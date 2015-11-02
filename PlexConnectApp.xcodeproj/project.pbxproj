@@ -1,0 +1,459 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		016474A31BE7EB320075EBC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 016474A21BE7EB320075EBC6 /* Assets.xcassets */; };
+		016474A61BE7EBD70075EBC6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 016474A41BE7EBD70075EBC6 /* Main.storyboard */; };
+		016474C31BE7EFEC0075EBC6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016474C21BE7EFEC0075EBC6 /* ViewController.swift */; };
+		01CE20951BE6AF9200A2F10A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CE208F1BE6AF9200A2F10A /* AppDelegate.swift */; };
+		01CE20961BE6AF9200A2F10A /* PlexAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CE20901BE6AF9200A2F10A /* PlexAPI.swift */; };
+		01CE20971BE6AF9200A2F10A /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CE20911BE6AF9200A2F10A /* Server.swift */; };
+		01CE20981BE6AF9200A2F10A /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CE20921BE6AF9200A2F10A /* Settings.swift */; };
+		01CE20991BE6AF9200A2F10A /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CE20931BE6AF9200A2F10A /* Utilities.swift */; };
+		01CE209A1BE6AF9200A2F10A /* XMLConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CE20941BE6AF9200A2F10A /* XMLConverter.swift */; };
+		01CE20A21BE6AFE700A2F10A /* SWXMLHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CE20A11BE6AFE700A2F10A /* SWXMLHash.swift */; };
+		01CE20A51BE6B01B00A2F10A /* MenuBar.xml in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20A41BE6B01B00A2F10A /* MenuBar.xml */; };
+		01CE20BC1BE6B03700A2F10A /* Library.xml in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20A71BE6B03700A2F10A /* Library.xml */; };
+		01CE20BD1BE6B03700A2F10A /* List.xml in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20A81BE6B03700A2F10A /* List.xml */; };
+		01CE20BF1BE6B03700A2F10A /* Movie_Directory.xml in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20AA1BE6B03700A2F10A /* Movie_Directory.xml */; };
+		01CE20C01BE6B03700A2F10A /* Movie_List.xml in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20AB1BE6B03700A2F10A /* Movie_List.xml */; };
+		01CE20C11BE6B03700A2F10A /* Movie_MenuBar.xml in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20AC1BE6B03700A2F10A /* Movie_MenuBar.xml */; };
+		01CE20C21BE6B03700A2F10A /* Movie_OnDeck.xml in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20AD1BE6B03700A2F10A /* Movie_OnDeck.xml */; };
+		01CE20C31BE6B03700A2F10A /* Movie_PrePlay.xml in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20AE1BE6B03700A2F10A /* Movie_PrePlay.xml */; };
+		01CE20C41BE6B03700A2F10A /* PlayVideo.xml in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20AF1BE6B03700A2F10A /* PlayVideo.xml */; };
+		01CE20C51BE6B03700A2F10A /* Search_All.xml in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20B01BE6B03700A2F10A /* Search_All.xml */; };
+		01CE20C61BE6B03700A2F10A /* Search_Results.xml in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20B11BE6B03700A2F10A /* Search_Results.xml */; };
+		01CE20C71BE6B03700A2F10A /* Search.xml in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20B21BE6B03700A2F10A /* Search.xml */; };
+		01CE20C81BE6B03700A2F10A /* Settings.xml in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20B31BE6B03700A2F10A /* Settings.xml */; };
+		01CE20C91BE6B03700A2F10A /* SharedLibraries.xml in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20B41BE6B03700A2F10A /* SharedLibraries.xml */; };
+		01CE20CA1BE6B03700A2F10A /* TVShow_Directory.xml in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20B51BE6B03700A2F10A /* TVShow_Directory.xml */; };
+		01CE20CB1BE6B03700A2F10A /* TVShow_EpisodeList.xml in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20B61BE6B03700A2F10A /* TVShow_EpisodeList.xml */; };
+		01CE20CC1BE6B03700A2F10A /* TVShow_MenuBar.xml in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20B71BE6B03700A2F10A /* TVShow_MenuBar.xml */; };
+		01CE20CD1BE6B03700A2F10A /* TVShow_OnDeck.xml in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20B81BE6B03700A2F10A /* TVShow_OnDeck.xml */; };
+		01CE20CE1BE6B03700A2F10A /* TVShow_PrePlay.xml in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20B91BE6B03700A2F10A /* TVShow_PrePlay.xml */; };
+		01CE20CF1BE6B03700A2F10A /* TVShow_SeasonList.xml in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20BA1BE6B03700A2F10A /* TVShow_SeasonList.xml */; };
+		01CE20D01BE6B03700A2F10A /* TVShow_ShowList.xml in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20BB1BE6B03700A2F10A /* TVShow_ShowList.xml */; };
+		01CE20D81BE6B04900A2F10A /* App.js in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20D11BE6B04900A2F10A /* App.js */; };
+		01CE20D91BE6B04900A2F10A /* MyPlex.js in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20D21BE6B04900A2F10A /* MyPlex.js */; };
+		01CE20DA1BE6B04900A2F10A /* Presenter.js in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20D31BE6B04900A2F10A /* Presenter.js */; };
+		01CE20DB1BE6B04900A2F10A /* Search.js in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20D41BE6B04900A2F10A /* Search.js */; };
+		01CE20DC1BE6B04900A2F10A /* Settings.js in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20D51BE6B04900A2F10A /* Settings.js */; };
+		01CE20DD1BE6B04900A2F10A /* Utilities.js in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20D61BE6B04900A2F10A /* Utilities.js */; };
+		01CE20DE1BE6B04900A2F10A /* VideoPlayer.js in Resources */ = {isa = PBXBuildFile; fileRef = 01CE20D71BE6B04900A2F10A /* VideoPlayer.js */; };
+		01CE20E31BE6B0F800A2F10A /* SwiftHTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CE20E21BE6B0F800A2F10A /* SwiftHTTP.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		016474A21BE7EB320075EBC6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		016474A51BE7EBD70075EBC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		016474C21BE7EFEC0075EBC6 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		01CE20661BE6ADD500A2F10A /* PlexConnectApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlexConnectApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		01CE20741BE6ADD500A2F10A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		01CE208F1BE6AF9200A2F10A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		01CE20901BE6AF9200A2F10A /* PlexAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlexAPI.swift; sourceTree = "<group>"; };
+		01CE20911BE6AF9200A2F10A /* Server.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
+		01CE20921BE6AF9200A2F10A /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		01CE20931BE6AF9200A2F10A /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		01CE20941BE6AF9200A2F10A /* XMLConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLConverter.swift; sourceTree = "<group>"; };
+		01CE20A01BE6AFE700A2F10A /* SWXMLHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWXMLHash.h; path = PlexConnectApp/lib_SWXMLHash/SWXMLHash.h; sourceTree = "<group>"; };
+		01CE20A11BE6AFE700A2F10A /* SWXMLHash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SWXMLHash.swift; path = PlexConnectApp/lib_SWXMLHash/SWXMLHash.swift; sourceTree = "<group>"; };
+		01CE20A41BE6B01B00A2F10A /* MenuBar.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = MenuBar.xml; path = PlexConnectApp/TVMLTemplates/MenuBar.xml; sourceTree = "<group>"; };
+		01CE20A71BE6B03700A2F10A /* Library.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Library.xml; path = PlexConnectApp/TVMLTemplates/Library.xml; sourceTree = "<group>"; };
+		01CE20A81BE6B03700A2F10A /* List.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = List.xml; path = PlexConnectApp/TVMLTemplates/List.xml; sourceTree = "<group>"; };
+		01CE20AA1BE6B03700A2F10A /* Movie_Directory.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Movie_Directory.xml; path = PlexConnectApp/TVMLTemplates/Movie_Directory.xml; sourceTree = "<group>"; };
+		01CE20AB1BE6B03700A2F10A /* Movie_List.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Movie_List.xml; path = PlexConnectApp/TVMLTemplates/Movie_List.xml; sourceTree = "<group>"; };
+		01CE20AC1BE6B03700A2F10A /* Movie_MenuBar.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Movie_MenuBar.xml; path = PlexConnectApp/TVMLTemplates/Movie_MenuBar.xml; sourceTree = "<group>"; };
+		01CE20AD1BE6B03700A2F10A /* Movie_OnDeck.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Movie_OnDeck.xml; path = PlexConnectApp/TVMLTemplates/Movie_OnDeck.xml; sourceTree = "<group>"; };
+		01CE20AE1BE6B03700A2F10A /* Movie_PrePlay.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Movie_PrePlay.xml; path = PlexConnectApp/TVMLTemplates/Movie_PrePlay.xml; sourceTree = "<group>"; };
+		01CE20AF1BE6B03700A2F10A /* PlayVideo.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = PlayVideo.xml; path = PlexConnectApp/TVMLTemplates/PlayVideo.xml; sourceTree = "<group>"; };
+		01CE20B01BE6B03700A2F10A /* Search_All.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Search_All.xml; path = PlexConnectApp/TVMLTemplates/Search_All.xml; sourceTree = "<group>"; };
+		01CE20B11BE6B03700A2F10A /* Search_Results.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Search_Results.xml; path = PlexConnectApp/TVMLTemplates/Search_Results.xml; sourceTree = "<group>"; };
+		01CE20B21BE6B03700A2F10A /* Search.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Search.xml; path = PlexConnectApp/TVMLTemplates/Search.xml; sourceTree = "<group>"; };
+		01CE20B31BE6B03700A2F10A /* Settings.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Settings.xml; path = PlexConnectApp/TVMLTemplates/Settings.xml; sourceTree = "<group>"; };
+		01CE20B41BE6B03700A2F10A /* SharedLibraries.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = SharedLibraries.xml; path = PlexConnectApp/TVMLTemplates/SharedLibraries.xml; sourceTree = "<group>"; };
+		01CE20B51BE6B03700A2F10A /* TVShow_Directory.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = TVShow_Directory.xml; path = PlexConnectApp/TVMLTemplates/TVShow_Directory.xml; sourceTree = "<group>"; };
+		01CE20B61BE6B03700A2F10A /* TVShow_EpisodeList.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = TVShow_EpisodeList.xml; path = PlexConnectApp/TVMLTemplates/TVShow_EpisodeList.xml; sourceTree = "<group>"; };
+		01CE20B71BE6B03700A2F10A /* TVShow_MenuBar.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = TVShow_MenuBar.xml; path = PlexConnectApp/TVMLTemplates/TVShow_MenuBar.xml; sourceTree = "<group>"; };
+		01CE20B81BE6B03700A2F10A /* TVShow_OnDeck.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = TVShow_OnDeck.xml; path = PlexConnectApp/TVMLTemplates/TVShow_OnDeck.xml; sourceTree = "<group>"; };
+		01CE20B91BE6B03700A2F10A /* TVShow_PrePlay.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = TVShow_PrePlay.xml; path = PlexConnectApp/TVMLTemplates/TVShow_PrePlay.xml; sourceTree = "<group>"; };
+		01CE20BA1BE6B03700A2F10A /* TVShow_SeasonList.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = TVShow_SeasonList.xml; path = PlexConnectApp/TVMLTemplates/TVShow_SeasonList.xml; sourceTree = "<group>"; };
+		01CE20BB1BE6B03700A2F10A /* TVShow_ShowList.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = TVShow_ShowList.xml; path = PlexConnectApp/TVMLTemplates/TVShow_ShowList.xml; sourceTree = "<group>"; };
+		01CE20D11BE6B04900A2F10A /* App.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = App.js; path = PlexConnectApp/js/App.js; sourceTree = "<group>"; };
+		01CE20D21BE6B04900A2F10A /* MyPlex.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = MyPlex.js; path = PlexConnectApp/js/MyPlex.js; sourceTree = "<group>"; };
+		01CE20D31BE6B04900A2F10A /* Presenter.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = Presenter.js; path = PlexConnectApp/js/Presenter.js; sourceTree = "<group>"; };
+		01CE20D41BE6B04900A2F10A /* Search.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = Search.js; path = PlexConnectApp/js/Search.js; sourceTree = "<group>"; };
+		01CE20D51BE6B04900A2F10A /* Settings.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = Settings.js; path = PlexConnectApp/js/Settings.js; sourceTree = "<group>"; };
+		01CE20D61BE6B04900A2F10A /* Utilities.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = Utilities.js; path = PlexConnectApp/js/Utilities.js; sourceTree = "<group>"; };
+		01CE20D71BE6B04900A2F10A /* VideoPlayer.js */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.javascript; name = VideoPlayer.js; path = PlexConnectApp/js/VideoPlayer.js; sourceTree = "<group>"; };
+		01CE20E21BE6B0F800A2F10A /* SwiftHTTP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftHTTP.swift; path = PlexConnectApp/lib_SwiftHTTP_Server/SwiftHTTP.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		01CE20631BE6ADD500A2F10A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		01CE205D1BE6ADD500A2F10A = {
+			isa = PBXGroup;
+			children = (
+				01CE20681BE6ADD500A2F10A /* PlexConnectApp */,
+				01CE20671BE6ADD500A2F10A /* Products */,
+				01CE209D1BE6AFAE00A2F10A /* lib_SwiftHTTP_Server */,
+				01CE20A31BE6AFEC00A2F10A /* lib_SWXMLHash */,
+				01CE20DF1BE6B04E00A2F10A /* js */,
+				01CE20A61BE6B01F00A2F10A /* TVMLTemplates */,
+			);
+			sourceTree = "<group>";
+		};
+		01CE20671BE6ADD500A2F10A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				01CE20661BE6ADD500A2F10A /* PlexConnectApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		01CE20681BE6ADD500A2F10A /* PlexConnectApp */ = {
+			isa = PBXGroup;
+			children = (
+				01CE208F1BE6AF9200A2F10A /* AppDelegate.swift */,
+				01CE20901BE6AF9200A2F10A /* PlexAPI.swift */,
+				01CE20911BE6AF9200A2F10A /* Server.swift */,
+				01CE20921BE6AF9200A2F10A /* Settings.swift */,
+				01CE20931BE6AF9200A2F10A /* Utilities.swift */,
+				01CE20941BE6AF9200A2F10A /* XMLConverter.swift */,
+				016474C21BE7EFEC0075EBC6 /* ViewController.swift */,
+				016474A21BE7EB320075EBC6 /* Assets.xcassets */,
+				016474A41BE7EBD70075EBC6 /* Main.storyboard */,
+				01CE20741BE6ADD500A2F10A /* Info.plist */,
+			);
+			path = PlexConnectApp;
+			sourceTree = "<group>";
+		};
+		01CE209D1BE6AFAE00A2F10A /* lib_SwiftHTTP_Server */ = {
+			isa = PBXGroup;
+			children = (
+				01CE20E21BE6B0F800A2F10A /* SwiftHTTP.swift */,
+			);
+			name = lib_SwiftHTTP_Server;
+			sourceTree = "<group>";
+		};
+		01CE20A31BE6AFEC00A2F10A /* lib_SWXMLHash */ = {
+			isa = PBXGroup;
+			children = (
+				01CE20A01BE6AFE700A2F10A /* SWXMLHash.h */,
+				01CE20A11BE6AFE700A2F10A /* SWXMLHash.swift */,
+			);
+			name = lib_SWXMLHash;
+			sourceTree = "<group>";
+		};
+		01CE20A61BE6B01F00A2F10A /* TVMLTemplates */ = {
+			isa = PBXGroup;
+			children = (
+				01CE20A41BE6B01B00A2F10A /* MenuBar.xml */,
+				01CE20A71BE6B03700A2F10A /* Library.xml */,
+				01CE20A81BE6B03700A2F10A /* List.xml */,
+				01CE20AA1BE6B03700A2F10A /* Movie_Directory.xml */,
+				01CE20AB1BE6B03700A2F10A /* Movie_List.xml */,
+				01CE20AC1BE6B03700A2F10A /* Movie_MenuBar.xml */,
+				01CE20AD1BE6B03700A2F10A /* Movie_OnDeck.xml */,
+				01CE20AE1BE6B03700A2F10A /* Movie_PrePlay.xml */,
+				01CE20AF1BE6B03700A2F10A /* PlayVideo.xml */,
+				01CE20B01BE6B03700A2F10A /* Search_All.xml */,
+				01CE20B11BE6B03700A2F10A /* Search_Results.xml */,
+				01CE20B21BE6B03700A2F10A /* Search.xml */,
+				01CE20B31BE6B03700A2F10A /* Settings.xml */,
+				01CE20B41BE6B03700A2F10A /* SharedLibraries.xml */,
+				01CE20B51BE6B03700A2F10A /* TVShow_Directory.xml */,
+				01CE20B61BE6B03700A2F10A /* TVShow_EpisodeList.xml */,
+				01CE20B71BE6B03700A2F10A /* TVShow_MenuBar.xml */,
+				01CE20B81BE6B03700A2F10A /* TVShow_OnDeck.xml */,
+				01CE20B91BE6B03700A2F10A /* TVShow_PrePlay.xml */,
+				01CE20BA1BE6B03700A2F10A /* TVShow_SeasonList.xml */,
+				01CE20BB1BE6B03700A2F10A /* TVShow_ShowList.xml */,
+			);
+			name = TVMLTemplates;
+			sourceTree = "<group>";
+		};
+		01CE20DF1BE6B04E00A2F10A /* js */ = {
+			isa = PBXGroup;
+			children = (
+				01CE20D11BE6B04900A2F10A /* App.js */,
+				01CE20D21BE6B04900A2F10A /* MyPlex.js */,
+				01CE20D31BE6B04900A2F10A /* Presenter.js */,
+				01CE20D41BE6B04900A2F10A /* Search.js */,
+				01CE20D51BE6B04900A2F10A /* Settings.js */,
+				01CE20D61BE6B04900A2F10A /* Utilities.js */,
+				01CE20D71BE6B04900A2F10A /* VideoPlayer.js */,
+			);
+			name = js;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		01CE20651BE6ADD500A2F10A /* PlexConnectApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01CE20771BE6ADD500A2F10A /* Build configuration list for PBXNativeTarget "PlexConnectApp" */;
+			buildPhases = (
+				01CE20621BE6ADD500A2F10A /* Sources */,
+				01CE20631BE6ADD500A2F10A /* Frameworks */,
+				01CE20641BE6ADD500A2F10A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PlexConnectApp;
+			productName = PlexConnectApp;
+			productReference = 01CE20661BE6ADD500A2F10A /* PlexConnectApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		01CE205E1BE6ADD500A2F10A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = Baa;
+				TargetAttributes = {
+					01CE20651BE6ADD500A2F10A = {
+						CreatedOnToolsVersion = 7.1;
+					};
+				};
+			};
+			buildConfigurationList = 01CE20611BE6ADD500A2F10A /* Build configuration list for PBXProject "PlexConnectApp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 01CE205D1BE6ADD500A2F10A;
+			productRefGroup = 01CE20671BE6ADD500A2F10A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				01CE20651BE6ADD500A2F10A /* PlexConnectApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		01CE20641BE6ADD500A2F10A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01CE20C01BE6B03700A2F10A /* Movie_List.xml in Resources */,
+				01CE20D91BE6B04900A2F10A /* MyPlex.js in Resources */,
+				01CE20D01BE6B03700A2F10A /* TVShow_ShowList.xml in Resources */,
+				01CE20C41BE6B03700A2F10A /* PlayVideo.xml in Resources */,
+				01CE20C51BE6B03700A2F10A /* Search_All.xml in Resources */,
+				01CE20C11BE6B03700A2F10A /* Movie_MenuBar.xml in Resources */,
+				01CE20BF1BE6B03700A2F10A /* Movie_Directory.xml in Resources */,
+				01CE20CB1BE6B03700A2F10A /* TVShow_EpisodeList.xml in Resources */,
+				01CE20A51BE6B01B00A2F10A /* MenuBar.xml in Resources */,
+				01CE20DD1BE6B04900A2F10A /* Utilities.js in Resources */,
+				01CE20DE1BE6B04900A2F10A /* VideoPlayer.js in Resources */,
+				01CE20D81BE6B04900A2F10A /* App.js in Resources */,
+				01CE20C71BE6B03700A2F10A /* Search.xml in Resources */,
+				01CE20CE1BE6B03700A2F10A /* TVShow_PrePlay.xml in Resources */,
+				01CE20C21BE6B03700A2F10A /* Movie_OnDeck.xml in Resources */,
+				01CE20CF1BE6B03700A2F10A /* TVShow_SeasonList.xml in Resources */,
+				01CE20DC1BE6B04900A2F10A /* Settings.js in Resources */,
+				01CE20BD1BE6B03700A2F10A /* List.xml in Resources */,
+				01CE20C61BE6B03700A2F10A /* Search_Results.xml in Resources */,
+				01CE20DA1BE6B04900A2F10A /* Presenter.js in Resources */,
+				01CE20CC1BE6B03700A2F10A /* TVShow_MenuBar.xml in Resources */,
+				016474A61BE7EBD70075EBC6 /* Main.storyboard in Resources */,
+				01CE20CA1BE6B03700A2F10A /* TVShow_Directory.xml in Resources */,
+				01CE20CD1BE6B03700A2F10A /* TVShow_OnDeck.xml in Resources */,
+				01CE20C81BE6B03700A2F10A /* Settings.xml in Resources */,
+				01CE20C91BE6B03700A2F10A /* SharedLibraries.xml in Resources */,
+				01CE20C31BE6B03700A2F10A /* Movie_PrePlay.xml in Resources */,
+				016474A31BE7EB320075EBC6 /* Assets.xcassets in Resources */,
+				01CE20DB1BE6B04900A2F10A /* Search.js in Resources */,
+				01CE20BC1BE6B03700A2F10A /* Library.xml in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		01CE20621BE6ADD500A2F10A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01CE20951BE6AF9200A2F10A /* AppDelegate.swift in Sources */,
+				01CE20971BE6AF9200A2F10A /* Server.swift in Sources */,
+				01CE209A1BE6AF9200A2F10A /* XMLConverter.swift in Sources */,
+				016474C31BE7EFEC0075EBC6 /* ViewController.swift in Sources */,
+				01CE20981BE6AF9200A2F10A /* Settings.swift in Sources */,
+				01CE20991BE6AF9200A2F10A /* Utilities.swift in Sources */,
+				01CE20961BE6AF9200A2F10A /* PlexAPI.swift in Sources */,
+				01CE20A21BE6AFE700A2F10A /* SWXMLHash.swift in Sources */,
+				01CE20E31BE6B0F800A2F10A /* SwiftHTTP.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		016474A41BE7EBD70075EBC6 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				016474A51BE7EBD70075EBC6 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		01CE20751BE6ADD500A2F10A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = appletvos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Debug;
+		};
+		01CE20761BE6ADD500A2F10A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = appletvos;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		01CE20781BE6ADD500A2F10A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
+				INFOPLIST_FILE = PlexConnectApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "-.PlexConnectApp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		01CE20791BE6ADD500A2F10A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
+				INFOPLIST_FILE = PlexConnectApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "-.PlexConnectApp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		01CE20611BE6ADD500A2F10A /* Build configuration list for PBXProject "PlexConnectApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01CE20751BE6ADD500A2F10A /* Debug */,
+				01CE20761BE6ADD500A2F10A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		01CE20771BE6ADD500A2F10A /* Build configuration list for PBXNativeTarget "PlexConnectApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01CE20781BE6ADD500A2F10A /* Debug */,
+				01CE20791BE6ADD500A2F10A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 01CE205E1BE6ADD500A2F10A /* Project object */;
+}

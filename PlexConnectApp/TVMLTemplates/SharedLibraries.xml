@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+<document>
+  <head>
+    <style>
+    .dimmedText {
+    color: #A0A0A0;
+    }
+    </style>
+  </head>
+  <listTemplate>
+    <list>
+      <!--
+      <relatedContent>
+        <itemBanner>
+          <heroImg src="${this.BASEURL}resources/images/italy/italy_10_square.jpg" />
+        </itemBanner>
+      </relatedContent>
+      -->
+      <header>
+        <title>Shared Libraries</title>
+      </header>
+
+{{PMSLOOP(shared)}}{{
+{{XML()}}{{
+      <section>
+        <header>
+          <title>{{PMSVAL(name)}}</title>
+        </header>
+{{COPY(MediaContainer/Directory)}}{{
+{{SET(noItems:false)}}
+{{IF({{CHK("{{VAL(type:)}}"=="movie")}})}}{{
+        <listItemLockup
+            onSelectURL="{{URL(Movie_MenuBar:{{VAL(key)}})}}" onSelectPresenter="select"
+            onPlayURL="{{URL(Movie_MenuBar:{{VAL(key)}})}}" onPlayPresenter="select"
+            onSelectHoldURL="" onSelectHoldPresenter="modal"
+            >
+          <title>{{VAL(title)}}</title>
+        </listItemLockup>
+}}
+{{IF({{CHK("{{VAL(type:)}}"=="show")}})}}{{
+        <listItemLockup
+            onSelectURL="{{URL(TVShow_MenuBar:{{VAL(key)}})}}" onSelectPresenter="select"
+            onPlayURL="{{URL(TVShow_MenuBar:{{VAL(key)}})}}" onPlayPresenter="select"
+            onSelectHoldURL="" onSelectHoldPresenter="modal"
+            >
+          <title>{{VAL(title)}}</title>
+        </listItemLockup>
+}}
+{{IF({{CHK("{{VAL(type:)}}"!="movie" && "{{VAL(type:)}}"!="show")}})}}{{
+        <listItemLockup
+            onSelectURL="{{URL(xyz_MenuBar:{{VAL(key)}})}}" onSelectPresenter="select"
+            onPlayURL="{{URL(xyz_MenuBar:{{VAL(key)}})}}" onPlayPresenter="select"
+            onSelectHoldURL="" onSelectHoldPresenter="modal"
+            disabled="true"
+            >
+          <title>{{VAL(title)}}</title>
+        </listItemLockup>
+}}
+}}
+        <!-- search -->
+        <listItemLockup
+            onSelectURL="{{URL(Search:)}}" onSelectPresenter="select"
+            onPlayURL="{{URL(Search:)}}" onPlayPresenter="select"
+            onSelectHoldURL="" onSelectHoldPresenter="modal"
+            >
+          <title>{{TEXT(Search)}}</title>
+          <decorationImage src="resource://chevron" />
+        </listItemLockup>
+
+      </section>
+}}
+}}
+    </list>
+  </listTemplate>
+</document>
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>TITLE</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

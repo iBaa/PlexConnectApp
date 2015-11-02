@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+<document>
+  <listTemplate>
+    <list>
+      
+      <header>
+        <title>Settings</title>
+      </header>
+      
+      <section>
+        <header>
+          <title>{{TEXT(Plex Media Environment)}}</title>
+        </header>
+        
+        <listItemLockup
+          presenter="discover(event)"
+          >
+          <title>Discover</title>
+        </listItemLockup>
+        
+{{IF(!{{USRVAL(name)}})}} {{
+        <listItemLockup
+          id="MyPlexSignInOut"
+          presenter="myPlexSignInOut(event)"
+          >
+          <title>Sign In</title>
+          <decorationLabel />
+          <decorationImage src="resource://chevron" />
+        </listItemLockup>
+}}
+{{IF({{USRVAL(name)}})}} {{
+        <listItemLockup
+          id="MyPlexSignInOut"
+          presenter="myPlexSignInOut(event)"
+          >
+          <title>Sign Out</title>
+          <decorationLabel>{{USRVAL(name)}}</decorationLabel>
+        </listItemLockup>
+}}
+      </section>
+
+      <section>
+        <header>
+          <title>{{TEXT(Media Replay)}}</title>
+        </header>
+
+        <listItemLockup
+          id="transcoderAction"
+          presenter="Settings.toggle(event)"
+          >
+          <title>{{TEXT(Transcoder Action)}}</title>
+          <decorationLabel>{{SETTING(transcoderAction)}}</decorationLabel>
+        </listItemLockup>
+        <listItemLockup
+          id="transcoderQuality"
+          presenter="Settings.toggle(event)"
+          >
+          <title>{{TEXT(Transcode Quality)}}</title>
+          <decorationLabel>{{SETTING(transcoderQuality)}}</decorationLabel>
+        </listItemLockup>
+        <listItemLockup
+          id="remoteBitrate"
+          presenter="Settings.toggle(event)"
+          >
+          <title>{{TEXT(Remote Bitrate)}}</title>
+          <decorationLabel>{{SETTING(remoteBitrate)}}</decorationLabel>
+        </listItemLockup>
+
+      </section>
+
+    </list>
+  </listTemplate>
+</document>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{XML()}}{{
+<document>
+  <productTemplate>
+    <background>
+    </background>
+    <banner>
+      <infoList>
+        <info>
+          <header>
+            <title>Directors</title>
+          </header>
+{{COPY(MediaContainer/Video/Director)}}{{  <!-- COPY till 5 or so? -->
+          <text>{{VAL(tag)}}</text>
+}}
+        </info>
+        <info>
+          <header>
+            <title>Writers</title>
+          </header>
+{{COPY(MediaContainer/Video/Writer)}}{{  <!-- COPY till 5 or so? -->
+          <text>{{VAL(tag)}}</text>
+}}
+        </info>
+      </infoList>
+      <stack>
+        <title>{{VAL(MediaContainer/Video/index)}}. {{VAL(MediaContainer/Video/title)}}</title>
+        <subtitle>{{VAL(MediaContainer/Video/studio)}}</subtitle>
+        <row>
+          <!--text>rating(Video/contentRating)</text-->
+          <text>{{DURATION({{VAL(MediaContainer/Video/duration)}})}}</text>
+          <text>{{VAL(MediaContainer/Video/Genre/tag)}}</text>
+          <text>{{VAL(MediaContainer/Video/year)}}</text>
+          <!--badge src="resource://mpaa-pg" class="badge" /-->
+          <!--badge src="resource://cc" class="badge" /-->
+        </row>
+        <description allowsZooming="true" moreLabel="more">{{VAL(MediaContainer/Video/summary)}}</description><!-- todo: more -->
+        <!--text>Language information can go here</text-->
+        <row>
+          <buttonLockup
+              onSelectURL="{{URL(PlayVideo:)}}" onSelectPresenter="video"
+              >
+            <badge src="resource://button-play" />
+            <title>Play</title>
+          </buttonLockup>
+        </row>
+      </stack>
+      <heroImg src="{{IMAGEURL(MediaContainer/Video/thumb::768)}}" />
+    </banner>
+
+{{XML(/library/metadata/{{VAL(MediaContainer/Video/parentRatingKey)}}/children)}}{{
+<!--or cascade: (MediaContainer/Video/parentKey)->(MediaContainer/Directory/key)-->
+
+    <shelf>
+      <header>
+        <title>Episodes</title>
+      </header>
+      <section>
+        {{COPY(MediaContainer/Video)}}
+        {{
+        <lockup>
+          <img src="{{IMAGEURL(thumb::384)}}" width="150" height="226" />
+          <title><![CDATA[{{VAL(index)}}. {{VAL(title)}}]]></title>
+          <subtitle>{{VAL(extraType::1=Trailer|2=Deleted|3=Interview|4=???|5=Behind the Scenes|6=Scene)}}</subtitle>
+        </lockup>
+        }}
+      </section>
+    </shelf>
+}}
+<!-- Everything past this is below the fold -->
+  </productTemplate>
+</document>
+}}

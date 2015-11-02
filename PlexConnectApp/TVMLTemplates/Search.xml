@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+<document>
+  <searchTemplate onLoad="Search.onLoad(event)">
+    <!-- search -->
+    <searchField url="{{URL(Search_Results:/search?type%3D4%26query%3D{0})}}" />
+    <!-- results -->
+    <collectionList id="searchResults">
+      <!-- todo: should be merged with Search_Results.xml - but then it first gets populated with non-sense data -->
+    </collectionList>
+  </searchTemplate>
+</document>

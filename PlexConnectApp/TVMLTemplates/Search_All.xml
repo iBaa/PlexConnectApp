@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+<document>
+  <head>
+    <style>
+      .sectionSpacing {
+        margin: 0 40;
+      }
+      .pullAheadVsSectionSpacing {
+        margin: 0 -40;
+      }
+    </style>
+  </head>
+  <searchTemplate onLoad="Search.onLoad(event)">
+    <!-- search -->
+    <searchField url="{{URL(Search_All:/search?type%3D4%26query%3D{0})}}" />
+    <!-- results -->
+    <collectionList id="searchResults" class="pullAheadVsSectionSpacing">
+
+      <!-- movies -->
+{{CUT({{GET(noMovies)}})}}{{
+{{SET(noMovies:true)}}
+      <shelf>
+        <header class="sectionSpacing">
+          <title>{{TEXT(Movies)}}</title>
+        </header>
+{{PMSLOOP(all)}}{{
+{{XML()}}{{
+{{SET(noItems:true)}}
+{{CUT({{GET(noItems)}})}}{{
+        <section class="sectionSpacing">
+          <header>
+            <title>&lt;{{PMSVAL(name)}}&gt;</title>  <!-- add local/remote, remove servername if only one -->
+          </header>
+{{COPY(MediaContainer/Video)}}{{
+{{IF({{CHK("{{VAL(type:)}}"=="movie")}})}}{{
+{{SET(noMovies:false)}}
+{{SET(noItems:false)}}  <!-- this PMS -->
+          <lockup
+              onSelectURL="{{URL(Movie_PrePlay:{{VAL(key)}})}}" onSelectPresenter="select"
+              onPlayURL="{{URL(PlayVideo:{{VAL(key)}})}}" onPlayPresenter="video"
+              onHoldSelect="ScrobbleMenu"
+              >
+            <img src="{{IMAGEURL(thumb::384)}}" width="200" height="300" />
+            <title><![CDATA[{{VAL(title)}}]]></title>
+          </lockup>
+}}
+}}
+        </section>
+}}
+}}
+}}
+      </shelf>
+}}
+      
+      <!-- shows -->
+{{CUT({{GET(noShows)}})}}{{
+{{SET(noShows:true)}}
+      <shelf>
+        <header class="sectionSpacing">
+          <title>{{TEXT(Shows)}}</title>
+        </header>
+{{PMSLOOP(all)}}{{
+{{XML()}}{{
+{{SET(noItems:true)}}
+{{CUT({{GET(noItems)}})}}{{
+        <section class="sectionSpacing">
+          <header>
+            <title>&lt;{{PMSVAL(name)}}&gt;</title>  <!-- add local/remote, remove servername if only one -->
+          </header>
+{{COPY(MediaContainer/Directory)}}{{
+{{IF({{CHK("{{VAL(type:)}}"=="show")}})}}{{
+{{SET(noShows:false)}}
+{{SET(noItems:false)}}
+          <lockup
+              onSelectURL="{{URL(TVShow_SeasonList:{{VAL(key)}})}}" onSelectPresenter="select"
+              onPlayURL="{{URL(TVShow_SeasonList:{{VAL(key)}})}}" onPlayPresenter="select"
+              onSelectHoldURL="" onSelectHoldPresenter="modal"
+              >
+            <img src="{{IMAGEURL(thumb::384)}}" width="200" height="300" />
+            <title><![CDATA[{{VAL(title)}}]]></title>
+          </lockup>
+}}
+}}
+        </section>
+}}
+}}
+}}
+      </shelf>
+}}
+
+      <!-- episodes -->
+{{CUT({{GET(noEpisodes)}})}}{{
+{{SET(noEpisodes:true)}}
+      <shelf>
+        <header class="sectionSpacing">
+          <title>{{TEXT(Episodes)}}</title>
+        </header>
+{{PMSLOOP(all)}}{{
+{{XML()}}{{
+{{SET(noItems:true)}}
+{{CUT({{GET(noItems)}})}}{{
+        <section class="sectionSpacing">
+          <header>
+            <title>&lt;{{PMSVAL(name)}}&gt;</title>  <!-- add local/remote, remove servername if only one -->
+          </header>
+{{COPY(MediaContainer/Video)}}{{
+{{IF({{CHK("{{VAL(type:)}}"=="episode")}})}}{{
+{{SET(noEpisodes:false)}}
+{{SET(noItems:false)}}
+          <lockup
+              onSelectURL="{{URL(TVShow_PrePlay:{{VAL(key)}})}}" onSelectPresenter="select"
+              onPlayURL="{{URL(PlayVideo:{{VAL(key)}})}}" onPlayPresenter="video"
+              onSelectHoldURL="" onSelectHoldPresenter="modal"
+              >
+            <img src="{{IMAGEURL(thumb::384)}}" width="200" height="300" />
+            <title><![CDATA[{{VAL(title)}}]]></title>
+            <subtitle><![CDATA[{{VAL(grandparentTitle)}}]]></subtitle>
+          </lockup>
+}}
+}}
+        </section>
+}}
+}}
+}}
+      </shelf>
+}}
+
+      <!-- albums -->
+{{CUT({{GET(noAlbums)}})}}{{
+{{SET(noAlbums:true)}}
+      <shelf>
+        <header class="sectionSpacing">
+          <title>{{TEXT(Albums)}}</title>
+        </header>
+{{PMSLOOP(all)}}{{
+{{XML()}}{{
+{{SET(noItems:true)}}
+{{CUT({{GET(noItems)}})}}{{
+        <section class="sectionSpacing">
+          <header>
+            <title>&lt;{{PMSVAL(name)}}&gt;</title>  <!-- add local/remote, remove servername if only one -->
+          </header>
+{{COPY(MediaContainer/Directory)}}{{
+{{IF({{CHK("{{VAL(type:)}}"=="album")}})}}{{
+{{SET(noAlbums:false)}}
+{{SET(noItems:false)}}
+          <lockup
+              onSelectURL="{{URL(:{{VAL(key)}})}}" onSelectPresenter=""
+              onPlayURL="{{URL(PlayAudio:{{VAL(key)}})}}" onPlayPresenter="audio"
+              onSelectHoldURL="" onSelectHoldPresenter="modal"
+              >
+            <img src="{{IMAGEURL(thumb::384)}}" width="200" height="300" />
+            <title><![CDATA[{{VAL(title)}}]]></title>
+            <subtitle><![CDATA[{{VAL(parentTitle)}}]]></subtitle>
+          </lockup>
+}}
+}}
+        </section>
+}}
+}}
+}}
+      </shelf>
+}}
+
+      <!-- artists -->
+{{CUT({{GET(noArtists)}})}}{{
+{{SET(noArtists:true)}}
+      <shelf>
+        <header class="sectionSpacing">
+          <title>{{TEXT(Artists)}}</title>
+        </header>
+{{PMSLOOP(all)}}{{
+{{XML()}}{{
+{{SET(noItems:true)}}
+{{CUT({{GET(noItems)}})}}{{
+        <section class="sectionSpacing">
+          <header>
+            <title>&lt;{{PMSVAL(name)}}&gt;</title>  <!-- add local/remote, remove servername if only one -->
+          </header>
+{{COPY(MediaContainer/Directory)}}{{
+{{IF({{CHK("{{VAL(type:)}}"=="artist")}})}}{{
+{{SET(noArtists:false)}}
+{{SET(noItems:false)}}
+          <lockup
+              onSelectURL="{{URL(:{{VAL(key)}})}}" onSelectPresenter=""
+              onPlayURL="{{URL(PlayAudio:{{VAL(key)}})}}" onPlayPresenter="audio"
+              onSelectHoldURL="" onSelectHoldPresenter="modal"
+              >
+            <img src="{{IMAGEURL(thumb::384)}}" width="200" height="300" />
+            <title><![CDATA[{{VAL(title)}}]]></title>
+          </lockup>
+}}
+}}
+        </section>
+}}
+}}
+}}
+      </shelf>
+}}
+
+    </collectionList>
+  </searchTemplate>
+</document>

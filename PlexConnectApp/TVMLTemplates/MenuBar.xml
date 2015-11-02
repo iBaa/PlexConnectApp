@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+<document>
+  <menuBarTemplate>
+    <menuBar>
+
+      <menuItem id="Library" presenter="menuBar" menuContent="{{URL(Library:/library/sections)}}">
+        <title>Library</title>
+      </menuItem>
+      
+      <menuItem id="SharedLibraries" presenter="menuBar" menuContent="{{URL(SharedLibraries:/library/sections)}}">
+          <title>Shared Libraries</title>
+      </menuItem>
+      
+      <menuItem id="Search" presenter="menuBar" menuContent="{{URL(Search_All:)}}">
+          <title>Search</title>
+      </menuItem>
+      
+      <menuItem id="Settings" presenter="menuBar" menuContent="{{URL(Settings:)}}">
+          <title>Settings</title>
+      </menuItem>
+
+    </menuBar>
+  </menuBarTemplate>
+</document>
+

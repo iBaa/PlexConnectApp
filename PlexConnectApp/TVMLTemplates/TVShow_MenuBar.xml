@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+<document>
+  <menuBarTemplate>
+    <menuBar>
+        
+      <menuItem id="All" presenter="menuBar" menuContent="{{URL(TVShow_ShowList:all)}}">
+        <title>{{TEXT(All Shows)}}</title>
+      </menuItem>
+      <menuItem id="OnDeck" presenter="menuBar" menuContent="{{URL(TVShow_OnDeck:)}}" autoHighlight="true">
+        <title>{{TEXT(On Deck)}}</title>
+      </menuItem>
+      <menuItem id="Unwatched" presenter="menuBar" menuContent="{{URL(TVShow_ShowList:unwatched)}}">
+        <title>{{TEXT(Unwatched)}}</title>
+      </menuItem>
+      <menuItem id="Genre" presenter="menuBar" menuContent="{{URL(TVShow_Directory:genre)}}">
+          <title>{{TEXT(Genre)}}</title>
+      </menuItem>
+      <!--
+      <menuItem id="More" presenter="menuBar" menuContent="{{URL(TVShow_Secondary:)}}">
+          <title>{{TEXT(More...)}}</title>
+      </menuItem>
+      -->
+
+    </menuBar>
+  </menuBarTemplate>
+</document>
