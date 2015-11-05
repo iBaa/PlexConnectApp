@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+  <listTemplate>
+
+<!-- album list -->
+{{CUT({{GET(noAlbums)}})}}{{
+{{SET(noAlbums:true)}}
+    <banner>
+      <title>{{VAL(MediaContainer/title2)}}</title>
+    </banner>
+    <list>
+
+      <section>
+{{COPY(MediaContainer/Directory)}}{{
+{{IF({{CHK("{{VAL(type:)}}"=="album")}})}}{{
+{{SET(noItems:false)}}
+{{SET(noAlbums:false)}}
+        <listItemLockup
+            onSelectURL="{{URL(Music_TrackList:{{VAL(key)}})}}" onSelectPresenter="select"
+            onPlayURL="{{URL(PlayAudio:{{VAL(key)}})}}" onPlayPresenter="audio"
+            resume_onSelectURL="{{URL(PlayResume:{{VAL(key)}})}}" resume_onSelectPresenter="modal"
+            >
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <relatedContent>
+            <lockup>
+              <img src="{{IMAGEURL(thumb::768)}}" />
+            </lockup>
+          </relatedContent>
+        </listItemLockup>
+}}
+}}
+      </section>
+    </list>
+}}
+
+<!-- generic directoy -->
+{{IF({{GET(noItems)}})}}{{
+    <banner>
+      <title>{{VAL(MediaContainer/title1)}}</title>
+    </banner>
+    <list>
+
+      <section>
+{{COPY(MediaContainer/Directory)}}{{
+{{SET(noItems:false)}}
+        <listItemLockup
+            onSelectURL="{{URL(Music_Directory:{{VAL(key)}})}}" onSelectPresenter="select"
+            onPlayURL="{{URL(Music_Directory:{{VAL(key)}})}}" onPlayPresenter="select"
+            resume_onSelectURL="{{URL()}}" resume_onSelectPresenter="modal"
+            >
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <relatedContent>
+            <lockup>
+              <img src="{{IMAGEURL(thumb::768)}}" />
+            </lockup>
+          </relatedContent>
+        </listItemLockup>
+}}
+      </section>
+    </list>
+}}
+  </listTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>TITLE</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

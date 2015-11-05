@@ -40,6 +40,7 @@ class cXmlConverter {
             "VAL": processVAL!,
             "EVAL": processEVAL!,
             "DURATION": processDURATION!,
+            "DURATION_HMS": processDURATION_HMS!,
             "SEASONEPISODE": processSEASONEPISODE!,
             "CHK": processCHK!,
             "PMSID": processPMSID!,
@@ -49,6 +50,7 @@ class cXmlConverter {
             "GET": processGET!,
             "URL": processURL!,
             "VIDEOURL": processVIDEOURL!,
+            "AUDIOURL": processAUDIOURL!,
             "IMAGEURL": processIMAGEURL!,
             "TEXT": processTEXT!,
             "SETTING": processSETTING!,
@@ -362,6 +364,29 @@ class cXmlConverter {
         return "\(minute) minutes"
     }
     
+    var processDURATION_HMS: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
+        _self, XML, _par in
+        
+        var par = _par.componentsSeparatedByString(":")
+        var hours: Int = 0, minutes: Int = 0, seconds: Int = 0
+        if let duration = Int(_self.getParam(XML, par: &par)) {  // duration in ms
+            var sec: Int
+            sec = duration / 1000  // duration in sec
+            hours = sec / 60/60
+            sec = sec - hours * 60*60  // duration (after hours) in sec
+            minutes = sec / 60
+            sec = sec - minutes * 60  // duration (after hours/minutes) in sec
+            seconds = sec
+        }
+        var res: String
+        if (hours>0) {
+            res = String(format: "%i:%02i:%02i", hours, minutes, seconds)
+        } else {
+            res = String(format: "%i:%02i", minutes, seconds)
+        }
+        return res
+    }
+    
     var processSEASONEPISODE: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
         _self, XML, _par in
         
@@ -482,6 +507,28 @@ class cXmlConverter {
             return res
         }
         return "[[VIDEOURL - node <video> not found]]"
+    }
+
+    var processAUDIOURL: ((_self: cXmlConverter, XML: XMLIndexer?, par: String) -> String)? = {
+        _self, XML, _par in
+        
+        var par = _par.componentsSeparatedByString(":")
+        
+        // sanity check
+        if _self.pmsId == nil {
+            return "[[AUDIOURL - pmsId not initialised]]"
+        }
+        
+        if let audio = _self.getNode(XML, par: &par) {
+            var res = getAudioPath(audio, partIx: 0, pmsId: _self.pmsId!, pmsPath: _self.pmsPath)
+            // XML safe?
+            res = res.stringByReplacingOccurrencesOfString("&", withString: "&amp;")  // must be first
+            res = res.stringByReplacingOccurrencesOfString("<", withString: "&lt;")
+            res = res.stringByReplacingOccurrencesOfString(">", withString: "&gt;")
+            
+            return res
+        }
+        return "[[AUDIOURL - node <video> not found]]"
     }
 
     var processIMAGEURL: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {

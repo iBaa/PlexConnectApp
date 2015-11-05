@@ -326,8 +326,6 @@ func getVideoPath(video: XMLIndexer, partIx: Int, pmsId: String, pmsPath: String
     return res
 }
 
-
-
 func getDirectVideoPath(key: String, pmsToken: String) -> String {
     var res: String
     
@@ -345,8 +343,6 @@ func getDirectVideoPath(key: String, pmsToken: String) -> String {
 
     return res
 }
-
-
 
 func getTranscodeVideoArgs(path: String, ratingKey: String, partIx: Int, transcoderAction: String, quality: [String: String], audio: [String: String]) -> [NSURLQueryItem] {
 
@@ -367,9 +363,9 @@ func getTranscodeVideoArgs(path: String, ratingKey: String, partIx: Int, transco
         NSURLQueryItem(name: "protocol", value: "hls"),
         NSURLQueryItem(name: "videoResolution", value: quality["resolution"]!),
         NSURLQueryItem(name: "videoQuality", value: quality["quality"]!),
-        NSURLQueryItem(name: "maxVideoBitrate", value: quality["bitrate"]),
+        NSURLQueryItem(name: "maxVideoBitrate", value: quality["bitrate"]!),
         NSURLQueryItem(name: "directStream", value: directStream),
-        NSURLQueryItem(name: "audioBoost", value: audio["boost"]),
+        NSURLQueryItem(name: "audioBoost", value: audio["boost"]!),
         NSURLQueryItem(name: "fastSeek", value: "1"),
         
         /* todo: subtitle support
@@ -377,6 +373,94 @@ func getTranscodeVideoArgs(path: String, ratingKey: String, partIx: Int, transco
         args["skipSubtitles"] = subtitle["dontBurnIn"]  // '1'  // shut off PMS subtitles. Todo: skip only for aTV native/SRT (or other supported)
         */
         
+    ]
+    return args
+}
+
+
+
+func getAudioPath(audio: XMLIndexer, partIx: Int, pmsId: String, pmsPath: String?) -> String {
+    var res: String
+    
+    // sanity check
+    // todo: ?
+    
+    // XML pointing to Track node
+    let media = audio["Media"][0]  // todo: cover XMLError, errorchecking on optionals
+    let part = media["Part"][partIx]
+    
+    // todo: transcoder action setting?
+    
+    var audioATVNative =
+        // todo: check Media.get('container') as well - mp3, m4a, ...?
+        ["mp3", "aac", "ac3", "drms", "alac", "aiff", "wav"].contains(getAttribute(media, key: "audioCodec", dflt: ""))
+    print("audioATVNative: " + String(audioATVNative))
+    
+    // transcoder bitrate setting [kbps] -  eg. 128, 256, 384, 512?
+    var quality: [String: String] = [:]
+    quality["bitrate"] = "384"  // maxAudioBitrate  // todo: setting?
+    let qualityDirectPlay = Int(getAttribute(media, key: "bitrate", dflt: "0")) < Int(quality["bitrate"]!)
+    print("quality: ", quality["bitrate"], "qualityDirectPlay: ", qualityDirectPlay)
+
+    // determine adio URL
+    // direct play for...
+    //    audioATVNative
+    //    limited by quality setting
+    let accessToken = PlexMediaServerInformation[pmsId]!.getAttribute("accessToken")
+    if audioATVNative && qualityDirectPlay {
+        // direct play
+        let key = getAttribute(part, key: "key", dflt: "")
+        
+        var xargs = getDeviceInfoXArgs()
+        if accessToken != "" {
+            xargs += [ NSURLQueryItem(name: "X-Plex-Token", value: accessToken) ]
+        }
+        
+        let urlComponents = NSURLComponents(string: key)
+        urlComponents!.queryItems = xargs
+        
+        res = urlComponents!.string!
+    } else {
+        // request transcoding
+        let key = getAttribute(audio, key: "key", dflt: "")
+        let ratingKey = getAttribute(audio, key: "ratingKey", dflt: "")
+        
+        let args = getTranscodeAudioArgs(key, ratingKey: ratingKey, quality: quality)
+        
+        var xargs = getDeviceInfoXArgs()
+        if accessToken != "" {
+            xargs += [ NSURLQueryItem(name: "X-Plex-Token", value: accessToken) ]
+        }
+        
+        let urlComponents = NSURLComponents(string: "/music/:/transcode/universal/start.mp3?")
+        urlComponents!.queryItems = args + xargs
+        
+        res = urlComponents!.string!
+    }
+    
+    if res.hasPrefix("/") {
+        // internal full path
+        res = PlexMediaServerInformation[pmsId]!.getAttribute("uri") + res
+    } else if res.hasPrefix("http://") || res.hasPrefix("https://") {
+        // external address - do nothing
+    } else {
+        // internal path, add-on
+        res = PlexMediaServerInformation[pmsId]!.getAttribute("uri") + pmsPath! + res
+    }
+
+    return res
+}
+
+func getTranscodeAudioArgs(path: String, ratingKey: String, quality: [String: String]) -> [NSURLQueryItem] {
+    
+    let args: [NSURLQueryItem] = [
+        NSURLQueryItem(name: "path", value: path),
+        // mediaIndex
+        // partIndex
+
+        NSURLQueryItem(name: "session", value: ratingKey),  // todo: session UDID? ratingKey?
+        NSURLQueryItem(name: "protocol", value: "http"),
+        NSURLQueryItem(name: "maxAudioBitrate", value: quality["bitrate"]!),
     ]
     return args
 }

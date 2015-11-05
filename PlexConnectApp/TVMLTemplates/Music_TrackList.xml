@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+  <listTemplate>
+    <banner>
+      <title>{{VAL(MediaContainer/title2)}}</title>
+    </banner>
+    <list>
+
+      <section>
+        <!-- shuffle -->
+        <!--
+        <listItemLockup
+            onSelectURL="{{URL(PlayAudio:{{VAL(key)}})}}" onSelectPresenter="audio"
+            onPlayURL="{{URL(PlayAudio:{{VAL(key)}})}}" onPlayPresenter="audio"
+            resume_onSelectURL="{{URL(PlayResume:{{VAL(key)}})}}" resume_onSelectPresenter="modal"
+            >
+          <title>{{TEXT(Shuffle)}}</title>
+          <decorationImage src="resource://shuffle" />
+        </listItemLockup>
+        -->
+        <!-- now playing -->
+        <listItemLockup
+          onSelectURL="" onSelectPresenter="audioPlayer.nowPlaying()"
+          onPlayURL="" onPlayPresenter="audioPlayer.nowPlaying()"
+          resume_onSelectURL="{{URL(PlayResume:{{VAL(key)}})}}" resume_onSelectPresenter="modal"
+          >
+          <title>{{TEXT(Now Playing)}}</title>
+          <decorationImage src="resource://chevron" />
+        </listItemLockup>
+      </section>
+      
+      <separator>      </separator>
+      <section>
+        <header>  <!--gives some space between shuffle/nowplaying and actual track list-->
+        </header>
+{{COPY(MediaContainer/Track)}}{{
+{{SET(noItems:false)}}
+        <listItemLockup
+            onSelectURL="{{URL(PlayAudio:{{VAL(key)}})}}" onSelectPresenter="audio"
+            onPlayURL="{{URL(PlayAudio:{{VAL(key)}})}}" onPlayPresenter="audio"
+            resume_onSelectURL="{{URL(PlayResume:{{VAL(key)}})}}" resume_onSelectPresenter="modal"
+            >
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <decorationLabel>{{DURATION_HMS({{VAL(duration)}})}}</decorationLabel>
+          <relatedContent>
+            <lockup>
+              <img src="{{IMAGEURL(thumb::768)}}" />
+            </lockup>
+          </relatedContent>
+        </listItemLockup>
+}}
+      </section>
+
+    </list>
+  </listTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>TITLE</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

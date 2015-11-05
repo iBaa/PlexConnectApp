@@ -52,6 +52,9 @@ onSelect: function(event) {
   } else if (presenter=="video") {
     var videoURL = elem.getAttribute("onSelectURL");
     videoPlayer.play(videoURL);
+  } else if (presenter=="audio") {
+      var audioURL = elem.getAttribute("onSelectURL");
+      audioPlayer.play(audioURL);
   } else if (presenter=="menuBar"){
     // menuBar
     var feature = elem.parentNode.getFeature("MenuBarDocument");

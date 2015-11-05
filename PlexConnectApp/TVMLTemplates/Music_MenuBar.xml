@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+<document>
+  <menuBarTemplate>
+    <menuBar>
+      
+      <menuItem id="Albums" presenter="menuBar" menuContent="{{URL(Music_Directory:albums)}}">
+        <title>{{TEXT(Albums)}}</title>
+      </menuItem>
+      <menuItem id="Artists" presenter="menuBar" menuContent="{{URL(Music_Directory:all)}}" autoHighlight="true">
+        <title>{{TEXT(Artists)}}</title>
+      </menuItem>
+      <menuItem id="RecentlyAdded" presenter="menuBar" menuContent="{{URL(Music_Directory:recentlyAdded)}}">
+        <title>{{TEXT(RecentlyAdded)}}</title>
+      </menuItem>
+      <menuItem id="Genre" presenter="menuBar" menuContent="{{URL(Music_Directory:genre)}}">
+          <title>{{TEXT(Genre)}}</title>
+      </menuItem>
+      <!--
+      todo: /decade /year (secondary)
+      -->
+
+    </menuBar>
+  </menuBarTemplate>
+</document>

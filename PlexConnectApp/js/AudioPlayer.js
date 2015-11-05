@@ -3,7 +3,7 @@
  See LICENSE.txt for this sample’s licensing information
  */
 
-// metadata - communicated in PlayVideo
+// metadata - communicated in PlayAudio
 var key;
 var ratingKey;
 var duration;
@@ -16,13 +16,13 @@ var lastTranscoderPingTime;
 var isTranscoding = false;
 var pingTimer = null;
 
-/*
- https://developer.apple.com/library/prerelease/tvos/samplecode/TVMLAudioVideo/Listings/client_js_application_js.html#//apple_ref/doc/uid/TP40016506-client_js_application_js-DontLinkElementID_6
- */
-var videoPlayer = {
-  
+// the player
+var player = null
+
+var audioPlayer = {
+
 play: function(url) {
-  loadDocument(url, videoPlayer.gotPlayVideoXML);
+  loadDocument(url, audioPlayer.gotPlayVideoXML);
 },
 
 gotPlayVideoXML: function(doc) {
@@ -37,11 +37,12 @@ gotPlayVideoXML: function(doc) {
   lastTranscoderPingTime = -1;
   isTranscoding = (doc.getTextContent('mediaUrl').indexOf('transcode/universal') > -1);
   
-  // create video player
+  // create audio player
   // todo: playlist with mulitple items
-  var player = new Player();
+  audioPlayer.TEST="HELLO"
+  player = new Player();
   var playlist = new Playlist();
-  var mediaItem = new MediaItem("video", doc.getTextContent('mediaUrl'));
+  var mediaItem = new MediaItem("audio", doc.getTextContent('mediaUrl'));
 
   mediaItem.title = doc.getTextContent('title');
   mediaItem.subtitle = doc.getTextContent('subtitle');
@@ -53,12 +54,19 @@ gotPlayVideoXML: function(doc) {
   player.playlist = playlist;
   player.playlist.push(mediaItem);
   
-  player.addEventListener("timeDidChange", videoPlayer.onTimeDidChange, {"interval":5})
-  player.addEventListener("stateDidChange", videoPlayer.onStateDidChange)
-  
+  player.addEventListener("timeDidChange", audioPlayer.onTimeDidChange, {"interval":5})
+  player.addEventListener("stateDidChange", audioPlayer.onStateDidChange)
+
+  player.present();  // todo: bug? why do we need present, then play? will stay at "paused" otherwise.
   player.play();
 },
 
+nowPlaying: function() {
+  if(player) {
+    player.present();  // todo: disable button if player unavailbale
+  }
+},
+  
 onTimeDidChange: function(timeObj) {
   console.log("onTimeDidChange: " + timeObj.time + "s");
   //remainingTime = Math.round((duration / 1000) - time);
@@ -89,16 +97,11 @@ onTimeDidChange: function(timeObj) {
       )
   {
     lastTranscoderPingTime = thisReportTime;
-    var url = pmsBaseUrl + '/video/:/transcode/universal/ping?session=' + ratingKey;
+    var url = pmsBaseUrl + '/music/:/transcode/universal/ping?session=' + ratingKey;
     if (pmsToken!='')
       url = url + '&X-Plex-Token=' + pmsToken;
     loadPage(url);
   }
-
-  /*
-  if (subtitle)
-    updateSubtitle(thisReportTime);
-  */
 },
   
 onStateDidChange: function(stateObj) {
@@ -120,7 +123,7 @@ onStateDidChange: function(stateObj) {
     {
       pingTimer = setInterval(
         function() {
-                    var url = pmsBaseUrl + '/video/:/transcode/universal/ping?session=' + ratingKey;
+                    var url = pmsBaseUrl + '/music/:/transcode/universal/ping?session=' + ratingKey;
                     if (pmsToken!='')
                       url = url + '&X-Plex-Token=' + pmsToken;
                     loadPage(url);
@@ -141,18 +144,15 @@ onStateDidChange: function(stateObj) {
     pmsState = 'stopped'
     if (isTranscoding)
     {
-      var url = pmsBaseUrl + '/video/:/transcode/universal/stop?session=' + ratingKey;
+      var url = pmsBaseUrl + '/music/:/transcode/universal/stop?session=' + ratingKey;
       if (pmsToken!='')
         url = url + '&X-Plex-Token=' + pmsToken;
       loadPage(url);
     }
+    player = null  // free player to get cleaned up
   }
   
   if (pmsState != null) {
-/*
-    // correct thisReportTime with startTime if stacked media part
-    thisReportTime += startTime;
-*/
     var url = pmsBaseUrl + '/:/timeline?ratingKey=' + ratingKey +
               '&key=' + key +
               '&state=' + pmsState +
