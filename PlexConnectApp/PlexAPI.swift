@@ -320,7 +320,7 @@ func getVideoPath(video: XMLIndexer, partIx: Int, pmsId: String, pmsPath: String
         // external address - do nothing
     } else {
         // internal path, add-on
-        res = PlexMediaServerInformation[pmsId]!.getAttribute("uri") + pmsPath! + res
+        res = PlexMediaServerInformation[pmsId]!.getAttribute("uri") + pmsPath! + "/" + res
     }
     
     return res
@@ -445,7 +445,7 @@ func getAudioPath(audio: XMLIndexer, partIx: Int, pmsId: String, pmsPath: String
         // external address - do nothing
     } else {
         // internal path, add-on
-        res = PlexMediaServerInformation[pmsId]!.getAttribute("uri") + pmsPath! + res
+        res = PlexMediaServerInformation[pmsId]!.getAttribute("uri") + pmsPath! + "/" + res
     }
 
     return res
@@ -466,6 +466,89 @@ func getTranscodeAudioArgs(path: String, ratingKey: String, quality: [String: St
 }
 
 
+
+func getPhotoPath(key: String, width: String, height: String, pmsId: String, pmsPath: String?) -> String {
+    var res: String
+    
+    // sanity check
+    // todo: ?
+    
+    // todo: transcoder action setting
+    //let transcoderAction = settings.getSetting("transcoderAction")
+
+    // type, format  // todo: thumbs don't have a type... they only come like "/library/metadata/24468/thumb/1445568358" - they will be always transcoded.
+
+    let photoType = NSString(string: key).pathExtension
+    let photoATVNative = ["jpg","jpeg","tif","tiff","gif","png"].contains(photoType)
+    print("photoATVNative: " + String(photoATVNative))
+
+    let accessToken = PlexMediaServerInformation[pmsId]!.getAttribute("accessToken")
+    if photoATVNative && width=="" && height=="" {
+        // direct play
+        var xargs = getDeviceInfoXArgs()
+        if accessToken != "" {
+            xargs += [ NSURLQueryItem(name: "X-Plex-Token", value: accessToken) ]
+        }
+        
+        let urlComponents = NSURLComponents(string: key)
+        urlComponents!.queryItems = xargs
+        
+        res = urlComponents!.string!
+    } else {
+        // request transcoding
+        var _width = width
+        var _height = height
+        if _height=="" {
+            _height = width
+        }
+        if _width=="" {
+            _width = "1920"
+            _height = "1080"
+        }
+
+        var photoPath: String
+        if key.hasPrefix("/") {
+            // internal full path
+            photoPath = "http://127.0.0.1:32400" + key
+        } else if key.hasPrefix("http://") || key.hasPrefix("https://") {
+            // external address - do nothing - can we get a transcoding request for external images?
+            photoPath = key
+        } else {
+            // internal path, add-on
+            photoPath = "http://127.0.0.1:32400" + pmsPath! + "/" + key
+        }
+ 
+        let args: [NSURLQueryItem] = [
+            NSURLQueryItem(name: "url", value: photoPath),  // .stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())),
+            NSURLQueryItem(name: "width", value: _width),
+            NSURLQueryItem(name: "height", value: _height),
+        ]
+        
+        var xargs: [NSURLQueryItem] = []
+        if accessToken != "" {
+            xargs += [ NSURLQueryItem(name: "X-Plex-Token", value: accessToken) ]
+        }
+        
+        let urlComponents = NSURLComponents(string: "/photo/:/transcode")
+        urlComponents!.queryItems = args + xargs
+        
+        res = urlComponents!.string!
+    }
+
+    if res.hasPrefix("/") {
+        // internal full path
+        res = PlexMediaServerInformation[pmsId]!.getAttribute("uri") + res
+    } else if res.hasPrefix("http://") || res.hasPrefix("https://") {
+        // external address - do nothing
+    } else {
+        // internal path, add-on
+        res = PlexMediaServerInformation[pmsId]!.getAttribute("uri") + pmsPath! + res
+    }
+
+    return res
+}
+
+    
 
 func getDeviceInfoXArgs() -> [NSURLQueryItem] {
     let device = UIDevice()

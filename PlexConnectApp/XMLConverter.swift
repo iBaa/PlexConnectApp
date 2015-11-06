@@ -528,16 +528,28 @@ class cXmlConverter {
             
             return res
         }
-        return "[[AUDIOURL - node <video> not found]]"
+        return "[[AUDIOURL - node <audio> not found]]"
     }
 
     var processIMAGEURL: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
         _self, XML, _par in
     
         var par = _par.componentsSeparatedByString(":")
+        
+        // sanity check
+        if _self.pmsId == nil {
+            return "[[IMAGEURL - pmsId not initialised]]"
+        }
+
         let key = _self.getKey(XML, par: &par)
-        // todo: transcoding, real implemenattion of getPMSAdr()
-        let res = getPMSAdr(_self.pmsId!, PMSPath: key)  // todo: relative path in key?
+        let width = _self.getParam(XML, par: &par)
+        let height = _self.getParam(XML, par: &par)
+        var res = getPhotoPath(key, width: width, height: height, pmsId: _self.pmsId!, pmsPath: _self.pmsPath)
+        // XML safe?
+        res = res.stringByReplacingOccurrencesOfString("&", withString: "&amp;")  // must be first
+        res = res.stringByReplacingOccurrencesOfString("<", withString: "&lt;")
+        res = res.stringByReplacingOccurrencesOfString(">", withString: "&gt;")
+            
         return res
     }
 
