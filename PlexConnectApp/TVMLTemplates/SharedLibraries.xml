@@ -16,7 +16,7 @@ See LICENSE.txt for this sample’s licensing information
       </relatedContent>
       -->
       <header>
-        <title>Shared Libraries</title>
+        <title>{{TEXT(Shared Libraries)}}</title>
       </header>
 
 {{PMSLOOP(shared)}}{{
@@ -33,7 +33,7 @@ See LICENSE.txt for this sample’s licensing information
             onPlayURL="{{URL(Movie_MenuBar:{{VAL(key)}})}}" onPlayPresenter="select"
             onSelectHoldURL="" onSelectHoldPresenter="modal"
             >
-          <title>{{VAL(title)}}</title>
+          <title><![CDATA[{{VAL(title)}}]]></title>
         </listItemLockup>
 }}
 {{IF({{CHK("{{VAL(type:)}}"=="show")}})}}{{
@@ -42,7 +42,7 @@ See LICENSE.txt for this sample’s licensing information
             onPlayURL="{{URL(TVShow_MenuBar:{{VAL(key)}})}}" onPlayPresenter="select"
             onSelectHoldURL="" onSelectHoldPresenter="modal"
             >
-          <title>{{VAL(title)}}</title>
+          <title><![CDATA[{{VAL(title)}}]]></title>
         </listItemLockup>
 }}
 {{IF({{CHK("{{VAL(type:)}}"=="artist")}})}}{{
@@ -51,7 +51,7 @@ See LICENSE.txt for this sample’s licensing information
             onPlayURL="{{URL(Music_MenuBar:{{VAL(key)}})}}" onPlayPresenter="select"
             onSelectHoldURL="" onSelectHoldPresenter="modal"
             >
-          <title>{{VAL(title)}}</title>
+          <title><![CDATA[{{VAL(title)}}]]></title>
         </listItemLockup>
 }}
 {{IF({{CHK("{{VAL(type:)}}"=="photo")}})}}{{
@@ -60,7 +60,7 @@ See LICENSE.txt for this sample’s licensing information
             onPlayURL="{{URL(Photo_MenuBar:{{VAL(key)}})}}" onPlayPresenter="select"
             onSelectHoldURL="" onSelectHoldPresenter="modal"
             >
-          <title>{{VAL(title)}}</title>
+          <title><![CDATA[{{VAL(title)}}]]></title>
         </listItemLockup>
 }}
 }}

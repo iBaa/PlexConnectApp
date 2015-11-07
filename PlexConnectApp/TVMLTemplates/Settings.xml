@@ -8,7 +8,7 @@ See LICENSE.txt for this sample’s licensing information
     <list>
       
       <header>
-        <title>Settings</title>
+        <title>{{TEXT(Settings)}}</title>
       </header>
       
       <section>
@@ -19,7 +19,7 @@ See LICENSE.txt for this sample’s licensing information
         <listItemLockup
           presenter="discover(event)"
           >
-          <title>Discover</title>
+          <title>{{TEXT(Discover)}}</title>
         </listItemLockup>
         
 {{IF(!{{USRVAL(name)}})}} {{
@@ -27,7 +27,7 @@ See LICENSE.txt for this sample’s licensing information
           id="MyPlexSignInOut"
           presenter="myPlexSignInOut(event)"
           >
-          <title>Sign In</title>
+          <title>{{TEXT(Sign In)}}</title>
           <decorationLabel />
           <decorationImage src="resource://chevron" />
         </listItemLockup>
@@ -37,7 +37,7 @@ See LICENSE.txt for this sample’s licensing information
           id="MyPlexSignInOut"
           presenter="myPlexSignInOut(event)"
           >
-          <title>Sign Out</title>
+          <title>{{TEXT(Sign Out)}}</title>
           <decorationLabel>{{USRVAL(name)}}</decorationLabel>
         </listItemLockup>
 }}

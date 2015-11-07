@@ -9,7 +9,7 @@ See LICENSE.txt for this sample’s licensing information
 <document>
   <listTemplate>
     <banner>
-      <title>{{VAL(MediaContainer/title1)}}</title>
+      <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
     </banner>
     <list>
       
@@ -25,7 +25,7 @@ See LICENSE.txt for this sample’s licensing information
           <relatedContent>
             <lockup>
               <img src="{{IMAGEURL(thumb::768)}}" />
-              <title>{{VAL(title)}}</title>
+              <title><![CDATA[{{VAL(title)}}]]></title>
               <description>{{VAL(summary)}}</description>
             </lockup>
           </relatedContent>

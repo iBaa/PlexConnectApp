@@ -12,7 +12,7 @@ See LICENSE.txt for this sample’s licensing information
       <infoList>
         <info>
           <header>
-            <title>Directors</title>
+            <title>{{TEXT(Directors)}}</title>
           </header>
 {{COPY(MediaContainer/Video/Director)}}{{  <!-- COPY till 5 or so? -->
           <text>{{VAL(tag)}}</text>
@@ -20,7 +20,7 @@ See LICENSE.txt for this sample’s licensing information
         </info>
         <info>
           <header>
-            <title>Writers</title>
+            <title>{{TEXT(Writers)}}</title>
           </header>
 {{COPY(MediaContainer/Video/Writer)}}{{  <!-- COPY till 5 or so? -->
           <text>{{VAL(tag)}}</text>
@@ -28,7 +28,7 @@ See LICENSE.txt for this sample’s licensing information
         </info>
       </infoList>
       <stack>
-        <title>{{VAL(MediaContainer/Video/index)}}. {{VAL(MediaContainer/Video/title)}}</title>
+        <title><![CDATA[{{VAL(MediaContainer/Video/index)}}. {{VAL(MediaContainer/Video/title)}}]]></title>
         <subtitle>{{VAL(MediaContainer/Video/studio)}}</subtitle>
         <row>
           <!--text>rating(Video/contentRating)</text-->
@@ -45,7 +45,7 @@ See LICENSE.txt for this sample’s licensing information
               onSelectURL="{{URL(PlayVideo:)}}" onSelectPresenter="video"
               >
             <badge src="resource://button-play" />
-            <title>Play</title>
+            <title>{{TEXT(Play)}}</title>
           </buttonLockup>
         </row>
       </stack>
@@ -57,7 +57,7 @@ See LICENSE.txt for this sample’s licensing information
 
     <shelf>
       <header>
-        <title>Episodes</title>
+        <title>{{TEXT(Episodes)}}</title>
       </header>
       <section>
         {{COPY(MediaContainer/Video)}}

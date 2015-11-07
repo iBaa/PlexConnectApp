@@ -13,7 +13,7 @@ See LICENSE.txt for this sample’s licensing information
 {{CUT({{GET(noAlbums)}})}}{{
 {{SET(noAlbums:true)}}
     <banner>
-      <title>{{VAL(MediaContainer/title2)}}</title>
+      <title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
     </banner>
     <list>
 
@@ -43,7 +43,7 @@ See LICENSE.txt for this sample’s licensing information
 <!-- generic directoy -->
 {{IF({{GET(noItems)}})}}{{
     <banner>
-      <title>{{VAL(MediaContainer/title1)}}</title>
+      <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
     </banner>
     <list>
 

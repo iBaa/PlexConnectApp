@@ -13,7 +13,7 @@ See LICENSE.txt for this sample’s licensing information
   <stackTemplate>
 {{XML(onDeck?X-Plex-Container-Start=0&amp;X-Plex-Container-Size=30)}}{{ <!--X-Plex-Container-Start=0&amp;X-Plex-Container-Size=40-->
     <banner>
-      <title>{{VAL(MediaContainer/title1)}}</title>
+      <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
     </banner>
     <collectionList>
 {{IFNODE(MediaContainer/Video)}}{{

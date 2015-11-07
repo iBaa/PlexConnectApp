@@ -12,20 +12,20 @@ See LICENSE.txt for this sample’s licensing information
       <infoList>
         <info>
           <header>
-            <title>Director</title>
+            <title>{{TEXT(Director)}}</title>
           </header>
           <text>{{VAL(MediaContainer/Video/Director/tag)}}</text>
         </info>
         <info>
           <header>
-            <title>Producer</title>
+            <title>{{TEXT(Producer)}}</title>
           </header>
           <text>{{VAL(MediaContainer/Video/Producer/tag)}}</text>
         </info>
         
         <info>
           <header>
-            <title>Actors</title>
+            <title>{{TEXT(Actors)}}</title>
           </header>
 {{COPY(MediaContainer/Video/Role)}}{{  <!-- COPY till 5 or so? -->
           <text>{{VAL(tag)}}</text>
@@ -33,7 +33,7 @@ See LICENSE.txt for this sample’s licensing information
         </info>
       </infoList>
       <stack>
-        <title>{{VAL(MediaContainer/Video/title)}}</title>
+        <title><![CDATA[{{VAL(MediaContainer/Video/title)}}]]></title>
         <row>
           <!--text>rating(Video/contentRating)</text-->
           <text>{{DURATION({{VAL(MediaContainer/Video/duration)}})}}</text>
@@ -49,7 +49,7 @@ See LICENSE.txt for this sample’s licensing information
               onSelectURL="{{URL(PlayVideo:)}}" onSelectPresenter="video"
               >
             <badge src="resource://button-play" />
-            <title>Play</title>
+            <title>{{TEXT(Play)}}</title>
           </buttonLockup>
           <!--buttonLockup type="buy">
            <text>$9.99</text>
@@ -63,14 +63,14 @@ See LICENSE.txt for this sample’s licensing information
 {{IFNODE(MediaContainer/Video/Extras/Video:)}}{{
     <shelf>
       <header>
-        <title>Extras</title>
+        <title>{{TEXT(Extras)}}</title>
       </header>
       <section>
         {{COPY(MediaContainer/Video/Extras/Video)}}
         {{
         <lockup>
           <img src="{{IMAGEURL(thumb::384)}}" width="150" height="226" />
-          <title>{{VAL(title)}}</title>
+          <title><![CDATA[{{VAL(title)}}]]></title>
           <subtitle>{{VAL(extraType::1=Trailer|2=Deleted|3=Interview|4=???|5=Behind the Scenes|6=Scene)}}</subtitle>
         </lockup>
         }}
@@ -83,7 +83,7 @@ See LICENSE.txt for this sample’s licensing information
 {{IFNODE(MediaContainer/Video:)}}{{
     <shelf>
       <header>
-        <title>Related Movies</title>
+        <title>{{TEXT(Related Movies)}}</title>
       </header>
       <section>
         {{COPY(MediaContainer/Video)}}

@@ -9,7 +9,7 @@ See LICENSE.txt for this sample’s licensing information
 <document>
   <listTemplate>
     <banner>
-      <title>{{VAL(MediaContainer/grandparentTitle:{{VAL(MediaContainer/parentTitle)}})}}</title>
+      <title><![CDATA[{{VAL(MediaContainer/grandparentTitle:{{VAL(MediaContainer/parentTitle)}})}}]]></title>
     </banner>
 {{SET(parentIndex:{{VAL(MediaContainer/parentIndex:0)}})}}  <!--grab parentIndex, might be not available lateron-->
     <list>
