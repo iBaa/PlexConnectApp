@@ -51,6 +51,7 @@ class cXmlConverter {
             "URL": processURL!,
             "VIDEOURL": processVIDEOURL!,
             "AUDIOURL": processAUDIOURL!,
+            "PHOTOURL": processPHOTOURL!,
             "IMAGEURL": processIMAGEURL!,
             "TEXT": processTEXT!,
             "SETTING": processSETTING!,
@@ -506,7 +507,7 @@ class cXmlConverter {
             
             return res
         }
-        return "[[VIDEOURL - node <video> not found]]"
+        return "[[VIDEOURL - node 'video' not found]]"
     }
 
     var processAUDIOURL: ((_self: cXmlConverter, XML: XMLIndexer?, par: String) -> String)? = {
@@ -528,31 +529,49 @@ class cXmlConverter {
             
             return res
         }
-        return "[[AUDIOURL - node <audio> not found]]"
+        return "[[AUDIOURL - node 'audio' not found]]"
     }
 
-    var processIMAGEURL: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
+    var processPHOTOURL: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
         _self, XML, _par in
     
         var par = _par.componentsSeparatedByString(":")
         
         // sanity check
         if _self.pmsId == nil {
-            return "[[IMAGEURL - pmsId not initialised]]"
+            return "[[PHOTOURL - pmsId not initialised]]"
         }
 
-        let key = _self.getKey(XML, par: &par)
-        let width = _self.getParam(XML, par: &par)
-        let height = _self.getParam(XML, par: &par)
-        var res = getPhotoPath(key, width: width, height: height, pmsId: _self.pmsId!, pmsPath: _self.pmsPath)
-        // XML safe?
-        res = res.stringByReplacingOccurrencesOfString("&", withString: "&amp;")  // must be first
-        res = res.stringByReplacingOccurrencesOfString("<", withString: "&lt;")
-        res = res.stringByReplacingOccurrencesOfString(">", withString: "&gt;")
+        if let photo = _self.getNode(XML, par: &par) {
+            let width = _self.getParam(XML, par: &par)
+            let height = _self.getParam(XML, par: &par)
+            var res = getPhotoPath(photo, width: width, height: height, pmsId: _self.pmsId!, pmsPath: _self.pmsPath)
+            // XML safe?
+            res = res.stringByReplacingOccurrencesOfString("&", withString: "&amp;")  // must be first
+            res = res.stringByReplacingOccurrencesOfString("<", withString: "&lt;")
+            res = res.stringByReplacingOccurrencesOfString(">", withString: "&gt;")
             
-        return res
+            return res
+        }
+        return "[[PHOTOURL - node 'photo' not found]]"
     }
 
+    var processIMAGEURL: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
+        _self, XML, _par in
+        
+        var par = _par.componentsSeparatedByString(":")
+        
+        // sanity check
+        if _self.pmsId == nil {
+            return "[[IMAGEURL - pmsId not initialised]]"
+        }
+        
+        let key = _self.getKey(XML, par: &par)
+        let res = getPMSAdr(_self.pmsId!, PMSPath: key)  // todo: relative path in key?
+        
+        return res
+    }
+    
     var processEVAL: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
         _self, XML, _par in
     

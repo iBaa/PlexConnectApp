@@ -19,6 +19,7 @@ App.onLaunch = function(options) {
     `${options.BASEURL}/js/Presenter.js`,
     `${options.BASEURL}/js/VideoPlayer.js`,
     `${options.BASEURL}/js/AudioPlayer.js`,
+    `${options.BASEURL}/js/PhotoPresenter.js`,
     `${options.BASEURL}/js/Settings.js`,
     `${options.BASEURL}/js/MyPlex.js`,
     `${options.BASEURL}/js/Search.js`

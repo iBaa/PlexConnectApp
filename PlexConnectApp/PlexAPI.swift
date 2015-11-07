@@ -467,24 +467,28 @@ func getTranscodeAudioArgs(path: String, ratingKey: String, quality: [String: St
 
 
 
-func getPhotoPath(key: String, width: String, height: String, pmsId: String, pmsPath: String?) -> String {
+func getPhotoPath(photo: XMLIndexer, width: String, height: String, pmsId: String, pmsPath: String?) -> String {
     var res: String
     
     // sanity check
     // todo: ?
-    
+
+    // XML pointing to Video node
+    let media = photo["Media"][0]  // todo: cover XMLError, errorchecking on optionals
+    let part = media["Part"][0]
+
     // todo: transcoder action setting
     //let transcoderAction = settings.getSetting("transcoderAction")
 
-    // type, format  // todo: thumbs don't have a type... they only come like "/library/metadata/24468/thumb/1445568358" - they will be always transcoded.
-
-    let photoType = NSString(string: key).pathExtension
-    let photoATVNative = ["jpg","jpeg","tif","tiff","gif","png"].contains(photoType)
+    // photo format
+    let photoATVNative = ["jpg","jpeg","tif","tiff","gif","png"].contains(getAttribute(media, key: "container", dflt: ""))
     print("photoATVNative: " + String(photoATVNative))
 
     let accessToken = PlexMediaServerInformation[pmsId]!.getAttribute("accessToken")
     if photoATVNative && width=="" && height=="" {
         // direct play
+        let key = getAttribute(part, key: "key", dflt: "")
+        
         var xargs = getDeviceInfoXArgs()
         if accessToken != "" {
             xargs += [ NSURLQueryItem(name: "X-Plex-Token", value: accessToken) ]
@@ -496,6 +500,8 @@ func getPhotoPath(key: String, width: String, height: String, pmsId: String, pms
         res = urlComponents!.string!
     } else {
         // request transcoding
+        let key = getAttribute(part, key: "key", dflt: "")  // compare video/audio. Photo transcoder takes one file, not XML Photo structure
+        
         var _width = width
         var _height = height
         if _height=="" {
@@ -517,9 +523,9 @@ func getPhotoPath(key: String, width: String, height: String, pmsId: String, pms
             // internal path, add-on
             photoPath = "http://127.0.0.1:32400" + pmsPath! + "/" + key
         }
- 
+
         let args: [NSURLQueryItem] = [
-            NSURLQueryItem(name: "url", value: photoPath),  // .stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())),
+            NSURLQueryItem(name: "url", value: photoPath),
             NSURLQueryItem(name: "width", value: _width),
             NSURLQueryItem(name: "height", value: _height),
         ]

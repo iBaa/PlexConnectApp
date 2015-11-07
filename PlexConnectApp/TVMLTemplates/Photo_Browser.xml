@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+  <head>
+    <style>
+      .showTextOnHighlight {
+        tv-text-highlight-style: show-on-highlight;
+      }
+    </style>
+  </head>
+  <stackTemplate>
+    <banner>
+      <title>{{VAL(MediaContainer/title1)}}</title>
+    </banner>
+    <collectionList>
+
+      <!-- directories: shelf -->
+{{CUT({{GET(noDirs)}})}}{{
+{{SET(noDirs:true)}}
+      <shelf>
+        <header>
+          <title>{{TEXT(Directories)}}</title>
+        </header>
+        <section>
+{{COPY(MediaContainer/Directory)}}{{
+{{SET(noItems:false)}}
+{{SET(noDirs:false)}}
+          <lockup
+            onSelectURL="{{URL(Photo_Browser:{{VAL(key)}})}}" onSelectPresenter="select"
+            onPlayURL="{{URL(Photo_Browser:{{VAL(key)}})}}" onPlayPresenter="select"
+            onSelectHoldURL="{{URL(:{{VAL(key)}})}}" onSelectHoldPresenter="modal"
+            >
+          <img src="{{IMAGEURL(thumb::384)}}" width="150" height="150" />
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <relatedContent>
+            <lockup>
+            <!--folder image -->
+            </lockup>
+          </relatedContent>
+        </lockup>
+}}
+      </section>
+      </shelf>
+}}
+
+      <!-- photos: grid -->
+{{CUT({{GET(noPhotos)}})}}{{
+{{SET(noPhotos:true)}}
+      <grid>
+        <header>
+          <title>{{TEXT(Photos)}}</title>
+        </header>
+        <section>
+{{COPY(MediaContainer/Photo)}}{{
+{{SET(noItems:false)}}
+{{SET(noPhotos:false)}}
+        <lockup
+            onSelectURL="{{URL(Photos:{{VAL(key)}})}}" onSelectPresenter="photo"
+            onPlayURL="{{URL(Photos:{{VAL(key)}})}}" onPlayPresenter="photo"
+            onSelectHoldURL="{{URL(:{{VAL(key)}})}}" onSelectHoldPresenter="modal"
+            >
+          <img src="{{PHOTOURL(:384)}}" width="150" height="150" />
+          <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
+        </lockup>
+}}
+      </section>
+      </grid>
+}}
+      
+    </collectionList>
+  </stackTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>TITLE</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

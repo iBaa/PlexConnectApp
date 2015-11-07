@@ -6,13 +6,6 @@ See LICENSE.txt for this sample’s licensing information
 {{CUT({{GET(noItems)}})}}{{
 {{SET(noItems:true)}}
 <document>
-  <head>
-    <style>
-    .dimmedText {
-    color: #A0A0A0;
-    }
-    </style>
-  </head>
   <listTemplate>
     <list>
       <!--
@@ -52,17 +45,26 @@ See LICENSE.txt for this sample’s licensing information
           <title>{{VAL(title)}}</title>
         </listItemLockup>
 }}
-{{IF({{CHK("{{VAL(type:)}}"!="movie" && "{{VAL(type:)}}"!="show")}})}}{{
+{{IF({{CHK("{{VAL(type:)}}"=="artist")}})}}{{
         <listItemLockup
-            onSelectURL="{{URL(xyz_MenuBar:{{VAL(key)}})}}" onSelectPresenter="select"
-            onPlayURL="{{URL(xyz_MenuBar:{{VAL(key)}})}}" onPlayPresenter="select"
+            onSelectURL="{{URL(Music_MenuBar:{{VAL(key)}})}}" onSelectPresenter="select"
+            onPlayURL="{{URL(Music_MenuBar:{{VAL(key)}})}}" onPlayPresenter="select"
             onSelectHoldURL="" onSelectHoldPresenter="modal"
-            disabled="true"
+            >
+          <title>{{VAL(title)}}</title>
+        </listItemLockup>
+}}
+{{IF({{CHK("{{VAL(type:)}}"=="photo")}})}}{{
+        <listItemLockup
+            onSelectURL="{{URL(Photo_MenuBar:{{VAL(key)}})}}" onSelectPresenter="select"
+            onPlayURL="{{URL(Photo_MenuBar:{{VAL(key)}})}}" onPlayPresenter="select"
+            onSelectHoldURL="" onSelectHoldPresenter="modal"
             >
           <title>{{VAL(title)}}</title>
         </listItemLockup>
 }}
 }}
+
         <!-- search -->
         <listItemLockup
             onSelectURL="{{URL(Search:)}}" onSelectPresenter="select"

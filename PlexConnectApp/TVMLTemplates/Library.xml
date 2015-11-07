@@ -54,17 +54,17 @@ See LICENSE.txt for this sample’s licensing information
           <title>{{VAL(title)}}</title>
         </listItemLockup>
 }}
-{{IF({{CHK("{{VAL(type:)}}"!="movie" && "{{VAL(type:)}}"!="show" && "{{VAL(type:)}}"!="artist")}})}}{{
+{{IF({{CHK("{{VAL(type:)}}"=="photo")}})}}{{
         <listItemLockup
-            onSelectURL="{{URL(xyz_MenuBar:{{VAL(key)}})}}" onSelectPresenter="select"
-            onPlayURL="{{URL(xyz_MenuBar:{{VAL(key)}})}}" onPlayPresenter="select"
+            onSelectURL="{{URL(Photo_MenuBar:{{VAL(key)}})}}" onSelectPresenter="select"
+            onPlayURL="{{URL(Photo_MenuBar:{{VAL(key)}})}}" onPlayPresenter="select"
             onSelectHoldURL="" onSelectHoldPresenter="modal"
-            disabled="true"
             >
           <title>{{VAL(title)}}</title>
         </listItemLockup>
 }}
 }}
+
         <!-- search -->
         <listItemLockup
             onSelectURL="{{URL(Search:)}}" onSelectPresenter="select"
