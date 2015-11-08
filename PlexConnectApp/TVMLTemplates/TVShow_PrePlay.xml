@@ -38,7 +38,7 @@ See LICENSE.txt for this sample’s licensing information
           <!--badge src="resource://mpaa-pg" class="badge" /-->
           <!--badge src="resource://cc" class="badge" /-->
         </row>
-        <description allowsZooming="true" moreLabel="more">{{VAL(MediaContainer/Video/summary)}}</description><!-- todo: more -->
+        <description allowsZooming="true" moreLabel="more"><![CDATA[{{VAL(MediaContainer/Video/summary)}}]]></description><!-- todo: more -->
         <!--text>Language information can go here</text-->
         <row>
           <buttonLockup
@@ -62,7 +62,10 @@ See LICENSE.txt for this sample’s licensing information
       <section>
         {{COPY(MediaContainer/Video)}}
         {{
-        <lockup>
+        <lockup
+            onSelectURL="{{URL(TVShow_PrePlay:{{VAL(key)}})}}" onSelectPresenter="select"
+            onPlayURL="{{URL(PlayVideo:{{VAL(key)}})}}" onPlayPresenter="video"
+            >
           <img src="{{IMAGEURL(thumb::384)}}" width="150" height="226" />
           <title><![CDATA[{{VAL(index)}}. {{VAL(title)}}]]></title>
           <subtitle>{{VAL(extraType::1=Trailer|2=Deleted|3=Interview|4=???|5=Behind the Scenes|6=Scene)}}</subtitle>

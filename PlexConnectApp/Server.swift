@@ -88,10 +88,11 @@ func processXMLRequest(req: SwiftHTTP.Request, resp: SwiftHTTP.Response) {
     var queryStrings = [String: String]()
     if let query = req.URL.query {
         for qs in query.componentsSeparatedByString("&") {
+            let range = qs.rangeOfString("=")
             // Get the parameter name
-            let key = qs.componentsSeparatedByString("=")[0]
+            let key = qs.substringToIndex(range!.startIndex)
             // Get the parameter value
-            var value = qs.componentsSeparatedByString("=")[1]
+            var value = qs.substringFromIndex(range!.endIndex)
             value = value.stringByReplacingOccurrencesOfString("+", withString: " ")
             value = value.stringByRemovingPercentEncoding!
             

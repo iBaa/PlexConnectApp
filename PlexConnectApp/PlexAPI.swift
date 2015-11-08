@@ -368,6 +368,8 @@ func getTranscodeVideoArgs(path: String, ratingKey: String, partIx: Int, transco
         NSURLQueryItem(name: "audioBoost", value: audio["boost"]!),
         NSURLQueryItem(name: "fastSeek", value: "1"),
         
+        NSURLQueryItem(name: "skipSubtitles", value: "1"),  // no PMS subtitles for now
+        
         /* todo: subtitle support
         args["subtitleSize"] = subtitle["size"]
         args["skipSubtitles"] = subtitle["dontBurnIn"]  // '1'  // shut off PMS subtitles. Todo: skip only for aTV native/SRT (or other supported)
