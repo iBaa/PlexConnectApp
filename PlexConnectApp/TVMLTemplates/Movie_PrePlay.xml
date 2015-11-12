@@ -95,7 +95,7 @@ See LICENSE.txt for this sample’s licensing information
             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             >
           <img src="{{IMAGEURL(thumb::384)}}" width="150" height="226" />
-          <title>{{VAL(title)}}</title>
+          <title><![CDATA[{{VAL(title)}}]]></title>
         </lockup>
         }}
       </section>
