@@ -24,8 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TVApplicationControllerDe
         // Override point for customization after application launch.
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
-        // run Server
-        runServer()
         // discover
         discoverServers()
         
@@ -44,7 +42,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TVApplicationControllerDe
             This will allow for the resource to be retrieved and UI presented to
             the user quickly.
         */
-        if let javaScriptURL = NSURL(string: TVBaseURL! + "/js/App.js") {
+        
+        let TVBaseURL = NSBundle.mainBundle().bundleURL.absoluteString
+        if let javaScriptURL = NSURL(string: TVBaseURL + "/js/App.js") {
             appControllerContext.javaScriptApplicationURL = javaScriptURL
         }
         
@@ -84,8 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TVApplicationControllerDe
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        print("shutting down")
-        shutdownServer()
+        print("WillTerminate")
     }
 
     // ** TVApplicationControllerDelegate
@@ -108,5 +107,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TVApplicationControllerDe
     func appController(appController: TVApplicationController, didStopWithOptions options: [String: AnyObject]?) {
         print("\(__FUNCTION__) invoked with options: \(options)")
     }
+    
+    func appController(appController: TVApplicationController, evaluateAppJavaScriptInContext jsContext: JSContext) {
+        let jsInterface: cJsInterface = cJsInterface();
+        jsContext.setObject(jsInterface, forKeyedSubscript: "swiftInterface")
+    }
 }
-

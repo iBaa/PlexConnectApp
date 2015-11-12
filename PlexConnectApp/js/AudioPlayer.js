@@ -21,11 +21,13 @@ var player = null
 
 var audioPlayer = {
 
-play: function(url) {
-  loadDocument(url, audioPlayer.gotPlayVideoXML);
-},
+play: function(pmsId, pmsPath) {
+  // get track list
+  var docString = swiftInterface.getViewIdPath('PlayAudio', pmsId, pmsPath);  // error handling?
+  
+  var parser = new DOMParser();
+  var doc = parser.parseFromString(docString, "application/xml");
 
-gotPlayVideoXML: function(doc) {
   // setup variables for transcoder ping
   key = doc.getTextContent('key');
   ratingKey = doc.getTextContent('ratingKey');
@@ -39,7 +41,6 @@ gotPlayVideoXML: function(doc) {
   
   // create audio player
   // todo: playlist with mulitple items
-  audioPlayer.TEST="HELLO"
   player = new Player();
   var playlist = new Playlist();
   var mediaItem = new MediaItem("audio", doc.getTextContent('mediaUrl'));

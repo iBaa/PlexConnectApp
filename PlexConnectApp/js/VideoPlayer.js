@@ -21,11 +21,13 @@ var pingTimer = null;
  */
 var videoPlayer = {
   
-play: function(url) {
-  loadDocument(url, videoPlayer.gotPlayVideoXML);
-},
+play: function(pmsId, pmsPath) {
+  // get video list
+  var docString = swiftInterface.getViewIdPath('PlayVideo', pmsId, pmsPath);  // error handling?
+  
+  var parser = new DOMParser();
+  var doc = parser.parseFromString(docString, "application/xml");
 
-gotPlayVideoXML: function(doc) {
   // setup variables for transcoder ping
   key = doc.getTextContent('key');
   ratingKey = doc.getTextContent('ratingKey');

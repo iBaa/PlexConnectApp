@@ -17,9 +17,8 @@ See LICENSE.txt for this sample’s licensing information
         <!-- shuffle -->
         <!--
         <listItemLockup
-            onSelectURL="{{URL(PlayAudio:{{VAL(key)}})}}" onSelectPresenter="audio"
-            onPlayURL="{{URL(PlayAudio:{{VAL(key)}})}}" onPlayPresenter="audio"
-            resume_onSelectURL="{{URL(PlayResume:{{VAL(key)}})}}" resume_onSelectPresenter="modal"
+            onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
             >
           <title>{{TEXT(Shuffle)}}</title>
           <decorationImage src="resource://shuffle" />
@@ -27,9 +26,8 @@ See LICENSE.txt for this sample’s licensing information
         -->
         <!-- now playing -->
         <listItemLockup
-          onSelectURL="" onSelectPresenter="audioPlayer.nowPlaying()"
-          onPlayURL="" onPlayPresenter="audioPlayer.nowPlaying()"
-          resume_onSelectURL="{{URL(PlayResume:{{VAL(key)}})}}" resume_onSelectPresenter="modal"
+          onSelect="audioPlayer.nowPlaying()"
+          onSelectHold="modal"
           >
           <title>{{TEXT(Now Playing)}}</title>
           <decorationImage src="resource://chevron" />
@@ -43,9 +41,8 @@ See LICENSE.txt for this sample’s licensing information
 {{COPY(MediaContainer/Track)}}{{
 {{SET(noItems:false)}}
         <listItemLockup
-            onSelectURL="{{URL(PlayAudio:{{VAL(key)}})}}" onSelectPresenter="audio"
-            onPlayURL="{{URL(PlayAudio:{{VAL(key)}})}}" onPlayPresenter="audio"
-            resume_onSelectURL="{{URL(PlayResume:{{VAL(key)}})}}" resume_onSelectPresenter="modal"
+            onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
             >
           <title><![CDATA[{{VAL(title)}}]]></title>
           <decorationLabel>{{DURATION_HMS({{VAL(duration)}})}}</decorationLabel>

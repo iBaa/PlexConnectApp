@@ -22,63 +22,68 @@ makeDocument: function(resource) {
 modalDialogPresenter: function(xml) {
   navigationDocument.presentModal(xml);
 },
+
+/*
+  call swift.XMLConverter with...
+    template: view
+    pmsId: id
+    pmsPath: path
+ */
+load: function(view, pmsId, pmsPath) {
+  console.log("load");
   
-pushDocument: function(xml) {
-  xml.addEventListener("select", Presenter.onSelect.bind(Presenter));
-  xml.addEventListener("play", Presenter.onPlay.bind(Presenter));
-  //xml.addEventListener("highlight", Presenter.onHighlight.bind(Presenter));
-  xml.addEventListener("load", Presenter.onLoad.bind(Presenter));  // setup search for char entered
-  navigationDocument.pushDocument(xml);
+  var docString = swiftInterface.getViewIdPath(view, pmsId, pmsPath);
+  var parser = new DOMParser();
+  var doc = parser.parseFromString(docString, "application/xml");
+    
+  doc.addEventListener("select", Presenter.onSelect.bind(Presenter));
+  doc.addEventListener("play", Presenter.onPlay.bind(Presenter));
+  //doc.addEventListener("highlight", Presenter.onHighlight.bind(Presenter));
+  doc.addEventListener("load", Presenter.onLoad.bind(Presenter));  // setup search for char entered
+  
+  navigationDocument.pushDocument(doc);
 },
   
-// event handler: onSelect
-onSelect: function(event) {
-  console.log(event);
-  var elem = event.target;
-  
+loadMenuContent: function(view, pmsId, pmsPath) {
+  console.log("loadMenuContent");
+  var elem = this.event.target;  // todo: check event existing
   var id = elem.getAttribute("id");
-  var presenter = elem.getAttribute("onSelectPresenter");
-  if (!presenter) {
-    presenter = elem.getAttribute("presenter");  // default to plain presenter tag
-  }
   
-  if (presenter=="select") {
-    var url = elem.getAttribute("onSelectURL");
-    if (!url) {
-      url = elem.getAttribute("URL");  // default to plain presenter tag
+  var feature = elem.parentNode.getFeature("MenuBarDocument");
+  if (feature) {
+    var currentDoc = feature.getDocument(elem);
+    if (!currentDoc  // todo: better algorithm to decide on doc reload
+        || (id!="Search" && id!="Settings")) {  // currently: force reload on each but Settings, Search
+
+      var docString = swiftInterface.getViewIdPath(view, pmsId, pmsPath);  // error handling?
+      var parser = new DOMParser();
+      var doc = parser.parseFromString(docString, "application/xml");
+      
+      doc.addEventListener("select", Presenter.onSelect.bind(Presenter));
+      doc.addEventListener("play", Presenter.onPlay.bind(Presenter));
+      doc.addEventListener("load", Presenter.onLoad.bind(Presenter));  // setup search for char entered
+      
+      feature.setDocument(doc, elem);
     }
-    console.log(url);
-    loadXML(url);
-  } else if (presenter=="video") {
-    var videoURL = elem.getAttribute("onSelectURL");
-    videoPlayer.play(videoURL);
-  } else if (presenter=="audio") {
-      var audioURL = elem.getAttribute("onSelectURL");
-      audioPlayer.play(audioURL);
-  } else if (presenter=="photo") {
-      var photoURL = elem.getAttribute("onSelectURL");
-      photoPresenter.show(photoURL);
-  } else if (presenter=="menuBar"){
-    // menuBar
-    var feature = elem.parentNode.getFeature("MenuBarDocument");
-    var menuContent = elem.getAttribute("menuContent");
-    if (feature && menuContent) {
-      var currentDoc = feature.getDocument(elem);
-        if (!currentDoc  // todo: better algorithm to decide on doc reload
-          || (id!="Search" && id!="Settings")) {  // currently: force reload on each but Settings, Search
-                     loadDocument(menuContent,function(doc) {
-                     doc.addEventListener("select", Presenter.onSelect.bind(Presenter));
-                     doc.addEventListener("load", Presenter.onLoad.bind(Presenter));  // setup search for char entered
-                     feature.setDocument(doc, elem);
-                     });
-      }
-    }
-  } else {
-    if (elem) {
-      //var onSelect = elem.getAttribute("onSelect");  // get onSelect=...
-      with (event) {
-        eval(presenter);
-      }
+  }
+},
+
+// store event for downstream use
+event: "",
+
+/*
+ event handlers
+ */
+onSelect: function(event) {
+  console.log("onSelect "+event);
+  this.event = event;
+  var elem = event.target;
+
+  if (elem) {
+    var id = elem.getAttribute("id");
+    var onSelect = elem.getAttribute("onSelect");  // get onSelect=...
+    with (event) {
+      eval(onSelect);
     }
   }
 },

@@ -18,11 +18,14 @@ String.prototype.tagsToHtmlEntities = function() {
 
 var photoPresenter = {
 
-show: function(url) {
-  loadDocument(url, this.gotPhotoXML);
-},
+show: function(pmsId, pmsPath) {
+  // get photo list
+  var docString = swiftInterface.getViewIdPath('Photos', pmsId, pmsPath);  // error handling?
+  
+  var parser = new DOMParser();
+  var doc = parser.parseFromString(docString, "application/xml");
 
-gotPhotoXML: function(doc) {
+  // render picture to screen
   photoUrl = doc.getTextContent('photo');
   doc = createPhoto(photoUrl.tagsToHtmlEntities());
   navigationDocument.pushDocument(doc);

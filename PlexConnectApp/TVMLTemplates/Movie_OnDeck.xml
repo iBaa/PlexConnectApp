@@ -21,9 +21,10 @@ See LICENSE.txt for this sample’s licensing information
 {{COPY(MediaContainer/Video)}}{{
 {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
             <lockup
-                onSelectURL="{{URL(Movie_PrePlay:{{VAL(key)}})}}" onSelectPresenter="select"
-                onPlayURL="{{URL(PlayVideo:{{VAL(key)}})}}" onPlayPresenter="video"
-                onHoldSelect="ScrobbleMenu">
+                onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onSelectHold="ScrobbleMenu"
+                >
               <img src="{{IMAGEURL(thumb::384)}}" width="200" height="300" /> <!-- example: w=150;h=226 -->
               <title><![CDATA[{{VAL(title)}}]]></title>
               <subtitle>{{VAL(year:&#x00AD;)}}</subtitle>
@@ -43,9 +44,10 @@ See LICENSE.txt for this sample’s licensing information
 {{COPY(MediaContainer/Video)}}{{
 {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
             <lockup
-                onSelectURL="{{URL(Movie_PrePlay:{{VAL(key)}})}}" onSelectPresenter="select"
-                onPlayURL="{{URL(PlayVideo:{{VAL(key)}})}}" onPlayPresenter="video"
-                onHoldSelect="ScrobbleMenu">
+                onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onSelectHold="ScrobbleMenu"
+                >
               <img src="{{IMAGEURL(thumb::384)}}" width="150" height="226" />
               <title><![CDATA[{{VAL(title)}}]]></title>
               <subtitle>{{VAL(year:&#x00AD;)}}</subtitle>
@@ -64,9 +66,10 @@ See LICENSE.txt for this sample’s licensing information
 {{COPY(MediaContainer/Video)}}{{
 {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
             <lockup
-                onSelectURL="{{URL(Movie_PrePlay:{{VAL(key)}})}}" onSelectPresenter="select"
-                onPlayURL="{{URL(PlayVideo:{{VAL(key)}})}}" onPlayPresenter="video"
-                onHoldSelect="ScrobbleMenu">
+                onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onSelectHold="ScrobbleMenu"
+                >
               <img src="{{IMAGEURL(thumb::384)}}" width="150" height="226" />
               <title><![CDATA[{{VAL(title)}}]]></title>
               <subtitle>{{VAL(year:&#x00AD;)}}</subtitle>

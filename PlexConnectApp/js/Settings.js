@@ -9,13 +9,11 @@ toggle: function(event) {
   var elem = event.target;
   
   // toggle setting
-  var url = myURL +
-            "/Settings.xml" +  // todo: link to current settings page
-            "?X-PMS-Command=ToggleSetting&X-PMS-Setting="+elem.getAttribute("id");
-  loadDocument(url, function(doc) { Settings.updateView(doc, elem); });
-},
+  var setting = elem.getAttribute("id");
+  var docString = swiftInterface.toggleSettingView(setting, "Settings");
+  var parser = new DOMParser();
+  var doc = parser.parseFromString(docString, "application/xml");
 
-updateView: function(doc, elem) {
   // update view
   var newElem = doc.getElementById(elem.getAttribute("id"));
   if (elem && newElem) {

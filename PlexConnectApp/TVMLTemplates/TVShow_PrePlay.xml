@@ -42,7 +42,7 @@ See LICENSE.txt for this sample’s licensing information
         <!--text>Language information can go here</text-->
         <row>
           <buttonLockup
-              onSelectURL="{{URL(PlayVideo:)}}" onSelectPresenter="video"
+              onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH()}}')"
               >
             <badge src="resource://button-play" />
             <title>{{TEXT(Play)}}</title>
@@ -63,8 +63,9 @@ See LICENSE.txt for this sample’s licensing information
         {{COPY(MediaContainer/Video)}}
         {{
         <lockup
-            onSelectURL="{{URL(TVShow_PrePlay:{{VAL(key)}})}}" onSelectPresenter="select"
-            onPlayURL="{{URL(PlayVideo:{{VAL(key)}})}}" onPlayPresenter="video"
+            onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
             >
           <img src="{{IMAGEURL(thumb::384)}}" width="150" height="226" />
           <title><![CDATA[{{VAL(index)}}. {{VAL(title)}}]]></title>

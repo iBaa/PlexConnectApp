@@ -63,19 +63,3 @@ function loadPage(url)
   req.send();
 };
 
-
-// loadXML - to support onSelect in List.xml
-function loadXML(url) {
-  loadDocument(url, Presenter.pushDocument);
-}
-
-
-// load doc and forward to fn() - todo: ResourceLoader? what about error/timeout?
-function loadDocument(url, fn) {
-  var req = new XMLHttpRequest();
-  req.responseType = "document";
-  req.addEventListener("load", function() {fn(req.responseXML);}, false);
-  req.open('GET', url, true);
-  req.send();
-}
-

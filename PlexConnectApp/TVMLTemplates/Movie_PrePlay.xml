@@ -46,7 +46,7 @@ See LICENSE.txt for this sample’s licensing information
         <!--text>Language information can go here</text-->
         <row>
           <buttonLockup
-              onSelectURL="{{URL(PlayVideo:)}}" onSelectPresenter="video"
+              onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH()}}')"
               >
             <badge src="resource://button-play" />
             <title>{{TEXT(Play)}}</title>
@@ -69,10 +69,8 @@ See LICENSE.txt for this sample’s licensing information
         {{COPY(MediaContainer/Video/Extras/Video)}}
         {{
         <lockup
-            onSelectURL="{{URL(PlayVideo:{{VAL(key)}})}}" onSelectPresenter="video"
-            onPlayURL="{{URL(PlayVideo:{{VAL(key)}})}}" onPlayPresenter="video"
+            onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             >
-
           <img src="{{IMAGEURL(thumb::384)}}" width="150" height="226" />
           <title><![CDATA[{{VAL(title)}}]]></title>
           <subtitle>{{VAL(extraType::1=Trailer|2=Deleted|3=Interview|4=???|5=Behind the Scenes|6=Scene)}}</subtitle>
@@ -93,8 +91,8 @@ See LICENSE.txt for this sample’s licensing information
         {{COPY(MediaContainer/Video)}}
         {{
         <lockup
-            onSelectURL="{{URL(Movie_PrePlay:{{VAL(key)}})}}" onSelectPresenter="select"
-            onPlayURL="{{URL(PlayVideo:{{VAL(key)}})}}" onPlayPresenter="video"
+            onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             >
           <img src="{{IMAGEURL(thumb::384)}}" width="150" height="226" />
           <title>{{VAL(title)}}</title>

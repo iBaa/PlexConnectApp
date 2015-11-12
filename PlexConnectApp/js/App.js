@@ -9,7 +9,17 @@
  */
 
 
-var myURL;
+// re-route console.log() to XCode debug window
+var console = {
+  log: function() {
+    var message = '';
+    for(var i = 0; i < arguments.length; i++) {
+      message += arguments[i] + ' '
+    };
+    swiftInterface.log(message)
+  }
+};
+
 
 
 App.onLaunch = function(options) {
@@ -28,9 +38,8 @@ App.onLaunch = function(options) {
   evaluateScripts(javascriptFiles, function(success) {
     if(success) {
       console.log(options);
-      myURL = options["BASEURL"]
-      var templateURL = myURL+'/MenuBar.xml';  // template/
-      loadDocument(templateURL, Presenter.pushDocument);
+
+      Presenter.load('MenuBar','','');
     } else {
       var errorDoc = createAlert("Evaluate Scripts Error", "Error attempting to evaluate external JavaScript files.");
       navigationDocument.presentModal(errorDoc);

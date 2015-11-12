@@ -17,7 +17,7 @@ See LICENSE.txt for this sample’s licensing information
         </header>
         
         <listItemLockup
-          presenter="discover(event)"
+          onSelect="discover(event)"
           >
           <title>{{TEXT(Discover)}}</title>
         </listItemLockup>
@@ -25,7 +25,7 @@ See LICENSE.txt for this sample’s licensing information
 {{IF(!{{USRVAL(name)}})}} {{
         <listItemLockup
           id="MyPlexSignInOut"
-          presenter="myPlexSignInOut(event)"
+          onSelect="myPlexSignInOut(event)"
           >
           <title>{{TEXT(Sign In)}}</title>
           <decorationLabel />
@@ -35,7 +35,7 @@ See LICENSE.txt for this sample’s licensing information
 {{IF({{USRVAL(name)}})}} {{
         <listItemLockup
           id="MyPlexSignInOut"
-          presenter="myPlexSignInOut(event)"
+          onSelect="myPlexSignInOut(event)"
           >
           <title>{{TEXT(Sign Out)}}</title>
           <decorationLabel>{{USRVAL(name)}}</decorationLabel>
@@ -50,21 +50,21 @@ See LICENSE.txt for this sample’s licensing information
 
         <listItemLockup
           id="transcoderAction"
-          presenter="Settings.toggle(event)"
+          onSelect="Settings.toggle(event)"
           >
           <title>{{TEXT(Transcoder Action)}}</title>
           <decorationLabel>{{SETTING(transcoderAction)}}</decorationLabel>
         </listItemLockup>
         <listItemLockup
           id="transcoderQuality"
-          presenter="Settings.toggle(event)"
+          onSelect="Settings.toggle(event)"
           >
           <title>{{TEXT(Transcode Quality)}}</title>
           <decorationLabel>{{SETTING(transcoderQuality)}}</decorationLabel>
         </listItemLockup>
         <listItemLockup
           id="remoteBitrate"
-          presenter="Settings.toggle(event)"
+          onSelect="Settings.toggle(event)"
           >
           <title>{{TEXT(Remote Bitrate)}}</title>
           <decorationLabel>{{SETTING(remoteBitrate)}}</decorationLabel>

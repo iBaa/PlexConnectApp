@@ -24,19 +24,18 @@ See LICENSE.txt for this sample’s licensing information
 {{COPY(MediaContainer/Directory)}}{{
 {{SET(noItems:false)}}
         <listItemLockup
-            onSelectURL="{{URL(List:{{VAL(key)}})}}" onSelectPresenter="select"
-            onPlayURL="{{URL(List:{{VAL(key)}})}}" onPlayPresenter="select"
-            onSelectHoldURL="" onSelectHoldPresenter="modal"
+            onSelect="Presenter.load('List', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
             >
-            <title><![CDATA[{{VAL(title)}}]]></title>
+          <title><![CDATA[{{VAL(title)}}]]></title>
         </listItemLockup>
 }}
 {{COPY(MediaContainer/Video)}}{{
 {{SET(noItems:false)}}
         <listItemLockup
-            onSelectURL="{{URL(Movie_PrePlay:{{VAL(key)}})}}" onSelectPresenter="select"
-            onPlayURL="{{URL(PlayVideo:{{VAL(key)}})}}" onPlayPresenter="video"
-            resume_onSelectURL="{{URL(PlayResume:{{VAL(key)}})}}" resume_onSelectPresenter="modal"
+            onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('PlayVideo', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
             >
           <title><![CDATA[{{VAL(title)}}]]></title>
         </listItemLockup>

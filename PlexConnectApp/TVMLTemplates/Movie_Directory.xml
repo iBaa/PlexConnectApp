@@ -17,9 +17,8 @@ See LICENSE.txt for this sample’s licensing information
 {{COPY(MediaContainer/Directory)}}{{
 {{SET(noItems:false)}}
         <listItemLockup
-            onSelectURL="{{URL(Movie_Directory:{{VAL(key)}})}}" onSelectPresenter="select"
-            onPlayURL="{{URL(Directoy:{{VAL(key)}})}}" onPlayPresenter="select"
-            onSelectHoldURL="{{URL(:{{VAL(key)}})}}" onSelectHoldPresenter="modal"
+            onSelect="Presenter.load('Movie_Directory', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
             >
           <title><![CDATA[{{VAL(title)}}]]></title>
           <relatedContent>
@@ -33,9 +32,9 @@ See LICENSE.txt for this sample’s licensing information
 {{COPY(MediaContainer/Video)}}{{
 {{SET(noItems:false)}}
         <listItemLockup
-            onSelectURL="{{URL(Movie_PrePlay:{{VAL(key)}})}}" onSelectPresenter="select"
-            onPlayURL="{{URL(PlayVideo:{{VAL(key)}})}}" onPlayPresenter="video"
-            onSelectHoldURL="{{URL(PlayResume:{{VAL(key)}})}}" onSelectHoldPresenter="modal"
+            onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
             >
           <title><![CDATA[{{VAL(title)}}]]></title>
           <!-- played dot -->

@@ -6,11 +6,18 @@
 /*
  discover
  */
-discover = function(event) {
-  var url = myURL +
-  "/Settings.xml" +
-  "?X-PMS-Command=Discover"
-  loadDocument(url, function () {});
+discover = function(event) {  // todo: show spinner, number of PMSs found
+  var elem = event.target;
+  
+  var docString = swiftInterface.discover("Settings");
+  var parser = new DOMParser();
+  var doc = parser.parseFromString(docString, "application/xml");
+
+  // update view
+  var newElem = doc.getElementById(elem.getAttribute("id"));
+  if (elem && newElem) {
+    elem.innerHTML = newElem.innerHTML;
+  }
 }
 
 
@@ -141,25 +148,12 @@ myPlexSignInOut = function(event)
         doLogin = function()
         {
             // login and get new settings page
-            var url = myURL +
-                      "/Settings.xml" +
-                      "?X-PMS-Command=MyPlexSignIn" +
-                      "&X-PMS-Username=" + encodeURIComponent(_username) +
-                      "&X-PMS-Password=" + encodeURIComponent(_password)
-          /*
-            var req = new XMLHttpRequest();
-            req.open('GET', url, false);
-            req.send();
-            var doc = req.responseXML;
-          */
-          loadDocument(url, updateView);
-        }
-      
-        updateView = function(doc)
-        {
-      
+            var docString = swiftInterface.signInUserPasswordView(_username, _password, "Settings");
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(docString, "application/xml");
+
             // update MyPlexSignInOut
-            var new_elem = doc.getElementById('MyPlexSignInOut');  // listItemLockup
+            var new_elem = doc.getElementById('MyPlexSignInOut');  // listItemLockup // _myPlexElem.getAttribute("id")
             if (new_elem) {
               _myPlexElem.innerHTML = new_elem.innerHTML;
             }
@@ -190,7 +184,7 @@ myPlexSignInOut = function(event)
             }
             else
             {
-                setLabel(elem, 'decorationLabel', _failed);
+                setLabel(_myPlexElem, 'decorationLabel', _failed);
                 console.log("MyPlex Login - failed");
             }
         };
@@ -207,22 +201,11 @@ myPlexSignInOut = function(event)
     {
         doLogout = function()
         {
-            //atv.clearInterval(timer);
-            
             // logout and get new settings page
-            var url = myURL +
-                      "/Settings.xml" +
-                      "?X-PMS-Command=MyPlexSignOut"
-          /*
-            var req = new XMLHttpRequest();
-            req.open('GET', url, false);
-            req.send();
-            var doc = req.responseXML;
-          */
-          loadDocument(url, updateView);
-        }
-      
-        updateView = function(doc) {
+            var docString = swiftInterface.signOut("Settings");
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(docString, "application/xml");
+          
             // update MyPlexSignInOut
             var new_elem = doc.getElementById('MyPlexSignInOut')
             if (new_elem) {

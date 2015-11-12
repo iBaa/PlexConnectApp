@@ -32,20 +32,19 @@ See LICENSE.txt for this sample’s licensing information
 {{SET(noItems:false)}}
 {{SET(noDirs:false)}}
           <lockup
-            onSelectURL="{{URL(Photo_Browser:{{VAL(key)}})}}" onSelectPresenter="select"
-            onPlayURL="{{URL(Photo_Browser:{{VAL(key)}})}}" onPlayPresenter="select"
-            onSelectHoldURL="{{URL(:{{VAL(key)}})}}" onSelectHoldPresenter="modal"
-            >
-          <img src="{{IMAGEURL(thumb::384)}}" width="150" height="150" />
-          <title><![CDATA[{{VAL(title)}}]]></title>
-          <relatedContent>
-            <lockup>
-            <!--folder image -->
-            </lockup>
-          </relatedContent>
-        </lockup>
+              onSelect="Presenter.load('Photo_Browser', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+              onSelectHold="modal"
+              >
+            <img src="{{IMAGEURL(thumb::384)}}" width="150" height="150" />
+            <title><![CDATA[{{VAL(title)}}]]></title>
+            <relatedContent>
+              <lockup>
+              <!--folder image -->
+              </lockup>
+            </relatedContent>
+          </lockup>
 }}
-      </section>
+        </section>
       </shelf>
 }}
 
@@ -61,9 +60,8 @@ See LICENSE.txt for this sample’s licensing information
 {{SET(noItems:false)}}
 {{SET(noPhotos:false)}}
         <lockup
-            onSelectURL="{{URL(Photos:{{VAL(key)}})}}" onSelectPresenter="photo"
-            onPlayURL="{{URL(Photos:{{VAL(key)}})}}" onPlayPresenter="photo"
-            onSelectHoldURL="{{URL(:{{VAL(key)}})}}" onSelectHoldPresenter="modal"
+            onSelect="photoPresenter.show('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
             >
           <img src="{{PHOTOURL(:384)}}" width="150" height="150" />
           <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>

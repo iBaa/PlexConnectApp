@@ -20,15 +20,18 @@ requestAndUpdateSearch: function() {
   }
   // get data from searchfield
   var query = searchField.getFeature("Keyboard").text;  // get the keyboard element, entered query string
+  
+  // query and get search results
   var url = searchField.getAttribute("url");
+  var view = searchField.getAttribute("view");
+  var pmsId = searchField.getAttribute("pmsId");
+  var pmsPath = searchField.getAttribute("pmsPath").format(encodeURIComponent(query));
+  
+  var docString = swiftInterface.getViewIdPath(view, pmsId, pmsPath);
+  var parser = new DOMParser();
+  var doc = parser.parseFromString(docString, "application/xml");
 
-  // request
-  var url = url.format(encodeURIComponent(query));
-  loadDocument(url, function(doc) { Search.updateView(doc, searchResults) });
-},
-
-updateView: function(doc, searchResults) {
-  // get results from PMS response
+  // update view
   var newResults = doc.getElementById('searchResults');
   if (newResults && newResults.childElementCount>0) {  // todo: check results, too?
     searchResults.innerHTML = newResults.innerHTML;
@@ -40,6 +43,7 @@ updateView: function(doc, searchResults) {
 },
   
 onLoad: function(event) {
+  console.log("Search.onLoad");
   var elem = event.target;
   
   // find searchField

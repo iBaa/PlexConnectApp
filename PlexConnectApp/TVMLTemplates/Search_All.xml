@@ -16,7 +16,11 @@ See LICENSE.txt for this sample’s licensing information
   </head>
   <searchTemplate onLoad="Search.onLoad(event)">
     <!-- search -->
-    <searchField url="{{URL(Search_All:/search?type%3D4%26query%3D{0})}}" />
+    <searchField
+        view="Search_All"
+        pmsId=""
+        pmsPath="/search?type=4&amp;query={0}"
+        />
     <!-- results -->
     <collectionList id="searchResults" class="pullAheadVsSectionSpacing">
 
@@ -40,9 +44,9 @@ See LICENSE.txt for this sample’s licensing information
 {{SET(noMovies:false)}}
 {{SET(noItems:false)}}  <!-- this PMS -->
           <lockup
-              onSelectURL="{{URL(Movie_PrePlay:{{VAL(key)}})}}" onSelectPresenter="select"
-              onPlayURL="{{URL(PlayVideo:{{VAL(key)}})}}" onPlayPresenter="video"
-              onHoldSelect="ScrobbleMenu"
+              onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+              onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+              onSelectHold="ScrobbleMenu"
               >
             <img src="{{IMAGEURL(thumb::384)}}" width="200" height="300" />
             <title><![CDATA[{{VAL(title)}}]]></title>
@@ -76,9 +80,8 @@ See LICENSE.txt for this sample’s licensing information
 {{SET(noShows:false)}}
 {{SET(noItems:false)}}
           <lockup
-              onSelectURL="{{URL(TVShow_SeasonList:{{VAL(key)}})}}" onSelectPresenter="select"
-              onPlayURL="{{URL(TVShow_SeasonList:{{VAL(key)}})}}" onPlayPresenter="select"
-              onSelectHoldURL="" onSelectHoldPresenter="modal"
+              onSelect="Presenter.load('TVShow_SeasonList', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+              onSelectHold="ScrobbleMenu"
               >
             <img src="{{IMAGEURL(thumb::384)}}" width="200" height="300" />
             <title><![CDATA[{{VAL(title)}}]]></title>
@@ -112,9 +115,9 @@ See LICENSE.txt for this sample’s licensing information
 {{SET(noEpisodes:false)}}
 {{SET(noItems:false)}}
           <lockup
-              onSelectURL="{{URL(TVShow_PrePlay:{{VAL(key)}})}}" onSelectPresenter="select"
-              onPlayURL="{{URL(PlayVideo:{{VAL(key)}})}}" onPlayPresenter="video"
-              onSelectHoldURL="" onSelectHoldPresenter="modal"
+              onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+              onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+              onSelectHold="modal"
               >
             <img src="{{IMAGEURL(thumb::384)}}" width="200" height="300" />
             <title><![CDATA[{{VAL(title)}}]]></title>
@@ -149,9 +152,8 @@ See LICENSE.txt for this sample’s licensing information
 {{SET(noAlbums:false)}}
 {{SET(noItems:false)}}
           <lockup
-              onSelectURL="{{URL(:{{VAL(key)}})}}" onSelectPresenter=""
-              onPlayURL="{{URL(PlayAudio:{{VAL(key)}})}}" onPlayPresenter="audio"
-              onSelectHoldURL="" onSelectHoldPresenter="modal"
+              onSelect="Presenter.load('Music_TrackList', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+              onSelectHold="modal"
               >
             <img src="{{IMAGEURL(thumb::384)}}" width="200" height="300" />
             <title><![CDATA[{{VAL(title)}}]]></title>
@@ -186,9 +188,8 @@ See LICENSE.txt for this sample’s licensing information
 {{SET(noArtists:false)}}
 {{SET(noItems:false)}}
           <lockup
-              onSelectURL="{{URL(:{{VAL(key)}})}}" onSelectPresenter=""
-              onPlayURL="{{URL(PlayAudio:{{VAL(key)}})}}" onPlayPresenter="audio"
-              onSelectHoldURL="" onSelectHoldPresenter="modal"
+              onSelect="Presenter.load('Music_Directory', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+              onSelectHold="modal"
               >
             <img src="{{IMAGEURL(thumb::384)}}" width="200" height="300" />
             <title><![CDATA[{{VAL(title)}}]]></title>

@@ -48,7 +48,7 @@ class cXmlConverter {
             "USRVAL": processUSRVAL!,
             "SET": processSET!,
             "GET": processGET!,
-            "URL": processURL!,
+            "PATH": processPATH!,
             "VIDEOURL": processVIDEOURL!,
             "AUDIOURL": processAUDIOURL!,
             "PHOTOURL": processPHOTOURL!,
@@ -398,44 +398,35 @@ class cXmlConverter {
         return res
     }
     
-    var processURL: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
+    var processPATH: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
         _self, XML, _par in
         
         var par = _par.componentsSeparatedByString(":")
         var res = ""
-
-        let template = _self.getParam(XML, par: &par)
-        let key = _self.getParam(XML, par: &par)
-        let options = _self.getParam(XML, par: &par)
         
-        res = TVBaseURL! + "/\(template).xml"
+        let key = _self.getParam(XML, par: &par)
         
         if !(_self.pmsPath==nil) {
             if (key.hasPrefix("/")) {
-                res += "?X-PMSPath=\(key)"
+                res = key
             } else if (key=="") {
-                res += "?X-PMSPath=\(_self.pmsPath!)"
+                res = _self.pmsPath!
             } else {
-                res += "?X-PMSPath=\(_self.pmsPath!)/\(key)"
+                res = _self.pmsPath! + "/" + key
             }
         } else {
             if (key.hasPrefix("/")) {
-                res += "?X-PMSPath=\(key)"
+                res = key
             } else if (key=="") {
                 // do nothing
             } else {
                 // todo: key without trailering /... what to do?
             }
         }
-
-        if !(_self.pmsId==nil) {
-            res = res + "&amp;X-PMSId="+_self.pmsId!
-        }
-        res = res + options  // additional options/query string
         
         return res
     }
-
+    
     var processPMSID: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
         _self, XML, _par in
         if let pmsId = _self.pmsId {

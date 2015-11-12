@@ -23,9 +23,9 @@ See LICENSE.txt for this sample’s licensing information
 {{SET(noItems:false)}}
 {{SET(noAlbums:false)}}
         <listItemLockup
-            onSelectURL="{{URL(Music_TrackList:{{VAL(key)}})}}" onSelectPresenter="select"
-            onPlayURL="{{URL(PlayAudio:{{VAL(key)}})}}" onPlayPresenter="audio"
-            resume_onSelectURL="{{URL(PlayResume:{{VAL(key)}})}}" resume_onSelectPresenter="modal"
+            onSelect="Presenter.load('Music_TrackList', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
             >
           <title><![CDATA[{{VAL(title)}}]]></title>
           <relatedContent>
@@ -51,9 +51,8 @@ See LICENSE.txt for this sample’s licensing information
 {{COPY(MediaContainer/Directory)}}{{
 {{SET(noItems:false)}}
         <listItemLockup
-            onSelectURL="{{URL(Music_Directory:{{VAL(key)}})}}" onSelectPresenter="select"
-            onPlayURL="{{URL(Music_Directory:{{VAL(key)}})}}" onPlayPresenter="select"
-            resume_onSelectURL="{{URL()}}" resume_onSelectPresenter="modal"
+            onSelect="Presenter.load('Music_Directory', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
             >
           <title><![CDATA[{{VAL(title)}}]]></title>
           <relatedContent>

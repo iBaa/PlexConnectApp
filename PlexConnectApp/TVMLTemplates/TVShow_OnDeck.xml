@@ -7,7 +7,7 @@ See LICENSE.txt for this sample’s licensing information
 {{SET(noItems:true)}}
 <document>
   <head>
-    <!--script src="{{URL(:/js/utils.js)}}" /-->
+    <!--script src="URL://js/utils.js" /-->
   </head>
 
   <stackTemplate>
@@ -25,9 +25,10 @@ See LICENSE.txt for this sample’s licensing information
 {{COPY(MediaContainer/Video)}}{{
 {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
             <lockup
-                onSelectURL="{{URL(TVShow_PrePlay:{{VAL(key)}})}}" onSelectPresenter="select"
-                onPlayURL="{{URL(PlayVideo:{{VAL(key)}})}}" onPlayPresenter="video"
-                onHoldSelect="ScrobbleMenu">
+                onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onSelectHold="ScrobbleMenu"
+                >
               <img src="{{IMAGEURL(grandparentThumb::384)}}" width="200" height="300" /> <!-- example: w=150;h=226 -->
               <title><![CDATA[{{VAL(title)}}]]></title>
               <subtitle>{{SEASONEPISODE({{VAL(parentIndex:0)}}:{{VAL(index:0)}})}}</subtitle>
@@ -47,11 +48,12 @@ See LICENSE.txt for this sample’s licensing information
 {{COPY(MediaContainer/Video)}}{{
 {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
             <lockup
-                onSelectURL="{{URL(TVShow_PrePlay:{{VAL(key)}})}}" onSelectPresenter="select"
-                onPlayURL="{{URL(PlayVideo:{{VAL(key)}})}}" onPlayPresenter="video"
-                onHoldSelect="ScrobbleMenu">
-                {{IF({{VAL(parentThumb:)}})}}{{<img src="{{IMAGEURL(parentThumb::384)}}" width="150" height="226" />}}
-                {{IF(!{{VAL(parentThumb:)}})}}{{<img src="{{IMAGEURL(grandparentThumb::384)}}" width="150" height="226" />}}
+                onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onSelectHold="ScrobbleMenu"
+                >
+              {{IF({{VAL(parentThumb:)}})}}{{<img src="{{IMAGEURL(parentThumb::384)}}" width="150" height="226" />}}
+              {{IF(!{{VAL(parentThumb:)}})}}{{<img src="{{IMAGEURL(grandparentThumb::384)}}" width="150" height="226" />}}
               <title><![CDATA[{{VAL(title)}}]]></title>
               <subtitle>{{SEASONEPISODE({{VAL(parentIndex:0)}}:{{VAL(index:0)}})}}</subtitle>
             </lockup>
@@ -69,11 +71,12 @@ See LICENSE.txt for this sample’s licensing information
 {{COPY(MediaContainer/Video)}}{{
 {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
             <lockup
-                onSelectURL="{{URL(TVShow_PrePlay:{{VAL(key)}})}}" onSelectPresenter="select"
-                onPlayURL="{{URL(PlayVideo:{{VAL(key)}})}}" onPlayPresenter="video"
-                onHoldSelect="ScrobbleMenu">
-                {{IF({{VAL(parentThumb)}})}}{{<img src="{{IMAGEURL(parentThumb::384)}}" width="150" height="226" />}}
-                {{IF(!{{VAL(parentThumb)}})}}{{<img src="{{IMAGEURL(grandparentThumb::384)}}" width="150" height="226" />}}
+                onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onSelectHold="ScrobbleMenu"
+                >
+              {{IF({{VAL(parentThumb)}})}}{{<img src="{{IMAGEURL(parentThumb::384)}}" width="150" height="226" />}}
+              {{IF(!{{VAL(parentThumb)}})}}{{<img src="{{IMAGEURL(grandparentThumb::384)}}" width="150" height="226" />}}
               <title><![CDATA[{{VAL(title)}}]]></title>
               <subtitle>{{SEASONEPISODE({{VAL(parentIndex:0)}}:{{VAL(index:0)}})}}</subtitle>
             </lockup>
