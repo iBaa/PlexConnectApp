@@ -17,11 +17,11 @@ var isTranscoding = false;
 var pingTimer = null;
 
 // the player
-var player = null
+var player = null;
 
 var audioPlayer = {
 
-play: function(pmsId, pmsPath) {
+play: function(pmsId, pmsPath) {  // todo: startAt, shuffle
   // get track list
   var docString = swiftInterface.getViewIdPath('PlayAudio', pmsId, pmsPath);  // error handling?
   
@@ -29,35 +29,58 @@ play: function(pmsId, pmsPath) {
   var doc = parser.parseFromString(docString, "application/xml");
 
   // setup variables for transcoder ping
-  key = doc.getTextContent('key');
-  ratingKey = doc.getTextContent('ratingKey');
-  duration = doc.getTextContent('duration');
   pmsBaseUrl = doc.getTextContent('pmsBaseUrl');
   pmsToken = doc.getTextContent('pmsToken');
   
   lastReportedTime = -1;
   lastTranscoderPingTime = -1;
-  isTranscoding = (doc.getTextContent('mediaUrl').indexOf('transcode/universal') > -1);
   
-  // create audio player
-  // todo: playlist with mulitple items
-  player = new Player();
+  // create playlist
   var playlist = new Playlist();
-  var mediaItem = new MediaItem("audio", doc.getTextContent('mediaUrl'));
+  
+  var tracks = doc.getElementsByTagName("track");
+  for (var ix=0; ix<tracks.length; ix++) {
+    var track = tracks.item(ix);  // why not [ix]?
+    
+    var mediaItem = new MediaItem("video");
+    
+    // player
+    mediaItem.url = track.getTextContent('mediaUrl');
+    mediaItem.title = track.getTextContent('title');
+    mediaItem.subtitle = track.getTextContent('subtitle');
+    mediaItem.type = track.getTextContent('genre');
+    mediaItem.artworkImageURL = track.getTextContent('imageURL');
+    mediaItem.description = track.getTextContent('description');
+    // mediaItem.resumeTime = 0;
+    
+    // PMS
+    mediaItem.key = track.getTextContent('key');
+    mediaItem.ratingKey = track.getTextContent('ratingKey');
+    mediaItem.duration = track.getTextContent('duration');
+    
+    playlist.push(mediaItem)
+  }
 
-  mediaItem.title = doc.getTextContent('title');
-  mediaItem.subtitle = doc.getTextContent('subtitle');
-  mediaItem.type = doc.getTextContent('genre');
-  mediaItem.artworkImageURL = doc.getTextContent('imageURL');
-  mediaItem.description = doc.getTextContent('description');
-  // mediaItem.resumeTime = 0;
+  // read back key, ratingKey from first playlist entry
+  mediaItem = playlist.item(0);
+  if (!mediaItem) {
+    // something went wrong - no media, no player...
+    return
+  }
+  key = mediaItem.key
+  ratingKey = mediaItem.ratingKey;
+  duration = mediaItem.duration;
+  isTranscoding = (mediaItem.url.indexOf('transcode/universal') > -1);
 
+  // create audio player
+  player = new Player();
   player.playlist = playlist;
-  player.playlist.push(mediaItem);
   
   player.addEventListener("timeDidChange", audioPlayer.onTimeDidChange, {"interval":5})
   player.addEventListener("stateDidChange", audioPlayer.onStateDidChange)
-
+  player.addEventListener("mediaItemDidChange", audioPlayer.onMediaItemDidChange)
+  
+  // start player
   player.present();  // todo: bug? why do we need present, then play? will stay at "paused" otherwise.
   player.play();
 },
@@ -70,6 +93,7 @@ nowPlaying: function() {
   
 onTimeDidChange: function(timeObj) {
   console.log("onTimeDidChange: " + timeObj.time + "s");
+  
   //remainingTime = Math.round((duration / 1000) - time);
   var thisReportTime = Math.round(timeObj.time*1000)
   /*
@@ -111,8 +135,7 @@ onStateDidChange: function(stateObj) {
   // states: begin, loading, paused, playing, end
   newState = stateObj.state;
   pmsState = null;
-
-
+  
   if (newState == 'loading')  // loading state, tell PMS we're buffering
   {
     pmsState = 'buffering';
@@ -168,5 +191,20 @@ onStateDidChange: function(stateObj) {
   }
 },
 
+onMediaItemDidChange: function(event) {
+  console.log("onMediaItemDidChange "+event.reason);
+  // event.reason: 0-Unknown, 1-Played to end, 2-Forwarded to end, 3-Errored, 4-Playlist changed, 5-User initiated
+  
+  // media information
+  var mediaItem = player.currentMediaItem;
+  if (mediaItem) {
+    key = mediaItem.key;
+    ratingKey = mediaItem.ratingKey;
+    duration = mediaItem.duration;
+    isTranscoding = (mediaItem.url.indexOf('transcode/universal') > -1);
+  }
+  
+  lastReportedTime = -1;
+  lastTranscoderPingTime = -1;
+},
 }
-

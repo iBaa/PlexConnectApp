@@ -42,6 +42,7 @@ See LICENSE.txt for this sample’s licensing information
 {{SET(noItems:false)}}
         <listItemLockup
             onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH()}}')"
             onSelectHold="modal"
             >
           <title><![CDATA[{{VAL(title)}}]]></title>
