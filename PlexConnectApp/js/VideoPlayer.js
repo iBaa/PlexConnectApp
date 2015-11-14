@@ -16,6 +16,9 @@ var lastTranscoderPingTime;
 var isTranscoding = false;
 var pingTimer = null;
 
+// the player
+var player = null;  // todo: treat all those variables more "locally" to videoPlayer?
+
 /*
  https://developer.apple.com/library/prerelease/tvos/samplecode/TVMLAudioVideo/Listings/client_js_application_js.html#//apple_ref/doc/uid/TP40016506-client_js_application_js-DontLinkElementID_6
  */
@@ -29,40 +32,64 @@ play: function(pmsId, pmsPath) {
   var doc = parser.parseFromString(docString, "application/xml");
 
   // setup variables for transcoder ping
-  key = doc.getTextContent('key');
-  ratingKey = doc.getTextContent('ratingKey');
-  duration = doc.getTextContent('duration');
   pmsBaseUrl = doc.getTextContent('pmsBaseUrl');
   pmsToken = doc.getTextContent('pmsToken');
   
   lastReportedTime = -1;
   lastTranscoderPingTime = -1;
-  isTranscoding = (doc.getTextContent('mediaUrl').indexOf('transcode/universal') > -1);
   
-  // create video player
-  // todo: playlist with mulitple items
-  var player = new Player();
+  // create playlist
   var playlist = new Playlist();
-  var mediaItem = new MediaItem("video", doc.getTextContent('mediaUrl'));
+  
+  var videos = doc.getElementsByTagName("video");
+  for (var ix=0; ix<videos.length; ix++) {
+    var video = videos.item(ix);  // why not [ix]?
+    
+    var mediaItem = new MediaItem("video");
+    
+    // player
+    mediaItem.url = video.getTextContent('mediaUrl');
+    mediaItem.title = video.getTextContent('title');
+    mediaItem.subtitle = video.getTextContent('subtitle');
+    mediaItem.type = video.getTextContent('genre');
+    mediaItem.artworkImageURL = video.getTextContent('imageURL');
+    mediaItem.description = video.getTextContent('description');
+    // mediaItem.resumeTime = 0;
 
-  mediaItem.title = doc.getTextContent('title');
-  mediaItem.subtitle = doc.getTextContent('subtitle');
-  mediaItem.type = doc.getTextContent('genre');
-  mediaItem.artworkImageURL = doc.getTextContent('imageURL');
-  mediaItem.description = doc.getTextContent('description');
-  // mediaItem.resumeTime = 0;
+    // PMS
+    mediaItem.key = video.getTextContent('key');
+    mediaItem.ratingKey = video.getTextContent('ratingKey');
+    mediaItem.duration = video.getTextContent('duration');
+  
+    playlist.push(mediaItem)
+  }
 
+  // read back key, ratingKey from first playlist entry
+  mediaItem = playlist.item(0);
+  if (!mediaItem) {
+    // something went wrong - no media, no player...
+    return
+  }
+  key = mediaItem.key
+  ratingKey = mediaItem.ratingKey;
+  duration = mediaItem.duration;
+  isTranscoding = (mediaItem.url.indexOf('transcode/universal') > -1);
+
+  // create video player
+  player = new Player();
   player.playlist = playlist;
-  player.playlist.push(mediaItem);
   
   player.addEventListener("timeDidChange", videoPlayer.onTimeDidChange, {"interval":5})
   player.addEventListener("stateDidChange", videoPlayer.onStateDidChange)
+  player.addEventListener("mediaItemDidChange", videoPlayer.onMediaItemDidChange)
   
+  // start player
   player.play();
 },
 
 onTimeDidChange: function(timeObj) {
   console.log("onTimeDidChange: " + timeObj.time + "s");
+  
   //remainingTime = Math.round((duration / 1000) - time);
   var thisReportTime = Math.round(timeObj.time*1000)
   /*
@@ -109,8 +136,7 @@ onStateDidChange: function(stateObj) {
   // states: begin, loading, paused, playing, end
   newState = stateObj.state;
   pmsState = null;
-
-
+  
   if (newState == 'loading')  // loading state, tell PMS we're buffering
   {
     pmsState = 'buffering';
@@ -169,5 +195,20 @@ onStateDidChange: function(stateObj) {
   }
 },
 
+onMediaItemDidChange: function(event) {
+  console.log("onMediaItemDidChange "+event.reason);
+  // event.reason: 0-Unknown, 1-Played to end, 2-Forwarded to end, 3-Errored, 4-Playlist changed, 5-User initiated
+  
+  // media information
+  var mediaItem = player.currentMediaItem;
+  if (mediaItem) {
+    key = mediaItem.key;
+    ratingKey = mediaItem.ratingKey;
+    duration = mediaItem.duration;
+    isTranscoding = (mediaItem.url.indexOf('transcode/universal') > -1);
+  }
+  
+  lastReportedTime = -1;
+  lastTranscoderPingTime = -1;
+},
 }
-

@@ -89,11 +89,21 @@ onSelect: function(event) {
 },
   
 onPlay: function(event) {
-  console.log(event);
+  console.log("onPlay "+event);
+  this.event = event;
   var elem = event.target;
-//
-  Presenter.onSelect(event);
-//
+
+  if (elem) {
+    var id = elem.getAttribute("id");
+    var onPlay = elem.getAttribute("onPlay");  // get onPlay=...
+    if (!onPlay) {
+      onPlay = elem.getAttribute("onSelect");  // fall back to onSelect=...
+    }
+    with (event) {
+      eval(onPlay);
+    }
+  }
+
 },
   
 // grab keyboard changes for searchField

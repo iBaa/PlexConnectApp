@@ -36,6 +36,15 @@ if (!Document.prototype.getTextContent) {
   }
 }
 
+if (!Element.prototype.getTextContent) {
+    Element.prototype.getTextContent = function(tagName) {
+        var element = this.getElementByTagName(tagName);
+        if (element && element.textContent) {
+            return element.textContent;
+        }
+        return '';
+    }
+}
 
 
 // String extensions
