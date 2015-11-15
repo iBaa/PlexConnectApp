@@ -82,15 +82,15 @@ function TEXT(textString) {
 
 // instant documents
 var createSpinner = function(title) {
-    var docString = `<?xml version="1.0" encoding="UTF-8" ?>
-    <document>
-    <loadingTemplate>
+  var docString = `<?xml version="1.0" encoding="UTF-8" ?>
+<document>
+  <loadingTemplate>
     <activityIndicator>
-    <title>${title}</title>
+      <title>${title}</title>
     </activityIndicator>
-    </loadingTemplate>
-    </document>`
-    var parser = new DOMParser();
-    var doc = parser.parseFromString(docString, "application/xml");
-    return doc;
+  </loadingTemplate>
+</document>`
+  var parser = new DOMParser();
+  var doc = parser.parseFromString(docString, "application/xml");
+  return doc;
 }
