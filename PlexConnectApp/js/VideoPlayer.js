@@ -200,8 +200,9 @@ onMediaItemDidChange: function(event) {
   // event.reason: 0-Unknown, 1-Played to end, 2-Forwarded to end, 3-Errored, 4-Playlist changed, 5-User initiated
   
   // media information
-  var mediaItem = player.currentMediaItem;
-  if (mediaItem) {
+  if (player && player.currentMediaItem) {
+    var mediaItem = player.currentMediaItem;
+
     key = mediaItem.key;
     ratingKey = mediaItem.ratingKey;
     duration = mediaItem.duration;

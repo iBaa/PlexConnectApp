@@ -17,9 +17,11 @@ See LICENSE.txt for this sample’s licensing information
         </header>
         
         <listItemLockup
+          id="Discover"
           onSelect="discover(event)"
           >
           <title>{{TEXT(Discover)}}</title>
+          <decorationLabel>{{TEXT(online:)}} {{PMSCNT(all)}}</decorationLabel>
         </listItemLockup>
         
 {{IF(!{{USRVAL(name)}})}} {{

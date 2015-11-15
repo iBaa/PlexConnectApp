@@ -38,11 +38,13 @@ class cXmlConverter {
         // jump table to commands processing attributes: VAL, VIDEOURL, ...
         processAttrib = [
             "VAL": processVAL!,
+            "TABLE": processTABLE!,
             "EVAL": processEVAL!,
             "DURATION": processDURATION!,
             "DURATION_HMS": processDURATION_HMS!,
             "SEASONEPISODE": processSEASONEPISODE!,
             "CHK": processCHK!,
+            "PMSCNT": processPMSCNT!,
             "PMSID": processPMSID!,
             "PMSVAL": processPMSVAL!,
             "USRVAL": processUSRVAL!,
@@ -255,6 +257,9 @@ class cXmlConverter {
         var res = ""
         _self.variables["ix_" + tag] = "0"
         for (ix, (_pmsId, _pms)) in PlexMediaServerInformation.enumerate() {  // todo: async in parallel?
+            if (_pms.getAttribute("uri") == "") {  // server not online, no connection found
+                continue
+            }
             if (tag=="owned") {
                 if (_pms.getAttribute("owned") != "1") {  // next if this is not owned
                     continue
@@ -350,6 +355,26 @@ class cXmlConverter {
         return key
     }
     
+    var processTABLE: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
+        _self, XML, _par in
+        
+        var par = _par.componentsSeparatedByString(":")
+        var value = _self.getParam(XML, par: &par)
+        var res = _self.getParam(XML, par: &par)  // default if no match
+        
+        // look up tableKeys and replace value if equal
+        while (!par.isEmpty) {
+            let tableKey = _self.getParam(XML, par: &par)  // get key/value pair
+            let tableValue = _self.getParam(XML, par: &par)
+            
+            if (value == tableKey) {
+                res = tableValue
+                break
+            }
+        }
+        return res
+    }
+    
     var processDURATION: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
         _self, XML, _par in
         
@@ -425,6 +450,32 @@ class cXmlConverter {
         }
         
         return res
+    }
+
+    var processPMSCNT: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
+        _self, XML, _par in
+        
+        var par = _par.componentsSeparatedByString(":")
+        var tag = _self.getParam(XML,par: &par)
+        
+        // loop over PMSs
+        var res = 0
+        for (ix, (_pmsId, _pms)) in PlexMediaServerInformation.enumerate() {  // todo: async in parallel?
+            if (_pms.getAttribute("uri") == "") {  // server not online, no connection found
+                continue
+            }
+            if (tag=="owned") {
+                if (_pms.getAttribute("owned") != "1") {  // next if this is not owned
+                    continue
+                }
+            } else if (tag=="shared") {
+                if (_pms.getAttribute("owned") == "1") {  // next if this is owned
+                    continue
+                }
+            }
+            res++
+        }
+        return String(res)
     }
     
     var processPMSID: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {

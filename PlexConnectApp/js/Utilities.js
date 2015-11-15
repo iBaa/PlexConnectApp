@@ -72,3 +72,25 @@ function loadPage(url)
   req.send();
 };
 
+
+
+// prepare for localisation - currently just return string
+function TEXT(textString) {
+    return textString
+}
+
+
+// instant documents
+var createSpinner = function(title) {
+    var docString = `<?xml version="1.0" encoding="UTF-8" ?>
+    <document>
+    <loadingTemplate>
+    <activityIndicator>
+    <title>${title}</title>
+    </activityIndicator>
+    </loadingTemplate>
+    </document>`
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(docString, "application/xml");
+    return doc;
+}
