@@ -29,7 +29,7 @@ modalDialogPresenter: function(xml) {
     pmsId: id
     pmsPath: path
  */
-load: function(view, pmsId, pmsPath) {
+setupViewDocument: function(view, pmsId, pmsPath) {
   console.log("load");
   
   var docString = swiftInterface.getViewIdPath(view, pmsId, pmsPath);
@@ -41,9 +41,20 @@ load: function(view, pmsId, pmsPath) {
   //doc.addEventListener("highlight", Presenter.onHighlight.bind(Presenter));
   doc.addEventListener("load", Presenter.onLoad.bind(Presenter));  // setup search for char entered
   
+  return doc
+},
+
+load: function(view, pmsId, pmsPath) {
+  var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
   navigationDocument.pushDocument(doc);
 },
-  
+
+loadAndSwap: function(view, pmsId, pmsPath) {
+  var currentDoc = navigationDocument.documents[navigationDocument.documents.length-1];
+  var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
+  navigationDocument.replaceDocument(doc, currentDoc);
+},
+
 loadMenuContent: function(view, pmsId, pmsPath) {
   console.log("loadMenuContent");
   var elem = this.event.target;  // todo: check event existing
@@ -55,14 +66,7 @@ loadMenuContent: function(view, pmsId, pmsPath) {
     if (!currentDoc  // todo: better algorithm to decide on doc reload
         || (id!="Search" && id!="Settings")) {  // currently: force reload on each but Settings, Search
 
-      var docString = swiftInterface.getViewIdPath(view, pmsId, pmsPath);  // error handling?
-      var parser = new DOMParser();
-      var doc = parser.parseFromString(docString, "application/xml");
-      
-      doc.addEventListener("select", Presenter.onSelect.bind(Presenter));
-      doc.addEventListener("play", Presenter.onPlay.bind(Presenter));
-      doc.addEventListener("load", Presenter.onLoad.bind(Presenter));  // setup search for char entered
-      
+      var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
       feature.setDocument(doc, elem);
     }
   }

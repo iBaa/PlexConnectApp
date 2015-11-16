@@ -91,7 +91,7 @@ See LICENSE.txt for this sample’s licensing information
         {{COPY(MediaContainer/Video)}}
         {{
         <lockup
-            onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelect="Presenter.loadAndSwap('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             >
           <img src="{{IMAGEURL(thumb::384)}}" width="150" height="226" />
