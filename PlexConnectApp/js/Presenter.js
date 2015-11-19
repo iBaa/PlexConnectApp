@@ -45,14 +45,18 @@ setupViewDocument: function(view, pmsId, pmsPath) {
 },
 
 load: function(view, pmsId, pmsPath) {
+  var loadingDoc = createSpinner("");
+  navigationDocument.pushDocument(loadingDoc);
   var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
-  navigationDocument.pushDocument(doc);
+  navigationDocument.replaceDocument(doc, loadingDoc);
 },
 
 loadAndSwap: function(view, pmsId, pmsPath) {
   var currentDoc = navigationDocument.documents[navigationDocument.documents.length-1];
+  var loadingDoc = createSpinner("");
+  navigationDocument.replaceDocument(loadingDoc, currentDoc);
   var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
-  navigationDocument.replaceDocument(doc, currentDoc);
+  navigationDocument.replaceDocument(doc, loadingDoc);
 },
 
 loadMenuContent: function(view, pmsId, pmsPath) {
@@ -66,6 +70,8 @@ loadMenuContent: function(view, pmsId, pmsPath) {
     if (!currentDoc  // todo: better algorithm to decide on doc reload
         || (id!="Search" && id!="Settings")) {  // currently: force reload on each but Settings, Search
 
+      var loadingDoc = createSpinner("");
+      feature.setDocument(loadingDoc, elem);
       var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
       feature.setDocument(doc, elem);
     }
