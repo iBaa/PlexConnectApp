@@ -11,6 +11,7 @@
 		011EC01E1BEA6CBA008C3CC6 /* Music_Directory.xml in Resources */ = {isa = PBXBuildFile; fileRef = 011EC01D1BEA6CBA008C3CC6 /* Music_Directory.xml */; };
 		011EC0221BEA94A3008C3CC6 /* Music_TrackList.xml in Resources */ = {isa = PBXBuildFile; fileRef = 011EC0211BEA94A3008C3CC6 /* Music_TrackList.xml */; };
 		011EC0241BEA9AE2008C3CC6 /* PlayAudio.xml in Resources */ = {isa = PBXBuildFile; fileRef = 011EC0231BEA9AE2008C3CC6 /* PlayAudio.xml */; };
+		01547A8C1BFE606D00643B83 /* TVShow_EpisodeContext.xml in Resources */ = {isa = PBXBuildFile; fileRef = 01547A8B1BFE606D00643B83 /* TVShow_EpisodeContext.xml */; };
 		0154E8451BEE0D8F00343DBB /* Photo_MenuBar.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0154E8441BEE0D8F00343DBB /* Photo_MenuBar.xml */; };
 		0154E8471BEE0FA800343DBB /* Photo_Browser.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0154E8461BEE0FA800343DBB /* Photo_Browser.xml */; };
 		0154E84B1BEE305100343DBB /* Photos.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0154E84A1BEE305100343DBB /* Photos.xml */; };
@@ -55,6 +56,7 @@
 		011EC01D1BEA6CBA008C3CC6 /* Music_Directory.xml */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = text.xml; name = Music_Directory.xml; path = PlexConnectApp/TVMLTemplates/Music_Directory.xml; sourceTree = "<group>"; };
 		011EC0211BEA94A3008C3CC6 /* Music_TrackList.xml */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = text.xml; name = Music_TrackList.xml; path = PlexConnectApp/TVMLTemplates/Music_TrackList.xml; sourceTree = "<group>"; };
 		011EC0231BEA9AE2008C3CC6 /* PlayAudio.xml */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = text.xml; name = PlayAudio.xml; path = PlexConnectApp/TVMLTemplates/PlayAudio.xml; sourceTree = "<group>"; };
+		01547A8B1BFE606D00643B83 /* TVShow_EpisodeContext.xml */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = text.xml; name = TVShow_EpisodeContext.xml; path = PlexConnectApp/TVMLTemplates/TVShow_EpisodeContext.xml; sourceTree = "<group>"; };
 		0154E8441BEE0D8F00343DBB /* Photo_MenuBar.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Photo_MenuBar.xml; path = PlexConnectApp/TVMLTemplates/Photo_MenuBar.xml; sourceTree = "<group>"; };
 		0154E8461BEE0FA800343DBB /* Photo_Browser.xml */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = text.xml; name = Photo_Browser.xml; path = PlexConnectApp/TVMLTemplates/Photo_Browser.xml; sourceTree = "<group>"; };
 		0154E84A1BEE305100343DBB /* Photos.xml */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = text.xml; name = Photos.xml; path = PlexConnectApp/TVMLTemplates/Photos.xml; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				01CE20B31BE6B03700A2F10A /* Settings.xml */,
 				01CE20B41BE6B03700A2F10A /* SharedLibraries.xml */,
 				01CE20B51BE6B03700A2F10A /* TVShow_Directory.xml */,
+				01547A8B1BFE606D00643B83 /* TVShow_EpisodeContext.xml */,
 				01CE20B61BE6B03700A2F10A /* TVShow_EpisodeList.xml */,
 				01CE20B71BE6B03700A2F10A /* TVShow_MenuBar.xml */,
 				01CE20B81BE6B03700A2F10A /* TVShow_OnDeck.xml */,
@@ -256,6 +259,7 @@
 				01CE20C51BE6B03700A2F10A /* Search_All.xml in Resources */,
 				01CE20C11BE6B03700A2F10A /* Movie_MenuBar.xml in Resources */,
 				01CE20BF1BE6B03700A2F10A /* Movie_Directory.xml in Resources */,
+				01547A8C1BFE606D00643B83 /* TVShow_EpisodeContext.xml in Resources */,
 				01CE20CB1BE6B03700A2F10A /* TVShow_EpisodeList.xml in Resources */,
 				01CE20A51BE6B01B00A2F10A /* MenuBar.xml in Resources */,
 				011EC01E1BEA6CBA008C3CC6 /* Music_Directory.xml in Resources */,

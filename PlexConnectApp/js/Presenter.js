@@ -35,8 +35,10 @@ setupViewDocument: function(view, pmsId, pmsPath) {
   var docString = swiftInterface.getViewIdPath(view, pmsId, pmsPath);
   var parser = new DOMParser();
   var doc = parser.parseFromString(docString, "application/xml");
-    
+  
+  // events: https://developer.apple.com/library/tvos/documentation/TVMLKit/Reference/TVViewElement_Ref/index.html#//apple_ref/c/tdef/TVElementEventType
   doc.addEventListener("select", Presenter.onSelect.bind(Presenter));
+  doc.addEventListener("holdselect", Presenter.onHoldSelect.bind(Presenter));
   doc.addEventListener("play", Presenter.onPlay.bind(Presenter));
   //doc.addEventListener("highlight", Presenter.onHighlight.bind(Presenter));
   doc.addEventListener("load", Presenter.onLoad.bind(Presenter));  // setup search for char entered
@@ -49,6 +51,7 @@ load: function(view, pmsId, pmsPath) {
   navigationDocument.pushDocument(loadingDoc);
   var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
   navigationDocument.replaceDocument(doc, loadingDoc);
+  navigationDocument.dismissModal();  // just in case?!  // todo: if (isModal)...?
 },
 
 loadAndSwap: function(view, pmsId, pmsPath) {
@@ -57,8 +60,14 @@ loadAndSwap: function(view, pmsId, pmsPath) {
   navigationDocument.replaceDocument(loadingDoc, currentDoc);
   var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
   navigationDocument.replaceDocument(doc, loadingDoc);
+  navigationDocument.dismissModal();  // just in case?!  // todo: if (isModal)...?
 },
 
+loadContextMenu(view, pmsId, pmsPath) {
+  var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
+  navigationDocument.presentModal(doc);
+},
+  
 loadMenuContent: function(view, pmsId, pmsPath) {
   console.log("loadMenuContent");
   var elem = this.event.target;  // todo: check event existing
@@ -94,6 +103,23 @@ onSelect: function(event) {
     var onSelect = elem.getAttribute("onSelect");  // get onSelect=...
     with (event) {
       eval(onSelect);
+    }
+  }
+},
+  
+onHoldSelect: function(event) {
+  console.log("onHoldSelect "+event);
+  this.event = event;
+  var elem = event.target;
+  
+  if (elem) {
+    var id = elem.getAttribute("id");
+    var onHoldSelect = elem.getAttribute("onHoldSelect");  // get onHoldSelect=...
+    if (!onHoldSelect) {
+      onHoldSelect = elem.getAttribute("onSelect");  // fall back to onSelect=...
+    }
+    with (event) {
+      eval(onHoldSelect);
     }
   }
 },

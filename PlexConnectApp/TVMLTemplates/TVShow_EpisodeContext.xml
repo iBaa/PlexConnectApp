@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{XML()}}{{
+<document>
+  <alertTemplate>
+    <title><![CDATA[{{VAL(MediaContainer/Video/title)}}]]></title>
+    <description><![CDATA[{{VAL(MediaContainer/Video/grandparentTitle)}}]]></description>
+
+    <button
+        onSelect="Presenter.load('TVShow_SeasonList', '{{PMSID()}}', '{{PATH({{VAL(MediaContainer/Video/grandparentKey)}}/children)}}')"
+        >
+      <text>{{TEXT(View Show)}}</text>
+    </button>
+
+    <button
+        onSelect="Presenter.load('TVShow_EpisodeList', '{{PMSID()}}', '{{PATH({{VAL(MediaContainer/Video/parentKey)}}/children)}}')"
+        >
+      <text>{{TEXT(View Season)}}</text>
+    </button>
+
+    <!--mark watched/unwatched/change artwork-->
+
+  </alertTemplate>
+</document>
+}}
