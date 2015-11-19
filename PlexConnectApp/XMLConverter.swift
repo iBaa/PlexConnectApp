@@ -298,14 +298,7 @@ class cXmlConverter {
         //key = key.stringByRemovingPercentEncoding!  // todo: not PercentEncoding, but &amp; and such
         var xmlSection: XMLIndexer? = nil
 
-        if (key.hasPrefix("/")) {
-            res = key
-        } else if (key=="") {
-            res = _self.pmsPath!
-        } else {
-            res = _self.pmsPath! + "/" + key
-        }
-        let URL = getPMSAdr(_self.pmsId!, PMSPath: res)
+        let URL = getPmsUrl(key, pmsId: _self.pmsId!, pmsPath: _self.pmsPath!)
 
         if _self.xmlCache[URL] != nil {
             // grab cached XML
@@ -609,7 +602,7 @@ class cXmlConverter {
         }
         
         let key = _self.getKey(XML, par: &par)
-        let res = getPMSAdr(_self.pmsId!, PMSPath: key)  // todo: relative path in key?
+        let res = getPmsUrl(key, pmsId: _self.pmsId!, pmsPath: _self.pmsPath!)  // todo: pmsId, pmsPath optional?
         
         return res
     }

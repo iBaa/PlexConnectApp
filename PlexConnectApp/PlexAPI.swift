@@ -141,19 +141,41 @@ class cPlexMediaServerInformation {
 }
 
 
-func getPMSAdr(PMSId: String, PMSPath: String) -> String {
 
+func getPmsUrl(key: String, pmsId: String, pmsPath: String) -> String {
+
+    // prepare pms uri & token
+    var token: String
+    var url: String = ""
+    if (pmsId == "plex.tv") {
+        // plex.tv - user data
+        url = "https://plex.tv"
+        token = plexUserInformation.getAttribute("token")
+    } else {
+        // PMS specific
+        url = PlexMediaServerInformation[pmsId]!.getAttribute("uri")  // todo: check if pmsId is useable
+        token = PlexMediaServerInformation[pmsId]!.getAttribute("accessToken")
+    }
+
+    // path
+    if (key.hasPrefix("/")) {  // internal full path
+        url = url + key
+    } else if (key=="") {  // keep current path
+        url = url + pmsPath
+    } else {  // relative path - current plex new path component
+        url = url + pmsPath + "/" + key
+    }
+
+    // token
     var queryDelimiter = "?"
-    if PMSPath.characters.contains("?") {
+    if url.characters.contains("?") {
         queryDelimiter = "&"
     }
-    // todo: if let PMSId
-    let URL = PlexMediaServerInformation[PMSId]!.getAttribute("uri") +
-              PMSPath +
-              queryDelimiter + "X-Plex-Token="+PlexMediaServerInformation[PMSId]!.getAttribute("accessToken")
-    print("request: \(URL)")
-        return URL
-    }
+    url = url + queryDelimiter + "X-Plex-Token=" + token
+    
+    print("request: \(url)")
+    return url
+}
 
 
 
