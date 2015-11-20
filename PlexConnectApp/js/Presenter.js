@@ -63,9 +63,13 @@ loadAndSwap: function(view, pmsId, pmsPath) {
   navigationDocument.dismissModal();  // just in case?!  // todo: if (isModal)...?
 },
 
-loadContextMenu(view, pmsId, pmsPath) {
+loadContext(view, pmsId, pmsPath) {
   var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
   navigationDocument.presentModal(doc);
+},
+    
+closeContext() {
+  navigationDocument.dismissModal();
 },
   
 loadMenuContent: function(view, pmsId, pmsPath) {

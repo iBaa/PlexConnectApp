@@ -27,7 +27,7 @@ See LICENSE.txt for this sample’s licensing information
             <lockup
                 onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                 onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-                onHoldSelect="Presenter.loadContextMenu('TVShow_EpisodeContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onHoldSelect="Presenter.loadContext('TVShow_EpisodeContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                 >
               <img src="{{IMAGEURL(grandparentThumb::384)}}" width="200" height="300" /> <!-- example: w=150;h=226 -->
               <title><![CDATA[{{VAL(title)}}]]></title>
@@ -50,7 +50,7 @@ See LICENSE.txt for this sample’s licensing information
             <lockup
                 onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                 onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-                onHoldSelect="Presenter.loadContextMenu('TVShow_EpisodeContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onHoldSelect="Presenter.loadContext('TVShow_EpisodeContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                 >
               {{IF({{VAL(parentThumb:)}})}}{{<img src="{{IMAGEURL(parentThumb::384)}}" width="150" height="226" />}}
               {{IF(!{{VAL(parentThumb:)}})}}{{<img src="{{IMAGEURL(grandparentThumb::384)}}" width="150" height="226" />}}
@@ -73,7 +73,7 @@ See LICENSE.txt for this sample’s licensing information
             <lockup
                 onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                 onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-                onHoldSelect="Presenter.loadContextMenu('TVShow_EpisodeContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onHoldSelect="Presenter.loadContext('TVShow_EpisodeContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                 >
               {{IF({{VAL(parentThumb)}})}}{{<img src="{{IMAGEURL(parentThumb::384)}}" width="150" height="226" />}}
               {{IF(!{{VAL(parentThumb)}})}}{{<img src="{{IMAGEURL(grandparentThumb::384)}}" width="150" height="226" />}}

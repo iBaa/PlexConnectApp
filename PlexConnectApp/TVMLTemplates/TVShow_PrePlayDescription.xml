@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{XML()}}{{
+<document>
+  <head>
+    <style>
+      .subtitleStyle {
+        color: rgb(255,255,255);
+        tv-text-style: subtitle1;
+        margin: 30;
+      }
+    </style>
+  </head>
+  
+  <descriptiveAlertTemplate>
+    <title><![CDATA[{{SEASONEPISODE({{VAL(MediaContainer/Video/parentIndex)}}:{{VAL(MediaContainer/Video/index)}})}} {{VAL(MediaContainer/Video/title)}}]]></title>
+    <subtitle class="subtitleStyle"><![CDATA[{{VAL(MediaContainer/Video/grandparentTitle)}}]]></subtitle>  <!--subtitleStyle - why is this black and small per default? -->
+    <description><![CDATA[{{VAL(MediaContainer/Video/summary)}}]]></description>
+    
+    <button
+        onSelect="Presenter.closeContext()"
+        >
+        <text>{{TEXT(back)}}</text>
+    </button>
+  </descriptiveAlertTemplate>
+</document>
+}}

@@ -19,11 +19,11 @@ See LICENSE.txt for this sample’s licensing information
         <listItemLockup
             onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-            onHoldSelect="Presenter.loadContextMenu('TVShow_EpisodeContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onHoldSelect="Presenter.loadContext('TVShow_EpisodeContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             >
           <img src="{{IMAGEURL(thumb::384)}}" width="100" height="150" />
           <title><![CDATA[{{VAL(title)}}]]></title>
-          <subtitle>{{TEXT(Episode)}} {{SEASONEPISODE({{VAL(parentIndex:{{GET(parentIndex)}})}}:{{VAL(index:0)}})}}</subtitle>
+          <subtitle><![CDATA[{{TEXT(Episode)}} {{SEASONEPISODE({{VAL(parentIndex:{{GET(parentIndex)}})}}:{{VAL(index:0)}})}}]]></subtitle>
           <relatedContent>
             <lockup>
               <img src="{{IMAGEURL(thumb::768)}}" />

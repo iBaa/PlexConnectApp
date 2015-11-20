@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0103CD841BFF81D5008AC23E /* TVShow_PrePlayDescription.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0103CD831BFF81D5008AC23E /* TVShow_PrePlayDescription.xml */; };
 		011EC01C1BEA6B6A008C3CC6 /* Music_MenuBar.xml in Resources */ = {isa = PBXBuildFile; fileRef = 011EC01B1BEA6B6A008C3CC6 /* Music_MenuBar.xml */; };
 		011EC01E1BEA6CBA008C3CC6 /* Music_Directory.xml in Resources */ = {isa = PBXBuildFile; fileRef = 011EC01D1BEA6CBA008C3CC6 /* Music_Directory.xml */; };
 		011EC0221BEA94A3008C3CC6 /* Music_TrackList.xml in Resources */ = {isa = PBXBuildFile; fileRef = 011EC0211BEA94A3008C3CC6 /* Music_TrackList.xml */; };
@@ -20,6 +21,7 @@
 		016474C31BE7EFEC0075EBC6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016474C21BE7EFEC0075EBC6 /* ViewController.swift */; };
 		016BE1651BF51E5200EA6126 /* JsInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016BE1641BF51E5200EA6126 /* JsInterface.swift */; };
 		016BE16A1BF525BB00EA6126 /* js in Resources */ = {isa = PBXBuildFile; fileRef = 016BE1691BF525BB00EA6126 /* js */; };
+		01A3C32A1BFF7BD100BBB7B1 /* Movie_PrePlayDescription.xml in Resources */ = {isa = PBXBuildFile; fileRef = 01A3C3291BFF7BD100BBB7B1 /* Movie_PrePlayDescription.xml */; };
 		01ACE6D11BF7CB4A0036A8FE /* Playlists_Video.xml in Resources */ = {isa = PBXBuildFile; fileRef = 01ACE6D01BF7CB4A0036A8FE /* Playlists_Video.xml */; };
 		01ACE6D31BF7D0900036A8FE /* Playlists_Audio.xml in Resources */ = {isa = PBXBuildFile; fileRef = 01ACE6D21BF7D0900036A8FE /* Playlists_Audio.xml */; };
 		01CE20951BE6AF9200A2F10A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CE208F1BE6AF9200A2F10A /* AppDelegate.swift */; };
@@ -52,6 +54,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0103CD831BFF81D5008AC23E /* TVShow_PrePlayDescription.xml */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = text.xml; name = TVShow_PrePlayDescription.xml; path = PlexConnectApp/TVMLTemplates/TVShow_PrePlayDescription.xml; sourceTree = "<group>"; };
 		011EC01B1BEA6B6A008C3CC6 /* Music_MenuBar.xml */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = text.xml; name = Music_MenuBar.xml; path = PlexConnectApp/TVMLTemplates/Music_MenuBar.xml; sourceTree = "<group>"; };
 		011EC01D1BEA6CBA008C3CC6 /* Music_Directory.xml */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = text.xml; name = Music_Directory.xml; path = PlexConnectApp/TVMLTemplates/Music_Directory.xml; sourceTree = "<group>"; };
 		011EC0211BEA94A3008C3CC6 /* Music_TrackList.xml */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = text.xml; name = Music_TrackList.xml; path = PlexConnectApp/TVMLTemplates/Music_TrackList.xml; sourceTree = "<group>"; };
@@ -65,6 +68,7 @@
 		016474C21BE7EFEC0075EBC6 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		016BE1641BF51E5200EA6126 /* JsInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsInterface.swift; sourceTree = "<group>"; };
 		016BE1691BF525BB00EA6126 /* js */ = {isa = PBXFileReference; lastKnownFileType = folder; name = js; path = PlexConnectApp/js; sourceTree = "<group>"; };
+		01A3C3291BFF7BD100BBB7B1 /* Movie_PrePlayDescription.xml */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = text.xml; name = Movie_PrePlayDescription.xml; path = PlexConnectApp/TVMLTemplates/Movie_PrePlayDescription.xml; sourceTree = "<group>"; };
 		01ACE6D01BF7CB4A0036A8FE /* Playlists_Video.xml */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = text.xml; name = Playlists_Video.xml; path = PlexConnectApp/TVMLTemplates/Playlists_Video.xml; sourceTree = "<group>"; };
 		01ACE6D21BF7D0900036A8FE /* Playlists_Audio.xml */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = text.xml; name = Playlists_Audio.xml; path = PlexConnectApp/TVMLTemplates/Playlists_Audio.xml; sourceTree = "<group>"; };
 		01CE20661BE6ADD500A2F10A /* PlexConnectApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlexConnectApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -166,6 +170,7 @@
 				01CE20AC1BE6B03700A2F10A /* Movie_MenuBar.xml */,
 				01CE20AD1BE6B03700A2F10A /* Movie_OnDeck.xml */,
 				01CE20AE1BE6B03700A2F10A /* Movie_PrePlay.xml */,
+				01A3C3291BFF7BD100BBB7B1 /* Movie_PrePlayDescription.xml */,
 				011EC0211BEA94A3008C3CC6 /* Music_TrackList.xml */,
 				011EC01D1BEA6CBA008C3CC6 /* Music_Directory.xml */,
 				011EC01B1BEA6B6A008C3CC6 /* Music_MenuBar.xml */,
@@ -187,6 +192,7 @@
 				01CE20B71BE6B03700A2F10A /* TVShow_MenuBar.xml */,
 				01CE20B81BE6B03700A2F10A /* TVShow_OnDeck.xml */,
 				01CE20B91BE6B03700A2F10A /* TVShow_PrePlay.xml */,
+				0103CD831BFF81D5008AC23E /* TVShow_PrePlayDescription.xml */,
 				01CE20BA1BE6B03700A2F10A /* TVShow_SeasonList.xml */,
 				01CE20BB1BE6B03700A2F10A /* TVShow_ShowList.xml */,
 			);
@@ -262,6 +268,7 @@
 				01547A8C1BFE606D00643B83 /* TVShow_EpisodeContext.xml in Resources */,
 				01CE20CB1BE6B03700A2F10A /* TVShow_EpisodeList.xml in Resources */,
 				01CE20A51BE6B01B00A2F10A /* MenuBar.xml in Resources */,
+				0103CD841BFF81D5008AC23E /* TVShow_PrePlayDescription.xml in Resources */,
 				011EC01E1BEA6CBA008C3CC6 /* Music_Directory.xml in Resources */,
 				0154E84B1BEE305100343DBB /* Photos.xml in Resources */,
 				01CE20CE1BE6B03700A2F10A /* TVShow_PrePlay.xml in Resources */,
@@ -282,6 +289,7 @@
 				01CE20C81BE6B03700A2F10A /* Settings.xml in Resources */,
 				01CE20C91BE6B03700A2F10A /* SharedLibraries.xml in Resources */,
 				01CE20C31BE6B03700A2F10A /* Movie_PrePlay.xml in Resources */,
+				01A3C32A1BFF7BD100BBB7B1 /* Movie_PrePlayDescription.xml in Resources */,
 				016474A31BE7EB320075EBC6 /* Assets.xcassets in Resources */,
 				016BE16A1BF525BB00EA6126 /* js in Resources */,
 				01CE20BC1BE6B03700A2F10A /* Library.xml in Resources */,

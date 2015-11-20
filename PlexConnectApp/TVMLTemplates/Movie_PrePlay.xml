@@ -42,7 +42,11 @@ See LICENSE.txt for this sample’s licensing information
           <!--badge src="resource://mpaa-pg" class="badge" /-->
           <!--badge src="resource://cc" class="badge" /-->
         </row>
-        <description allowsZooming="true" moreLabel="more"><![CDATA[{{VAL(MediaContainer/Video/summary)}}]]></description><!-- todo: more -->
+        <description allowsZooming="true" moreLabel="more"
+            onSelect="Presenter.loadContext('Movie_PrePlayDescription', '{{PMSID()}}', '{{PATH()}}')"
+            >
+          <![CDATA[{{VAL(MediaContainer/Video/summary)}}]]>
+        </description>
         <!--text>Language information can go here</text-->
         <row>
           <buttonLockup

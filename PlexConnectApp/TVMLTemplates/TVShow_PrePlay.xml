@@ -29,7 +29,7 @@ See LICENSE.txt for this sample’s licensing information
       </infoList>
       <stack>
         <title><![CDATA[{{VAL(MediaContainer/Video/index)}}. {{VAL(MediaContainer/Video/title)}}]]></title>
-        <subtitle>{{VAL(MediaContainer/Video/studio)}}</subtitle>
+        <subtitle><![CDATA[{{VAL(MediaContainer/Video/studio)}}]]></subtitle>
         <row>
           <!--text>rating(Video/contentRating)</text-->
           <text>{{DURATION({{VAL(MediaContainer/Video/duration)}})}}</text>
@@ -38,7 +38,11 @@ See LICENSE.txt for this sample’s licensing information
           <!--badge src="resource://mpaa-pg" class="badge" /-->
           <!--badge src="resource://cc" class="badge" /-->
         </row>
-        <description allowsZooming="true" moreLabel="more"><![CDATA[{{VAL(MediaContainer/Video/summary)}}]]></description><!-- todo: more -->
+        <description allowsZooming="true" moreLabel="more"
+            onSelect="Presenter.loadContext('TVShow_PrePlayDescription', '{{PMSID()}}', '{{PATH()}}')"
+            >
+          <![CDATA[{{VAL(MediaContainer/Video/summary)}}]]>
+        </description>
         <!--text>Language information can go here</text-->
         <row>
           <buttonLockup
