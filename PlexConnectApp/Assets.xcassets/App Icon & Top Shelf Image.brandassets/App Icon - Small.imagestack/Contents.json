@@ -1,10 +1,16 @@
 {
   "layers" : [
     {
-      "filename" : "Front.imagestacklayer"
+      "filename" : "Boy.imagestacklayer"
     },
     {
-      "filename" : "Middle.imagestacklayer"
+      "filename" : "Girl.imagestacklayer"
+    },
+    {
+      "filename" : "Empty.imagestacklayer"
+    },
+    {
+      "filename" : "TVSet.imagestacklayer"
     },
     {
       "filename" : "Back.imagestacklayer"
