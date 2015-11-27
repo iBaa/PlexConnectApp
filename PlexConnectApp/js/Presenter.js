@@ -40,7 +40,7 @@ setupViewDocument: function(view, pmsId, pmsPath) {
   doc.addEventListener("select", Presenter.onSelect.bind(Presenter));
   doc.addEventListener("holdselect", Presenter.onHoldSelect.bind(Presenter));
   doc.addEventListener("play", Presenter.onPlay.bind(Presenter));
-  //doc.addEventListener("highlight", Presenter.onHighlight.bind(Presenter));
+  doc.addEventListener("highlight", Presenter.onHighlight.bind(Presenter));
   doc.addEventListener("load", Presenter.onLoad.bind(Presenter));  // setup search for char entered
   
   return doc
@@ -91,6 +91,26 @@ loadMenuContent: function(view, pmsId, pmsPath) {
   }
 },
 
+loadParade: function(view, pmsId, pmsPath) {
+  console.log("loadParade");
+  var elem = this.event.target;
+  if (!elem) {  // no element?
+    return;
+  }
+  var elem = elem.getElementByTagName("relatedContent");
+  if (elem.hasChildNodes()) {  // related content already populated?
+    return;
+  }
+  
+  // update view
+  var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
+  var elemNew = doc.getElementByTagName("relatedContent");
+  
+  if (elem && elemNew) {
+    elem.innerHTML = elemNew.innerHTML;
+  }
+},
+  
 // store event for downstream use
 event: "",
 
@@ -144,6 +164,19 @@ onPlay: function(event) {
     }
   }
 
+},
+
+onHighlight: function(event) {
+  console.log("onHighlight "+event);
+  this.event = event;
+  var elem = event.target;
+  
+  if (elem) {
+    var onHighlight = elem.getAttribute("onHighlight");  // get onHighlight=...
+    if (onHighlight) {
+      eval(onHighlight);
+    }
+  }
 },
   
 // grab keyboard changes for searchField

@@ -16,6 +16,10 @@
 		0154E8451BEE0D8F00343DBB /* Photo_MenuBar.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0154E8441BEE0D8F00343DBB /* Photo_MenuBar.xml */; };
 		0154E8471BEE0FA800343DBB /* Photo_Browser.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0154E8461BEE0FA800343DBB /* Photo_Browser.xml */; };
 		0154E84B1BEE305100343DBB /* Photos.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0154E84A1BEE305100343DBB /* Photos.xml */; };
+		015D8AA11C08BAD600E5C4DD /* Movie_Parade.xml in Resources */ = {isa = PBXBuildFile; fileRef = 015D8AA01C08BAD600E5C4DD /* Movie_Parade.xml */; };
+		015D8AA31C08E67800E5C4DD /* TVShow_Parade.xml in Resources */ = {isa = PBXBuildFile; fileRef = 015D8AA21C08E67800E5C4DD /* TVShow_Parade.xml */; };
+		015D8AA51C08E68E00E5C4DD /* Photo_Parade.xml in Resources */ = {isa = PBXBuildFile; fileRef = 015D8AA41C08E68E00E5C4DD /* Photo_Parade.xml */; };
+		015D8AA71C08E69900E5C4DD /* Music_Parade.xml in Resources */ = {isa = PBXBuildFile; fileRef = 015D8AA61C08E69900E5C4DD /* Music_Parade.xml */; };
 		016474A31BE7EB320075EBC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 016474A21BE7EB320075EBC6 /* Assets.xcassets */; };
 		016474A61BE7EBD70075EBC6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 016474A41BE7EBD70075EBC6 /* Main.storyboard */; };
 		016474C31BE7EFEC0075EBC6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016474C21BE7EFEC0075EBC6 /* ViewController.swift */; };
@@ -63,6 +67,10 @@
 		0154E8441BEE0D8F00343DBB /* Photo_MenuBar.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Photo_MenuBar.xml; path = PlexConnectApp/TVMLTemplates/Photo_MenuBar.xml; sourceTree = "<group>"; };
 		0154E8461BEE0FA800343DBB /* Photo_Browser.xml */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = text.xml; name = Photo_Browser.xml; path = PlexConnectApp/TVMLTemplates/Photo_Browser.xml; sourceTree = "<group>"; };
 		0154E84A1BEE305100343DBB /* Photos.xml */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = text.xml; name = Photos.xml; path = PlexConnectApp/TVMLTemplates/Photos.xml; sourceTree = "<group>"; };
+		015D8AA01C08BAD600E5C4DD /* Movie_Parade.xml */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = text.xml; name = Movie_Parade.xml; path = PlexConnectApp/TVMLTemplates/Movie_Parade.xml; sourceTree = "<group>"; };
+		015D8AA21C08E67800E5C4DD /* TVShow_Parade.xml */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = text.xml; name = TVShow_Parade.xml; path = PlexConnectApp/TVMLTemplates/TVShow_Parade.xml; sourceTree = "<group>"; };
+		015D8AA41C08E68E00E5C4DD /* Photo_Parade.xml */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = text.xml; name = Photo_Parade.xml; path = PlexConnectApp/TVMLTemplates/Photo_Parade.xml; sourceTree = "<group>"; };
+		015D8AA61C08E69900E5C4DD /* Music_Parade.xml */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = text.xml; name = Music_Parade.xml; path = PlexConnectApp/TVMLTemplates/Music_Parade.xml; sourceTree = "<group>"; };
 		016474A21BE7EB320075EBC6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		016474A51BE7EBD70075EBC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		016474C21BE7EFEC0075EBC6 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -169,13 +177,16 @@
 				01CE20AB1BE6B03700A2F10A /* Movie_List.xml */,
 				01CE20AC1BE6B03700A2F10A /* Movie_MenuBar.xml */,
 				01CE20AD1BE6B03700A2F10A /* Movie_OnDeck.xml */,
+				015D8AA01C08BAD600E5C4DD /* Movie_Parade.xml */,
 				01CE20AE1BE6B03700A2F10A /* Movie_PrePlay.xml */,
 				01A3C3291BFF7BD100BBB7B1 /* Movie_PrePlayDescription.xml */,
 				011EC0211BEA94A3008C3CC6 /* Music_TrackList.xml */,
 				011EC01D1BEA6CBA008C3CC6 /* Music_Directory.xml */,
 				011EC01B1BEA6B6A008C3CC6 /* Music_MenuBar.xml */,
+				015D8AA61C08E69900E5C4DD /* Music_Parade.xml */,
 				0154E8461BEE0FA800343DBB /* Photo_Browser.xml */,
 				0154E8441BEE0D8F00343DBB /* Photo_MenuBar.xml */,
+				015D8AA41C08E68E00E5C4DD /* Photo_Parade.xml */,
 				0154E84A1BEE305100343DBB /* Photos.xml */,
 				011EC0231BEA9AE2008C3CC6 /* PlayAudio.xml */,
 				01CE20AF1BE6B03700A2F10A /* PlayVideo.xml */,
@@ -191,6 +202,7 @@
 				01CE20B61BE6B03700A2F10A /* TVShow_EpisodeList.xml */,
 				01CE20B71BE6B03700A2F10A /* TVShow_MenuBar.xml */,
 				01CE20B81BE6B03700A2F10A /* TVShow_OnDeck.xml */,
+				015D8AA21C08E67800E5C4DD /* TVShow_Parade.xml */,
 				01CE20B91BE6B03700A2F10A /* TVShow_PrePlay.xml */,
 				0103CD831BFF81D5008AC23E /* TVShow_PrePlayDescription.xml */,
 				01CE20BA1BE6B03700A2F10A /* TVShow_SeasonList.xml */,
@@ -275,7 +287,9 @@
 				01ACE6D11BF7CB4A0036A8FE /* Playlists_Video.xml in Resources */,
 				01CE20C21BE6B03700A2F10A /* Movie_OnDeck.xml in Resources */,
 				01CE20CF1BE6B03700A2F10A /* TVShow_SeasonList.xml in Resources */,
+				015D8AA51C08E68E00E5C4DD /* Photo_Parade.xml in Resources */,
 				0154E8451BEE0D8F00343DBB /* Photo_MenuBar.xml in Resources */,
+				015D8AA71C08E69900E5C4DD /* Music_Parade.xml in Resources */,
 				011EC01C1BEA6B6A008C3CC6 /* Music_MenuBar.xml in Resources */,
 				01CE20BD1BE6B03700A2F10A /* List.xml in Resources */,
 				01CE20C61BE6B03700A2F10A /* Search.xml in Resources */,
@@ -288,9 +302,11 @@
 				01CE20CD1BE6B03700A2F10A /* TVShow_OnDeck.xml in Resources */,
 				01CE20C81BE6B03700A2F10A /* Settings.xml in Resources */,
 				01CE20C91BE6B03700A2F10A /* SharedLibraries.xml in Resources */,
+				015D8AA11C08BAD600E5C4DD /* Movie_Parade.xml in Resources */,
 				01CE20C31BE6B03700A2F10A /* Movie_PrePlay.xml in Resources */,
 				01A3C32A1BFF7BD100BBB7B1 /* Movie_PrePlayDescription.xml in Resources */,
 				016474A31BE7EB320075EBC6 /* Assets.xcassets in Resources */,
+				015D8AA31C08E67800E5C4DD /* TVShow_Parade.xml in Resources */,
 				016BE16A1BF525BB00EA6126 /* js in Resources */,
 				01CE20BC1BE6B03700A2F10A /* Library.xml in Resources */,
 			);
@@ -415,6 +431,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = PlexConnectApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "-.PlexConnectApp";
@@ -429,6 +446,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = PlexConnectApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "-.PlexConnectApp";

@@ -6,7 +6,7 @@ See LICENSE.txt for this sample’s licensing information
 {{CUT({{GET(noItems)}})}}{{
 {{SET(noItems:true)}}
 <document>
-  <listTemplate>
+  <paradeTemplate>
     <list>
       <!--
       <relatedContent>
@@ -31,32 +31,40 @@ See LICENSE.txt for this sample’s licensing information
         <listItemLockup
             onSelect="Presenter.load('Movie_MenuBar', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onSelectHold="modal"
+            onHighlight="Presenter.loadParade('Movie_Parade', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             >
           <title><![CDATA[{{VAL(title)}}]]></title>
+          <relatedContent />
         </listItemLockup>
 }}
 {{IF({{CHK("{{VAL(type:)}}"=="show")}})}}{{
         <listItemLockup
             onSelect="Presenter.load('TVShow_MenuBar', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onSelectHold="modal"
+            onHighlight="Presenter.loadParade('TVShow_Parade', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             >
           <title><![CDATA[{{VAL(title)}}]]></title>
+          <relatedContent />
         </listItemLockup>
 }}
 {{IF({{CHK("{{VAL(type:)}}"=="artist")}})}}{{
         <listItemLockup
             onSelect="Presenter.load('Music_MenuBar', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onSelectHold="modal"
+            onHighlight="Presenter.loadParade('Music_Parade', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             >
           <title><![CDATA[{{VAL(title)}}]]></title>
+          <relatedContent />
         </listItemLockup>
 }}
 {{IF({{CHK("{{VAL(type:)}}"=="photo")}})}}{{
         <listItemLockup
             onSelect="Presenter.load('Photo_MenuBar', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onSelectHold="modal"
+            onHighlight="Presenter.loadParade('Photo_Parade', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             >
           <title><![CDATA[{{VAL(title)}}]]></title>
+          <relatedContent />
         </listItemLockup>
 }}
 }}
@@ -74,7 +82,7 @@ See LICENSE.txt for this sample’s licensing information
 }}
 }}
     </list>
-  </listTemplate>
+  </paradeTemplate>
 </document>
 }}
 
