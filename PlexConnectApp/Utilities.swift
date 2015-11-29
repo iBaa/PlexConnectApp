@@ -119,3 +119,12 @@ func readResource(file: NSString) -> NSString {
     //print(content)
     return content
 }
+
+// find resourcefile, return URL
+func getResourceUrl(file: String, ext: String, dir: String) -> String {
+    let bundle = NSBundle.mainBundle()
+    if let url = bundle.URLForResource(file, withExtension: ext, subdirectory: dir) {
+        return url.absoluteString
+    }
+    return ""
+}

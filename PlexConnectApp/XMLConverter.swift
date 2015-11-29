@@ -602,9 +602,13 @@ class cXmlConverter {
         }
         
         let key = _self.getKey(XML, par: &par)
-        let res = getPmsUrl(key, pmsId: _self.pmsId!, pmsPath: _self.pmsPath!)  // todo: pmsId, pmsPath optional?
-        
-        return res
+        if (key != "") {
+            let res = getPmsUrl(key, pmsId: _self.pmsId!, pmsPath: _self.pmsPath!)  // todo: pmsId, pmsPath optional?
+            return res
+        } else {
+            let res = getResourceUrl("missing-image", ext: "png", dir: "Images")
+            return res
+        }
     }
     
     var processEVAL: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
