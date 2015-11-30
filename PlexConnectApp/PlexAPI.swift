@@ -227,7 +227,7 @@ func getVideoPath(video: XMLIndexer, partIx: Int, pmsId: String, pmsPath: String
         "1080p 40.0Mbps": ("1920x1080", "100", "40000")
     ]
     var quality: [String: String] = [:]
-    if plexUserInformation.getAttribute("local") == "1" {
+    if PlexMediaServerInformation[pmsId]!.getAttribute("publicAddressMatches") == "1" {  // todo: check if pmsId is useable
         quality["resolution"] = qualityLookup[settings.getSetting("transcoderQuality")]?.0
         quality["quality"] = qualityLookup[settings.getSetting("transcoderQuality")]?.1
         quality["bitrate"] = qualityLookup[settings.getSetting("transcoderQuality")]?.2
