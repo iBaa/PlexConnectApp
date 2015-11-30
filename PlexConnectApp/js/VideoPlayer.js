@@ -24,7 +24,9 @@ var player = null;  // todo: treat all those variables more "locally" to videoPl
  */
 var videoPlayer = {
   
-play: function(pmsId, pmsPath) {
+play: function(pmsId, pmsPath, resume) {
+  // resume: optional value - string "resume" to start first video at "resumeTime"
+  
   // get video list
   var docString = swiftInterface.getViewIdPath('PlayVideo', pmsId, pmsPath);  // error handling?
   
@@ -51,10 +53,8 @@ play: function(pmsId, pmsPath) {
     mediaItem.url = video.getTextContent('mediaUrl');
     mediaItem.title = video.getTextContent('title');
     mediaItem.subtitle = video.getTextContent('subtitle');
-    mediaItem.type = video.getTextContent('genre');
     mediaItem.artworkImageURL = video.getTextContent('imageURL');
     mediaItem.description = video.getTextContent('description');
-    // mediaItem.resumeTime = 0;
 
     // PMS
     mediaItem.key = video.getTextContent('key');
@@ -79,10 +79,19 @@ play: function(pmsId, pmsPath) {
   player = new Player();
   player.playlist = playlist;
   
-  player.addEventListener("timeDidChange", videoPlayer.onTimeDidChange, {"interval":5})
-  player.addEventListener("stateDidChange", videoPlayer.onStateDidChange)
-  player.addEventListener("mediaItemDidChange", videoPlayer.onMediaItemDidChange)
+  player.addEventListener("timeDidChange", videoPlayer.onTimeDidChange, {"interval":5});
+  player.addEventListener("stateWillChange", videoPlayer.onStateWillChange);
+  player.addEventListener("stateDidChange", videoPlayer.onStateDidChange);
+  player.addEventListener("mediaItemDidChange", videoPlayer.onMediaItemDidChange);
   
+  // "resume" first video
+  if (resume=="resume") {
+    var video = doc.getElementByTagName("video");
+    var resumeTime = video.getTextContent('resumeTime');  // in ms
+    
+    player.seekToTime(resumeTime/1000)  // todo: stacked media - roll resumeTime into next part
+  }
+
   // start player
   player.play();
 },
@@ -129,17 +138,54 @@ onTimeDidChange: function(timeObj) {
     updateSubtitle(thisReportTime);
   */
 },
+
+onStateWillChange: function(stateObj) {
+  console.log("onStateWillChange: "+stateObj.oldState+" to "+stateObj.state);
+ 
+  // states: begin, scanning, loading, paused, playing, end
+  newState = stateObj.state;
   
+  if (newState == 'end') {  // approaching state "end"
+    // modify PrePlay Screen - resume button
+    var doc = navigationDocument.documents[navigationDocument.documents.length-1];
+    var elem = doc.getElementById("resume");
+
+    var resumeThreshold = 60000;  // 1min in ms  // check with PMS time thresholds
+    var finishThreshold = duration-60000;  // 1min in ms before the end
+
+    if (elem) {
+      if (elem.hasAttribute("disabled") &&
+          lastReportedTime >= resumeThreshold &&
+          lastReportedTime < finishThreshold) {  // enable resume button to have it handy after menu-ing out
+
+        var newElem = elem.cloneNode(true);
+        newElem.removeAttribute("disabled");
+        elem.outerHTML = newElem.outerHTML;
+      }
+      else if (!elem.hasAttribute("disabled") &&
+          lastReportedTime >= finishThreshold) {  // disable resume button - video is done completely
+
+        var newElem = elem.cloneNode(true);
+        newElem.setAttribute("disabled", "true");
+        elem.outerHTML = newElem.outerHTML;
+      }
+    }
+  }
+},
+
 onStateDidChange: function(stateObj) {
   console.log("onStateDidChange: "+stateObj.oldState+" to "+stateObj.state);
 
-  // states: begin, loading, paused, playing, end
+  // states: begin, scanning, loading, paused, playing, end
   newState = stateObj.state;
   pmsState = null;
   
   if (newState == 'loading')  // loading state, tell PMS we're buffering
   {
     pmsState = 'buffering';
+  }
+  else if (newState == 'scanning') {  // scanning state - RW or FF, +/-10sec
+    
   }
   else if (newState == 'paused')  // pause state, ping transcoder to keep session alive
   {

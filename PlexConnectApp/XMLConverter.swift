@@ -51,6 +51,7 @@ class cXmlConverter {
             "SET": processSET!,
             "GET": processGET!,
             "PATH": processPATH!,
+            "RESOURCEURL": processRESOURCEURL!,
             "VIDEOURL": processVIDEOURL!,
             "AUDIOURL": processAUDIOURL!,
             "PHOTOURL": processPHOTOURL!,
@@ -445,6 +446,18 @@ class cXmlConverter {
         return res
     }
 
+    var processRESOURCEURL: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
+        _self, XML, _par in
+
+        var par = _par.componentsSeparatedByString(":")
+        let dir = _self.getParam(XML,par: &par)
+        let file = _self.getParam(XML,par: &par)
+        let ext = _self.getParam(XML,par: &par)
+
+        let res = getResourceUrl(file, ext: ext, dir: dir)
+        return res
+    }
+    
     var processPMSCNT: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
         _self, XML, _par in
         

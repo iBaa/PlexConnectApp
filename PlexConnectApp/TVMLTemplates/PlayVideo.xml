@@ -16,11 +16,11 @@ See LICENSE.txt for this sample’s licensing information
       <mediaUrl>{{VIDEOURL()}}</mediaUrl>
       <title><![CDATA[{{VAL(title)}}]]></title>
       <subtitle><![CDATA[{{VAL(subtitle)}}]]></subtitle>
-      <genre><![CDATA[{{VAL(Genre/tag)}}]]></genre>
       <description><![CDATA[{{VAL(summary)}}]]></description>
-      <bookmarkTime>{{EVAL({{VAL(viewOffset:0)}} / 1000)}}</bookmarkTime>
       <imageURL>{{IMAGEURL(thumb::384)}}</imageURL>
-    
+      
+      <resumeTime>{{VAL(viewOffset:0)}}</resumeTime>
+      
       <!-- PMS -->
       <key>{{VAL(key)}}</key>
       <ratingKey>{{VAL(ratingKey)}}</ratingKey>

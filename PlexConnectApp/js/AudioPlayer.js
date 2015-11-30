@@ -42,13 +42,12 @@ play: function(pmsId, pmsPath) {  // todo: startAt, shuffle
   for (var ix=0; ix<tracks.length; ix++) {
     var track = tracks.item(ix);  // why not [ix]?
     
-    var mediaItem = new MediaItem("video");
+    var mediaItem = new MediaItem("audio");
     
     // player
     mediaItem.url = track.getTextContent('mediaUrl');
     mediaItem.title = track.getTextContent('title');
     mediaItem.subtitle = track.getTextContent('subtitle');
-    mediaItem.type = track.getTextContent('genre');
     mediaItem.artworkImageURL = track.getTextContent('imageURL');
     mediaItem.description = track.getTextContent('description');
     // mediaItem.resumeTime = 0;

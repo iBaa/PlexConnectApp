@@ -16,9 +16,7 @@ See LICENSE.txt for this sample’s licensing information
       <mediaUrl>{{AUDIOURL()}}</mediaUrl>
       <title><![CDATA[{{VAL(title)}}]]></title>
       <subtitle><![CDATA[{{VAL(subtitle)}}]]></subtitle>
-      <genre><![CDATA[{{VAL(Genre/tag)}}]]></genre>
       <description><![CDATA[{{VAL(summary)}}]]></description>
-      <bookmarkTime>{{EVAL({{VAL(viewOffset:0)}} / 1000)}}</bookmarkTime>
       <imageURL>{{IMAGEURL(grandparentThumb::384)}}</imageURL>
     
       <!-- PMS -->
