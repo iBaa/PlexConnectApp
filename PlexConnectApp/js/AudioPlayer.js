@@ -21,7 +21,16 @@ var player = null;
 
 var audioPlayer = {
 
-play: function(pmsId, pmsPath) {  // todo: startAt, shuffle
+play: function(pmsId, pmsPath) {
+  // parse optional argument: "startAt",ix; "shuffle"
+  var startAt = 0;
+  var shuffle = false;
+  if(arguments[2]=="startAt") {
+    startAt = arguments[3];
+  } else if (arguments[2]=="shuffle") {
+    shuffle = true;
+  }
+  
   // get track list
   var docString = swiftInterface.getViewIdPath('PlayAudio', pmsId, pmsPath);  // error handling?
   
@@ -39,8 +48,15 @@ play: function(pmsId, pmsPath) {  // todo: startAt, shuffle
   var playlist = new Playlist();
   
   var tracks = doc.getElementsByTagName("track");
-  for (var ix=0; ix<tracks.length; ix++) {
-    var track = tracks.item(ix);  // why not [ix]?
+  
+  // startAt/shuffle: create array of tracks to play
+  var arr = range(startAt,tracks.length-1);
+  if (shuffle) {
+    arr = shuffleArray(arr);
+  }
+
+  for (var ix in arr) {
+    var track = tracks.item(arr[ix]);  // why not [arr[ix]]?
     
     var mediaItem = new MediaItem("audio");
     

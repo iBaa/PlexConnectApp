@@ -62,6 +62,31 @@ if (!String.prototype.format) {
 
 
 
+// range
+function range(start, end) {
+    var arr = [];
+    for (var i = start; i <= end; i++) {
+        arr.push(i);
+    }
+    return arr;
+}
+
+// shuffleArray
+// basics from http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+function shuffleArray(arr) {
+    var temp, j, i = arr.length;
+    while (--i) {
+        j = ~~(Math.random() * (i + 1));
+        temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    
+    return arr;
+}
+
+
+
 // Networking stuff
 
 // Send http request - disregard response

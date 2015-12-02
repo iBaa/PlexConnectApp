@@ -15,20 +15,18 @@ See LICENSE.txt for this sample’s licensing information
 
       <section>
         <!-- shuffle -->
-        <!--
         <listItemLockup
-            onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', 'shuffle')"
             onSelectHold="modal"
             >
           <title>{{TEXT(Shuffle)}}</title>
-          <decorationImage src="resource://shuffle" />
+          <decorationImage src="resource://button-shuffle" />
         </listItemLockup>
-        -->
         <!-- now playing -->
         <listItemLockup
-          onSelect="audioPlayer.nowPlaying()"
-          onSelectHold="modal"
-          >
+            onSelect="audioPlayer.nowPlaying()"
+            onSelectHold="modal"
+            >
           <title>{{TEXT(Now Playing)}}</title>
           <decorationImage src="resource://chevron" />
         </listItemLockup>
