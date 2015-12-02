@@ -16,13 +16,14 @@ var lastTranscoderPingTime;
 var isTranscoding = false;
 var pingTimer = null;
 
-// the player
-var player = null;  // todo: treat all those variables more "locally" to videoPlayer?
+
 
 /*
  https://developer.apple.com/library/prerelease/tvos/samplecode/TVMLAudioVideo/Listings/client_js_application_js.html#//apple_ref/doc/uid/TP40016506-client_js_application_js-DontLinkElementID_6
  */
 var videoPlayer = {
+    
+player: null,  // the player
   
 play: function(pmsId, pmsPath, resume) {
   // resume: optional value - string "resume" to start first video at "resumeTime"
@@ -76,7 +77,7 @@ play: function(pmsId, pmsPath, resume) {
   isTranscoding = (mediaItem.url.indexOf('transcode/universal') > -1);
 
   // create video player
-  player = new Player();
+  var player = new Player();
   player.playlist = playlist;
   
   player.addEventListener("timeDidChange", videoPlayer.onTimeDidChange, {"interval":5});
@@ -94,6 +95,8 @@ play: function(pmsId, pmsPath, resume) {
 
   // start player
   player.play();
+  
+  videoPlayer.player = player;
 },
 
 onTimeDidChange: function(timeObj) {
@@ -246,6 +249,7 @@ onMediaItemDidChange: function(event) {
   // event.reason: 0-Unknown, 1-Played to end, 2-Forwarded to end, 3-Errored, 4-Playlist changed, 5-User initiated
   
   // media information
+  var player = videoPlayer.player;
   if (player && player.currentMediaItem) {
     var mediaItem = player.currentMediaItem;
 

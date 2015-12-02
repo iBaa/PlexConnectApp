@@ -16,10 +16,11 @@ var lastTranscoderPingTime;
 var isTranscoding = false;
 var pingTimer = null;
 
-// the player
-var player = null;
+
 
 var audioPlayer = {
+  
+player: null,  // the player
 
 play: function(pmsId, pmsPath) {
   // parse optional argument: "startAt",ix; "shuffle"
@@ -88,7 +89,7 @@ play: function(pmsId, pmsPath) {
   isTranscoding = (mediaItem.url.indexOf('transcode/universal') > -1);
 
   // create audio player
-  player = new Player();
+  var player = new Player();
   player.playlist = playlist;
   
   player.addEventListener("timeDidChange", audioPlayer.onTimeDidChange, {"interval":5})
@@ -98,11 +99,13 @@ play: function(pmsId, pmsPath) {
   // start player
   player.present();  // todo: bug? why do we need present, then play? will stay at "paused" otherwise.
   player.play();
+  
+  audioPlayer.player = player;
 },
 
 nowPlaying: function() {
-  if(player) {
-    player.present();  // todo: disable button if player unavailbale
+  if(audioPlayer.player) {
+    audioPlayer.player.present();  // todo: disable button if player unavailbale
   }
 },
   
@@ -188,7 +191,7 @@ onStateDidChange: function(stateObj) {
         url = url + '&X-Plex-Token=' + pmsToken;
       loadPage(url);
     }
-    player = null  // free player to get cleaned up
+    //player = null  // free player to get cleaned up  // don't. when starting a new track, player will be started, then old one removed.
   }
   
   if (pmsState != null) {
