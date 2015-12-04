@@ -13,6 +13,7 @@ var pmsToken;
 // information for player - computed internally
 var lastReportedTime;
 var lastTranscoderPingTime;
+var partStartTime;  // ms - starting time of stacked media part
 var isTranscoding = false;
 var pingTimer = null;
 
@@ -25,8 +26,18 @@ var videoPlayer = {
     
 player: null,  // the player
   
-play: function(pmsId, pmsPath, resume) {
-  // resume: optional value - string "resume" to start first video at "resumeTime"
+play: function(pmsId, pmsPath) {
+  // parse optional argument: "resume"; "startAt",ix; "shuffle"
+  var resume = false;
+  var startAt = 0;
+  var shuffle = false;
+  if (arguments[2]=="resume") {
+    resume = true;
+  } else if(arguments[2]=="startAt") {
+    startAt = arguments[3];
+  } else if (arguments[2]=="shuffle") {
+    shuffle = true;
+  }
   
   // get video list
   var docString = swiftInterface.getViewIdPath('PlayVideo', pmsId, pmsPath);  // error handling?
@@ -38,42 +49,84 @@ play: function(pmsId, pmsPath, resume) {
   pmsBaseUrl = doc.getTextContent('pmsBaseUrl');
   pmsToken = doc.getTextContent('pmsToken');
   
-  lastReportedTime = -1;
-  lastTranscoderPingTime = -1;
+  lastReportedTime = 0;
+  lastTranscoderPingTime = 0;
   
   // create playlist
   var playlist = new Playlist();
   
   var videos = doc.getElementsByTagName("video");
-  for (var ix=0; ix<videos.length; ix++) {
-    var video = videos.item(ix);  // why not [ix]?
-    
-    var mediaItem = new MediaItem("video");
-    
-    // player
-    mediaItem.url = video.getTextContent('mediaUrl');
-    mediaItem.title = video.getTextContent('title');
-    mediaItem.subtitle = video.getTextContent('subtitle');
-    mediaItem.artworkImageURL = video.getTextContent('imageURL');
-    mediaItem.description = video.getTextContent('description');
-
-    // PMS
-    mediaItem.key = video.getTextContent('key');
-    mediaItem.ratingKey = video.getTextContent('ratingKey');
-    mediaItem.duration = video.getTextContent('duration');
   
-    playlist.push(mediaItem)
+  // startAt/shuffle: create array of tracks to play
+  var arr = range(startAt,videos.length-1);
+  if (shuffle) {
+    arr = shuffleArray(arr);
   }
+    
+  for (var ix in arr) {
+    var video = videos.item(arr[ix]);  // why not [arr[ix]]?
+    
+    var _partStartTime = 0;
+    var parts = video.getElementsByTagName('part');
+    for (var partIx=0; partIx<parts.length; partIx++) {
+      var part = parts.item(partIx);
+      
+      var mediaItem = new MediaItem('video');
+    
+      // player
+      mediaItem.url = part.getTextContent('mediaUrl');
+    
+      mediaItem.title = video.getTextContent('title');
+      mediaItem.subtitle = video.getTextContent('subtitle');  // todo: check subtitle for stacked video
+      mediaItem.artworkImageURL = video.getTextContent('imageURL');
+      mediaItem.description = video.getTextContent('description');
 
+      // PMS
+      mediaItem.key = video.getTextContent('key');
+      mediaItem.ratingKey = video.getTextContent('ratingKey');
+      mediaItem.duration = parseInt(video.getTextContent('duration'));
+      mediaItem.partDuration = parseInt(part.getTextContent('mediaDuration'));
+      
+      mediaItem.partStartTime = _partStartTime;
+      _partStartTime += mediaItem.partDuration;  // stacked media: startTime = sum of previous durations
+  
+      playlist.push(mediaItem)
+    }
+  }
+  
+  // "resume" into consecutive stacked video
+  var resumeTime = 0;
+  if (resume) {
+    var video = doc.getElementByTagName('video');
+    resumeTime = parseInt(video.getTextContent('resumeTime'));  // in ms
+    
+    // skip over already watched parts
+    mediaItem = playlist.item(0);
+    while (resumeTime > mediaItem.partDuration) {
+      playlist.splice(0, 1);  // remove first playlist element
+      resumeTime -= mediaItem.partDuration;
+      mediaItem = playlist.item(0);  // check next
+      if (!mediaItem) {
+        // no media left? - no media, no player...
+        var doc = createAlert("Video Player", "Resume over end of video.");
+        navigationDocument.pushDocument(doc);
+        return
+      }
+    }
+  }
+  
   // read back key, ratingKey from first playlist entry
   mediaItem = playlist.item(0);
   if (!mediaItem) {
     // something went wrong - no media, no player...
+    var doc = createAlert("Video Player", "No media found.");
+    navigationDocument.pushDocument(doc);
     return
   }
   key = mediaItem.key
   ratingKey = mediaItem.ratingKey;
   duration = mediaItem.duration;
+  partStartTime = mediaItem.partStartTime;
   isTranscoding = (mediaItem.url.indexOf('transcode/universal') > -1);
 
   // create video player
@@ -85,15 +138,8 @@ play: function(pmsId, pmsPath, resume) {
   player.addEventListener("stateDidChange", videoPlayer.onStateDidChange);
   player.addEventListener("mediaItemDidChange", videoPlayer.onMediaItemDidChange);
   
-  // "resume" first video
-  if (resume=="resume") {
-    var video = doc.getElementByTagName("video");
-    var resumeTime = video.getTextContent('resumeTime');  // in ms
-    
-    player.seekToTime(resumeTime/1000)  // todo: stacked media - roll resumeTime into next part
-  }
-
   // start player
+  player.seekToTime(resumeTime/1000);
   player.play();
   
   videoPlayer.player = player;
@@ -104,12 +150,11 @@ onTimeDidChange: function(timeObj) {
   
   //remainingTime = Math.round((duration / 1000) - time);
   var thisReportTime = Math.round(timeObj.time*1000)
-  /*
-  // correct thisReportTime with startTime if stacked media part
-  thisReportTime += startTime;
-  */
+  // correct thisReportTime with startTime of stacked media part
+  thisReportTime += partStartTime;
+  
   // report watched time
-  if (lastReportedTime == -1 || Math.abs(thisReportTime-lastReportedTime) > 5000)
+  if (Math.abs(thisReportTime-lastReportedTime) > 5000)
   {
     lastReportedTime = thisReportTime;
     var url = pmsBaseUrl + '/:/timeline?ratingKey=' + ratingKey +
@@ -226,10 +271,6 @@ onStateDidChange: function(stateObj) {
   }
   
   if (pmsState != null) {
-/*
-    // correct thisReportTime with startTime if stacked media part
-    thisReportTime += startTime;
-*/
     var url = pmsBaseUrl + '/:/timeline?ratingKey=' + ratingKey +
               '&key=' + key +
               '&state=' + pmsState +
@@ -256,10 +297,11 @@ onMediaItemDidChange: function(event) {
     key = mediaItem.key;
     ratingKey = mediaItem.ratingKey;
     duration = mediaItem.duration;
+    partStartTime = mediaItem.partStartTime;
     isTranscoding = (mediaItem.url.indexOf('transcode/universal') > -1);
   }
   
-  lastReportedTime = -1;
-  lastTranscoderPingTime = -1;
+  lastReportedTime = partStartTime;
+  lastTranscoderPingTime = partStartTime;
 },
 }

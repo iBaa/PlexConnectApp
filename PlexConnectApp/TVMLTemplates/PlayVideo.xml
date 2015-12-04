@@ -13,7 +13,12 @@ See LICENSE.txt for this sample’s licensing information
 {{
     <video>
       <!-- player -->
-      <mediaUrl>{{VIDEOURL()}}</mediaUrl>
+{{COPY(Media/Part)}}{{
+      <part>
+        <mediaUrl>{{VIDEOURL(@elem_MediaContainer_Video:{{GET(ix_Media_Part)}})}}</mediaUrl>
+        <mediaDuration>{{VAL(duration)}}</mediaDuration>
+      </part>
+}}
       <title><![CDATA[{{VAL(title)}}]]></title>
       <subtitle><![CDATA[{{VAL(subtitle)}}]]></subtitle>
       <description><![CDATA[{{VAL(summary)}}]]></description>

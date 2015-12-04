@@ -137,8 +137,13 @@ class cXmlConverter {
         var elem = XML!
         var lvls = tag.componentsSeparatedByString("/")
         while (lvls.count>0 && lvls[0] != "" ) {
-            // todo: check for special chars - settings, vars, ...  // shouldn't happen, should it?
-            elem = elem[lvls.removeFirst()][0]  // always first element? How about indexing?
+            var lvl = lvls.removeFirst()
+            if (lvl[lvl.startIndex] == "@") {  // startsWith("@") - link to previously stored XML/node
+                lvl.removeAtIndex(lvl.startIndex)  // remove "@"
+                elem = self.xmlCache[lvl]!  // todo: check optional for usability
+            } else {  // walk the tree
+                elem = elem[lvl][0]  // always first element? How about indexing?
+            }
             if (!elem) {
                 return nil
             }
@@ -175,9 +180,9 @@ class cXmlConverter {
         }
 
         // loop over XML elements and recursively process body
-        _self.variables["ix_" + tag] = "0"
         for (ix, _elem) in elem[lvls[0]].enumerate() {
-            _self.variables["ix_" + tag] = String(ix)
+            _self.xmlCache["elem_" + tag.stringByReplacingOccurrencesOfString("/", withString: "_")] = _elem
+            _self.variables["ix_" + tag.stringByReplacingOccurrencesOfString("/", withString: "_")] = String(ix)
             res = res + _self.convert(_body, xmlSection: _elem)
         }
         return res
@@ -256,7 +261,6 @@ class cXmlConverter {
         
         // loop over PMSs
         var res = ""
-        _self.variables["ix_" + tag] = "0"
         for (ix, (_pmsId, _pms)) in PlexMediaServerInformation.enumerate() {  // todo: async in parallel?
             if (_pms.getAttribute("uri") == "") {  // server not online, no connection found
                 continue
@@ -273,7 +277,7 @@ class cXmlConverter {
             
             // recursively process body
             _self.pmsId = _pmsId
-            _self.variables["ix_" + tag] = String(ix)
+            _self.variables["ix_" + tag.stringByReplacingOccurrencesOfString("/", withString: "_")] = String(ix)
             res = res + _self.convert(_body, xmlSection: XML)
         }
         
@@ -546,7 +550,11 @@ class cXmlConverter {
         }
         
         if let video = _self.getNode(XML, par: &par) {
-            var res = getVideoPath(video, partIx: 0, pmsId: _self.pmsId!, pmsPath: _self.pmsPath)  // todo: 0 - multi-part video
+            var partIx = 0
+            if let ix = Int(_self.getParam(XML, par: &par)) {  // optional: partIndex
+                partIx = ix
+            }
+            var res = getVideoPath(video, partIx: partIx, pmsId: _self.pmsId!, pmsPath: _self.pmsPath)
             
             // XML safe?
             res = res.stringByReplacingOccurrencesOfString("&", withString: "&amp;")  // must be first

@@ -38,7 +38,10 @@ if (!Document.prototype.getTextContent) {
 
 if (!Element.prototype.getTextContent) {
     Element.prototype.getTextContent = function(tagName) {
-        var element = this.getElementByTagName(tagName);
+        var element = this;
+        if (tagName) {
+            var element = this.getElementByTagName(tagName);
+        }
         if (element && element.textContent) {
             return element.textContent;
         }
