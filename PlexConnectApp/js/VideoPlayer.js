@@ -171,7 +171,7 @@ onTimeDidChange: function(timeObj) {
 
   // ping transcoder to keep it alive
   if (isTranscoding &&
-      (lastTranscoderPingTime == -1 || Math.abs(thisReportTime-lastTranscoderPingTime) > 60000)
+      (Math.abs(thisReportTime-lastTranscoderPingTime) > 60000)
       )
   {
     lastTranscoderPingTime = thisReportTime;
@@ -299,9 +299,9 @@ onMediaItemDidChange: function(event) {
     duration = mediaItem.duration;
     partStartTime = mediaItem.partStartTime;
     isTranscoding = (mediaItem.url.indexOf('transcode/universal') > -1);
+
+    lastReportedTime = partStartTime;  // reset timer only if other mediaItem follows to stay in sync with key/ratingKey
+    lastTranscoderPingTime = partStartTime;
   }
-  
-  lastReportedTime = partStartTime;
-  lastTranscoderPingTime = partStartTime;
 },
 }

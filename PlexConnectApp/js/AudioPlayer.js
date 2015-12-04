@@ -42,8 +42,8 @@ play: function(pmsId, pmsPath) {
   pmsBaseUrl = doc.getTextContent('pmsBaseUrl');
   pmsToken = doc.getTextContent('pmsToken');
   
-  lastReportedTime = -1;
-  lastTranscoderPingTime = -1;
+  lastReportedTime = 0;
+  lastTranscoderPingTime = 0;
   
   // create playlist
   var playlist = new Playlist();
@@ -81,6 +81,8 @@ play: function(pmsId, pmsPath) {
   mediaItem = playlist.item(0);
   if (!mediaItem) {
     // something went wrong - no media, no player...
+    var doc = createAlert("Audio Player", "No media found.");
+    navigationDocument.pushDocument(doc);
     return
   }
   key = mediaItem.key
@@ -119,7 +121,7 @@ onTimeDidChange: function(timeObj) {
   thisReportTime += startTime;
   */
   // report watched time
-  if (lastReportedTime == -1 || Math.abs(thisReportTime-lastReportedTime) > 5000)
+  if (Math.abs(thisReportTime-lastReportedTime) > 5000)
   {
     lastReportedTime = thisReportTime;
     var url = pmsBaseUrl + '/:/timeline?ratingKey=' + ratingKey +
@@ -136,7 +138,7 @@ onTimeDidChange: function(timeObj) {
 
   // ping transcoder to keep it alive
   if (isTranscoding &&
-      (lastTranscoderPingTime == -1 || Math.abs(thisReportTime-lastTranscoderPingTime) > 60000)
+      (Math.abs(thisReportTime-lastTranscoderPingTime) > 60000)
       )
   {
     lastTranscoderPingTime = thisReportTime;
@@ -221,9 +223,9 @@ onMediaItemDidChange: function(event) {
     ratingKey = mediaItem.ratingKey;
     duration = mediaItem.duration;
     isTranscoding = (mediaItem.url.indexOf('transcode/universal') > -1);
+      
+    lastReportedTime = 0;
+    lastTranscoderPingTime = 0;
   }
-  
-  lastReportedTime = -1;
-  lastTranscoderPingTime = -1;
 },
 }
