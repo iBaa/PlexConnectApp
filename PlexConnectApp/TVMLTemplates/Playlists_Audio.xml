@@ -21,6 +21,11 @@ See LICENSE.txt for this sample’s licensing information
             >
           <title>{{TEXT(Shuffle)}}</title>
           <decorationImage src="resource://button-shuffle" />
+          <relatedContent>
+            <lockup>
+              <img src="{{IMAGEURL(MediaContainer/composite::768)}}" />
+            </lockup>
+          </relatedContent>
         </listItemLockup>
         <!-- now playing -->
         <listItemLockup
