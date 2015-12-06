@@ -1,0 +1,16 @@
+Icon (layered)
+ - Boy
+ - Girl
+ - Empty
+ - TVSet
+ - PlexInc Logo, Background
+2700x1620 -> scale to 400x240
+2700x1620 -> scale to 1280x768
+
+TopShelf
+ - Boy, Girl, TVSet, PlexInc Logo, Background
+2700x1013 -> scale to 1920x720
+
+MissingImage
+ - Boy, Girl, TVSet, QuestionMark, Background
+1790x1790 -> scale to 100x100
