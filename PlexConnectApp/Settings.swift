@@ -1,5 +1,5 @@
 //
-//  Settigns.swift
+//  Settings.swift
 //  PlexConnectApp
 //
 //  Created by Baa on 28.10.15.
@@ -42,6 +42,14 @@ class cSettings {
             "Auto", "DirectPlay", "Transcode"
             ], 0
         ),
+        "theme": ([
+            "Default",
+            ], 0
+        ),
+        "themeExternalOverride": ([
+            "off", "127.0.0.1:1844"
+            ], 0
+        ),
     ]
     
     init() {
@@ -66,6 +74,18 @@ class cSettings {
         return ""
     }
     
+    func setSetting(key: String, ix: Int) {
+        if let setting = _settings[key] {
+            let (choices, dflt) = setting
+            
+            if ix < 0 || ix >= choices.count {  // ==0: uninitialised; >count: out of range
+                _storage.setInteger(dflt+1, forKey: key)
+            } else {
+                _storage.setInteger(ix+1, forKey: key)
+            }
+        }
+    }
+
     func toggleSetting(key: String) -> String {
         if let setting = _settings[key] {
             let (choices, dflt) = setting

@@ -65,7 +65,7 @@ class cXmlConverter {
     
     func setup(reqFile: String,
         pmsId: String?, pmsPath: String?, query: [String: String]) {
-            self.template = readResource(reqFile) as String
+            self.template = readTVMLTemplate(reqFile, theme: settings.getSetting("theme"))
             self.pmsId = pmsId
             self.pmsPath = pmsPath
             //self.query = query

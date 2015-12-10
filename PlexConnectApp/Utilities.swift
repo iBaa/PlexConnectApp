@@ -95,30 +95,77 @@ func getInnerBrackets(str: String, pos: Int=0, open: String="(", close:  String=
 
 
 
-// find, open an read resourcefile
-func readResource(file: NSString) -> NSString {
-    // parse filename
-    let pos = file.rangeOfString(".", options: NSStringCompareOptions.BackwardsSearch)
-    let name = file.substringToIndex(pos.location)
-    let ext = file.pathExtension // or substringFromIndex
-    
-    // find resource in bundle
-    let bundle = NSBundle.mainBundle()
-    let path = bundle.pathForResource(name, ofType: ext)
-    //print(path)
-    
-    // read resource
-    let content: NSString
-    do {
-        content = try NSString.init(contentsOfFile: path!, encoding: NSUTF8StringEncoding)
-    } catch let error {
-        content = ""
-        print("***error reading file: \(error)")
+// find, open and read resourcefile
+func readTVMLTemplate(name: String, theme: String) -> String {
+    var content: String
+
+    let themeExternalOverride = settings.getSetting("themeExternalOverride")
+    if themeExternalOverride == "off" {
+        // get resource from bundle
+        let theme = settings.getSetting("theme")
+        content = readResource(name, ext: "xml", dir: "TVMLTemplates"+"/" + theme)
+    } else {
+        // catch external TVMLTemplate
+        if let extContent = readExternalContent("http://" + "127.0.0.1:1844" + "/" + name + ".xml") {  // todo: flexible IP:port
+            content = extContent
+        } else {
+            content = readResource("Theme_NoExternal", ext: "xml", dir: "TVMLTemplates")
+        }
+
     }
     
     //print(content)
     return content
 }
+
+func readResource(file: String, ext: String, dir: String) -> String {
+    var content: String
+    
+    // find resource in bundle
+    let bundle = NSBundle.mainBundle()
+    let path = bundle.pathForResource(file, ofType: ext, inDirectory: dir)
+    
+    // read resource
+    do {
+        content = try NSString.init(contentsOfFile: path!, encoding: NSUTF8StringEncoding) as String
+    } catch let error {
+        content = ""
+        print("***error reading file: \(error)")
+    }
+    return content
+}
+
+// get resource from remote url
+func readExternalContent(url: String) -> String? {
+    // request URL, wait for response, return data
+    var content: String? = nil
+    
+    let dsptch = dispatch_semaphore_create(0)
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+        let _nsurl = NSURL(string: url)        
+        let _nsurlSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        _nsurlSessionConfiguration.URLCache = nil  // for development: do not cache anything, always load current TVMLTemplate
+        let _nsurlSession = NSURLSession(configuration: _nsurlSessionConfiguration)
+        
+        let task = _nsurlSession.dataTaskWithURL(_nsurl!, completionHandler: { (data, response, error) -> Void in
+            // get response
+            if (error == nil) {
+                if let httpResp = response as? NSHTTPURLResponse {
+                    if httpResp.statusCode == 200 {
+                        content = String(data: data!, encoding: NSUTF8StringEncoding)
+                    }
+                }
+            }
+            dispatch_semaphore_signal(dsptch)
+        });
+        task.resume()
+    })
+    dispatch_semaphore_wait(dsptch, dispatch_time(DISPATCH_TIME_NOW, httpTimeout))
+    
+    return content
+}
+
+
 
 // find resourcefile, return URL
 func getResourceUrl(file: String, ext: String, dir: String) -> String {

@@ -19,6 +19,7 @@ import TVMLKit
     
     // Settings
     func toggleSetting(setting: String, view: String) -> String
+    func resetSetting(setting: String) -> String
     
     // PlexAPI
     func discover(view: String) -> String
@@ -36,7 +37,7 @@ class cJsInterface: NSObject, jsInterfaceProtocol {
     // XMLConverter
     func getView(view: String, id: String, path: String) -> String {
         let processor = cXmlConverter()  // new class instance each time? or just re-setup and run?
-        processor.setup(view+".xml", pmsId: id, pmsPath: path, query: [:])
+        processor.setup(view, pmsId: id, pmsPath: path, query: [:])
         
         let TVMLTemplate = processor.doIt()
         return TVMLTemplate
@@ -48,6 +49,12 @@ class cJsInterface: NSObject, jsInterfaceProtocol {
         
         return getView(view, id: "", path: "")
     }
+    func resetSetting(setting: String) -> String {
+        settings.setSetting(setting, ix: 0)
+        
+        return settings.getSetting(setting)
+    }
+
     
     // PlexAPI
     func discover(view: String) -> String {
