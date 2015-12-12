@@ -11,6 +11,12 @@ See LICENSE.txt for this sample’s licensing information
     <banner>
       <infoList>
         <info>
+          <ratingCard style="tv-align: right;">
+            <ratingBadge style="tv-rating-style: star-hollow-l;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
+          </ratingCard>
+        </info>
+        
+        <info>
           <header>
             <title>{{TEXT(Directors)}}</title>
           </header>
