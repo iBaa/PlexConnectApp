@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+<document>
+    <head>
+        <style>
+            .lightBackgroundColor {
+            background-color: #85837e;
+            }
+        </style>
+    </head>
+
+
+
+    <alertTemplate theme="dark" class="lightBackgroundColor">
+        <title>Please choose a Plex Media Server</title>
+         <description>This should be actually auto populated with a list of available servers...</description>
+        <button onSelect="">
+            <text>1st Server</text>
+        </button>
+        <button onSelect="">
+            <text>2nd Server</text>
+        </button>
+        <button onSelect="">
+            <text>3rd Server</text>
+        </button>
+        
+    </alertTemplate>
+</document>
+

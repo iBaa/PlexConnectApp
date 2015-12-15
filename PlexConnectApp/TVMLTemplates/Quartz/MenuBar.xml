@@ -1,0 +1,21 @@
+<document>
+    <head>
+        <style>
+            .lightBackgroundColor {
+            background-color: #85837e;
+            }
+        </style>
+    </head>
+    
+    
+    
+    <alertTemplate class="lightBackgroundColor">
+        <title></title>
+        <description>This this is just a lame way to get rid of that menu bar...
+        </description>
+        <button onHighlight="Presenter.load('Library', '', '{{PATH(/library/sections)}}')"
+            onSelect="Presenter.load('Library', '', '{{PATH(/library/sections)}}')">
+            <text>Welcome</text>
+        </button>
+    </alertTemplate>
+</document>
