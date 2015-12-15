@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{XML()}}{{
+<document>
+  <head>
+    <style>
+      .title {
+        tv-text-style: title2;
+        color: rgb(255,255,255);
+        background-color: transparent;
+      }
+      .description {
+        tv-text-style: body;
+        color: rgb(255,255,255);
+        background-color: rgba(0,0,0,0.2);  /* background color when highlighted */
+        tv-text-max-lines: 3;
+      }
+      .detailRow {
+        tv-interitem-spacing: 30;  /* space between items in row */
+        tv-content-align: center;  /* vertical adjustment */
+        tv-align: left;
+        margin: 10 0;
+      }
+      .detailText {
+        font-size: 20;
+        color: rgb(255,255,255);
+      }
+      .buttonRow {
+        tv-interitem-spacing: 30;  /* space between buttons in row */
+        tv-align: left;
+        margin: 20 0;  /* space around element: vertical, hoizontal */
+      }
+      .buttonBadge {
+        tv-tint-color: rgb(255,255,255);  /* color of button image foreground if inactive */
+      }
+      .buttonText {
+        tv-text-style: caption1;  /* button text style */
+        tv-align: center;  /* alignment of text relative to button */
+        color: rgb(255,255,255);  /* color of caption text when highlighted */
+        background-color: transparent;  /* background color of text when highlighted */
+        text-align: center;  /* center caption under button */
+      }
+    </style>
+  </head>
+  <divTemplate>
+    <!--fanart-->
+    <background>
+      <img src="{{IMAGEURL(MediaContainer/Video/art)}}" width="1920" height="1080" />
+    </background>
+    
+    <lockup>
+      <!--gradient-->
+      <img src="{{RESOURCEURL(TVMLTemplates/Fanart:gradient_1920x1080:png)}}" width="1920" height="1080" />
+      <overlay>
+        
+        <row style="height: 320;" />  <!--vertical space-->
+        <row style="tv-content-align: bottom;" autoHighlight="true">
+          <img src="{{RESOURCEURL(TVMLTemplates/Fanart:empty_1x1:png)}}" width="100" height="1" />  <!--todo: horizontal space-->
+          
+          <lockup>
+            <!--heroImg-->
+            <img src="{{IMAGEURL(MediaContainer/Video/thumb)}}" width="400" height="600"/>
+            <row style="height: 100;" />  <!--vertical space-->
+          </lockup>
+          <img src="{{RESOURCEURL(TVMLTemplates/Fanart:empty_1x1:png)}}" width="40" height="1" />  <!--todo: horizontal space-->
+          
+          <lockup>  <!-- should be "stack", shouldn't it?-->
+            <img src="{{RESOURCEURL(TVMLTemplates/Fanart:empty_1x1:png)}}" width="1280" height="1" />  <!--todo: horizontal space, how to do it correctly?-->
+            <!--title-->
+            <title class="title"><![CDATA[{{VAL(MediaContainer/Video/title)}}]]></title>
+            <!--description-->
+            <row>
+              <img src="{{RESOURCEURL(TVMLTemplates/Fanart:empty_1x1:png)}}" width="1" height="108" />  <!--todo: vertical space, height, min-height, max-height don't work in description-->
+              <description class="description" allowsZooming="true" moreLabel="more"
+                  onSelect="Presenter.loadContext('Movie_PrePlayDescription', '{{PMSID()}}', '{{PATH()}}')"
+                  >
+                <![CDATA[{{VAL(MediaContainer/Video/summary)}}]]>
+              </description>
+            </row>
+            <!--details-->
+            <row class="detailRow">
+              <ratingBadge style="tv-rating-style: star-m;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}" />
+              <text class="detailText">{{VAL(MediaContainer/Video/year)}}</text>
+              <text class="detailText">{{VAL(MediaContainer/Video/Genre/tag)}}</text>
+              <text class="detailText">{{DURATION({{VAL(MediaContainer/Video/duration)}})}}</text>
+            </row>
+            <!--buttons-->
+            <row class="buttonRow" autoHighlight="true">
+              <buttonLockup class="button"
+                  onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH()}}')"
+                  >
+                <badge class="buttonBadge" src="resource://button-play" />
+                <title class="buttonText">{{TEXT(Play)}}</title>
+              </buttonLockup>
+              <buttonLockup class="button"
+                  id="resume"
+                  {{IF(!{{VAL(MediaContainer/Video/viewOffset:0)}})}}{{disabled="true"}}
+                  autoHighlight="true"
+                  onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH()}}', 'resume')"
+                  >
+                <badge class="buttonBadge" src="{{RESOURCEURL(Images:button-resume:png)}}" width="58" height="29" />
+                <title class="buttonText">{{TEXT(Resume)}}</title>
+              </buttonLockup>
+            </row>
+          </lockup>
+        </row>
+        
+      </overlay>
+    </lockup>
+    
+  </divTemplate>
+</document>
+}}

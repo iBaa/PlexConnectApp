@@ -103,13 +103,25 @@ func readTVMLTemplate(name: String, theme: String) -> String {
     if themeExternalOverride == "off" {
         // get resource from bundle
         let theme = settings.getSetting("theme")
-        content = readResource(name, ext: "xml", dir: "TVMLTemplates"+"/" + theme)
+        if let themeContent = readResource(name, ext: "xml", dir: "TVMLTemplates"+"/" + theme) {
+            content = themeContent
+        } else {
+            if let defaultContent = readResource(name, ext: "xml", dir: "TVMLTemplates"+"/"+"Default") {
+                content = defaultContent
+            } else {
+                content = ""
+            }
+        }
     } else {
         // catch external TVMLTemplate
         if let extContent = readExternalContent("http://" + "127.0.0.1:1844" + "/" + name + ".xml") {  // todo: flexible IP:port
             content = extContent
         } else {
-            content = readResource("Theme_NoExternal", ext: "xml", dir: "TVMLTemplates")
+            if let noContent = readResource("Theme_NoExternal", ext: "xml", dir: "TVMLTemplates") {
+                content = noContent
+            } else {
+                content = ""
+            }
         }
 
     }
@@ -118,18 +130,21 @@ func readTVMLTemplate(name: String, theme: String) -> String {
     return content
 }
 
-func readResource(file: String, ext: String, dir: String) -> String {
-    var content: String
+func readResource(file: String, ext: String, dir: String) -> String? {
+    var content: String?
     
     // find resource in bundle
     let bundle = NSBundle.mainBundle()
     let path = bundle.pathForResource(file, ofType: ext, inDirectory: dir)
+    if path == nil {
+        return nil
+    }
     
     // read resource
     do {
         content = try NSString.init(contentsOfFile: path!, encoding: NSUTF8StringEncoding) as String
     } catch let error {
-        content = ""
+        content = nil
         print("***error reading file: \(error)")
     }
     return content

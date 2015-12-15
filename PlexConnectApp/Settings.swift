@@ -43,7 +43,7 @@ class cSettings {
             ], 0
         ),
         "theme": ([
-            "Default",
+            "Default", "Fanart"
             ], 0
         ),
         "themeExternalOverride": ([
