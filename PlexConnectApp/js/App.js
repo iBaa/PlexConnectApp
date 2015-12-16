@@ -38,13 +38,27 @@ App.onLaunch = function(options) {
   evaluateScripts(javascriptFiles, function(success) {
     if(success) {
       console.log(options);
-
-      Presenter.load('MenuBar','','');
+      
+      Presenter.load('MyPlex_Discover','','');
+      swiftInterface.discover('MyPlex_Discover');  // no need for updated view...
+      Presenter.loadAndSwap('Main','','');
     } else {
       var errorDoc = createAlert("Evaluate Scripts Error", "Error attempting to evaluate external JavaScript files.");
       navigationDocument.presentModal(errorDoc);
     }
   });
+}
+
+App.onResume = function() {
+  console.log('onResume');
+  Presenter.load('MyPlex_Discover','','');
+  swiftInterface.discover('MyPlex_Discover');  // no need for updated view...
+  Presenter.loadAndSwap('Main','','');
+}
+
+App.onSuspend = function() {
+  console.log('onSuspend');
+  navigationDocument.clear();
 }
 
 App.onExit = function() {

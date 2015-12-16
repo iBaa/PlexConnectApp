@@ -6,11 +6,10 @@
 /*
  discover
  */
-discover = function(event) {  // todo: show spinner, number of PMSs found
+discover = function(event) {
   var elem = event.target;
   
-  var docSpinner = createSpinner(TEXT("Connecting to your Plex Media Servers..."));
-  navigationDocument.pushDocument(docSpinner);
+  Presenter.load("MyPlex_Discover", "", "");
   
   var docString = swiftInterface.discover("Settings");
   var parser = new DOMParser();
