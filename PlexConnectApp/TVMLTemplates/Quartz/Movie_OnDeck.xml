@@ -125,43 +125,6 @@ See LICENSE.txt for this sample’s licensing information
 
 
 
-
-
-<!--<shelf id="shelf_Sections">
-    <section>
-        <header>
-            <title>{{TEXT(Browse library by)}}</title>
-        </header>
-        <lockup onSelect="Presenter.load('Movie_List', '{{PMSID()}}', '{{PATH(all)}}')">
-            
-            <img src="http://skins.smartplus.cz/pedja-xbmc/icons/_all.png" width="309" height="309" />
-            <title class="showTextOnHighlight">{{TEXT(All videos)}}</title>
-        </lockup>
-        <lockup onSelect="Presenter.load('Movie_List', '{{PMSID()}}', '{{PATH(unwatched)}}')">
-            
-            <img src="http://skins.smartplus.cz/pedja-xbmc/icons/_unwatched.png" width="309" height="300" />
-            <title class="showTextOnHighlight">{{TEXT(Unwatched)}}</title>
-        </lockup>
-        <lockup onSelect="Presenter.load('Movie_List', '{{PMSID()}}', '{{PATH(recentlyViewed)}}')">
-            
-            <img src="http://skins.smartplus.cz/pedja-xbmc/icons/_rec_viewed.png" width="309" height="300" />
-            <title class="showTextOnHighlight">{{TEXT(Recently viewed)}}</title>
-        </lockup>
-        <lockup onSelect="Presenter.load('Movie_List', '{{PMSID()}}', '{{PATH(year)}}')">
-            
-            <img src="http://skins.smartplus.cz/pedja-xbmc/icons/_year.png" width="309" height="300" />
-            <title class="showTextOnHighlight">{{TEXT(by Year)}}</title>
-        </lockup>
-        <lockup onSelect="Presenter.load('Movie_List', '{{PMSID()}}', '{{PATH(decade)}}')">
-            
-            <img src="http://skins.smartplus.cz/pedja-xbmc/icons/_decade.png" width="309" height="300" />
-            <title class="showTextOnHighlight">{{TEXT(by Decade)}}</title>
-        </lockup>
-        
-    </section>
-</shelf>-->
-
-
 {{XML(newest)}}{{
 {{IFNODE(MediaContainer/Video)}}{{
         <shelf id="shelf_RecentlyReleased">
