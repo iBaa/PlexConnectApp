@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{XML(?includeExtras=1)}}{{
+<document>
+  <productTemplate>
+    <background>
+    </background>
+    <banner>
+      <infoList>
+        <info>
+          <ratingCard style="tv-align: right;">
+            <ratingBadge style="tv-rating-style: star-m;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
+          </ratingCard>
+        </info>
+        
+        <info>
+          <header>
+            <title>{{TEXT(Director)}}</title>
+          </header>
+          <text>{{VAL(MediaContainer/Video/Director/tag)}}</text>
+        </info>
+        <info>
+          <header>
+            <title>{{TEXT(Producer)}}</title>
+          </header>
+          <text>{{VAL(MediaContainer/Video/Producer/tag)}}</text>
+        </info>
+        
+        <info>
+          <header>
+            <title>{{TEXT(Actors)}}</title>
+          </header>
+{{COPY(MediaContainer/Video/Role)}}{{  <!-- COPY till 5 or so? -->
+          <text>{{VAL(tag)}}</text>
+}}
+        </info>
+      </infoList>
+      <stack>
+        <title><![CDATA[{{VAL(MediaContainer/Video/title)}}]]></title>
+        <row>
+          <!--<badge src="resource://cc" /-->
+          <!--text>rating(Video/contentRating)</text-->
+          <text>{{DURATION({{VAL(MediaContainer/Video/duration)}})}}</text>
+          <text>{{VAL(MediaContainer/Video/Genre/tag)}}</text>
+          <text>{{VAL(MediaContainer/Video/year)}}</text>
+          <!--badge src="resource://mpaa-pg" class="badge" /-->
+          <!--badge src="resource://cc" class="badge" /-->
+        </row>
+        <description allowsZooming="true" moreLabel="more"
+            onSelect="Presenter.loadContext('Movie_PrePlayDescription', '{{PMSID()}}', '{{PATH()}}')"
+            >
+          <![CDATA[{{VAL(MediaContainer/Video/summary)}}]]>
+        </description>
+        <!--text>Language information can go here</text-->
+        <row>
+          <buttonLockup
+              onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH()}}')"
+              >
+            <badge src="resource://button-play" />
+            <title>{{TEXT(Play)}}</title>
+          </buttonLockup>
+
+          <buttonLockup
+              id="resume"
+              {{IF(!{{VAL(MediaContainer/Video/viewOffset:0)}})}}{{disabled="true"}}
+              onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH()}}', 'resume')"
+              >
+            <badge src="{{RESOURCEURL(Images:button-resume:png)}}" width="58" height="29" />
+            <title>{{TEXT(Resume)}}</title>
+          </buttonLockup>
+
+        </row>
+      </stack>
+      <heroImg src="{{IMAGEURL(MediaContainer/Video/thumb::)}}" />
+    </banner>
+
+{{IFNODE(MediaContainer/Video/Extras/Video:)}}{{
+    <shelf>
+      <header>
+        <title>{{TEXT(Extras)}}</title>
+      </header>
+      <section>
+        {{COPY(MediaContainer/Video/Extras/Video)}}
+        {{
+        <lockup
+            onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            >
+          <img src="{{IMAGEURL(thumb::384)}}" width="306" height="207" />
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <subtitle>{{TABLE({{VAL(extraType)}}:{{TEXT(Clip)}}:1:{{TEXT(Trailer)}}:2:{{TEXT(Deleted Scene)}}:3:{{TEXT(Interview)}}:4:{{TEXT(Music Video)}}:5:{{TEXT(Behind the Scenes)}}:6:{{TEXT(Scene)}}:7:{{TEXT(Live Video)}}:8:{{TEXT(Lyrics Video)}})}}</subtitle>
+        </lockup>
+        }}
+      </section>
+    </shelf>
+}}
+<!-- Everything past this is below the fold -->
+
+{{XML(/library/metadata/{{VAL(MediaContainer/Video/ratingKey)}}/similar)}}{{
+{{IFNODE(MediaContainer/Video:)}}{{
+    <shelf>
+      <header>
+        <title>{{TEXT(Related Movies)}}</title>
+      </header>
+      <section>
+        {{COPY(MediaContainer/Video)}}
+        {{
+        <lockup
+            onSelect="Presenter.loadAndSwap('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            >
+          <img src="{{IMAGEURL(thumb::384)}}" width="207" height="309" />
+          <title><![CDATA[{{VAL(title)}}]]></title>
+        </lockup>
+        }}
+      </section>
+    </shelf>
+}}
+}}
+  </productTemplate>
+</document>
+}}
