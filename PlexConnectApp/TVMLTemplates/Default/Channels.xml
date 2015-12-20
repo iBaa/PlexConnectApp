@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+<document>
+  <listTemplate>
+    <list>
+      <!--
+      <relatedContent>
+        <itemBanner>
+          <heroImg src="${this.BASEURL}resources/images/italy/italy_10_square.jpg" />
+        </itemBanner>
+      </relatedContent>
+      -->
+      <header>
+        <title>{{TEXT(Channels)}}</title>
+      </header>
+
+{{PMSLOOP(owned)}}{{
+{{XML(/video)}}{{  <!--hit /channels/all for non-specific media list, sorted by last used-->
+{{IF({{VAL(MediaContainer/size)}})}}{{
+      <section>
+        <header>
+          <title>{{PMSVAL(name)}} - {{TEXT(Video)}}</title>
+        </header>
+{{COPY(MediaContainer/Directory)}}{{
+{{SET(noItems:false)}}
+        <listItemLockup
+            onSelect="Presenter.load('Movie_Directory', '{{PMSID()}}', '{{PATH(/video/{{VAL(key)}})}}')"
+            onSelectHold="modal"
+            >
+            <!--todo: fix PATH() with hard prefix plus changing key
+                      it's not failsafe, key could start with "/" to address root-->
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <relatedContent>
+            <lockup>
+              <img src="{{IMAGEURL(thumb::768)}}" />
+            </lockup>
+          </relatedContent>
+        </listItemLockup>
+}}
+      </section>
+}}
+}}
+
+{{XML(/music)}}{{
+{{IF({{VAL(MediaContainer/size)}})}}{{
+      <section>
+        <header>
+          <title>{{PMSVAL(name)}} - {{TEXT(Audio)}}</title>
+        </header>
+{{COPY(MediaContainer/Directory)}}{{
+{{SET(noItems:false)}}
+        <listItemLockup
+            onSelect="Presenter.load('Music_Directory', '{{PMSID()}}', '{{PATH(/music/{{VAL(key)}})}}')"
+            onSelectHold="modal"
+            >
+            <!--todo: fix PATH() with hard prefix plus changing key
+                      it's not failsafe, key could start with "/" to address root-->
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <relatedContent>
+            <lockup>
+              <img src="{{IMAGEURL(thumb::768)}}" />
+            </lockup>
+          </relatedContent>
+        </listItemLockup>
+}}
+      </section>
+}}
+}}
+
+{{XML(/photos)}}{{
+{{IF({{VAL(MediaContainer/size)}})}}{{
+      <section>
+        <header>
+          <title>{{PMSVAL(name)}} - {{TEXT(Photo)}}</title>
+        </header>
+{{COPY(MediaContainer/Directory)}}{{
+{{SET(noItems:false)}}
+        <listItemLockup
+            onSelect="Presenter.load('Photo_Browser', '{{PMSID()}}', '{{PATH(/photos/{{VAL(key)}})}}')"
+            onSelectHold="modal"
+            >
+            <!--todo: fix PATH() with hard prefix plus changing key
+                      it's not failsafe, key could start with "/" to address root-->
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <relatedContent>
+            <lockup>
+              <img src="{{IMAGEURL(thumb::768)}}" />
+            </lockup>
+          </relatedContent>
+        </listItemLockup>
+}}
+      </section>
+}}
+}}
+
+}}
+    </list>
+  </listTemplate>
+</document>
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>TITLE</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

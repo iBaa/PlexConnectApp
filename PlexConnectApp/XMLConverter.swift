@@ -447,6 +447,13 @@ class cXmlConverter {
             }
         }
         
+        // XML safe?
+        res = res.stringByReplacingOccurrencesOfString("&", withString: "&amp;")  // must be first
+        res = res.stringByReplacingOccurrencesOfString("<", withString: "&lt;")
+        res = res.stringByReplacingOccurrencesOfString(">", withString: "&gt;")
+        res = res.stringByReplacingOccurrencesOfString("'", withString: "&apos;")
+        res = res.stringByReplacingOccurrencesOfString("\"", withString: "&quot;")
+        
         return res
     }
 
@@ -560,6 +567,8 @@ class cXmlConverter {
             res = res.stringByReplacingOccurrencesOfString("&", withString: "&amp;")  // must be first
             res = res.stringByReplacingOccurrencesOfString("<", withString: "&lt;")
             res = res.stringByReplacingOccurrencesOfString(">", withString: "&gt;")
+            res = res.stringByReplacingOccurrencesOfString("'", withString: "&apos;")
+            res = res.stringByReplacingOccurrencesOfString("\"", withString: "&quot;")
             
             return res
         }
@@ -582,6 +591,8 @@ class cXmlConverter {
             res = res.stringByReplacingOccurrencesOfString("&", withString: "&amp;")  // must be first
             res = res.stringByReplacingOccurrencesOfString("<", withString: "&lt;")
             res = res.stringByReplacingOccurrencesOfString(">", withString: "&gt;")
+            res = res.stringByReplacingOccurrencesOfString("'", withString: "&apos;")
+            res = res.stringByReplacingOccurrencesOfString("\"", withString: "&quot;")
             
             return res
         }
@@ -606,6 +617,8 @@ class cXmlConverter {
             res = res.stringByReplacingOccurrencesOfString("&", withString: "&amp;")  // must be first
             res = res.stringByReplacingOccurrencesOfString("<", withString: "&lt;")
             res = res.stringByReplacingOccurrencesOfString(">", withString: "&gt;")
+            res = res.stringByReplacingOccurrencesOfString("'", withString: "&apos;")
+            res = res.stringByReplacingOccurrencesOfString("\"", withString: "&quot;")
             
             return res
         }
@@ -623,8 +636,18 @@ class cXmlConverter {
         }
         
         let key = _self.getKey(XML, par: &par)
-        if (key != "") {
-            let res = getPmsUrl(key, pmsId: _self.pmsId!, pmsPath: _self.pmsPath!)  // todo: pmsId, pmsPath optional?
+        if key.hasPrefix("http://") || key.hasPrefix("https://") {  // external address, eg. channels - keep
+            return key
+        } else if (key != "") {
+            var res: String
+            res = getPmsUrl(key, pmsId: _self.pmsId!, pmsPath: _self.pmsPath!)  // todo: pmsId, pmsPath optional?
+            // XML safe?
+            res = res.stringByReplacingOccurrencesOfString("&", withString: "&amp;")  // must be first
+            res = res.stringByReplacingOccurrencesOfString("<", withString: "&lt;")
+            res = res.stringByReplacingOccurrencesOfString(">", withString: "&gt;")
+            res = res.stringByReplacingOccurrencesOfString("'", withString: "&apos;")
+            res = res.stringByReplacingOccurrencesOfString("\"", withString: "&quot;")
+            
             return res
         } else {
             let res = getResourceUrl("missing-image", ext: "png", dir: "Images")
