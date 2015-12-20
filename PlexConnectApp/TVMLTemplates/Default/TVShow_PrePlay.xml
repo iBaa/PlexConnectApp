@@ -39,8 +39,8 @@ See LICENSE.txt for this sample’s licensing information
         <row>
           <!--text>rating(Video/contentRating)</text-->
           <text>{{DURATION({{VAL(MediaContainer/Video/duration)}})}}</text>
-          <text>{{VAL(MediaContainer/Video/Genre/tag)}}</text>
-          <text>{{VAL(MediaContainer/Video/year)}}</text>
+          <text><![CDATA[{{VAL(MediaContainer/Video/Genre/tag)}}]]></text>
+          <text><![CDATA[{{VAL(MediaContainer/Video/year)}}]]></text>
           <!--badge src="resource://mpaa-pg" class="badge" /-->
           <!--badge src="resource://cc" class="badge" /-->
         </row>

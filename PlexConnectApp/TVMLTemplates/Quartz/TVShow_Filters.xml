@@ -3,6 +3,8 @@
 Copyright (C) 2015 Baa. All rights reserved.
 See LICENSE.txt for this sample’s licensing information
 -->
+{{XML()}}
+{{
 <document>
     <head>
         <style>
@@ -13,11 +15,9 @@ See LICENSE.txt for this sample’s licensing information
     </head>
 
 
-
     <alertTemplate theme="dark" class="lightBackgroundColor">
-        <title>Sort Movies:</title>
-         <description>This should be actually auto populated with appropriate section filters...</description>
-        <button onSelect="Presenter.load('Movie_List', '{{PMSID()}}', '{{PATH(all)}}')">
+        <title>Sort TV Shows:</title>
+        <button onSelect="Presenter.load('TVShow_Grid', '{{PMSID()}}', '{{PATH(all)}}')">
             <text>By Title</text>
         </button>
         <button onSelect="Presenter.load('Genres', '{{PMSID()}}', '{{PATH(genre)}}')">
@@ -26,4 +26,4 @@ See LICENSE.txt for this sample’s licensing information
         
     </alertTemplate>
 </document>
-
+}}

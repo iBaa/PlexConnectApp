@@ -3,7 +3,7 @@
 Copyright (C) 2015 Baa. All rights reserved.
 See LICENSE.txt for this sample’s licensing information
 -->
-{{XML(?includeExtras=1)}}{{
+{{XML()}}{{
 <document>
   <productTemplate>
     <background>
@@ -12,36 +12,31 @@ See LICENSE.txt for this sample’s licensing information
       <infoList>
         <info>
           <ratingCard style="tv-align: right;">
-            <ratingBadge style="tv-rating-style: star-m;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
+            <ratingBadge style="tv-rating-style: star-hollow-l;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
           </ratingCard>
         </info>
         
         <info>
           <header>
-            <title>{{TEXT(Director)}}</title>
+            <title>{{TEXT(Directors)}}</title>
           </header>
-          <text>{{VAL(MediaContainer/Video/Director/tag)}}</text>
+{{COPY(MediaContainer/Video/Director)}}{{  <!-- COPY till 5 or so? -->
+          <text>{{VAL(tag)}}</text>
+}}
         </info>
         <info>
           <header>
-            <title>{{TEXT(Producer)}}</title>
+            <title>{{TEXT(Writers)}}</title>
           </header>
-          <text>{{VAL(MediaContainer/Video/Producer/tag)}}</text>
-        </info>
-        
-        <info>
-          <header>
-            <title>{{TEXT(Actors)}}</title>
-          </header>
-{{COPY(MediaContainer/Video/Role)}}{{  <!-- COPY till 5 or so? -->
+{{COPY(MediaContainer/Video/Writer)}}{{  <!-- COPY till 5 or so? -->
           <text>{{VAL(tag)}}</text>
 }}
         </info>
       </infoList>
       <stack>
-        <title><![CDATA[{{VAL(MediaContainer/Video/title)}}]]></title>
+        <title><![CDATA[{{VAL(MediaContainer/Video/index)}}. {{VAL(MediaContainer/Video/title)}}]]></title>
+        <subtitle><![CDATA[{{VAL(MediaContainer/Video/studio)}}]]></subtitle>
         <row>
-          <!--<badge src="resource://cc" /-->
           <!--text>rating(Video/contentRating)</text-->
           <text>{{DURATION({{VAL(MediaContainer/Video/duration)}})}}</text>
           <text><![CDATA[{{VAL(MediaContainer/Video/Genre/tag)}}]]></text>
@@ -50,7 +45,7 @@ See LICENSE.txt for this sample’s licensing information
           <!--badge src="resource://cc" class="badge" /-->
         </row>
         <description allowsZooming="true" moreLabel="more"
-            onSelect="Presenter.loadContext('Movie_PrePlayDescription', '{{PMSID()}}', '{{PATH()}}')"
+            onSelect="Presenter.loadContext('TVShow_PrePlayDescription', '{{PMSID()}}', '{{PATH()}}')"
             >
           <![CDATA[{{VAL(MediaContainer/Video/summary)}}]]>
         </description>
@@ -62,10 +57,11 @@ See LICENSE.txt for this sample’s licensing information
             <badge src="resource://button-play" />
             <title>{{TEXT(Play)}}</title>
           </buttonLockup>
-
+          
           <buttonLockup
               id="resume"
               {{IF(!{{VAL(MediaContainer/Video/viewOffset:0)}})}}{{disabled="true"}}
+              autoHighlight="true"
               onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH()}}', 'resume')"
               >
             <badge src="{{RESOURCEURL(Images:button-resume:png)}}" width="58" height="29" />
@@ -77,48 +73,29 @@ See LICENSE.txt for this sample’s licensing information
       <heroImg src="{{IMAGEURL(MediaContainer/Video/thumb::)}}" />
     </banner>
 
-{{IFNODE(MediaContainer/Video/Extras/Video:)}}{{
+{{XML(/library/metadata/{{VAL(MediaContainer/Video/parentRatingKey)}}/children)}}{{
+<!--or cascade: (MediaContainer/Video/parentKey)->(MediaContainer/Directory/key)-->
+
     <shelf>
       <header>
-        <title>{{TEXT(Extras)}}</title>
+        <title>{{TEXT(Episodes)}}</title>
       </header>
       <section>
-        {{COPY(MediaContainer/Video/Extras/Video)}}
+        {{COPY(MediaContainer/Video)}}
         {{
         <lockup
-            onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelect="Presenter.loadAndSwap('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
             >
           <img src="{{IMAGEURL(thumb::384)}}" width="306" height="207" />
-          <title><![CDATA[{{VAL(title)}}]]></title>
-          <subtitle>{{TABLE({{VAL(extraType)}}:{{TEXT(Clip)}}:1:{{TEXT(Trailer)}}:2:{{TEXT(Deleted Scene)}}:3:{{TEXT(Interview)}}:4:{{TEXT(Music Video)}}:5:{{TEXT(Behind the Scenes)}}:6:{{TEXT(Scene)}}:7:{{TEXT(Live Video)}}:8:{{TEXT(Lyrics Video)}})}}</subtitle>
+          <title><![CDATA[{{VAL(index)}}. {{VAL(title)}}]]></title>
         </lockup>
         }}
       </section>
     </shelf>
 }}
 <!-- Everything past this is below the fold -->
-
-{{XML(/library/metadata/{{VAL(MediaContainer/Video/ratingKey)}}/similar)}}{{
-{{IFNODE(MediaContainer/Video:)}}{{
-    <shelf>
-      <header>
-        <title>{{TEXT(Related Movies)}}</title>
-      </header>
-      <section>
-        {{COPY(MediaContainer/Video)}}
-        {{
-        <lockup
-            onSelect="Presenter.loadAndSwap('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-            >
-          <img src="{{IMAGEURL(thumb::384)}}" width="207" height="306" />
-          <title><![CDATA[{{VAL(title)}}]]></title>
-        </lockup>
-        }}
-      </section>
-    </shelf>
-}}
-}}
   </productTemplate>
 </document>
 }}

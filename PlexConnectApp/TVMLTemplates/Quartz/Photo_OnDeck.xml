@@ -15,7 +15,7 @@ See LICENSE.txt for this sample’s licensing information
             margin: 40;
             }
             .showTextOnHighlight {
-            tv-text-highlight-style: marquee-on-highlight;
+            tv-text-highlight-style: show-on-highlight;
             }
             .roundedImageCorners {
             itml-img-treatment: corner-small;
@@ -24,14 +24,12 @@ See LICENSE.txt for this sample’s licensing information
         </style>
     </head>
     <stackTemplate class="lightBackgroundColor">
-
-
+        <banner>
+            <title>Movies</title>
+        </banner>
 {{XML(onDeck)}}
 
 {{
-        <banner>
-            <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
-        </banner>
 
 
     <collectionList>
@@ -56,7 +54,7 @@ See LICENSE.txt for this sample’s licensing information
             onSelectHold="ScrobbleMenu">
             <img class="roundedImageCorners" src="{{IMAGEURL(art::640)}}" width="547" height="270" />
             <overlay>
-                <progressBar value="{{EVAL({{VAL(viewOffset)}}.0/{{VAL(duration)}}.0)}}"/>
+                <progressBar value="{{EVAL({{VAL(viewOffset)}}/{{VAL(duration)}})}}"/>
                 <!--progressBar value="0.056678888" /-->
             </overlay>
             <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
@@ -67,16 +65,13 @@ See LICENSE.txt for this sample’s licensing information
 </shelf>
 }}
 
-{{XML()}}
-
-{{
 <separator>
-    <button onSelect="Presenter.load('Movie_Filters', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+    <button onSelect="Presenter.load('Filters', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
         <text>Library <badge src="resource://button-dropdown" width="31" height="14" /></text>
         
     </button>
 </separator>
-}}
+
 
 {{XML(recentlyAdded)}}{{
 {{IFNODE(MediaContainer/Video)}}{{
@@ -94,7 +89,7 @@ See LICENSE.txt for this sample’s licensing information
                 onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                 onSelectHold="ScrobbleMenu"
                 >
-              <img src="{{IMAGEURL(thumb::384)}}" width="207" height="306" />
+              <img src="{{IMAGEURL(thumb::384)}}" width="207" height="309" />
               <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
               <subtitle class="showTextOnHighlight">{{VAL(year:&#x00AD;)}}</subtitle>
             </lockup>
@@ -120,7 +115,7 @@ See LICENSE.txt for this sample’s licensing information
             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onSelectHold="ScrobbleMenu"
             >
-            <img src="{{IMAGEURL(thumb::384)}}" width="207" height="306" />
+            <img src="{{IMAGEURL(thumb::384)}}" width="207" height="309" />
             <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
             <subtitle class="showTextOnHighlight">{{VAL(year:&#x00AD;)}}</subtitle>
         </lockup>
@@ -145,7 +140,7 @@ See LICENSE.txt for this sample’s licensing information
                 onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                 onSelectHold="ScrobbleMenu"
                 >
-              <img src="{{IMAGEURL(thumb::384)}}" width="207" height="306" />
+              <img src="{{IMAGEURL(thumb::384)}}" width="207" height="309" />
               <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
               <subtitle class="showTextOnHighlight">{{VAL(year:&#x00AD;)}}</subtitle>
             </lockup>
@@ -169,7 +164,7 @@ See LICENSE.txt for this sample’s licensing information
             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onSelectHold="ScrobbleMenu"
             >
-            <img src="{{IMAGEURL(thumb::384)}}" width="207" height="306" />
+            <img src="{{IMAGEURL(thumb::384)}}" width="207" height="309" />
             <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
             <subtitle class="showTextOnHighlight">{{VAL(year:&#x00AD;)}}</subtitle>
         </lockup>

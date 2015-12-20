@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{XML()}}
+{{
+<document>
+    <head>
+        <style>
+            .lightBackgroundColor {
+            background-color: #85837e;
+            }
+        </style>
+    </head>
+    <alertTemplate theme="dark" class="lightBackgroundColor">
+    
+        <title>Sort Movies:</title>
+         <description>This should be actually auto populated with appropriate section filters...</description>
+        <button onSelect="Presenter.load('Movie_Grid', '{{PMSID()}}', '{{PATH(all)}}')">
+            <text>{{VAL(MediaContainer/Directory/title)}}</text>
+        </button>
+        <button onSelect="Presenter.load('Genres', '{{PMSID()}}', '{{PATH(genre)}}')">
+            <text>By Genre</text>
+        </button>
+        
+    </alertTemplate>
+</document>
+}}

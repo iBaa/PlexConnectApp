@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{CUT({{GET(noItems)}})}}
+{{
+{{SET(noItems:true)}}
+{{XML()}}
+{{
+<document>
+  <head>
+    <style>
+    .whiteButton {
+      tv-tint-color: rgb(255, 255, 255);
+      width: 500;
+      height: 200;
+    }
+    .plot {
+      min-height: 300;
+      max-height: 400;
+      margin: 50;
+    }
+    </style>
+  </head>
+  <compilationTemplate theme="dark">
+    <list>
+      <relatedContent>
+        <itemBanner>
+          <heroImg src="{{IMAGEURL(MediaContainer/art::)}}" />
+          <!--<row>
+            <buttonLockup class="whiteButton">
+              <badge src="" class="whiteButton" />
+              <title/>
+              <text><![CDATA[{{VAL(MediaContainer/summary)}}]]></text>
+            </buttonLockup>
+          </row>-->
+        </itemBanner>
+      </relatedContent>
+      <header>
+        <title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
+        <subtitle><![CDATA[{{VAL(MediaContainer/parentYear)}}]]></subtitle>
+        <row>
+          <text><![CDATA[{{VAL(MediaContainer/Directory/leafCount)}}]]></text>
+          <text><![CDATA[{{VAL(MediaContainer/Directory/leafCount)}}]]></text>
+        </row>
+        
+      </header>
+      <section>
+        <header>
+          <title>EPISODES</title>
+        </header>
+{{COPY(MediaContainer/Video)}}
+{{
+{{SET(noItems:false)}}
+	<listItemLockup autoHighlight="true" onSelect="Presenter.load('TVShow_EpisodeList', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal">
+          <ordinal minLength="5" class="ordinalLayout">{{VAL(parentIndex)}}.{{VAL(index)}}</ordinal>
+          <!-- <img src="{{IMAGEURL(thumb::384)}}" width="100" height="150" /-->
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <subtitle><![CDATA[{{TEXT(Season )}}{{VAL(parentIndex)}}{{TEXT( - Episode )}}{{VAL(index)}}]]></subtitle>
+          <!--<decorationLabel><![CDATA[{{VAL(leafCount)}}]]></decorationLabel>-->
+          <decorationImage src="{{IMAGEURL(thumb::384)}}" width="150" height="96"/>
+        </listItemLockup>
+        
+}}        
+      </section>
+    </list>
+  </compilationTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}
+{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>TITLE</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

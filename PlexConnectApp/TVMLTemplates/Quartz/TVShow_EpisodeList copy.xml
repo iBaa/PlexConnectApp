@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+  <listTemplate>
+    <banner>
+      <title><![CDATA[{{VAL(MediaContainer/grandparentTitle:{{VAL(MediaContainer/parentTitle)}})}}]]></title>
+    </banner>
+{{SET(parentIndex:{{VAL(MediaContainer/parentIndex:0)}})}}  <!--grab parentIndex, might be not available lateron-->
+    <list>
+      <section>
+{{COPY(MediaContainer/Video)}}{{
+{{SET(noItems:false)}}
+        <listItemLockup
+            onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onHoldSelect="Presenter.loadContext('TVShow_EpisodeContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            >
+          <img src="{{IMAGEURL(thumb::384)}}" width="100" height="150" />
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <subtitle><![CDATA[{{TEXT(Episode)}} {{SEASONEPISODE({{VAL(parentIndex:{{GET(parentIndex)}})}}:{{VAL(index:0)}})}}]]></subtitle>
+          <relatedContent>
+            <lockup>
+              <img src="{{IMAGEURL(thumb::768)}}" />
+              <title><![CDATA[{{VAL(title)}}]]></title>
+              <description><![CDATA[{{VAL(summary)}}]]></description>
+            </lockup>
+          </relatedContent>
+        </listItemLockup>
+}}
+      </section>
+      
+    </list>
+  </listTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>TITLE</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}
