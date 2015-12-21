@@ -54,12 +54,14 @@ See LICENSE.txt for this sample’s licensing information
             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onSelectHold="ScrobbleMenu">
             <img class="roundedImageCorners" src="{{IMAGEURL(art::640)}}" width="547" height="270" />
-            <overlay>
+		{{IF({{VAL(viewOffset)}})}}
+		{{
+          <overlay>
                 <progressBar value="{{EVAL({{VAL(viewOffset)}}.0/{{VAL(duration)}}.0)}}"/>
-                <!--progressBar value="0.056678888" /-->
             </overlay>
+		}}
             <title class="showTextOnHighlight"><![CDATA[{{VAL(grandparentTitle)}}]]></title>
-            <subtitle class="showTextOnHighlight"><![CDATA[S{{VAL(parentIndex)}}.E{{VAL(index)}} - {{VAL(title)}}]]></subtitle>
+            <subtitle class="showTextOnHighlight"><![CDATA[S{{VAL(parentIndex)}}.E{{VAL(index)}} • {{VAL(title)}}]]></subtitle>
             
         </lockup>
         }}
@@ -84,7 +86,7 @@ See LICENSE.txt for this sample’s licensing information
           
           <section>
             <header>
-              <title>{{TEXT(Unwatched)}}</title>
+              <title>{{TEXT(Unwatched TV Shows)}}</title>
             </header>
 {{COPY(MediaContainer/Directory)}}{{
 {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
@@ -110,7 +112,7 @@ See LICENSE.txt for this sample’s licensing information
     
     <section>
         <header>
-            <title>{{TEXT(Recently Added)}}</title>
+            <title>{{TEXT(Recently Added Episodes)}}</title>
         </header>
         {{COPY(MediaContainer/Video)}}{{
         {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
@@ -135,7 +137,7 @@ See LICENSE.txt for this sample’s licensing information
         <shelf id="shelf_RecentlyReleased">
           <section>
             <header>
-              <title>{{TEXT(Recently Aired)}}</title>
+              <title>{{TEXT(Recently Aired Episodes)}}</title>
             </header>
 {{COPY(MediaContainer/Video)}}{{
 {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->

@@ -38,7 +38,7 @@
         <subtitle><![CDATA[{{VAL(MediaContainer/parentYear)}}]]></subtitle>
         <row>
           <text><![CDATA[{{VAL(MediaContainer/Directory/leafCount)}}]]> episodes</text>
-          <text><![CDATA[{{EVAL({{VAL(MediaContainer/Directory/leafCount)}} - {{VAL(MediaContainer/Directory/viewedLeafCount)}})}} unwatched]]></text>
+          <text><![CDATA[•  {{EVAL({{VAL(MediaContainer/Directory/leafCount)}}-{{VAL(MediaContainer/Directory/viewedLeafCount)}})}} unwatched]]></text>
         </row>
         
       </header>
@@ -55,16 +55,20 @@
 {{COPY(MediaContainer/Directory)}}
 {{
 {{SET(noItems:false)}}
+	{{IF({{VAL(index)}})}}{{
 	<listItemLockup autoHighlight="true" onSelect="Presenter.load('TVShow_EpisodeList', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onSelectHold="modal">
-          <!--<ordinal minLength="3" class="ordinalLayout">1</ordinal>-->
+           
+          <!--<ordinal minLength="2" class="ordinalLayout">{{VAL(index)}}</ordinal>-->
           <!-- <img src="{{IMAGEURL(thumb::384)}}" width="100" height="150" /-->
           <title><![CDATA[{{VAL(title)}}]]></title>
-          <subtitle>Unwatched <![CDATA[{{EVAL({{VAL(leafCount)}} - {{VAL(viewedLeafCount)}})}} / ]]><![CDATA[{{VAL(leafCount)}}]]></subtitle>
-          <decorationLabel><![CDATA[{{EVAL({{VAL(leafCount)}} - {{VAL(viewedLeafCount)}})}}]]></decorationLabel>
+          <subtitle><![CDATA[{{VAL(leafCount)}} episodes]]></subtitle>
+          
+          <decorationLabel><![CDATA[Unwatched {{EVAL({{VAL(leafCount)}} - {{VAL(viewedLeafCount)}})}}]]></decorationLabel>
+          
           <!--<decorationImage src="{{IMAGEURL(thumb::384)}}" width="100" height="150"/>-->
         </listItemLockup>
-        
+        }}
 }}        
       </section>
     </list>

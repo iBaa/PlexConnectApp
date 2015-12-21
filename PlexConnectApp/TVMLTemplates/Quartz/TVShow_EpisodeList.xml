@@ -23,7 +23,14 @@
     <list>
       <relatedContent>
         <itemBanner>
-          <heroImg src="{{IMAGEURL(MediaContainer/art::)}}" />
+          {{IF({{VAL(MediaContainer/thumb)}})}}
+          {{
+          <heroImg src="{{IMAGEURL(MediaContainer/thumb::)}}" />
+          }}
+          {{IF(!{{VAL(MediaContainer/thumb)}})}}
+          {{
+          <heroImg src="{{IMAGEURL(MediaContainer/grandparentThumb::)}}" />
+          }}
           <!--<row>
             <buttonLockup class="whiteButton">
               <badge src="" class="whiteButton" />
@@ -34,11 +41,11 @@
         </itemBanner>
       </relatedContent>
       <header>
-        <title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
-        <subtitle><![CDATA[{{VAL(MediaContainer/parentYear)}}]]></subtitle>
+        <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
+        <subtitle><![CDATA[{{VAL(MediaContainer/title2)}}]]></subtitle>
         <row>
-          <text><![CDATA[{{VAL(MediaContainer/Directory/leafCount)}}]]></text>
-          <text><![CDATA[{{VAL(MediaContainer/Directory/leafCount)}}]]></text>
+          <text><![CDATA[{{VAL(MediaContainer/size)}} episodes]]></text>
+          <text><![CDATA[Rating: {{VAL(MediaContainer/grandparentContentRating)}}]]></text>
         </row>
         
       </header>
@@ -51,10 +58,10 @@
 {{SET(noItems:false)}}
 	<listItemLockup autoHighlight="true" onSelect="Presenter.load('TVShow_EpisodeList', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onSelectHold="modal">
-          <ordinal minLength="5" class="ordinalLayout">{{VAL(parentIndex)}}.{{VAL(index)}}</ordinal>
+          <ordinal minLength="2" class="ordinalLayout">{{VAL(index)}}</ordinal>
           <!-- <img src="{{IMAGEURL(thumb::384)}}" width="100" height="150" /-->
           <title><![CDATA[{{VAL(title)}}]]></title>
-          <subtitle><![CDATA[{{TEXT(Season )}}{{VAL(parentIndex)}}{{TEXT( - Episode )}}{{VAL(index)}}]]></subtitle>
+          <subtitle><![CDATA[{{TEXT(Aired )}}{{VAL(originallyAvailableAt)}}  •  {{EVAL({{VAL(duration)}}/1000/60)}}{{TEXT( minutes)}}]]></subtitle>
           <!--<decorationLabel><![CDATA[{{VAL(leafCount)}}]]></decorationLabel>-->
           <decorationImage src="{{IMAGEURL(thumb::384)}}" width="150" height="96"/>
         </listItemLockup>
