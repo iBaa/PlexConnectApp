@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{CUT({{GET(noItems)}})}}
+{{
+{{SET(noItems:true)}}
+{{XML()}}
+{{
+<document>
+  <head>
+    <style>
+    .whiteButton {
+      tv-tint-color: rgb(255, 255, 255);
+      width: 500;
+      height: 200;
+    }
+    .plot {
+      min-height: 300;
+      max-height: 400;
+      margin: 50;
+    }
+    </style>
+  </head>
+  <compilationTemplate theme="dark">
+    <list>
+      <relatedContent>
+        <itemBanner>
+          <heroImg src="{{IMAGEURL(MediaContainer/composite::)}}" />
+          <row>
+            <buttonLockup onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', '')">
+              <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images:50play:png)}}" width="50" height="50"/>
+              <title>Play all</title>
+            </buttonLockup>
+            <buttonLockup onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', 'shuffle')">
+              <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images:50shuffle:png)}}" width="50" height="50"/>
+              <title>Shuffle all</title>
+            </buttonLockup>
+            <buttonLockup onSelect="audioPlayer.nowPlaying()">
+              <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images:50speaker:png)}}" width="50" height="50" />
+              <title>Now playing</title>
+            </buttonLockup>
+          </row>
+        </itemBanner>
+      </relatedContent>
+      <header>
+        <title><![CDATA[{{VAL(MediaContainer/title)}}]]></title>
+        <subtitle>playlist</subtitle>
+        <row>
+          <text><![CDATA[{{VAL(MediaContainer/leafCount)}} items]]></text>
+          <text><![CDATA[{{EVAL({{VAL(MediaContainer/duration)}}/60)}}{{TEXT( minutes)}}]]></text>
+        </row>
+        
+      </header>
+      <section>
+        <!-- shuffle -->
+        <listItemLockup
+            onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', 'shuffle')"
+            onSelectHold="modal"
+            >
+          <title>{{TEXT(Shuffle all)}}</title>
+          <img src="{{RESOURCEURL(TVMLTemplates/Quartz/images:null:png)}}" width="90" height="90" />
+          <decorationImage src="{{RESOURCEURL(TVMLTemplates/Quartz/images:50shuffle:png)}}" width="50" height="50" />
+        </listItemLockup>
+      </section>
+      <section>
+        <header>
+          <title>TRACKS</title>
+        </header>
+        <!--<listItemLockup
+            onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', 'shuffle')"
+            onSelectHold="modal"
+            >
+          <title>{{TEXT(Shuffle all tracks)}}</title>
+          <img src="{{RESOURCEURL(TVMLTemplates/Quartz/images:null:png)}}" width="90" height="90" />
+          <decorationImage src="{{RESOURCEURL(TVMLTemplates/Quartz/images:50shuffle:png)}}" width="50" height="50"/>
+        </listItemLockup>-->
+{{COPY(MediaContainer/Track)}}
+{{
+{{SET(noItems:false)}}
+	<listItemLockup onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH()}}')"
+            onSelectHold="modal">
+           
+          <!--<ordinal minLength="3" class="ordinalLayout">{{VAL(index)}}</ordinal-->
+          <img src="{{IMAGEURL(thumb::120)}}" width="90" height="90" />
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <subtitle><![CDATA[{{VAL(grandparentTitle)}}  •  {{VAL(parentTitle)}}]]></subtitle>
+          
+          <decorationLabel>{{DURATION_HMS({{VAL(duration)}})}}</decorationLabel>
+          
+          <!--<decorationImage src="{{IMAGEURL(thumb::384)}}" width="100" height="150"/>-->
+        </listItemLockup>
+    
+}}        
+      </section>
+    </list>
+  </compilationTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}
+{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>TITLE</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

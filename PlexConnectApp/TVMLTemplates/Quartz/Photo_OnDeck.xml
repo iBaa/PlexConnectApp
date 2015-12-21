@@ -20,45 +20,43 @@ See LICENSE.txt for this sample’s licensing information
             .roundedImageCorners {
             itml-img-treatment: corner-small;
             }
+            .overlay {
+            text-align: right;
+            }
 
         </style>
     </head>
-    <stackTemplate class="lightBackgroundColor">
-        <banner>
-            <title>Movies</title>
-        </banner>
-{{XML(onDeck)}}
+{{XML(year)}}
 
 {{
+    <stackTemplate class="lightBackgroundColor">
+        <banner>
+            <title>{{VAL(MediaContainer/title1)}}</title>
+        </banner>
 
 
     <collectionList>
-{{IFNODE(MediaContainer/Video)}}
+{{IFNODE(MediaContainer/Directory)}}
 
 {{
 
-<shelf id="shelf_OnDeck">
+<shelf centered="true" id="shelf_Year">
     
     <section>
         <header>
-            <title>{{TEXT(Continue watching)}}</title>
+            <title>{{VAL(MediaContainer/title2)}}</title>
         </header>
         
-        {{COPY(MediaContainer/Video)}}
+        {{COPY(MediaContainer/Directory)}}
         
         {{
         
         {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
-        <lockup onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-            onSelectHold="ScrobbleMenu">
-            <img class="roundedImageCorners" src="{{IMAGEURL(art::640)}}" width="547" height="270" />
+        <lockup onSelect="Presenter.load('Photo_Browser', '{{PMSID()}}', '{{PATH({{VAL(fastKey)}})}}')">
+            <img class="roundedImageCorners" src="{{RESOURCEURL(TVMLTemplates/Quartz/images:photoFolderTop:png)}}" width="547" height="270" />
             <overlay>
-                <progressBar value="{{EVAL({{VAL(viewOffset)}}/{{VAL(duration)}})}}"/>
-                <!--progressBar value="0.056678888" /-->
+            <title class="overlay"><![CDATA[{{VAL(key)}}]]></title>
             </overlay>
-            <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
-            
         </lockup>
         }}
     </section>
@@ -66,7 +64,7 @@ See LICENSE.txt for this sample’s licensing information
 }}
 
 <separator>
-    <button onSelect="Presenter.load('Filters', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+    <button onSelect="Presenter.load('Photo_Filters', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
         <text>Library <badge src="resource://button-dropdown" width="31" height="14" /></text>
         
     </button>
@@ -74,104 +72,27 @@ See LICENSE.txt for this sample’s licensing information
 
 
 {{XML(recentlyAdded)}}{{
-{{IFNODE(MediaContainer/Video)}}{{
-        <shelf id="shelf_RecentlyAdded">
+{{IFNODE(MediaContainer/Photo)}}{{
+        <grid id="grid_RecentlyAdded">
         <!--<shelf autoHighlight="true" id="shelf_RecentlyAdded">-->
-          
-          <section>
+		  <section>
             <header>
-              <title>{{TEXT(Recently Added)}}</title>
+              <title>{{VAL(MediaContainer/title2)}}</title>
             </header>
-{{COPY(MediaContainer/Video)}}{{
+{{COPY(MediaContainer/Photo)}}{{
 {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
             <lockup
-                onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-                onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-                onSelectHold="ScrobbleMenu"
+                onSelect="photoPresenter.show('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onPlay="photoPresenter.slideshow('{{PMSID()}}', '{{PATH()}}')"
                 >
-              <img src="{{IMAGEURL(thumb::384)}}" width="207" height="309" />
-              <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
-              <subtitle class="showTextOnHighlight">{{VAL(year:&#x00AD;)}}</subtitle>
+              <img src="{{IMAGEURL(thumb::384)}}" width="306" height="306" />
+              <title class="showTextOnHighlight">{{VAL(year:&#x00AD;)}}</title>
             </lockup>
 }}
           </section>
-        </shelf>
+          </grid>
 }} }}
 
-
-
-{{XML(unwatched)}}{{
-{{IFNODE(MediaContainer/Video)}}{{
-<shelf id="shelf_unwatched">
-    
-    <section>
-        <header>
-            <title>{{TEXT(Unwatched)}}</title>
-        </header>
-        {{COPY(MediaContainer/Video)}}{{
-        {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
-        <lockup
-            onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-            onSelectHold="ScrobbleMenu"
-            >
-            <img src="{{IMAGEURL(thumb::384)}}" width="207" height="309" />
-            <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
-            <subtitle class="showTextOnHighlight">{{VAL(year:&#x00AD;)}}</subtitle>
-        </lockup>
-        }}
-    </section>
-</shelf>
-}} }}
-
-
-
-{{XML(newest)}}{{
-{{IFNODE(MediaContainer/Video)}}{{
-        <shelf id="shelf_RecentlyReleased">
-          <section>
-            <header>
-              <title>{{TEXT(Recently Released)}}</title>
-            </header>
-{{COPY(MediaContainer/Video)}}{{
-{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
-            <lockup
-                onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-                onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-                onSelectHold="ScrobbleMenu"
-                >
-              <img src="{{IMAGEURL(thumb::384)}}" width="207" height="309" />
-              <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
-              <subtitle class="showTextOnHighlight">{{VAL(year:&#x00AD;)}}</subtitle>
-            </lockup>
-}}
-          </section>
-        </shelf>
-}} }}
-
-{{XML(recentlyViewed)}}{{
-{{IFNODE(MediaContainer/Video)}}{{
-<shelf id="shelf_recentlyViewed">
-    
-    <section>
-        <header>
-            <title>{{TEXT(Recently Viewed)}}</title>
-        </header>
-        {{COPY(MediaContainer/Video)}}{{
-        {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
-        <lockup
-            onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-            onSelectHold="ScrobbleMenu"
-            >
-            <img src="{{IMAGEURL(thumb::384)}}" width="207" height="309" />
-            <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
-            <subtitle class="showTextOnHighlight">{{VAL(year:&#x00AD;)}}</subtitle>
-        </lockup>
-        }}
-    </section>
-</shelf>
-}} }}
 
 
     </collectionList>

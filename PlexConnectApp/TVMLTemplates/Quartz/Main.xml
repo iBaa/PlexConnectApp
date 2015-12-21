@@ -108,7 +108,7 @@ See LICENSE.txt for this sample’s licensing information
         {{IF({{CHK("{{VAL(type:)}}"=="photo")}})}}
         {{
         <lockup
-          onSelect="Presenter.load('Photo_MenuBar', '{{PMSID()}}', '{{PATH(/library/sections/{{VAL(key)}})}}')"
+          onSelect="Presenter.load('Photo_OnDeck', '{{PMSID()}}', '{{PATH(/library/sections/{{VAL(key)}})}}')"
           onSelectHold="modal"
           >
           
