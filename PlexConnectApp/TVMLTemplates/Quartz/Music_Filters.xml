@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!--
-Copyright (C) 2015 Baa. All rights reserved.
-See LICENSE.txt for this sample’s licensing information
--->
 {{XML()}}
 {{
 <document>
@@ -15,7 +11,7 @@ See LICENSE.txt for this sample’s licensing information
     </head>
     <alertTemplate theme="dark" class="lightBackgroundColor">
     
-        <title>Sort Movies:</title>
+        <title>Sort Music:</title>
          <description>This should be actually auto populated with appropriate section filters...</description>
         <button onSelect="Presenter.load('Movie_Grid', '{{PMSID()}}', '{{PATH(all)}}')">
             <text>{{VAL(MediaContainer/title1)}}</text>

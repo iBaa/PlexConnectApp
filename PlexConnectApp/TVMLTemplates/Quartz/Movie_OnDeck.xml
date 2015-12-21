@@ -26,7 +26,7 @@ See LICENSE.txt for this sample’s licensing information
     <stackTemplate class="lightBackgroundColor">
 
 
-{{XML(onDeck)}}
+{{XML(recentlyAdded)}}
 
 {{
         <banner>

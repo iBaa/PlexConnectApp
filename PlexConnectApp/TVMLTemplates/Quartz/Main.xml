@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!--
-Copyright (C) 2015 Baa. All rights reserved.
-See LICENSE.txt for this sample’s licensing information
--->
 {{CUT({{GET(noItems)}})}}{{
 {{SET(noItems:true)}}
 <document>
@@ -26,29 +22,27 @@ See LICENSE.txt for this sample’s licensing information
       
       }
       .rowLayout {
-      height: 130;
-      margin: 90;
+      height: 100;
+      margin: 60;
       tv-align: right;
       }
       .roundedImageCorners {
       itml-img-treatment: corner-small;
       }
       .banner {
-      height: 210;
+      height: 100;
       }
-      
+      .grid {
+      tv-interitem-spacing: 10;
+      }
     </style>
   </head>
   <stackTemplate theme="light" class="lightBackgroundColor">
-      <identityBanner class="banner">
-      <heroImg src="{{RESOURCEURL(TVMLTemplates/Quartz/images:topBannerSmall:png)}}" width="1740" height="180" />
-      <background>
-          <!--<img src="{{RESOURCEURL(TVMLTemplates/Quartz/images:topBannerSmall:png)}}" width="990" height="180" />-->
-      </background>
-      <!--<img src="resource://NZ-pg" width="90" height="180" />-->
-    <title></title>
-    <subtitle></subtitle>
-	  <row class="rowLayout">
+    <identityBanner class="banner">
+      
+      <title>Quartz</title>
+      <subtitle>theme for PlexConnect</subtitle>
+	  <row>
         <buttonLockup onSelect="Presenter.load('Search_All', '', '')">
             <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images:searchButton:png)}}" width="50" height="50"/>
             <title>Search</title>
@@ -59,15 +53,11 @@ See LICENSE.txt for this sample’s licensing information
         </buttonLockup>
     </row>
     </identityBanner>
-    <collectionList>
+        <collectionList>
     {{PMSLOOP(owned)}}{{
     {{XML({{PATH(/library/sections/)}})}}{{
     
-    <shelf centered="true" id="Library" autoHighlight="true">
-      <header>
-          <title>Library</title>
-      </header>
-      
+    <shelf centered="true" autoHighlight="true">
       <section>
         {{COPY(MediaContainer/Directory)}}
         {{
@@ -79,7 +69,7 @@ See LICENSE.txt for this sample’s licensing information
           onSelectHold="modal"
           >
           
-          <img class="roundedImageCorners" src="{{RESOURCEURL(TVMLTemplates/Quartz/images:bannerMovie:png)}}" height="318" width="547" />
+          <img class="roundedImageCorners" src="{{RESOURCEURL(TVMLTemplates/Quartz/images:bannerMovie:png)}}" height="270" width="547" />
           <title><![CDATA[{{VAL(title)}}]]></title>
         </lockup>
         }}
@@ -90,18 +80,18 @@ See LICENSE.txt for this sample’s licensing information
           onSelectHold="modal"
           >
           
-          <img class="roundedImageCorners" src="{{RESOURCEURL(TVMLTemplates/Quartz/images:bannerTV:png)}}" height="318" width="547" />
+          <img class="roundedImageCorners" src="{{RESOURCEURL(TVMLTemplates/Quartz/images:bannerTV:png)}}" height="270" width="547" />
           <title><![CDATA[{{VAL(title)}}]]></title>
         </lockup>
         }}
         {{IF({{CHK("{{VAL(type:)}}"=="artist")}})}}
         {{
         <lockup
-          onSelect="Presenter.load('Music_MenuBar', '{{PMSID()}}', '{{PATH(/library/sections/{{VAL(key)}})}}')"
+          onSelect="Presenter.load('Music_OnDeck', '{{PMSID()}}', '{{PATH(/library/sections/{{VAL(key)}})}}')"
           onSelectHold="modal"
           >
           
-          <img class="roundedImageCorners" src="{{RESOURCEURL(TVMLTemplates/Quartz/images:bannerMusic:png)}}" height="318" width="547" />
+          <img class="roundedImageCorners" src="{{RESOURCEURL(TVMLTemplates/Quartz/images:bannerMusic:png)}}" height="270" width="547" />
           <title><![CDATA[{{VAL(title)}}]]></title>
         </lockup>
         }}
@@ -112,7 +102,7 @@ See LICENSE.txt for this sample’s licensing information
           onSelectHold="modal"
           >
           
-          <img class="roundedImageCorners" src="{{RESOURCEURL(TVMLTemplates/Quartz/images:bannerPhoto:png)}}" height="318" width="547" />
+          <img class="roundedImageCorners" src="{{RESOURCEURL(TVMLTemplates/Quartz/images:bannerPhoto:png)}}" height="270" width="547" />
           <title><![CDATA[{{VAL(title)}}]]></title>
         </lockup>
         }}
@@ -131,7 +121,7 @@ See LICENSE.txt for this sample’s licensing information
     </separator>
     {{PMSLOOP(owned)}}{{
     {{XML({{PATH(/playlists/)}})}}{{
-    <shelf id="Playlists">
+    <grid class="grid">
       <header>
           <title>Playlists</title>
       </header>
@@ -149,7 +139,7 @@ See LICENSE.txt for this sample’s licensing information
           onSelectHold="modal"
           >
           
-          <img src="{{IMAGEURL(composite::360)}}" height="306" width="306" />
+          <img src="{{IMAGEURL(composite::360)}}" height="254" width="254" />
           <title><![CDATA[{{VAL(title)}}]]></title>
           
         </lockup>
@@ -161,7 +151,7 @@ See LICENSE.txt for this sample’s licensing information
           onSelectHold="modal"
           >
           
-          <img src="{{IMAGEURL(composite::360)}}" height="306" width="306" />
+          <img src="{{IMAGEURL(composite::360)}}" height="254" width="254" />
           <title><![CDATA[{{VAL(title)}}]]></title>
           
         </lockup>
@@ -174,74 +164,8 @@ See LICENSE.txt for this sample’s licensing information
       }}
       }}
 
-    </shelf>
- <!--
-        {{PMSLOOP(owned)}}{{
-    {{XML({{PATH(/channels/all/)}})}}{{
-    <shelf id="Channels">
-      <header>
-          <title>Channels</title>
-      </header>
-      
-      <section>
-        {{COPY(MediaContainer/Directory)}}
-        {{
-        {{SET(noItems:false)}}
-        {{IF({{CHK("{{VAL(type:)}}"=="channel")}})}}
-        {{
-        <lockup
-          onSelect="Presenter.load('List', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-          onSelectHold="modal"
-          >
-          
-          <img src="{{VAL(thumb)}}" height="306" width="306" />
-          <title><![CDATA[{{VAL(title)}}]]></title>
-        </lockup>
-        }}
-        
-        }}
-        
-      </section>
-      }}
-      }}
-
-    </shelf>
-    
-   <shelf>
-     <header>
-       <title>More</title>
-     </header>
-     <section>
-        <lockup onSelect="Presenter.load('Playlists_List', '', '{{PATH(/channels/all)}}')">
-          <img class="roundedImageCorners" src="{{RESOURCEURL(TVMLTemplates/Quartz/images:channels:png)}}" width="250" height="180" />
-          <title>Channels</title>
-        </lockup>
-        <lockup onSelect="Presenter.load('Playlists_List', '', '{{PATH(/playlists)}}')">
-          <img class="roundedImageCorners" src="{{RESOURCEURL(TVMLTemplates/Quartz/images:playlists:png)}}" width="250" height="180" />
-          <title>Playlists</title>
-        </lockup>
-        <lockup>
-          <img class="roundedImageCorners" src="{{RESOURCEURL(TVMLTemplates/Quartz/images:queue:png)}}" width="250" height="180" />
-          <title>Queue</title>
-        </lockup>
-        <lockup onSelect="Presenter.load('SharedLibraries', '', '{{PATH(/library/sections)}}')">
-          <img class="roundedImageCorners" src="{{RESOURCEURL(TVMLTemplates/Quartz/images:shared:png)}}" width="250" height="180" />
-          <title>Shared</title>
-        </lockup>
-        <lockup onSelect="Presenter.load('Search_All', '', '')">
-          <img class="roundedImageCorners" src="{{RESOURCEURL(TVMLTemplates/Quartz/images:search:png)}}" width="250" height="180" />
-          <title>Search</title>
-        </lockup>
-        <lockup onSelect="Presenter.load('Settings', '', '')">
-          <img class="roundedImageCorners" src="{{RESOURCEURL(TVMLTemplates/Quartz/images:settings:png)}}" width="250" height="180" />
-          <title>Settings</title>
-        </lockup>
-        
-      </section>
-    </shelf>
--->
-   
-  
+    </grid>
+ 
   </collectionList>
 
 

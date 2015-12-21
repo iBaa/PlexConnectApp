@@ -23,7 +23,7 @@
     <list>
       <relatedContent>
         <itemBanner>
-          <heroImg src="{{IMAGEURL(MediaContainer/composite::)}}" />
+          <heroImg src="{{IMAGEURL(MediaContainer/thumb::)}}" />
           <row>
             <buttonLockup onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', '')">
               <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images:50playlist:png)}}" width="50" height="50"/>
@@ -41,37 +41,28 @@
         </itemBanner>
       </relatedContent>
       <header>
-        <title><![CDATA[{{VAL(MediaContainer/title)}}]]></title>
-        <subtitle>playlist</subtitle>
+        <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
+        <subtitle><![CDATA[{{VAL(MediaContainer/title2)}}]]></subtitle>
         <row>
-          <text><![CDATA[{{VAL(MediaContainer/leafCount)}} items]]></text>
-          <text><![CDATA[{{EVAL({{VAL(MediaContainer/duration)}}/60)}}{{TEXT( minutes)}}]]></text>
+          <text><![CDATA[{{VAL(MediaContainer/parentYear)}}]]></text>
+          <text><![CDATA[{{VAL(MediaContainer/size)}} tracks]]></text>
         </row>
         
       </header>
+ {{IF({{VAL(MediaContainer/summary)}})}}
+    {{
       <section>
-        <!-- shuffle -->
-        <listItemLockup
-            onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', 'shuffle')"
-            onSelectHold="modal"
-            >
-          <title>{{TEXT(Shuffle all)}}</title>
-          <img src="{{RESOURCEURL(TVMLTemplates/Quartz/images:null:png)}}" width="90" height="90" />
-          <decorationImage src="{{RESOURCEURL(TVMLTemplates/Quartz/images:50shuffle:png)}}" width="50" height="50" />
-        </listItemLockup>
+      	<description allowsZooming="true" moreLabel="MORE"
+            onSelect="Presenter.loadContext('Movie_PrePlayDescription', '{{PMSID()}}', '{{PATH()}}')">
+          <![CDATA[{{VAL(MediaContainer/summary)}}]]>
+        </description>
       </section>
+      }}
       <section>
         <header>
           <title>TRACKS</title>
         </header>
-        <!--<listItemLockup
-            onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', 'shuffle')"
-            onSelectHold="modal"
-            >
-          <title>{{TEXT(Shuffle all tracks)}}</title>
-          <img src="{{RESOURCEURL(TVMLTemplates/Quartz/images:null:png)}}" width="90" height="90" />
-          <decorationImage src="{{RESOURCEURL(TVMLTemplates/Quartz/images:50shuffle:png)}}" width="50" height="50"/>
-        </listItemLockup>-->
+        
 {{COPY(MediaContainer/Track)}}
 {{
 {{SET(noItems:false)}}
@@ -82,7 +73,7 @@
           <!--<ordinal minLength="3" class="ordinalLayout">{{VAL(index)}}</ordinal-->
           <img src="{{IMAGEURL(thumb::120)}}" width="90" height="90" />
           <title><![CDATA[{{VAL(title)}}]]></title>
-          <subtitle><![CDATA[{{VAL(grandparentTitle)}}  •  {{VAL(parentTitle)}}]]></subtitle>
+          <subtitle><![CDATA[{{VAL(parentTitle)}}]]></subtitle>
           
           <decorationLabel>{{DURATION_HMS({{VAL(duration)}})}}</decorationLabel>
           

@@ -23,7 +23,9 @@ See LICENSE.txt for this sample’s licensing information
             .overlay {
             text-align: right;
             }
-
+			.grid {
+      		tv-interitem-spacing: 10;
+      		}
         </style>
     </head>
 {{XML(year)}}
@@ -73,19 +75,20 @@ See LICENSE.txt for this sample’s licensing information
 
 {{XML(recentlyAdded)}}{{
 {{IFNODE(MediaContainer/Photo)}}{{
-        <grid id="grid_RecentlyAdded">
+        <grid class="grid" id="grid_RecentlyAdded">
         <!--<shelf autoHighlight="true" id="shelf_RecentlyAdded">-->
-		  <section>
-            <header>
+		  <header>
               <title>{{VAL(MediaContainer/title2)}}</title>
             </header>
+            <section>
+            
 {{COPY(MediaContainer/Photo)}}{{
 {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
             <lockup
                 onSelect="photoPresenter.show('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                 onPlay="photoPresenter.slideshow('{{PMSID()}}', '{{PATH()}}')"
                 >
-              <img src="{{IMAGEURL(thumb::384)}}" width="306" height="306" />
+              <img src="{{IMAGEURL(thumb::360)}}" width="254" height="254" />
               <title class="showTextOnHighlight">{{VAL(year:&#x00AD;)}}</title>
             </lockup>
 }}

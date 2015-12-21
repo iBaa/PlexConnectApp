@@ -26,7 +26,7 @@
           <heroImg src="{{IMAGEURL(MediaContainer/composite::)}}" />
           <row>
             <buttonLockup onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', '')">
-              <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images:50play:png)}}" width="50" height="50"/>
+              <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images:50playlist:png)}}" width="50" height="50"/>
               <title>Play all</title>
             </buttonLockup>
             <buttonLockup onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', 'shuffle')">
