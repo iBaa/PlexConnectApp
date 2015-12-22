@@ -54,8 +54,8 @@
     </row>
     </identityBanner>
         <collectionList>
-    {{PMSLOOP(owned)}}{{
-    {{XML({{PATH(/library/sections/)}})}}{{
+    {{PMSLOOP(shared)}}{{
+    {{XML()}}{{
     
     <shelf centered="true" autoHighlight="true">
       <section>
@@ -120,90 +120,8 @@
         </button>
     </separator>
     {{PMSLOOP(owned)}}{{
-    {{XML({{PATH(/library/recentlyAdded)}})}}{{
-    <shelf>
-      <header>
-          <title>Recently Added</title>
-      </header>
-      
-      <section>
-        {{COPY(MediaContainer/Directory)}}
-        {{
-        {{SET(noItems:false)}}
-        <lockup
-          onSelect="Presenter.load('TVShow_EpisodeList', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-          onSelectHold="modal"
-          >
-          
-          <img src="{{IMAGEURL(thumb::360)}}" height="306" width="207" />
-          <title><![CDATA[{{VAL(title)}}]]></title>
-          
-        </lockup>
-        }}{{COPY(MediaContainer/Video)}}
-        {{
-        {{SET(noItems:false)}}
-        <lockup
-          onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-          onSelectHold="modal"
-          >
-          
-          <img src="{{IMAGEURL(thumb::360)}}" height="306" width="207" />
-          <title><![CDATA[{{VAL(title)}}]]></title>
-          
-        </lockup>
-        }}
-        
-      </section>
-      }}
-      }}
-
-    </shelf>
-    {{PMSLOOP(owned)}}{{
-    {{XML({{PATH(/library/onDeck)}})}}{{
-    <shelf>
-      <header>
-          <title>OnDeck</title>
-      </header>
-      
-      <section>
-        {{COPY(MediaContainer/Video)}}
-        {{
-        {{SET(noItems:false)}}
-        {{IF({{CHK("{{VAL(type:)}}"=="episode")}})}}
-        {{
-        <lockup
-          onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-          onSelectHold="modal"
-          >
-          
-          <img src="{{IMAGEURL(grandparentThumb::360)}}" height="306" width="207" />
-          <title><![CDATA[{{VAL(parentIndex)}}.{{VAL(index)}} - ]]><![CDATA[{{VAL(title)}}]]></title>
-          
-        </lockup>
-        }}
-        {{IF({{CHK("{{VAL(type:)}}"=="movie")}})}}
-        {{
-        <lockup
-          onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-          onSelectHold="modal"
-          >
-          
-          <img src="{{IMAGEURL(thumb::360)}}" height="306" width="207" />
-          <title><![CDATA[{{VAL(title)}}]]></title>
-          
-        </lockup>
-        }}
-        
-        }}
-      </section>
-      }}
-      }}
-
-    </shelf>
-    
-    {{PMSLOOP(owned)}}{{
     {{XML({{PATH(/playlists/)}})}}{{
-    <shelf>
+    <grid class="grid">
       <header>
           <title>Playlists</title>
       </header>
@@ -221,7 +139,7 @@
           onSelectHold="modal"
           >
           
-          <img src="{{IMAGEURL(composite::360)}}" height="306" width="306" />
+          <img src="{{IMAGEURL(composite::360)}}" height="254" width="254" />
           <title><![CDATA[{{VAL(title)}}]]></title>
           
         </lockup>
@@ -233,7 +151,7 @@
           onSelectHold="modal"
           >
           
-          <img src="{{IMAGEURL(composite::360)}}" height="306" width="306" />
+          <img src="{{IMAGEURL(composite::360)}}" height="254" width="254" />
           <title><![CDATA[{{VAL(title)}}]]></title>
           
         </lockup>
@@ -246,11 +164,7 @@
       }}
       }}
 
-    </shelf>
-    
-    
-
-    
+    </grid>
  
   </collectionList>
 
