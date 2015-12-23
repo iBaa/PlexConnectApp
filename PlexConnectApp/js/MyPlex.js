@@ -65,13 +65,12 @@ myPlexSignInOut = function(event)
         elem.innerHTML = new_elem.innerHTML;
       }
       
-      /*
       // update PlexHome
-      var elem = document.getElementById('PlexHomeUser');
-      var new_elem = doc.getElementById('PlexHomeUser');
-      new_elem.removeFromParent();
-      elem.parent.replaceChild(elem, new_elem);
-      */
+      var elem = _myPlexElem.ownerDocument.getElementById('MyPlexHomeUser');
+      var new_elem = doc.getElementById('MyPlexHomeUser');
+      if (elem && new_elem) {
+        elem.innerHTML = new_elem.innerHTML;
+      }
     };
   
     SignIn = function()
@@ -213,3 +212,125 @@ myPlexSignInOut = function(event)
         SignOut();
     }
 };
+
+
+var myPlex = {
+  
+elem: null,
+username: "",
+id: "",
+pin: "",
+  
+createPinEntryPage: function(type, title, description, callback_submit, defaultvalue)
+{
+  // todo: how to use 4digit pin/passcode entry mask?
+  // see http://stackoverflow.com/questions/34434312/tvml-how-to-modify-formtemplate-to-show-pin-entry
+
+  var docString = `<?xml version="1.0" encoding="UTF-8" ?>
+<document>
+  <formTemplate>
+    <banner>
+      <title>${title}</title>
+      <description>${description}</description>
+    </banner>
+    <textField keyboardType="numberPad">${type}</textField>
+    <footer>
+      <button>
+        <text>${TEXT("Submit")}</text>
+      </button>
+    </footer>
+  </formTemplate>
+</document>`
+  var parser = new DOMParser();
+  var doc = parser.parseFromString(docString, "application/xml");
+  
+  var button = doc.getElementByTagName("button");
+  button.addEventListener("select", callback_submit);
+  
+  return doc
+},
+  
+switchHomeUser_gotUser: function(username, id, protected) {
+  console.log("switchHomeUser_gotUser");
+  
+  // setup local storage
+  myPlex.username = username;
+  myPlex.id = id;
+  myPlex.pin = "";
+  
+  if (protected=='1')
+  {
+    // request pin for "protected" user
+    var doc = myPlex.createPinEntryPage('0000', TEXT("PlexHome User PIN"), TEXT("Enter the PlexHome user pin for {0}.").format(myPlex.username), myPlex.switchHomeUser_gotPin, null);
+    navigationDocument.pushDocument(doc);
+  }
+  else
+  {
+    // run spinner and sign in - pin=""
+    var docSpinner = createSpinner(TEXT("MyPlex: Signing in..."));
+    navigationDocument.pushDocument(docSpinner);
+    
+    myPlex.signInHomeUser();
+  }
+},
+  
+switchHomeUser_gotPin: function(event)
+{
+  var elem = event.target;
+  
+  var doc = navigationDocument.documents[navigationDocument.documents.length-1];
+  var textField = doc.getElementByTagName("textField")
+  
+  myPlex.pin = textField.getFeature("Keyboard").text;  // get the textField's keyboard element
+  if (!myPlex.pin) {  // empty string - try again
+    var docNext = myPlex.createPinEntryPage('0000', TEXT("PlexHome User PIN"), TEXT("Enter the PlexHome user pin for {0}.").format(myPlex.username), myPlex.switchHomeUser_gotPin, null);
+    
+    navigationDocument.popDocument();  // fades through Settings.xml
+    navigationDocument.pushDocument(docNext);
+    return;
+  }
+  
+  var docSpinner = createSpinner(TEXT("MyPlex: Signing in..."));
+  navigationDocument.replaceDocument(docSpinner, doc);
+  
+  myPlex.signInHomeUser();
+},
+  
+signInHomeUser: function() {
+  // login and get new settings page
+  var docString = swiftInterface.switchHomeUserIdPinView(myPlex.id, myPlex.pin, "Settings");
+  var parser = new DOMParser();
+  var newDoc = parser.parseFromString(docString, "application/xml");
+  
+  // update PlexHome
+  var elem = myPlex.elem;
+  var newElem = newDoc.getElementById('MyPlexHomeUser');
+  if (elem && newElem) {
+    elem.innerHTML = newElem.innerHTML;
+  }
+
+  // update HomeUser list
+  var doc = navigationDocument.documents[navigationDocument.documents.length-2];  // HomeUser list, covered by Spinner
+  navigationDocument.removeDocument(doc);  // remove
+  Presenter.loadAndSwap("MyPlex_HomeUsers", "plex.tv", "/api/home/users");  // swap against Spinner
+  // not sure why, but...
+  //    navigationDocument.popDocument();  // remove Spinner
+  //    Presenter.loadAndSwap("MyPlex_HomeUsers"...)  // swap HomeUser list
+  // didn't work.
+},
+  
+switchHomeUser: function(event) {
+  console.log("switchHomeUser");
+  
+  myPlex.elem = event.target;
+  if (!myPlex.elem) return;  // error - element not found
+  
+  // init local storage
+  myPlex.username = "";
+  myPlex.id = "";
+  myPlex.pin = "";
+  
+  // view HomeUser list
+  Presenter.load("MyPlex_HomeUsers", "plex.tv", "/api/home/users");
+},
+}

@@ -28,12 +28,17 @@ class cPlexUserInformation {
     private var _token: String
   */
     private var _xmlUser: XMLIndexer?  // store for debugging - XML data this PMS was set up with
-
+    private var _xmlHomeUser: XMLIndexer?
+    
     
     init() {
         _xmlUser = nil
-        _attributes = ["name": "", "email": "", "token": ""]
+        _xmlHomeUser = nil
+        _attributes = ["adminname": "", "name": "", "email": "", "token": ""]
 
+        if let name = _storage.stringForKey("adminname") {
+            _attributes["adminname"] = name
+        }
         if let name = _storage.stringForKey("name") {
             _attributes["name"] = name
         }
@@ -47,22 +52,50 @@ class cPlexUserInformation {
     
     init(xmlUser: XMLIndexer) {
         _xmlUser = xmlUser
-        
+        _xmlHomeUser = nil
+        _attributes = ["adminname": "", "name": "", "email": "", "token": ""]
+       
         // todo: check XML and neccessary nodes
-        _attributes["name"] = xmlUser["username"].element!.text!
-        _attributes["email"] = xmlUser["email"].element!.text!
-        _attributes["token"] = xmlUser["authentication-token"].element!.text!
+        if let name = xmlUser.element!.attributes["title"] {
+            _attributes["adminname"] = name
+            _attributes["name"] = name
+        }
+        if let email = xmlUser.element!.attributes["email"] {
+            _attributes["email"] = email
+        }
+        if let token = xmlUser.element!.attributes["authenticationToken"] {
+            _attributes["token"] = token
+        }
 
         store()
     }
     
+    func switchHomeUser(xmlUser: XMLIndexer) {
+        _xmlHomeUser = xmlUser
+
+        if let name = xmlUser.element!.attributes["title"] {
+            _attributes["name"] = name
+        }
+        if let email = xmlUser.element!.attributes["email"] {
+            _attributes["email"] = email
+        }
+        if let token = xmlUser.element!.attributes["authenticationToken"] {
+            _attributes["token"] = token
+        }
+        
+        store()
+    }
+    
     func clear() {
-        _attributes = ["name": "", "email": "", "token": ""]
+        _xmlUser = nil
+        _xmlHomeUser = nil
+        _attributes = ["adminname": "", "name": "", "email": "", "token": ""]
     
         store()
     }
     
     private func store() {
+        _storage.setObject(_attributes["adminname"], forKey: "adminname")
         _storage.setObject(_attributes["name"], forKey: "name")
         _storage.setObject(_attributes["email"], forKey: "email")
         _storage.setObject(_attributes["token"], forKey: "token")
@@ -678,7 +711,6 @@ func myPlexSignIn(username: String, password: String) {
         let task = session.dataTaskWithRequest(request) {
             (data, response, error) -> Void in
             if let httpResp = response as? NSHTTPURLResponse {
-                print(String(data: data!, encoding: NSUTF8StringEncoding))
                 XML = SWXMLHash.parse(data!)
             } else {
                 // error: what to do?
@@ -728,6 +760,54 @@ func myPlexSignOut() {
     
     // clear Plex Media Server list
     PlexMediaServerInformation = [:]
+}
+
+
+// PlexHome managed users
+func myPlexSwitchHomeUser(id: String, pin: String) {
+    var XML: XMLIndexer?
+    
+    let url = NSURL(string: "https://plex.tv/api/home/users/" + id + "/switch")
+    let request = NSMutableURLRequest(URL: url!)  // todo: optional
+    request.HTTPMethod = "POST"
+    request.addValue(plexUserInformation.getAttribute("token"), forHTTPHeaderField: "X-Plex-Token")
+    
+    if (pin != "") {
+        request.addValue(pin, forHTTPHeaderField: "pin")
+    }
+    let session = NSURLSession.sharedSession()
+    
+    let xargs = getDeviceInfoXArgs()
+    for xarg in xargs {
+        request.addValue(xarg.value!, forHTTPHeaderField: xarg.name)
+    }
+    
+    print("switch HomeUser")
+    let dsptch = dispatch_semaphore_create(0)
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+        let task = session.dataTaskWithRequest(request) {
+            (data, response, error) -> Void in
+            if let httpResp = response as? NSHTTPURLResponse {
+                XML = SWXMLHash.parse(data!)
+            } else {
+                // error: what to do?
+            }
+            dispatch_semaphore_signal(dsptch)
+        }
+        task.resume()
+    })
+    dispatch_semaphore_wait(dsptch, dispatch_time(DISPATCH_TIME_NOW, httpTimeout))
+    print("switch HomeUser done")
+    
+    // todo: errormanagement. better check of XML, ...
+    if (XML != nil && XML!["user"]) {
+        plexUserInformation.switchHomeUser(XML!["user"])
+    } else {
+        //plexUserInformation.clear()  // todo: switch user failed, what to do? stick with previous selection?
+    }
+    
+    // re-discover Plex Media Servers
+    discoverServers()
 }
 
 

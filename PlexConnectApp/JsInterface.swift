@@ -25,6 +25,7 @@ import TVMLKit
     func discover(view: String) -> String
     func signInUser(username: String, password: String, view: String) -> String
     func signOut(view: String) -> String
+    func switchHomeUserId(id: String, pin: String, view: String) -> String
 }
 
 
@@ -69,6 +70,11 @@ class cJsInterface: NSObject, jsInterfaceProtocol {
     
     func signOut(view: String) -> String {
         myPlexSignOut()
+        return getView(view, id: "", path: "")
+    }
+    
+    func switchHomeUserId(id: String, pin: String, view: String) -> String {
+        myPlexSwitchHomeUser(id, pin: pin)
         return getView(view, id: "", path: "")
     }
 }
