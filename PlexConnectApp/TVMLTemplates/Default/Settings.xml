@@ -24,7 +24,7 @@ See LICENSE.txt for this sample’s licensing information
           <decorationLabel>{{TEXT(online:)}} {{PMSCNT(all)}}</decorationLabel>
         </listItemLockup>
         
-{{IF(!{{USRVAL(name)}})}} {{
+{{IF(!{{USRVAL(adminname)}})}} {{
         <listItemLockup
           id="MyPlexSignInOut"
           onSelect="myPlexSignInOut(event)"
@@ -34,15 +34,26 @@ See LICENSE.txt for this sample’s licensing information
           <decorationImage src="resource://chevron" />
         </listItemLockup>
 }}
-{{IF({{USRVAL(name)}})}} {{
+{{IF({{USRVAL(adminname)}})}} {{
         <listItemLockup
           id="MyPlexSignInOut"
           onSelect="myPlexSignInOut(event)"
           >
           <title>{{TEXT(Sign Out)}}</title>
-          <decorationLabel>{{USRVAL(name)}}</decorationLabel>
+          <decorationLabel>{{USRVAL(adminname)}}</decorationLabel>
         </listItemLockup>
 }}
+
+        <listItemLockup
+          id="MyPlexHomeUser"
+          onSelect="myPlex.switchHomeUser(event)"
+          >
+          <row>
+            <title>{{TEXT(Switch Home User)}}</title>
+            <decorationLabel>{{USRVAL(name)}}</decorationLabel>
+            <decorationImage src="resource://chevron" />
+          </row>
+        </listItemLockup>
       </section>
 
       <section>
