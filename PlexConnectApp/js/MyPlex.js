@@ -302,21 +302,36 @@ signInHomeUser: function() {
   var parser = new DOMParser();
   var newDoc = parser.parseFromString(docString, "application/xml");
   
-  // update PlexHome
+  // check success, signal failed
   var elem = myPlex.elem;
   var newElem = newDoc.getElementById('MyPlexHomeUser');
   if (elem && newElem) {
-    elem.innerHTML = newElem.innerHTML;
+    var username = newElem.getTextContent('decorationLabel');
+    if (username == myPlex.username)
+    {
+      console.log("MyPlex HomeUser Login - done");
+      
+      // update PlexHome
+      elem.innerHTML = newElem.innerHTML;
+      
+      // update HomeUser list
+      var doc = navigationDocument.documents[navigationDocument.documents.length-2];  // HomeUser list, covered by Spinner
+      navigationDocument.removeDocument(doc);  // remove
+      Presenter.loadAndSwap("MyPlex_HomeUsers", "plex.tv", "/api/home/users");  // swap against Spinner
+      // not sure why, but...
+      //    navigationDocument.popDocument();  // remove Spinner
+      //    Presenter.loadAndSwap("MyPlex_HomeUsers"...)  // swap HomeUser list
+      // didn't work.
+    }
+    else
+    {
+      console.log("MyPlex HomeUser Login - failed");
+      
+      var doc = navigationDocument.documents[navigationDocument.documents.length-1];
+      var docAlert = createAlert("MyPlex", TEXT("Sign in failed."));
+      navigationDocument.replaceDocument(docAlert, doc);  // remove spinner, show error page
+    }
   }
-
-  // update HomeUser list
-  var doc = navigationDocument.documents[navigationDocument.documents.length-2];  // HomeUser list, covered by Spinner
-  navigationDocument.removeDocument(doc);  // remove
-  Presenter.loadAndSwap("MyPlex_HomeUsers", "plex.tv", "/api/home/users");  // swap against Spinner
-  // not sure why, but...
-  //    navigationDocument.popDocument();  // remove Spinner
-  //    Presenter.loadAndSwap("MyPlex_HomeUsers"...)  // swap HomeUser list
-  // didn't work.
 },
   
 switchHomeUser: function(event) {
