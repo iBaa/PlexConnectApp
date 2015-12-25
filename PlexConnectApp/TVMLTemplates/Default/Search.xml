@@ -9,7 +9,7 @@ See LICENSE.txt for this sample’s licensing information
     <searchField
         view="Search"
         pmsId="{{PMSID()}}"
-        pmsPath="/search?type=4&amp;query={0}"
+        pmsPath="/search?query={0}"
         />
     <!-- results -->
     <collectionList id="searchResults">
