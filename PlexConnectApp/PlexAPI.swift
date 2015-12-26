@@ -767,14 +767,13 @@ func myPlexSignOut() {
 func myPlexSwitchHomeUser(id: String, pin: String) {
     var XML: XMLIndexer?
     
-    let url = NSURL(string: "https://plex.tv/api/home/users/" + id + "/switch")
-    let request = NSMutableURLRequest(URL: url!)  // todo: optional
+    var url = "https://plex.tv/api/home/users/" + id + "/switch"
+    if (pin != "") {
+        url += "?pin="+pin
+    }
+    let request = NSMutableURLRequest(URL: NSURL(string: url)!)  // todo: optional
     request.HTTPMethod = "POST"
     request.addValue(plexUserInformation.getAttribute("token"), forHTTPHeaderField: "X-Plex-Token")
-    
-    if (pin != "") {
-        request.addValue(pin, forHTTPHeaderField: "pin")
-    }
     let session = NSURLSession.sharedSession()
     
     let xargs = getDeviceInfoXArgs()
