@@ -21,6 +21,10 @@ import TVMLKit
     func toggleSetting(setting: String, view: String) -> String
     func resetSetting(setting: String) -> String
     
+    // Storage
+    func getStorage(storage: String) -> String
+    func setStorage(storage: String, value: String)
+    
     // PlexAPI
     func discover(view: String) -> String
     func signInUser(username: String, password: String, view: String) -> String
@@ -55,7 +59,16 @@ class cJsInterface: NSObject, jsInterfaceProtocol {
         
         return settings.getSetting(setting)
     }
-
+    
+    // Storage
+    func getStorage(_storage: String) -> String {
+        let value = storage.getString(_storage)
+        
+        return value
+    }
+    func setStorage(_storage: String, value: String) {
+        storage.setString(_storage, value: value)
+    }
     
     // PlexAPI
     func discover(view: String) -> String {

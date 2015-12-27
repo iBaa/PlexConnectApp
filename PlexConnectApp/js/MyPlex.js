@@ -348,4 +348,21 @@ switchHomeUser: function(event) {
   // view HomeUser list
   Presenter.load("MyPlex_HomeUsers", "plex.tv", "/api/home/users");
 },
+  
+  
+switchServer: function(event) {
+  console.log("switchServer");
+
+  var elem = event.target;
+  if (!elem) return;  // error - element not found
+  
+  var uuid = elem.getAttribute('id');
+  swiftInterface.setStorageValue('pmsUuid', uuid);
+  var pmsId = elem.getAttribute('pmsId');
+  
+  // reload main, close server selection page
+  var doc = navigationDocument.documents[navigationDocument.documents.length-2];  // main page, covered by server selection page
+  navigationDocument.removeDocument(doc);  // remove
+  Presenter.loadAndSwap("Library", pmsId, "/library/sections");  // swap against server selection  // todo: variable view, pmsPath?
+},
 }

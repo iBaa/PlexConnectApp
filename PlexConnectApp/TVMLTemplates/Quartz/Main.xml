@@ -14,30 +14,13 @@ See LICENSE.txt for this sample’s licensing information
 
 
 
+    <!--temp patch - disable server selection-->
     <alertTemplate theme="dark" class="lightBackgroundColor">
-        <title>Please choose a Plex Media Server</title>
-         <description></description>
-{{PMSLOOP(owned)}}
-{{
-{{XML()}}
-{{
-        <button onSelect="Presenter.load('Library', '{{PMSID()}}', '{{PATH(/library/sections/)}}')">
-            <title>{{PMSVAL(name)}}</title>
-        </button>
-}}
-}}		
-{{PMSLOOP(shared)}}
-{{
-{{XML()}}
-{{
-        <!--button onSelect="Presenter.load('SharedLibraries', '{{PMSID()}}', '{{PATH(/library/sections/)}}')">
-            <title>{{PMSVAL(name)}}</title>
-        </button--> <!--Does not work -->
-        <button onSelect="Presenter.load('Library', '{{PMSID()}}', '{{PATH(/library/sections/)}}')">
-            <title>{{PMSVAL(name)}}</title> <!-- At least lists shared server sections -->
-        </button>
-}}
-}}        
+      <title>nothing to see here...</title>
+      <description></description>
+      <button onSelect="Presenter.load('Library', '{{PMSID(clientIdentifier:{{STORAGE(pmsUuid)}})}}', '{{PATH(/library/sections)}}')">
+        <title>Enjoy!</title>
+      </button>
     </alertTemplate>
+    
 </document>
-

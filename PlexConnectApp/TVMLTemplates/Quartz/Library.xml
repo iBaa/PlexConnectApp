@@ -54,6 +54,13 @@
     </row>
     </identityBanner>
         <collectionList>
+
+      <separator>
+        <button onSelect="Presenter.load('MyPlex_Servers', '', '')">
+          <text>Server: {{PMSVAL(name)}}  <badge src="resource://button-dropdown" width="31" height="14" /></text>
+        </button>
+      </separator>
+
     {{XML()}}
     {{
     
