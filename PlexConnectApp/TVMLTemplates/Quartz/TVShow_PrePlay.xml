@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{XML()}}{{
+<document>
+  <productTemplate>
+    <background>
+    </background>
+    <banner>
+      <infoList>
+        <info>
+          <ratingCard style="tv-align: right;">
+            <ratingBadge style="tv-rating-style: star-hollow-l;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
+          </ratingCard>
+        </info>
+        
+        <info>
+          <header>
+            <title>{{TEXT(Directors)}}</title>
+          </header>
+{{COPY(MediaContainer/Video/Director)}}{{  <!-- COPY till 5 or so? -->
+          <text>{{VAL(tag)}}</text>
+}}
+        </info>
+        <info>
+          <header>
+            <title>{{TEXT(Writers)}}</title>
+          </header>
+{{COPY(MediaContainer/Video/Writer)}}{{  <!-- COPY till 5 or so? -->
+          <text>{{VAL(tag)}}</text>
+}}
+        </info>
+      </infoList>
+      <stack>
+        <title><![CDATA[{{VAL(MediaContainer/Video/index)}}. {{VAL(MediaContainer/Video/title)}}]]></title>
+        <subtitle><![CDATA[{{VAL(MediaContainer/Video/studio)}}]]></subtitle>
+        <row>
+          <!--text>rating(Video/contentRating)</text-->
+          <text>{{DURATION({{VAL(MediaContainer/Video/duration)}})}}</text>
+          <text><![CDATA[{{VAL(MediaContainer/Video/Genre/tag)}}]]></text>
+          <text><![CDATA[{{VAL(MediaContainer/Video/year)}}]]></text>
+          <!--badge src="resource://mpaa-pg" class="badge" /-->
+          <!--badge src="resource://cc" class="badge" /-->
+        </row>
+        <description allowsZooming="true" moreLabel="more"
+            onSelect="Presenter.loadContext('TVShow_PrePlayDescription', '{{PMSID()}}', '{{PATH()}}')"
+            >
+          <![CDATA[{{VAL(MediaContainer/Video/summary)}}]]>
+        </description>
+        <!--text>Language information can go here</text-->
+        <row>
+          <buttonLockup
+              onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH()}}')"
+              >
+            <badge src="resource://button-play" />
+            <title>{{TEXT(Play)}}</title>
+          </buttonLockup>
+          
+          <buttonLockup
+              id="resume"
+              {{IF(!{{VAL(MediaContainer/Video/viewOffset:0)}})}}{{disabled="true"}}
+              autoHighlight="true"
+              onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH()}}', 'resume')"
+              >
+            <badge src="{{RESOURCEURL(Images:button-resume:png)}}" width="58" height="29" />
+            <title>{{TEXT(Resume)}}</title>
+          </buttonLockup>
+
+        </row>
+      </stack>
+      <heroImg src="{{IMAGEURL(MediaContainer/Video/thumb::)}}" />
+    </banner>
+
+{{XML(/library/metadata/{{VAL(MediaContainer/Video/parentRatingKey)}}/children)}}{{
+<!--or cascade: (MediaContainer/Video/parentKey)->(MediaContainer/Directory/key)-->
+
+    <shelf>
+      <header>
+        <title>{{TEXT(Episodes)}}</title>
+      </header>
+      <section>
+        {{COPY(MediaContainer/Video)}}
+        {{
+        <lockup
+            onSelect="Presenter.loadAndSwap('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
+            >
+          <img src="{{IMAGEURL(thumb::384)}}" width="306" height="207" />
+          <title><![CDATA[{{VAL(index)}}. {{VAL(title)}}]]></title>
+        </lockup>
+        }}
+      </section>
+    </shelf>
+}}
+<!-- Everything past this is below the fold -->
+  </productTemplate>
+</document>
+}}

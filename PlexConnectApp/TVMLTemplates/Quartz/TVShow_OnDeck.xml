@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+<document>
+    <head>
+        <style>
+            .lightBackgroundColor {
+            background-color: #efece6;
+            }
+            .layout {
+            margin: 40;
+            }
+            .showTextOnHighlight {
+            tv-text-highlight-style: show-on-highlight;
+            }
+            .roundedImageCorners {
+            itml-img-treatment: corner-small;
+            }
+
+        </style>
+    </head>
+    <stackTemplate class="lightBackgroundColor">
+{{XML(onDeck)}}
+
+{{
+        <banner>
+            <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
+        </banner>
+
+
+
+    <collectionList>
+{{IFNODE(MediaContainer/Video)}}
+
+{{
+
+<shelf centered="true" id="shelf_OnDeck">
+    
+    <section>
+        <header>
+            <title>{{TEXT(Continue watching)}}</title>
+        </header>
+        
+        {{COPY(MediaContainer/Video)}}
+        
+        {{
+        
+        {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
+        <lockup onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="ScrobbleMenu">
+            <img class="roundedImageCorners" src="{{IMAGEURL(art::640)}}" width="547" height="270" />
+		{{IF({{VAL(viewOffset)}})}}
+		{{
+          <overlay>
+                <progressBar value="{{EVAL({{VAL(viewOffset)}}.0/{{VAL(duration)}}.0)}}"/>
+            </overlay>
+		}}
+            <title class="showTextOnHighlight"><![CDATA[{{VAL(grandparentTitle)}}]]></title>
+            <subtitle class="showTextOnHighlight"><![CDATA[S{{VAL(parentIndex)}}.E{{VAL(index)}} • {{VAL(title)}}]]></subtitle>
+            
+        </lockup>
+        }}
+    </section>
+</shelf>
+}}
+{{XML()}}
+
+{{
+<separator>
+    <button onSelect="Presenter.load('TVShow_Filters', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+        <text>Library <badge src="resource://button-dropdown" width="31" height="14" /></text>
+        
+    </button>
+</separator>
+}}
+
+{{XML(unwatched)}}{{
+{{IFNODE(MediaContainer/Directory)}}{{
+        <shelf id="shelf_unwatched">
+        <!--<shelf autoHighlight="true" id="shelf_RecentlyAdded">-->
+          
+          <section>
+            <header>
+              <title>{{TEXT(Unwatched TV Shows)}}</title>
+            </header>
+{{COPY(MediaContainer/Directory)}}{{
+{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
+            <lockup
+                onSelect="Presenter.load('TVShow_SeasonList', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onSelectHold="ScrobbleMenu"
+                >
+              <img src="{{IMAGEURL(thumb::384)}}" width="207" height="306" />
+              <!--<title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>-->
+              <subtitle class="showTextOnHighlight"><![CDATA[{{VAL(leafCount)}} episodes]]></subtitle>
+            </lockup>
+}}
+          </section>
+        </shelf>
+}} }}
+
+
+
+{{XML(recentlyAdded)}}{{
+{{IFNODE(MediaContainer/Video)}}{{
+<shelf id="shelf_recentlyAdded">
+    
+    <section>
+        <header>
+            <title>{{TEXT(Recently Added Episodes)}}</title>
+        </header>
+        {{COPY(MediaContainer/Video)}}{{
+        {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
+        <lockup
+            onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="ScrobbleMenu"
+            >
+            <img src="{{IMAGEURL(grandparentThumb::384)}}" width="207" height="306" />
+            <title class="showTextOnHighlight"><![CDATA[{{VAL(grandparentTitle)}}]]></title>
+            <subtitle class="showTextOnHighlight"><![CDATA[S{{VAL(parentIndex)}}.E{{VAL(index)}} - {{VAL(title)}}]]></subtitle>
+        </lockup>
+        }}
+    </section>
+</shelf>
+}} }}
+
+
+
+{{XML(newest)}}{{
+{{IFNODE(MediaContainer/Video)}}{{
+        <shelf id="shelf_RecentlyReleased">
+          <section>
+            <header>
+              <title>{{TEXT(Recently Aired Episodes)}}</title>
+            </header>
+{{COPY(MediaContainer/Video)}}{{
+{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
+            <lockup
+                onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onSelectHold="ScrobbleMenu"
+                >
+              <img src="{{IMAGEURL(grandparentThumb::384)}}" width="207" height="306" />
+              <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
+              <subtitle class="showTextOnHighlight"><![CDATA[S{{VAL(parentIndex)}}.E{{VAL(index)}} - {{VAL(title)}}]]></subtitle>
+            </lockup>
+}}
+          </section>
+        </shelf>
+}} }}
+
+{{XML(recentlyViewed)}}{{
+{{IFNODE(MediaContainer/Video)}}{{
+<shelf centered="true" id="shelf_recentlyViewedEpisodes">
+    
+    <section>
+        <header>
+            <title>{{TEXT(Recently Viewed Episodes)}}</title>
+        </header>
+        {{COPY(MediaContainer/Video)}}{{
+        {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
+        <lockup
+            onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="ScrobbleMenu"
+            >
+            <img class="roundedImageCorners" src="{{IMAGEURL(thumb::384)}}" width="306" height="207" />
+            <title class="showTextOnHighlight"><![CDATA[{{VAL(grandparentTitle)}}]]></title>
+            <subtitle class="showTextOnHighlight"><![CDATA[S{{VAL(parentIndex)}}.E{{VAL(index)}} - {{VAL(title)}}]]></subtitle>
+        </lockup>
+        }}
+    </section>
+</shelf>
+}} }}
+
+
+
+    </collectionList>
+}}
+  </stackTemplate>
+</document>
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>TITLE</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}
+

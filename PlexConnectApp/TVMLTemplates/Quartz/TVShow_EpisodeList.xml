@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{CUT({{GET(noItems)}})}}
+{{
+{{SET(noItems:true)}}
+{{XML()}}
+{{
+<document>
+  <head>
+    <style>
+    .whiteButton {
+      tv-tint-color: rgb(255, 255, 255);
+      width: 500;
+      height: 200;
+    }
+    .plot {
+      min-height: 300;
+      max-height: 400;
+      margin: 50;
+    }
+    </style>
+  </head>
+  <compilationTemplate theme="dark">
+    <list>
+      <relatedContent>
+        <itemBanner>
+          {{IF({{VAL(MediaContainer/thumb)}})}}
+          {{
+          <heroImg src="{{IMAGEURL(MediaContainer/thumb::)}}" />
+          }}
+          {{IF(!{{VAL(MediaContainer/thumb)}})}}
+          {{
+          <heroImg src="{{IMAGEURL(MediaContainer/grandparentThumb::)}}" />
+          }}
+          <!--<row>
+            <buttonLockup class="whiteButton">
+              <badge src="" class="whiteButton" />
+              <title/>
+              <text><![CDATA[{{VAL(MediaContainer/summary)}}]]></text>
+            </buttonLockup>
+          </row>-->
+        </itemBanner>
+      </relatedContent>
+      <header>
+        <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
+        <subtitle><![CDATA[{{VAL(MediaContainer/title2)}}]]></subtitle>
+        <row>
+          <text><![CDATA[{{VAL(MediaContainer/size)}} episodes]]></text>
+          <text><![CDATA[Rating: {{VAL(MediaContainer/grandparentContentRating)}}]]></text>
+        </row>
+        
+      </header>
+      <section>
+        <header>
+          <title>EPISODES</title>
+        </header>
+{{COPY(MediaContainer/Video)}}
+{{
+{{SET(noItems:false)}}
+	<listItemLockup autoHighlight="true" onSelect="Presenter.load('TVShow_EpisodeList', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal">
+          <ordinal minLength="2" class="ordinalLayout">{{VAL(index)}}</ordinal>
+          <!-- <img src="{{IMAGEURL(thumb::384)}}" width="100" height="150" /-->
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <subtitle><![CDATA[{{TEXT(Aired )}}{{VAL(originallyAvailableAt)}}  •  {{EVAL({{VAL(duration)}}/1000/60)}}{{TEXT( minutes)}}]]></subtitle>
+          <!--<decorationLabel><![CDATA[{{VAL(leafCount)}}]]></decorationLabel>-->
+          <decorationImage src="{{IMAGEURL(thumb::384)}}" width="150" height="96"/>
+        </listItemLockup>
+        
+}}        
+      </section>
+    </list>
+  </compilationTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}
+{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>TITLE</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

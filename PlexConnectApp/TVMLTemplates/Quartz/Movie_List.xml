@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+    <head>
+        <style>
+            .showTextOnHighlight {
+            tv-text-highlight-style: show-on-highlight;
+            }
+            .lightBackgroundColor {
+            background-color: #efece6;
+            }
+            
+        </style>
+    </head>
+    <stackTemplate class="lightBackgroundColor">
+        <banner>
+            <title><![CDATA[{{VAL(MediaContainer/title1)}}]]> - <![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
+        </banner>
+        <collectionList>
+            
+            <grid>
+                <section>
+                    {{COPY(MediaContainer/Video)}}{{
+                    {{SET(noItems:false)}}
+                    <lockup
+            onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal">
+            
+                        <img src="{{IMAGEURL(thumb::300)}}" height="309" width="207"/>
+                        <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
+                        <subtitle class="showTextOnHighlight">{{VAL(year:&#x00AD;)}}</subtitle>
+                    </lockup>
+                    }}
+                </section>
+          </grid>
+}}
+      </collectionList>
+  </stackTemplate>
+</document>
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>TITLE</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

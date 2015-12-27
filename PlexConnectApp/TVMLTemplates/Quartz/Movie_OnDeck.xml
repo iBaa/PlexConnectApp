@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+<document>
+    <head>
+        <style>
+            .lightBackgroundColor {
+            background-color: #efece6;
+            }
+            .layout {
+            margin: 40;
+            }
+            .showTextOnHighlight {
+            tv-text-highlight-style: marquee-on-highlight;
+            }
+            .roundedImageCorners {
+            itml-img-treatment: corner-small;
+            }
+
+        </style>
+    </head>
+    <stackTemplate class="lightBackgroundColor">
+
+
+{{XML(recentlyAdded)}}
+
+{{
+        <banner>
+            <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
+        </banner>
+
+
+    <collectionList>
+{{IFNODE(MediaContainer/Video)}}
+
+{{
+
+<shelf id="shelf_OnDeck">
+    
+    <section>
+        <header>
+            <title>{{TEXT(Continue watching)}}</title>
+        </header>
+        
+        {{COPY(MediaContainer/Video)}}
+        
+        {{
+        
+        {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
+        <lockup onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="ScrobbleMenu">
+            <img class="roundedImageCorners" src="{{IMAGEURL(art::640)}}" width="547" height="270" />
+            <overlay>
+                <progressBar value="{{EVAL({{VAL(viewOffset)}}.0/{{VAL(duration)}}.0)}}"/>
+                <!--progressBar value="0.056678888" /-->
+            </overlay>
+            <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
+            
+        </lockup>
+        }}
+    </section>
+</shelf>
+}}
+
+{{XML()}}
+
+{{
+<separator>
+    <button onSelect="Presenter.load('Movie_Filters', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+        <text>Library <badge src="resource://button-dropdown" width="31" height="14" /></text>
+        
+    </button>
+</separator>
+}}
+
+{{XML(recentlyAdded)}}{{
+{{IFNODE(MediaContainer/Video)}}{{
+        <shelf id="shelf_RecentlyAdded">
+        <!--<shelf autoHighlight="true" id="shelf_RecentlyAdded">-->
+          
+          <section>
+            <header>
+              <title>{{TEXT(Recently Added)}}</title>
+            </header>
+{{COPY(MediaContainer/Video)}}{{
+{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
+            <lockup
+                onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onSelectHold="ScrobbleMenu"
+                >
+              <img src="{{IMAGEURL(thumb::384)}}" width="207" height="306" />
+              <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
+              <subtitle class="showTextOnHighlight">{{VAL(year:&#x00AD;)}}</subtitle>
+            </lockup>
+}}
+          </section>
+        </shelf>
+}} }}
+
+
+
+{{XML(unwatched)}}{{
+{{IFNODE(MediaContainer/Video)}}{{
+<shelf id="shelf_unwatched">
+    
+    <section>
+        <header>
+            <title>{{TEXT(Unwatched)}}</title>
+        </header>
+        {{COPY(MediaContainer/Video)}}{{
+        {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
+        <lockup
+            onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="ScrobbleMenu"
+            >
+            <img src="{{IMAGEURL(thumb::384)}}" width="207" height="306" />
+            <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
+            <subtitle class="showTextOnHighlight">{{VAL(year:&#x00AD;)}}</subtitle>
+        </lockup>
+        }}
+    </section>
+</shelf>
+}} }}
+
+
+
+{{XML(newest)}}{{
+{{IFNODE(MediaContainer/Video)}}{{
+        <shelf id="shelf_RecentlyReleased">
+          <section>
+            <header>
+              <title>{{TEXT(Recently Released)}}</title>
+            </header>
+{{COPY(MediaContainer/Video)}}{{
+{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
+            <lockup
+                onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onSelectHold="ScrobbleMenu"
+                >
+              <img src="{{IMAGEURL(thumb::384)}}" width="207" height="306" />
+              <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
+              <subtitle class="showTextOnHighlight">{{VAL(year:&#x00AD;)}}</subtitle>
+            </lockup>
+}}
+          </section>
+        </shelf>
+}} }}
+
+{{XML(recentlyViewed)}}{{
+{{IFNODE(MediaContainer/Video)}}{{
+<shelf id="shelf_recentlyViewed">
+    
+    <section>
+        <header>
+            <title>{{TEXT(Recently Viewed)}}</title>
+        </header>
+        {{COPY(MediaContainer/Video)}}{{
+        {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
+        <lockup
+            onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="ScrobbleMenu"
+            >
+            <img src="{{IMAGEURL(thumb::384)}}" width="207" height="306" />
+            <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
+            <subtitle class="showTextOnHighlight">{{VAL(year:&#x00AD;)}}</subtitle>
+        </lockup>
+        }}
+    </section>
+</shelf>
+}} }}
+
+
+    </collectionList>
+}}
+  </stackTemplate>
+</document>
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>TITLE</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}
+
