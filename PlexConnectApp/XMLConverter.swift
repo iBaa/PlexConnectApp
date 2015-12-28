@@ -58,7 +58,7 @@ class cXmlConverter {
             "IMAGEURL": processIMAGEURL!,
             "TEXT": processTEXT!,
             "SETTING": processSETTING!,
-            "STORAGE": processSTORAGE!,
+            "CUSTOMSETTING": processCUSTOMSETTING!,
         ]
     }
     
@@ -575,13 +575,13 @@ class cXmlConverter {
         return value!
     }
     
-    var processSTORAGE: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
+    var processCUSTOMSETTING: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
         _self, XML, _par in
         
         var par = _par.componentsSeparatedByString(":")
         let key = _self.getParam(XML, par: &par)
         
-        let value = storage.getString(key)
+        let value = settings.getCustomString(key)
         
         return value
     }

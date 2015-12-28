@@ -117,4 +117,15 @@ class cSettings {
             _storage.setInteger(dflt+1, forKey: key)  // store +1, as get returns 0 if uninitialised
         }
     }
+    
+    func getCustomString(key: String) -> String {
+        if let value = _storage.stringForKey(key) {
+            return value
+        }
+        return ""
+    }
+    
+    func setCustomString(key: String, value: String) {
+        _storage.setObject(value, forKey: key)
+    }
 }

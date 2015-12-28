@@ -18,16 +18,16 @@
 {{PMSLOOP(owned)}}{{
 {{SET(noItems:false)}}
         <listItemLockup
-          id="{{PMSVAL(clientIdentifier)}}"
-          pmsId="{{PMSID()}}"
-          onSelect="myPlex.switchServer(event);"
-          >
+            id="{{PMSVAL(clientIdentifier)}}"
+            onSelect="myPlex.switchServer(event);"
+            onSuccess="navigationDocument.popDocument(); Presenter.loadAndSwap('Library','{{PMSID()}}','/library/sections');"
+            >
           <row>
             <title><![CDATA[{{PMSVAL(name)}}]]></title>
 {{IF(!{{PMSVAL(local)}})}}{{
             <decorationImage src="{{RESOURCEURL(Images:icon_cloud:png)}}" width="50" height="30" />
 }}
-{{IF({{CHK("{{STORAGE(pmsUuid)}}"=="{{PMSVAL(clientIdentifier)}}")}})}}{{
+{{IF({{CHK("{{CUSTOMSETTING(pmsUuid)}}"=="{{PMSVAL(clientIdentifier)}}")}})}}{{
             <decorationImage src="resource://button-checkmark" />
 }}
           </row>
@@ -55,16 +55,16 @@
 {{PMSLOOP(shared)}}{{
 {{SET(noItems:false)}}
         <listItemLockup
-          id="{{PMSVAL(clientIdentifier)}}"
-          pmsId="{{PMSID()}}"
-          onSelect="myPlex.switchServer(event);"
-          >
+            id="{{PMSVAL(clientIdentifier)}}"
+            onSelect="myPlex.switchServer(event);"
+            onSuccess="navigationDocument.popDocument(); Presenter.loadAndSwap('Library','{{PMSID()}}','/library/sections');"
+            >
           <row>
             <title><![CDATA[{{PMSVAL(name)}}]]></title>
 {{IF(!{{PMSVAL(local)}})}}{{
             <decorationImage src="{{RESOURCEURL(Images:icon_cloud:png)}}" width="50" height="30" />
 }}
-{{IF({{CHK("{{STORAGE(pmsUuid)}}"=="{{PMSVAL(clientIdentifier)}}")}})}}{{
+{{IF({{CHK("{{CUSTOMSETTING(pmsUuid)}}"=="{{PMSVAL(clientIdentifier)}}")}})}}{{
             <decorationImage src="resource://button-checkmark" />
 }}
           </row>

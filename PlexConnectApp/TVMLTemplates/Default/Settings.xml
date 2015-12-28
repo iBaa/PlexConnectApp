@@ -46,7 +46,7 @@ See LICENSE.txt for this sample’s licensing information
 
         <listItemLockup
           id="MyPlexHomeUser"
-          onSelect="myPlex.switchHomeUser(event)"
+          onSelect="Presenter.load('MyPlex_HomeUsers', 'plex.tv', '/api/home/users');"
           >
           <row>
             <title>{{TEXT(Switch Home User)}}</title>
