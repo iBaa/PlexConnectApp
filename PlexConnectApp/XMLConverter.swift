@@ -58,6 +58,7 @@ class cXmlConverter {
             "IMAGEURL": processIMAGEURL!,
             "TEXT": processTEXT!,
             "SETTING": processSETTING!,
+            "CUSTOMSETTING": processCUSTOMSETTING!,
         ]
     }
     
@@ -497,10 +498,38 @@ class cXmlConverter {
     
     var processPMSID: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
         _self, XML, _par in
-        if let pmsId = _self.pmsId {
+       
+        var par = _par.componentsSeparatedByString(":")
+        
+        if (_par == "") {
+            // no parameter, return current pmsId
+            if let pmsId = _self.pmsId {
+                return pmsId
+            }
+            return ""
+        } else {
+            // optional parameters (key, value): find pmsId of selected server
+            let key = _self.getParam(XML, par: &par)
+            let value = _self.getParam(XML, par: &par)
+            
+            // loop over PMSs, find specified one
+            var pmsId = ""
+            for (ix, (_pmsId, _pms)) in PlexMediaServerInformation.enumerate() {  // todo: async in parallel?
+                if (_pms.getAttribute("uri") == "") {  // server not online, no connection found
+                    continue
+                }
+                if (_pms.getAttribute(key) == value) {
+                    pmsId = _pmsId
+                    break;
+                }
+            }
+            
+            // PMS not found, default to first
+            if (pmsId == "") {
+                pmsId = "0"  // todo: better default?
+            }
             return pmsId
         }
-        return ""
     }
     
     var processPMSVAL: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
@@ -544,6 +573,17 @@ class cXmlConverter {
             return ""
         }
         return value!
+    }
+    
+    var processCUSTOMSETTING: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
+        _self, XML, _par in
+        
+        var par = _par.componentsSeparatedByString(":")
+        let key = _self.getParam(XML, par: &par)
+        
+        let value = settings.getCustomString(key)
+        
+        return value
     }
     
     var processVIDEOURL: ((_self: cXmlConverter, XML: XMLIndexer?, par: String) -> String)? = {

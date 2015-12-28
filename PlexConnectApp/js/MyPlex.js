@@ -358,4 +358,22 @@ switchHomeUser: function(event) {
     myPlex.signInHomeUser();
   }
 },
+  
+  
+switchServer: function(event) {
+  console.log("switchServer");
+
+  var elem = event.target;
+  if (!elem) return;  // error - element not found
+  
+  var uuid = elem.getAttribute('id');
+  swiftInterface.setCustomSettingValue('pmsUuid', uuid);
+  
+  // eval(onSuccess)
+  var func = elem.getAttribute('onSuccess');
+  eval(func);
+  // example:
+  // *.popDocument()  // remove Server selection page
+  // *.loadAndSwap("Library", pmsId, pmsPath)  // reload main page
+},
 }

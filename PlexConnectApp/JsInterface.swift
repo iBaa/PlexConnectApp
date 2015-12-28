@@ -20,6 +20,8 @@ import TVMLKit
     // Settings
     func toggleSetting(setting: String, view: String) -> String
     func resetSetting(setting: String) -> String
+    func getCustomSetting(setting: String) -> String
+    func setCustomSetting(setting: String, value: String)
     
     // PlexAPI
     func discover(view: String) -> String
@@ -55,7 +57,14 @@ class cJsInterface: NSObject, jsInterfaceProtocol {
         
         return settings.getSetting(setting)
     }
-
+    func getCustomSetting(setting: String) -> String {
+        let value = settings.getCustomString(setting)
+        
+        return value
+    }
+    func setCustomSetting(setting: String, value: String) {
+        settings.setCustomString(setting, value: value)
+    }
     
     // PlexAPI
     func discover(view: String) -> String {
