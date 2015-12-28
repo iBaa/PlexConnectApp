@@ -250,30 +250,6 @@ createPinEntryPage: function(type, title, description, callback_submit, defaultv
   return doc
 },
   
-switchHomeUser_gotUser: function(username, id, protected) {
-  console.log("switchHomeUser_gotUser");
-  
-  // setup local storage
-  myPlex.username = username;
-  myPlex.id = id;
-  myPlex.pin = "";
-  
-  if (protected=='1')
-  {
-    // request pin for "protected" user
-    var doc = myPlex.createPinEntryPage('0000', TEXT("PlexHome User PIN"), TEXT("Enter the PlexHome user pin for {0}.").format(myPlex.username), myPlex.switchHomeUser_gotPin, null);
-    navigationDocument.pushDocument(doc);
-  }
-  else
-  {
-    // run spinner and sign in - pin=""
-    var docSpinner = createSpinner(TEXT("MyPlex: Signing in..."));
-    navigationDocument.pushDocument(docSpinner);
-    
-    myPlex.signInHomeUser();
-  }
-},
-  
 switchHomeUser_gotPin: function(event)
 {
   var elem = event.target;
@@ -303,33 +279,54 @@ signInHomeUser: function() {
   var newDoc = parser.parseFromString(docString, "application/xml");
   
   // check success, signal failed
-  var elem = myPlex.elem;
   var newElem = newDoc.getElementById('MyPlexHomeUser');
-  if (elem && newElem) {
+  if (newElem) {
     var username = newElem.getTextContent('decorationLabel');
     if (username == myPlex.username)
     {
       console.log("MyPlex HomeUser Login - done");
       
-      // update PlexHome
-      elem.innerHTML = newElem.innerHTML;
+      // update Settings page
+      // PlexHome
+      var doc = navigationDocument.documents[navigationDocument.documents.length-3];  // Settings page, covered by HomeUser list, Spinner
+      var elem = doc.getElementById('MyPlexHomeUser');
+      if (!elem) {
+        // try menuBar.menuContent
+        var elem = doc.getElementById('Settings');
+        if (elem) {
+          var feature = elem.parentNode.getFeature("MenuBarDocument");
+          doc = feature.getDocument(elem);  // todo: check for feature existing?
+          elem = doc.getElementById('MyPlexHomeUser');
+        }
+      }
+      if (elem) {
+        elem.innerHTML = newElem.innerHTML;
+      }
       
-      // update HomeUser list
-      var doc = navigationDocument.documents[navigationDocument.documents.length-2];  // HomeUser list, covered by Spinner
-      navigationDocument.removeDocument(doc);  // remove
-      Presenter.loadAndSwap("MyPlex_HomeUsers", "plex.tv", "/api/home/users");  // swap against Spinner
-      // not sure why, but...
-      //    navigationDocument.popDocument();  // remove Spinner
-      //    Presenter.loadAndSwap("MyPlex_HomeUsers"...)  // swap HomeUser list
-      // didn't work.
+      // update Discover
+      if (elem) {
+        var elem = elem.ownerDocument.getElementById('Discover');
+        var newElem = newDoc.getElementById('Discover');
+        if (elem && newElem) {
+          elem.innerHTML = newElem.innerHTML;
+        }
+      }
+      
+      // remove Spinner, then eval(onSuccess)
+      var doc = navigationDocument.documents[navigationDocument.documents.length-1];  // Spinner
+      var func = myPlex.elem.getAttribute('onSuccess');
+      doc.addEventListener("unload", function() { eval(func) });
+      navigationDocument.popDocument();  // remove Spinner
     }
     else
     {
       console.log("MyPlex HomeUser Login - failed");
       
-      var doc = navigationDocument.documents[navigationDocument.documents.length-1];
-      var docAlert = createAlert("MyPlex", TEXT("Sign in failed."));
-      navigationDocument.replaceDocument(docAlert, doc);  // remove spinner, show error page
+      // remove Spinner, then eval(onError)
+      var doc = navigationDocument.documents[navigationDocument.documents.length-1];  // Spinner
+      var func = myPlex.elem.getAttribute('onError');
+      doc.addEventListener("unload", function() { eval(func) });
+      navigationDocument.popDocument();  // remove Spinner
     }
   }
 },
@@ -341,11 +338,24 @@ switchHomeUser: function(event) {
   if (!myPlex.elem) return;  // error - element not found
   
   // init local storage
-  myPlex.username = "";
-  myPlex.id = "";
+  myPlex.username = myPlex.elem.getAttribute('username');
+  myPlex.id = myPlex.elem.getAttribute('id');
   myPlex.pin = "";
+  var protected = myPlex.elem.getAttribute('protected');
   
-  // view HomeUser list
-  Presenter.load("MyPlex_HomeUsers", "plex.tv", "/api/home/users");
+  if (protected=='1')
+  {
+    // request pin for "protected" user
+    var doc = myPlex.createPinEntryPage('0000', TEXT("PlexHome User PIN"), TEXT("Enter the PlexHome user pin for {0}.").format(myPlex.username), myPlex.switchHomeUser_gotPin, null);
+    navigationDocument.pushDocument(doc);
+  }
+  else
+  {
+    // run spinner and sign in - pin=""
+    var docSpinner = createSpinner(TEXT("MyPlex: Signing in..."));
+    navigationDocument.pushDocument(docSpinner);
+    
+    myPlex.signInHomeUser();
+  }
 },
 }
