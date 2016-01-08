@@ -19,7 +19,6 @@
 		01CE20991BE6AF9200A2F10A /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CE20931BE6AF9200A2F10A /* Utilities.swift */; };
 		01CE209A1BE6AF9200A2F10A /* XMLConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CE20941BE6AF9200A2F10A /* XMLConverter.swift */; };
 		01CE20A21BE6AFE700A2F10A /* SWXMLHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CE20A11BE6AFE700A2F10A /* SWXMLHash.swift */; };
-		01ED239D1C30677900A880BA /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01ED239C1C30677900A880BA /* Storage.swift */; };
 		01F0E79E1C133B0F00AE6D42 /* TVMLTemplates in Resources */ = {isa = PBXBuildFile; fileRef = 01F0E79D1C133B0F00AE6D42 /* TVMLTemplates */; };
 /* End PBXBuildFile section */
 
@@ -39,7 +38,6 @@
 		01CE20941BE6AF9200A2F10A /* XMLConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = XMLConverter.swift; sourceTree = "<group>"; };
 		01CE20A01BE6AFE700A2F10A /* SWXMLHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWXMLHash.h; path = PlexConnectApp/lib_SWXMLHash/SWXMLHash.h; sourceTree = "<group>"; };
 		01CE20A11BE6AFE700A2F10A /* SWXMLHash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SWXMLHash.swift; path = PlexConnectApp/lib_SWXMLHash/SWXMLHash.swift; sourceTree = "<group>"; };
-		01ED239C1C30677900A880BA /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		01F0E79D1C133B0F00AE6D42 /* TVMLTemplates */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TVMLTemplates; path = PlexConnectApp/TVMLTemplates; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -81,7 +79,6 @@
 				01CE20901BE6AF9200A2F10A /* PlexAPI.swift */,
 				016BE1641BF51E5200EA6126 /* JsInterface.swift */,
 				01CE20921BE6AF9200A2F10A /* Settings.swift */,
-				01ED239C1C30677900A880BA /* Storage.swift */,
 				01CE20931BE6AF9200A2F10A /* Utilities.swift */,
 				01CE20941BE6AF9200A2F10A /* XMLConverter.swift */,
 				016474C21BE7EFEC0075EBC6 /* ViewController.swift */,
@@ -179,7 +176,6 @@
 				016474C31BE7EFEC0075EBC6 /* ViewController.swift in Sources */,
 				01CE20981BE6AF9200A2F10A /* Settings.swift in Sources */,
 				01CE20991BE6AF9200A2F10A /* Utilities.swift in Sources */,
-				01ED239D1C30677900A880BA /* Storage.swift in Sources */,
 				01CE20961BE6AF9200A2F10A /* PlexAPI.swift in Sources */,
 				016BE1651BF51E5200EA6126 /* JsInterface.swift in Sources */,
 				01CE20A21BE6AFE700A2F10A /* SWXMLHash.swift in Sources */,
