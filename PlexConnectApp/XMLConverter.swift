@@ -297,6 +297,14 @@ class cXmlConverter {
         let __par = _self.convert(_par, xmlSection: XML)
         var par = __par.componentsSeparatedByString(":")
         
+        // optional param #1: pmsId  // todo: think about "requiring", might be empty to not overwrite
+        if (par.count > 1) {
+            let pmsId = _self.getParam(XML, par: &par)
+            if (pmsId != "") {
+                _self.pmsId = pmsId
+            }
+        }
+        
         var res = ""
         var key = _self.getParam(XML, par: &par)
         key = key.stringByReplacingOccurrencesOfString("&amp;", withString:"&")

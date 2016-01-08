@@ -291,12 +291,14 @@ signInHomeUser: function() {
       var doc = navigationDocument.documents[navigationDocument.documents.length-3];  // Settings page, covered by HomeUser list, Spinner
       var elem = doc.getElementById('MyPlexHomeUser');
       if (!elem) {
-        // try menuBar.menuContent
-        var elem = doc.getElementById('Settings');
-        if (elem) {
+        try {  // try menuBar.menuContent
+          elem = doc.getElementById('Settings');
           var feature = elem.parentNode.getFeature("MenuBarDocument");
           doc = feature.getDocument(elem);  // todo: check for feature existing?
           elem = doc.getElementById('MyPlexHomeUser');
+        }
+        catch(err) {  // still no MyPlexHomeUser
+          elem = undefined;
         }
       }
       if (elem) {
