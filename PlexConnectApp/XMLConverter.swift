@@ -33,6 +33,7 @@ class cXmlConverter {
             "IFNODE": processIFNODE!,
             "PMSLOOP": processPMSLOOP!,
             "XML": processXML!,
+            "PMS": processPMS!,
         ]
         
         // jump table to commands processing attributes: VAL, VIDEOURL, ...
@@ -342,6 +343,26 @@ class cXmlConverter {
         
         return res
     }
+    
+    var processPMS: ((_self: cXmlConverter, XML: XMLIndexer?, par: String, body: String) -> (String))? = {
+        _self, XML, _par, _body in
+        
+        // recursively process parameters
+        let __par = _self.convert(_par, xmlSection: XML)
+        var par = __par.componentsSeparatedByString(":")
+        
+        // optional param #1: pmsId  // todo: think about "requiring", might be empty to not overwrite
+        let pmsId = _self.getParam(XML, par: &par)
+        if (pmsId != "") {
+            _self.pmsId = pmsId
+        }
+        
+        // recursively process body
+        var res = ""
+        res = _self.convert(_body, xmlSection: XML)
+        
+        return res
+    }
 
 
     
@@ -538,7 +559,9 @@ class cXmlConverter {
         var par = _par.componentsSeparatedByString(":")
         var key = _self.getParam(XML, par: &par)
         if let pmsId = _self.pmsId {
-            return PlexMediaServerInformation[pmsId]!.getAttribute(key)  // todo: check pmsId known
+            if let pmsInfo = PlexMediaServerInformation[pmsId] {
+                return pmsInfo.getAttribute(key)
+            }
         }
         return ""
     }

@@ -5,7 +5,8 @@ See LICENSE.txt for this sample’s licensing information
 -->
 {{CUT({{GET(noItems)}})}}{{
 {{SET(noItems:true)}}
-{{XML()}}{{
+{{PMS(plex.tv)}}{{
+{{XML(/api/home/users)}}{{
 <document>
   <listTemplate>
     <list>
@@ -52,6 +53,7 @@ See LICENSE.txt for this sample’s licensing information
     </list>
   </listTemplate>
 </document>
+}}
 }}
 }}
 
