@@ -53,7 +53,8 @@
         </buttonLockup>
     </row>
     </identityBanner>
-        <collectionList>
+{{PMS({{PMSID(clientIdentifier:{{CUSTOMSETTING(pmsUuid)}})}})}}{{
+    <collectionList>
 
       <separator>
         <button onSelect="Presenter.load('MyPlex_Servers', '', '')">
@@ -61,7 +62,7 @@
         </button>
       </separator>
 
-    {{XML()}}
+    {{XML(/library/sections)}}
     {{
     
     <shelf centered="true" autoHighlight="true">
@@ -255,7 +256,7 @@
     
  
   </collectionList>
-
+}}
 
 
 </stackTemplate>
