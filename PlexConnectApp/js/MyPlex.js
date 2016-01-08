@@ -289,7 +289,12 @@ signInHomeUser: function() {
       // update Settings page
       // PlexHome
       var doc = navigationDocument.documents[navigationDocument.documents.length-3];  // Settings page, covered by HomeUser list, Spinner
-      var elem = doc.getElementById('MyPlexHomeUser');
+      try {  // MyPlexHomeUser element
+        var elem = doc.getElementById('MyPlexHomeUser');
+      }
+      catch (err) {
+        elem = undefined
+      }
       if (!elem) {
         try {  // try menuBar.menuContent
           elem = doc.getElementById('Settings');
