@@ -234,42 +234,26 @@ createPinEntryPage: function(type, title, description, callback_submit, defaultv
       <description>${description}</description>
     </banner>
     <textField keyboardType="numberPad">${type}</textField>
-    <footer>
-      <button>
-        <text>${TEXT("Submit")}</text>
-      </button>
-    </footer>
   </formTemplate>
 </document>`
   var parser = new DOMParser();
   var doc = parser.parseFromString(docString, "application/xml");
   
-  var button = doc.getElementByTagName("button");
-  button.addEventListener("select", callback_submit);
-  
-  return doc
-},
-  
-switchHomeUser_gotPin: function(event)
-{
-  var elem = event.target;
-  
-  var doc = navigationDocument.documents[navigationDocument.documents.length-1];
-  var textField = doc.getElementByTagName("textField")
-  
-  myPlex.pin = textField.getFeature("Keyboard").text;  // get the textField's keyboard element
-  if (!myPlex.pin) {  // empty string - try again
-    var docNext = myPlex.createPinEntryPage('0000', TEXT("PlexHome User PIN"), TEXT("Enter the PlexHome user pin for {0}.").format(myPlex.username), myPlex.switchHomeUser_gotPin, null);
-    
-    navigationDocument.popDocument();  // fades through Settings.xml
-    navigationDocument.pushDocument(docNext);
-    return;
+  // setup event onTextChange
+  var textField = doc.getElementByTagName("textField");
+  var keyboard = textField.getFeature("Keyboard"); // get the textField's Keyboard element
+  keyboard.onTextChange = function() {
+    myPlex.pin = keyboard.text;
+    if (myPlex.pin.length == 4) {
+      // got pin - run spinner and sign in
+      var docSpinner = createSpinner(TEXT("MyPlex: Signing in..."));
+      navigationDocument.replaceDocument(docSpinner, doc);
+      
+      myPlex.signInHomeUser();
+    }
   }
   
-  var docSpinner = createSpinner(TEXT("MyPlex: Signing in..."));
-  navigationDocument.replaceDocument(docSpinner, doc);
-  
-  myPlex.signInHomeUser();
+  return doc
 },
   
 signInHomeUser: function() {
