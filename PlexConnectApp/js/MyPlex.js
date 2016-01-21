@@ -9,253 +9,194 @@
 discover = function(event) {
   var elem = event.target;
   
-  Presenter.load("MyPlex_Discover", "", "");
+  var doc = Presenter.setupViewDocument("MyPlex_Discover","","");
+  navigationDocument.pushDocument(doc);
   
   var docString = swiftInterface.discover("Settings");
   var parser = new DOMParser();
   var doc = parser.parseFromString(docString, "application/xml");
-
-  navigationDocument.popDocument();
   
   // update view
   var newElem = doc.getElementById(elem.getAttribute("id"));
   if (elem && newElem) {
     elem.innerHTML = newElem.innerHTML;
   }
+  
+  // remove Spinner, then eval(onSuccess)
+  var doc = navigationDocument.documents[navigationDocument.documents.length-1];  // Spinner
+  var func = elem.getAttribute('onSuccess');
+  doc.addEventListener("unload", function() { eval(func) });
+  navigationDocument.popDocument();
 }
 
-
-/*
- myPlex sign in/out
- */
-myPlexSignInOut = function(event)
-{
-  var _myPlexElem = event.target;
-  if (!_myPlexElem) return;  // error - element not found
-  
-    getLabel = function(elem, label)
-    {
-        var elem_label = elem.getElementByTagName(label);
-        if (!elem_label) return '';  // error - element not found
-        return(elem_label.textContent)
-    };
-    
-    setLabel = function(elem, label, text)
-    {
-        var elem_label = elem.getElementByTagName(label);
-        if (!elem_label)
-        {
-            elem_label = document.makeElementNamed(label);
-            elem.appendChild(elem_label);
-        }
-        elem_label.textContent = text;
-    };
-  
-    updateWithDoc = function(doc) {
-      // update MyPlexSignInOut
-      var new_elem = doc.getElementById('MyPlexSignInOut');  // listItemLockup // _myPlexElem.getAttribute("id")
-      if (new_elem) {
-        _myPlexElem.innerHTML = new_elem.innerHTML;
-      }
-  
-      // update Discover
-      var elem = _myPlexElem.ownerDocument.getElementById('Discover');
-      var new_elem = doc.getElementById('Discover');
-      if (elem && new_elem) {
-        elem.innerHTML = new_elem.innerHTML;
-      }
-      
-      // update PlexHome
-      var elem = _myPlexElem.ownerDocument.getElementById('MyPlexHomeUser');
-      var new_elem = doc.getElementById('MyPlexHomeUser');
-      if (elem && new_elem) {
-        elem.innerHTML = new_elem.innerHTML;
-      }
-    };
-  
-    SignIn = function()
-    {
-        var _username = "";
-        var _password = "";
-      
-        createTextEntryPage = function(type, title, description, callback_submit, defaultvalue)
-        {
-          var docString = `<?xml version="1.0" encoding="UTF-8" ?>
-<document>
-  <formTemplate>
-    <banner>
-      <!--img src="path to images on your server/Car_Movie_800X400.png" width="800" height="400"/-->
-      <title>${title}</title>
-      <description>${description}</description>
-    </banner>
-    <textField>${type}</textField>
-    <footer>
-      <button>
-        <text>${TEXT("Submit")}</text>
-      </button>
-    </footer>
-  </formTemplate>
-</document>`
-          var parser = new DOMParser();
-          var doc = parser.parseFromString(docString, "application/xml");
-          
-          var button = doc.getElementByTagName("button");
-          button.addEventListener("select", callback_submit);
-          
-          return doc
-        };
-        
-        gotUsername = function(event)
-        {
-            var elem = event.target;
-          
-            var doc = navigationDocument.documents[navigationDocument.documents.length-1];
-            var textField = doc.getElementByTagName("textField")
-
-            _username = textField.getFeature("Keyboard").text;  // get the textField's Keyboard element
-            if (!_username) {  // empty string - try again
-                var docNext = createTextEntryPage('user Id', TEXT("MyPlex Username"), TEXT("To sign in to MyPlex, enter your Email address, username or Plex forum username."), gotUsername, null);
-            } else {  // todo: hide password while entering
-                var docNext = createTextEntryPage('password', TEXT("MyPlex Password"), TEXT("Enter the MyPlex password for {0}.").format(_username), gotPassword, null);
-            }
-          
-          navigationDocument.popDocument();  // fades through Settings.xml
-          navigationDocument.pushDocument(docNext);
-          //navigationDocument.replaceDocument(docPwd, doc);  // todo: doesn't work. keyboard is dead. need to re-attach keyboard feature to new doc?
-        };
-        
-        gotPassword = function(event)
-        {
-          var elem = event.target;
-
-          var doc = navigationDocument.documents[navigationDocument.documents.length-1];
-          var textField = doc.getElementByTagName("textField")
-          
-          _password = textField.getFeature("Keyboard").text;  // get the textField's keyboard element
-          if (!_password) {  // empty string - try again
-              var docNext = createTextEntryPage('password', TEXT("MyPlex Password"), TEXT("Enter the MyPlex password for {0}.").format(_username), gotPassword, null);
-            
-              navigationDocument.popDocument();  // fades through Settings.xml
-              navigationDocument.pushDocument(docNext);
-              return;
-          }
-
-          var docSpinner = createSpinner(TEXT("MyPlex: Signing in..."));
-          navigationDocument.replaceDocument(docSpinner, doc);
-          
-          doLogin();
-        };
-        
-        doLogin = function()
-        {
-            // login and get new settings page
-            var docString = swiftInterface.signInUserPasswordView(_username, _password, "Settings");
-            var parser = new DOMParser();
-            var doc = parser.parseFromString(docString, "application/xml");
-
-            // update view
-            updateWithDoc(doc);
-          
-            // check success, signal failed
-            //var elem = document.getElementById('MyPlexSignInOut');
-            var username = getLabel(_myPlexElem, 'decorationLabel');
-            if (username)
-            {
-                console.log("MyPlex Login - done");
-                navigationDocument.popDocument();  // remove spinner
-            }
-            else
-            {
-                //setLabel(_myPlexElem, 'decorationLabel', _failed);
-                console.log("MyPlex Login - failed");
-              
-                var doc = navigationDocument.documents[navigationDocument.documents.length-1];
-                var docAlert = createAlert("MyPlex", TEXT("Sign in failed."));
-                navigationDocument.replaceDocument(docAlert, doc);  // remove spinner, show error page
-            }
-        };
-        
-        setLabel(_myPlexElem, 'decorationLabel', '');
-        var doc = createTextEntryPage('user Id', TEXT("MyPlex Username"), TEXT("To sign in to MyPlex, enter your Email address, username or Plex forum username."), gotUsername, null);
-        navigationDocument.pushDocument(doc);
-    };
-    
-    
-    SignOut = function()
-    {
-        doLogout = function()
-        {
-            // logout and get new settings page
-            var docString = swiftInterface.signOut("Settings");
-            var parser = new DOMParser();
-            var doc = parser.parseFromString(docString, "application/xml");
-          
-            // update view
-            updateWithDoc(doc);
-          
-            console.log("MyPlex Logout - done");
-        };
-      
-        setLabel(_myPlexElem, 'decorationLabel', '');
-        doLogout();
-    };
-  
-
-    var username = getLabel(_myPlexElem, 'decorationLabel');
-    
-    if (username == '')
-    {
-        SignIn();
-    }
-    else
-    {
-        SignOut();
-    }
-};
 
 
 var myPlex = {
   
 elem: null,
 username: "",
+password: "",
 id: "",
 pin: "",
-  
-createPinEntryPage: function(type, title, description, callback_submit, defaultvalue)
-{
-  // todo: how to use 4digit pin/passcode entry mask?
-  // see http://stackoverflow.com/questions/34434312/tvml-how-to-modify-formtemplate-to-show-pin-entry
 
-  var docString = `<?xml version="1.0" encoding="UTF-8" ?>
-<document>
-  <formTemplate>
-    <banner>
-      <title>${title}</title>
-      <description>${description}</description>
-    </banner>
-    <textField keyboardType="numberPad">${type}</textField>
-  </formTemplate>
-</document>`
-  var parser = new DOMParser();
-  var doc = parser.parseFromString(docString, "application/xml");
-  
-  // setup event onTextChange
-  var textField = doc.getElementByTagName("textField");
-  var keyboard = textField.getFeature("Keyboard"); // get the textField's Keyboard element
-  keyboard.onTextChange = function() {
-    myPlex.pin = keyboard.text;
-    if (myPlex.pin.length == 4) {
-      // got pin - run spinner and sign in
-      var docSpinner = createSpinner(TEXT("MyPlex: Signing in..."));
-      navigationDocument.replaceDocument(docSpinner, doc);
-      
-      myPlex.signInHomeUser();
+
+updateSettings: function(fromDoc, toDoc)
+{
+  // update MyPlexSignInOut
+  var fromElem = fromDoc.getElementById('MyPlexSignInOut');  // listItemLockup // _myPlexElem.getAttribute("id")
+  var toElem = toDoc.getElementById('MyPlexSignInOut');
+  if (fromElem && toElem) {
+    toElem.innerHTML = fromElem.innerHTML;
+
+    // copy attributes - cover signin/out, onSuccess, ...
+    var keys = ["onSelect", "onSuccess", "onError"];  // todo: others?
+    for (var key of keys) {
+      toElem.setAttribute(key, fromElem.getAttribute(key));
     }
   }
   
-  return doc
+  // update Discover
+  var fromElem = fromDoc.getElementById('Discover');
+  var toElem = toDoc.getElementById('Discover');
+  if (fromElem && toElem) {
+    toElem.innerHTML = fromElem.innerHTML;
+  }
+    
+  // update PlexHome
+  var fromElem = fromDoc.getElementById('MyPlexHomeUser');
+  var toElem = toDoc.getElementById('MyPlexHomeUser');
+  if (fromElem && toElem) {
+    toElem.innerHTML = fromElem.innerHTML;
+  }
+},
+
+
+/*
+ myPlex sign in/out
+ */
+signIn: function(event)
+{
+  myPlex.elem = event.target;
+  if (!myPlex.elem) return;  // error - element not found
+
+  // request username
+  Presenter.load("MyPlex_SignInUsername","","");
+},
+
+signIn_gotUsername: function(event)
+{
+  var elem = event.target;
+  if (!elem) return;  // error - element not found
+
+  // read username form UI
+  var doc = elem.ownerDocument;
+  var textField = doc.getElementByTagName("textField");
+  var keyboard = textField.getFeature("Keyboard"); // get the textField's Keyboard element
+  myPlex.username = keyboard.text;
+  
+  if (!myPlex.username) {
+    // empty string - try again
+    var doc = navigationDocument.documents[navigationDocument.documents.length-1];
+    navigationDocument.popDocument();
+    navigationDocument.pushDocument(doc);
+  } else {
+    // request password
+    var newDoc = Presenter.setupViewDocument("MyPlex_SignInPassword","","");
+    navigationDocument.replaceDocument(newDoc, doc);  // todo: loadAndSwap hangs?!
+  }
 },
   
+signIn_gotPassword: function(event)
+{
+  var elem = event.target;
+  if (!elem) return;  // error - element not found
+  
+  // read password form UI
+  var doc = elem.ownerDocument;
+  var textField = doc.getElementByTagName("textField");
+  var keyboard = textField.getFeature("Keyboard"); // get the textField's Keyboard element
+  myPlex.password = keyboard.text;
+
+  if (!myPlex.password) {
+    // empty string - try again
+    var doc = navigationDocument.documents[navigationDocument.documents.length-1];
+    navigationDocument.popDocument();
+    navigationDocument.pushDocument(doc);
+  } else {
+    // go on, sign in...
+    var docSpinner = createSpinner(TEXT("MyPlex: Signing in..."));
+    navigationDocument.replaceDocument(docSpinner, doc);
+
+    myPlex.signIn_do();
+  }
+},
+  
+signIn_do: function() {
+  // store current key values
+  var onSuccess = myPlex.elem.getAttribute("onSuccess");
+  var onError = myPlex.elem.getAttribute("onError");
+
+  // login and get new settings page
+  var docString = swiftInterface.signInUserPasswordView(myPlex.username, myPlex.password, "Settings");
+  var parser = new DOMParser();
+  var doc = parser.parseFromString(docString, "application/xml");
+  
+  // update view
+  var settingsDoc = myPlex.elem.ownerDocument
+  myPlex.updateSettings(doc, settingsDoc);  // Settings page, covered by Spinner
+  
+  // check success, signal failed
+  var elem = doc.getElementById('MyPlexSignInOut');
+  try {  // in fresh received settings view - should never fail
+    var elem_label = elem.getElementByTagName('decorationLabel');
+    var username = elem_label.textContent;
+  }
+  catch (err) {
+    username = undefined
+  }
+  
+  if (username)
+  {
+    console.log("MyPlex Signin - success");
+    
+    // remove Spinner, then eval(onSuccess)
+    var doc = navigationDocument.documents[navigationDocument.documents.length-1];  // Spinner
+    doc.addEventListener("unload", function() { eval(onSuccess) });
+    navigationDocument.popDocument();  // remove Spinner
+  }
+  else
+  {
+    console.log("MyPlex Signin - failed");
+    
+    // remove Spinner, then eval(onError)
+    var doc = navigationDocument.documents[navigationDocument.documents.length-1];  // Spinner
+    doc.addEventListener("unload", function() { eval(onError) });
+    navigationDocument.popDocument();  // remove Spinner
+  }
+},
+
+signOut: function(event)
+{
+  var elem = event.target;
+  if (!elem) return;  // error - element not found
+
+  var settingsDoc = elem.ownerDocument;
+  
+  // logout and get new settings page
+  var docString = swiftInterface.signOut("Settings");
+  var parser = new DOMParser();
+  var doc = parser.parseFromString(docString, "application/xml");
+  
+  // update view
+  myPlex.updateSettings(doc, settingsDoc);
+  
+  console.log("MyPlex Signout - done");
+},
+
+
+/*
+ switch myPlex HomeUser
+ */
 signInHomeUser: function() {
   // login and get new settings page
   var docString = swiftInterface.switchHomeUserIdPinView(myPlex.id, myPlex.pin, "Settings");
@@ -337,7 +278,21 @@ switchHomeUser: function(event) {
   if (protected=='1')
   {
     // request pin for "protected" user
-    var doc = myPlex.createPinEntryPage('0000', TEXT("PlexHome User PIN"), TEXT("Enter the PlexHome user pin for {0}.").format(myPlex.username), myPlex.switchHomeUser_gotPin, null);
+    var doc = Presenter.setupViewDocument("MyPlex_SignInHomeUserPin","","");
+
+    // setup event onTextChange
+    var textField = doc.getElementByTagName("textField");
+    var keyboard = textField.getFeature("Keyboard"); // get the textField's Keyboard element
+    keyboard.onTextChange = function() {
+      myPlex.pin = keyboard.text;
+      if (myPlex.pin.length == 4) {
+        // got pin - run spinner and sign in
+        var docSpinner = createSpinner(TEXT("MyPlex: Signing in..."));
+        navigationDocument.replaceDocument(docSpinner, doc);
+        
+        myPlex.signInHomeUser();
+      }
+    }
     navigationDocument.pushDocument(doc);
   }
   else
@@ -351,6 +306,9 @@ switchHomeUser: function(event) {
 },
   
   
+/*
+ switch PlexMediaServer
+ */
 switchServer: function(event) {
   console.log("switchServer");
 

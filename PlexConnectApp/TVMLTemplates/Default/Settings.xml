@@ -18,7 +18,8 @@ See LICENSE.txt for this sample’s licensing information
         
         <listItemLockup
           id="Discover"
-          onSelect="discover(event)"
+          onSelect="discover(event);"
+          onSuccess=""
           >
           <title>{{TEXT(Discover)}}</title>
           <decorationLabel>{{TEXT(online:)}} {{PMSCNT(all)}}</decorationLabel>
@@ -27,7 +28,9 @@ See LICENSE.txt for this sample’s licensing information
 {{IF(!{{USRVAL(adminname)}})}} {{
         <listItemLockup
           id="MyPlexSignInOut"
-          onSelect="myPlexSignInOut(event)"
+          onSelect="myPlex.signIn(event);"
+          onSuccess=""
+          onError="Presenter.load('MyPlex_SignInFailed','','');"
           >
           <title>{{TEXT(Sign In)}}</title>
           <decorationLabel />
@@ -37,7 +40,7 @@ See LICENSE.txt for this sample’s licensing information
 {{IF({{USRVAL(adminname)}})}} {{
         <listItemLockup
           id="MyPlexSignInOut"
-          onSelect="myPlexSignInOut(event)"
+          onSelect="myPlex.signOut(event);"
           >
           <title>{{TEXT(Sign Out)}}</title>
           <decorationLabel>{{USRVAL(adminname)}}</decorationLabel>

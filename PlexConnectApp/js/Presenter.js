@@ -48,21 +48,29 @@ setupViewDocument: function(view, pmsId, pmsPath) {
 
 load: function(view, pmsId, pmsPath) {
   var loadingDoc = createSpinner("");
+  loadingDoc.addEventListener("load", function() {
+      var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
+      navigationDocument.replaceDocument(doc, loadingDoc);
+  });
   navigationDocument.pushDocument(loadingDoc);
-  var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
-  navigationDocument.replaceDocument(doc, loadingDoc);
-  navigationDocument.dismissModal();  // just in case?!  // todo: if (isModal)...?
+  //navigationDocument.dismissModal();  // just in case?!  // todo: if (isModal)...?
 },
 
 loadAndSwap: function(view, pmsId, pmsPath) {
   var currentDoc = navigationDocument.documents[navigationDocument.documents.length-1];
   var loadingDoc = createSpinner("");
+  loadingDoc.addEventListener("load", function() {
+      var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
+      navigationDocument.replaceDocument(doc, loadingDoc);
+  });
   navigationDocument.replaceDocument(loadingDoc, currentDoc);
-  var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
-  navigationDocument.replaceDocument(doc, loadingDoc);
-  navigationDocument.dismissModal();  // just in case?!  // todo: if (isModal)...?
+  // navigationDocument.dismissModal();  // just in case?!  // todo: if (isModal)...?
 },
 
+close() {
+  navigationDocument.popDocument();
+},
+  
 loadContext(view, pmsId, pmsPath) {
   var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
   navigationDocument.presentModal(doc);

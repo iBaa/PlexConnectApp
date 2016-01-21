@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+<document>
+  <menuBarTemplate>
+    <menuBar>
+      
+      <menuItem id="Playlists"
+          onSelect="Presenter.loadMenuContent('Playlists_List', '', '{{PATH(/playlists)}}')"
+          >
+        <title>{{TEXT(Playlists)}}</title>
+      </menuItem>
+
+      <menuItem id="Library"
+          autoHighlight="true"
+          onSelect="Presenter.loadMenuContent('Library', '', '{{PATH(/library/sections)}}')"
+          >
+        <title>{{TEXT(Library)}}</title>
+      </menuItem>
+      
+      <menuItem id="SharedLibraries"
+          onSelect="Presenter.loadMenuContent('SharedLibraries', '', '{{PATH(/library/sections)}}')"
+          >
+        <title>{{TEXT(Shared Libraries)}}</title>
+      </menuItem>
+      
+      <menuItem id="Channels"
+          onSelect="Presenter.loadMenuContent('Channels', '', '{{PATH(/channels)}}')"
+          >
+        <title>{{TEXT(Channels)}}</title>
+      </menuItem>
+      
+      <menuItem id="Search"
+          onSelect="Presenter.loadMenuContent('Search_All', '', '')"
+          >
+        <title>{{TEXT(Search)}}</title>
+      </menuItem>
+      
+      <menuItem id="Settings"
+          onSelect="Presenter.loadMenuContent('Settings', '', '')"
+          >
+        <title>{{TEXT(Settings)}}</title>
+      </menuItem>
+      
+    </menuBar>
+  </menuBarTemplate>
+</document>

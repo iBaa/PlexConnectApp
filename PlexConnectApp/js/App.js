@@ -38,10 +38,7 @@ App.onLaunch = function(options) {
   evaluateScripts(javascriptFiles, function(success) {
     if(success) {
       console.log(options);
-      
-      Presenter.load('MyPlex_Discover','','');
-      swiftInterface.discover('MyPlex_Discover');  // no need for updated view...
-      Presenter.loadAndSwap('Main','','');
+      Presenter.load('Main','','');
     } else {
       var errorDoc = createAlert("Evaluate Scripts Error", "Error attempting to evaluate external JavaScript files.");
       navigationDocument.presentModal(errorDoc);
@@ -51,9 +48,7 @@ App.onLaunch = function(options) {
 
 App.onResume = function() {
   console.log('onResume');
-  Presenter.load('MyPlex_Discover','','');
-  swiftInterface.discover('MyPlex_Discover');  // no need for updated view...
-  Presenter.loadAndSwap('Main','','');
+  Presenter.load('Main','','');
 }
 
 App.onSuspend = function() {
