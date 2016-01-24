@@ -11,6 +11,6 @@ TopShelf
  - Boy, Girl, TVSet, PlexInc Logo, Background
 2700x1013 -> scale to 1920x720
 
-MissingImage
- - Boy, Girl, TVSet, QuestionMark, Background
-1790x1790 -> scale to 100x100
+MissingImage, Folder
+ - Boy, Girl, TVSet, QuestionMark/Folder, Background
+1790x1790 -> scale to 256x256

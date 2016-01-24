@@ -8,7 +8,7 @@ See LICENSE.txt for this sample’s licensing information
     <menuBar>
       
       <menuItem id="All" 
-          onSelect="Presenter.loadMenuContent('Movie_List', '{{PMSID()}}', '{{PATH(all)}}')"
+          onSelect="Presenter.loadMenuContent('Movie_Directory', '{{PMSID()}}', '{{PATH(all)}}')"
           >
         <title>{{TEXT(All Movies)}}</title>
       </menuItem>
@@ -21,7 +21,7 @@ See LICENSE.txt for this sample’s licensing information
       </menuItem>
       
       <menuItem id="Unwatched"
-          onSelect="Presenter.loadMenuContent('Movie_List', '{{PMSID()}}', '{{PATH(unwatched)}}')"
+          onSelect="Presenter.loadMenuContent('Movie_Directory', '{{PMSID()}}', '{{PATH(unwatched)}}')"
           >
         <title>{{TEXT(Unwatched)}}</title>
       </menuItem>
