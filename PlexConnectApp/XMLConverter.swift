@@ -382,12 +382,19 @@ class cXmlConverter {
         var value = _self.getParam(XML, par: &par)
         var res = _self.getParam(XML, par: &par)  // default if no match
         
-        // look up tableKeys and replace value if equal
+        var cmd = ""  // default cmd modifier: exact match
+        if value.hasPrefix("$") {  // startsWith()
+            cmd = "$"
+            value = value.substringFromIndex(value.startIndex.advancedBy(1))  // skip $
+        }
+        
+        // look up tableKeys and replace value if equal / fits according cmd modifier
         while (!par.isEmpty) {
             let tableKey = _self.getParam(XML, par: &par)  // get key/value pair
             let tableValue = _self.getParam(XML, par: &par)
             
-            if (value == tableKey) {
+            if ( (value == tableKey) ||
+                 (cmd == "$" && value.hasPrefix(tableKey)) ) {
                 res = tableValue
                 break
             }
