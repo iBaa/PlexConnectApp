@@ -176,18 +176,23 @@ class cPlexMediaServerInformation {
 
 
 func getPmsUrl(key: String, pmsId: String, pmsPath: String) -> String {
-
+    if (pmsPath.hasPrefix("http://") || pmsPath.hasPrefix("https://")) {
+        // full URL, keep as is...
+        print("request full url: \(pmsPath)")
+        return pmsPath
+    }
+    
     // prepare pms uri & token
     var token: String
-    var url: String = ""
-    if (pmsId == "plex.tv") {
-        // plex.tv - user data
+    var url: String
+    if let pmsInfo = PlexMediaServerInformation[pmsId] {
+        // PMS specific
+        url = pmsInfo.getAttribute("uri")
+        token = pmsInfo.getAttribute("accessToken")
+    } else {
+        // pmsId not pointing to real PMS - try plex.tv and user token
         url = "https://plex.tv"
         token = plexUserInformation.getAttribute("token")
-    } else {
-        // PMS specific
-        url = PlexMediaServerInformation[pmsId]!.getAttribute("uri")  // todo: check if pmsId is useable
-        token = PlexMediaServerInformation[pmsId]!.getAttribute("accessToken")
     }
 
     // path
@@ -200,11 +205,13 @@ func getPmsUrl(key: String, pmsId: String, pmsPath: String) -> String {
     }
 
     // token
-    var queryDelimiter = "?"
-    if url.characters.contains("?") {
-        queryDelimiter = "&"
+    if token != "" {
+        var queryDelimiter = "?"
+        if url.characters.contains("?") {
+            queryDelimiter = "&"
+        }
+        url = url + queryDelimiter + "X-Plex-Token=" + token
     }
-    url = url + queryDelimiter + "X-Plex-Token=" + token
     
     print("request: \(url)")
     return url
@@ -215,8 +222,31 @@ func getPmsUrl(key: String, pmsId: String, pmsPath: String) -> String {
 func getVideoPath(video: XMLIndexer, partIx: Int, pmsId: String, pmsPath: String?) -> String {
     var res: String
 
-    // sanity check
-    // todo: ?
+    // sanity check: pmsId
+    var accessToken: String
+    var pmsUri: String
+    var pmsLocal: Bool
+    if let pmsInfo = PlexMediaServerInformation[pmsId] {
+        accessToken = pmsInfo.getAttribute("accessToken")
+        pmsUri = pmsInfo.getAttribute("uri")
+        pmsLocal = (pmsInfo.getAttribute("publicAddressMatches") == "1")
+    } else {
+        if pmsPath!.hasPrefix("http://") || pmsPath!.hasPrefix("https://") {
+            accessToken = ""
+            // arbitrary host, defined in parent path, eg. queue/indirect
+            // todo: use regex? use urlComponents?
+            let range = Range(start: pmsPath!.startIndex.advancedBy(8), end: pmsPath!.endIndex)  // 8 - start searching behind "//"  // todo: optionals
+            let rangeHostPathDelimiter = pmsPath!.rangeOfString("/", range: range)
+            pmsUri = pmsPath!.substringToIndex(rangeHostPathDelimiter!.startIndex)  // todo: optional
+            pmsLocal = false
+        } else {
+            // try plex.tv, user token
+            accessToken = plexUserInformation.getAttribute("token")
+            pmsUri = "https://plex.tv"
+            pmsLocal = false
+        }
+    }
+    // todo: pmsPath as optional?
     
     // XML pointing to Video node
     let media = video["Media"][0]  // todo: cover XMLError, errorchecking on optionals
@@ -260,7 +290,7 @@ func getVideoPath(video: XMLIndexer, partIx: Int, pmsId: String, pmsPath: String
         "1080p 40.0Mbps": ("1920x1080", "100", "40000")
     ]
     var quality: [String: String] = [:]
-    if PlexMediaServerInformation[pmsId]!.getAttribute("publicAddressMatches") == "1" {  // todo: check if pmsId is useable
+    if pmsLocal {
         quality["resolution"] = qualityLookup[settings.getSetting("transcoderQuality")]?.0
         quality["quality"] = qualityLookup[settings.getSetting("transcoderQuality")]?.1
         quality["bitrate"] = qualityLookup[settings.getSetting("transcoderQuality")]?.2
@@ -307,24 +337,21 @@ func getVideoPath(video: XMLIndexer, partIx: Int, pmsId: String, pmsPath: String
     
     // determine video URL
     // direct play for...
+    //    indirect or full url, eg. queue
+    //
     //    force direct play
     // or videoATVNative (HTTP live stream m4v/h264/aac...)
     //    limited by quality setting
     //    with aTV supported subtitle (iOS embedded tx3g, PlexConnext external srt)
-    let accessToken = PlexMediaServerInformation[pmsId]!.getAttribute("accessToken")
-    if transcoderAction == "DirectPlay"
-       ||
-       transcoderAction == "Auto" && videoATVNative && qualityDirectPlay /*&& subtitleDirectPlay*/ {
+    let key = getAttribute(part, key: "key", dflt: "")
+    let indirect = getAttribute(media, key: "indirect", dflt: "0")
+    if indirect == "1" ||
+       key.hasPrefix("http://") || key.hasPrefix("https://") {
+        res = key
+    } else if transcoderAction == "DirectPlay"
+              ||
+              transcoderAction == "Auto" && videoATVNative && qualityDirectPlay /*&& subtitleDirectPlay*/ {
         // direct play
-        let key = getAttribute(part, key: "key", dflt: "")
-        
-        let indirect = getAttribute(media, key: "indirect", dflt: "0")
-        if indirect=="1" {
-            // todo: indirection... typically attribute indirect is not available
-            // todo: select suitable resolution, today we just take first Media
-        }
-        //res = getDirectVideoPath(key, pmsToken: accessToken)
-        
         var xargs = getDeviceInfoXArgs()
         if accessToken != "" {
             xargs += [ NSURLQueryItem(name: "X-Plex-Token", value: accessToken) ]
@@ -336,7 +363,6 @@ func getVideoPath(video: XMLIndexer, partIx: Int, pmsId: String, pmsPath: String
         res = urlComponents!.string!
     } else {
         // request transcoding
-        let key = getAttribute(video, key: "key", dflt: "")
         let ratingKey = getAttribute(video, key: "ratingKey", dflt: "")
         
         // misc settings: subtitlesize, audioboost
@@ -370,12 +396,12 @@ func getVideoPath(video: XMLIndexer, partIx: Int, pmsId: String, pmsPath: String
     
     if res.hasPrefix("/") {
         // internal full path
-        res = PlexMediaServerInformation[pmsId]!.getAttribute("uri") + res
+        res = pmsUri + res
     } else if res.hasPrefix("http://") || res.hasPrefix("https://") {
         // external address - do nothing
     } else {
         // internal path, add-on
-        res = PlexMediaServerInformation[pmsId]!.getAttribute("uri") + pmsPath! + "/" + res
+        res = pmsUri + pmsPath! + "/" + res
     }
     
     return res

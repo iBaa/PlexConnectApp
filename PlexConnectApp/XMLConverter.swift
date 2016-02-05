@@ -112,8 +112,13 @@ class cXmlConverter {
         var elem = XML!
         var lvls = attrib.componentsSeparatedByString("/")
         while (lvls.count>1) {
-            // todo: check for special chars - settings, vars, ...  // shouldn't happen, should it?
-            elem = elem[lvls.removeFirst()][0]  // always first element? How about indexing?
+            var lvl = lvls.removeFirst()
+            if (lvl[lvl.startIndex] == "@") {  // startsWith("@") - link to previously stored XML/node
+                lvl.removeAtIndex(lvl.startIndex)  // remove "@"
+                elem = self.xmlCache[lvl]!  // todo: check optional for usability
+            } else {  // walk the tree
+                elem = elem[lvl][0]  // always first element? How about indexing?
+            }
             if (!elem) {
                 return dflt
             }
@@ -453,13 +458,15 @@ class cXmlConverter {
     var processPATH: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
         _self, XML, _par in
         
-        var par = _par.componentsSeparatedByString(":")
+        //var par = _par.componentsSeparatedByString(":")  // don't separate at colon - might contain http://... or https://...
         var res = ""
         
-        let key = _self.getParam(XML, par: &par)
+        let key = _par  // _self.getParam(XML, par: &par)
         
         if !(_self.pmsPath==nil) {
-            if (key.hasPrefix("/")) {
+            if (key.hasPrefix("http://") || key.hasPrefix("https://")) {
+                res = key
+            } else if (key.hasPrefix("/")) {
                 res = key
             } else if (key=="") {
                 res = _self.pmsPath!
@@ -467,7 +474,9 @@ class cXmlConverter {
                 res = _self.pmsPath! + "/" + key
             }
         } else {
-            if (key.hasPrefix("/")) {
+            if (key.hasPrefix("http://") || key.hasPrefix("https://")) {
+                res = key
+            } else if (key.hasPrefix("/")) {
                 res = key
             } else if (key=="") {
                 // do nothing
@@ -568,6 +577,15 @@ class cXmlConverter {
         if let pmsId = _self.pmsId {
             if let pmsInfo = PlexMediaServerInformation[pmsId] {
                 return pmsInfo.getAttribute(key)
+            } else {
+                if pmsId == "plex.tv" {
+                    // "special" PMS: plex.tv, user token
+                    if key == "uri" {
+                        return "https://plex.tv"
+                    } else if key == "accessToken" {
+                        return plexUserInformation.getAttribute("token")
+                    }
+                }
             }
         }
         return ""

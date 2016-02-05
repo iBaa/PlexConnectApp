@@ -20,7 +20,7 @@ See LICENSE.txt for this sample’s licensing information
       <imageURL>{{IMAGEURL(grandparentThumb::384)}}</imageURL>
     
       <!-- PMS -->
-      <key>{{VAL(key)}}</key>
+      <key><![CDATA[{{VAL(key)}}]]></key>
       <ratingKey>{{VAL(ratingKey)}}</ratingKey>
       <duration>{{VAL(duration)}}</duration>
     

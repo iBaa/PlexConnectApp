@@ -71,6 +71,25 @@ See LICENSE.txt for this sample’s licensing information
           </relatedContent>
         </listItemLockup>
 }}
+
+        <!-- clips -->
+{{IF({{CHK("{{VAL(type)}}"=="clip")}})}}{{
+{{SET(noItems:false)}}
+        <listItemLockup
+            onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH()}}')"
+            onSelectHold="modal"
+            >
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <relatedContent>
+            <lockup>
+              <img src="{{IMAGEURL(thumb::768)}}" />
+              <title><![CDATA[{{VAL(title)}}]]></title>
+              <description><![CDATA[{{VAL(summary)}}]]></description>
+            </lockup>
+          </relatedContent>
+        </listItemLockup>
+}}
 }}
       </section>
       

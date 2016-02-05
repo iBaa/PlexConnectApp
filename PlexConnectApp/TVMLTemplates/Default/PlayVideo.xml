@@ -17,6 +17,7 @@ See LICENSE.txt for this sample’s licensing information
       <part>
         <mediaUrl>{{VIDEOURL(@elem_MediaContainer_Video:{{GET(ix_Media_Part)}})}}</mediaUrl>
         <mediaDuration>{{VAL(duration)}}</mediaDuration>
+        <indirect>{{VAL(@elem_MediaContainer_Video/Media/indirect:0)}}</indirect>
       </part>
 }}
       <title><![CDATA[{{VAL(title)}}]]></title>
@@ -27,7 +28,7 @@ See LICENSE.txt for this sample’s licensing information
       <resumeTime>{{VAL(viewOffset:0)}}</resumeTime>
       
       <!-- PMS -->
-      <key>{{VAL(key)}}</key>
+      <key><![CDATA[{{VAL(key)}}]]></key>
       <ratingKey>{{VAL(ratingKey)}}</ratingKey>
       <duration>{{VAL(duration)}}</duration>
     

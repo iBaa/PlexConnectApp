@@ -12,6 +12,36 @@ See LICENSE.txt for this sample’s licensing information
     </banner>
     <list>
 
+      <!-- myplex queue -->
+{{PMS(plex.tv)}}{{
+{{XML(/api/playlists/queue)}}{{
+{{CUT({{GET(noQueueLists)}})}}{{
+{{SET(noQueueLists)}}
+      <section>
+        <header>
+          <title>{{TEXT(MyPlex Queue)}}</title>
+        </header>
+        
+{{COPY(MediaContainer/Directory)}}{{
+{{SET(noItems:false)}}
+{{SET(noQueueLists:false)}}
+        <listItemLockup
+            onSelect="Presenter.load('Playlists_Video', '{{PMSID()}}', '{{PATH(/api/playlists/queue/{{VAL(key)}})}}')"
+            onSelectHold="modal"
+            >
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <relatedContent>
+            <lockup>
+              <img src="{{IMAGEURL(composite::768)}}" />
+            </lockup>
+          </relatedContent>
+        </listItemLockup>
+}}
+      </section>
+}}
+}}
+}}
+
       <!-- video playlists -->
 {{PMSLOOP(all)}}{{
 {{XML()}}{{

@@ -75,6 +75,8 @@ play: function(pmsId, pmsPath) {
     
       // player
       mediaItem.url = part.getTextContent('mediaUrl');
+      mediaItem.partIx = partIx
+      mediaItem.indirect = part.getTextContent('indirect');
     
       mediaItem.title = video.getTextContent('title');
       mediaItem.subtitle = video.getTextContent('subtitle');  // todo: check subtitle for stacked video
@@ -128,7 +130,12 @@ play: function(pmsId, pmsPath) {
   duration = mediaItem.duration;
   partStartTime = mediaItem.partStartTime;
   isTranscoding = (mediaItem.url.indexOf('transcode/universal') > -1);
-
+  
+  // indirect url - redirect upper 3 video urls
+  for (var ix=0; ix<3 && ix<playlist.length; ix++) {
+    videoPlayer.handleIndirectUrl(playlist.item(ix));  // todo: redirect ix=1,2 asyncronous? would save some video startup time.
+  }
+  
   // create video player
   var player = new Player();
   player.playlist = playlist;
@@ -145,6 +152,22 @@ play: function(pmsId, pmsPath) {
   videoPlayer.player = player;
 },
 
+handleIndirectUrl: function(mediaItem) {
+  if (mediaItem && mediaItem.indirect=="1") {
+    // get redirected url from playlist based on fresh PMS XML
+    var docString = swiftInterface.getViewIdPath('PlayVideo', '', mediaItem.url);  // pmsId not needed, full url  // error handling?
+    
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(docString, "application/xml");
+    
+    // upadate url from playlist/video/part[ix]/mediaUrl
+    var parts = doc.getElementsByTagName('part');
+    var part = parts.item(mediaItem.partIx);
+    mediaItem.url = part.getTextContent('mediaUrl');
+    mediaItem.indirect = part.getTextContent('indirect');  // redirected once... should be "0" now
+  }
+},
+  
 onTimeDidChange: function(timeObj) {
   console.log("onTimeDidChange: " + timeObj.time + "s");
   
@@ -302,6 +325,16 @@ onMediaItemDidChange: function(event) {
 
     lastReportedTime = partStartTime;  // reset timer only if other mediaItem follows to stay in sync with key/ratingKey
     lastTranscoderPingTime = partStartTime;
+  }
+  
+  // indirect url - redirect 3rd one down
+  var playlist = player.playlist;
+  for (var ix=0; ix<playlist.length-2; ix++) {
+    if (playlist.item(ix)==player.currentMediaItem) {
+      var mediaItem = playlist.item(ix+2);  // redirect but-next, upper 3 urls already redirected in play()
+      videoPlayer.handleIndirectUrl(mediaItem);
+      break;
+    }
   }
 },
 }
