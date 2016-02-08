@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}
+{{
+<document>
+    <head>
+        <style>
+            .lightBackgroundColor {
+            background-color: #85837e;
+            }
+        </style>
+    </head>
+    <alertTemplate theme="dark" class="lightBackgroundColor">
+    <title>Filters</title>
+		<button onSelect="Presenter.load('Movie_MenuBarAll', '{{PMSID()}}', '{{PATH()}}/all')">
+				<text>All {{VAL(MediaContainer/title1)}}</text>
+		</button>
+		<button onSelect="Presenter.load('Movie_MenuBarUnwatched', '{{PMSID()}}', '{{PATH()}}/all?unwatched=1')">
+				<text>{{TEXT(Unwatched)}}</text>
+		</button>
+		<button onSelect="Presenter.load('Movie_MenuBarFilters', '{{PMSID()}}', '{{PATH()}}/newest')">
+				<text>{{TEXT(Recently Released)}}</text>
+		</button>
+		<button onSelect="Presenter.load('Movie_MenuBarFilters', '{{PMSID()}}', '{{PATH()}}/recentlyAdded')">
+				<text>{{TEXT(Recently Added)}}</text>
+		</button>
+		<button onSelect="Presenter.load('Movie_MenuBarFilters', '{{PMSID()}}', '{{PATH()}}/recentlyViewed')">
+				<text>{{TEXT(Recently Viewed)}}</text>
+		</button>
+		<button onSelect="Presenter.load('Movie_MenuBarFilters', '{{PMSID()}}', '{{PATH()}}/onDeck')">
+				<text>{{TEXT(Continue Watching)}}</text>
+		</button>
+	{{COPY(MediaContainer/Directory)}}{{
+		{{IF({{VAL(prompt)}})}}
+		{{
+		
+        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
+        	<button onSelect="Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/{{VAL(key)}}')">
+        	  	<text>{{VAL(title)}}</text>
+        	</button>
+    	}}
+    	{{IF(!{{VAL(prompt)}})}}
+		{{
+    	{{IF({{CHK("{{VAL(key:)}}"=="folder")}})}}
+		{{
+		
+        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
+        	<button onSelect="Presenter.load('List', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+            	<text>{{VAL(title)}}</text>
+        	</button>
+    	}}
+    	{{IF(!{{CHK("{{VAL(key:)}}"=="folder")}})}}
+		{{
+    		{{IF({{CHK("{{VAL(secondary:)}}"=="1")}})}}
+			{{
+		
+        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
+        	<button onSelect="Presenter.load('Movie_Secondary', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+            	<text>{{VAL(title)}}</text>
+        	</button>
+    		}}
+    		{{IF(!{{CHK("{{VAL(secondary:)}}"=="1")}})}}
+			{{
+        	<data/>
+    		}}
+    	}}
+    	}}
+    }}    
+}}        
+    </alertTemplate>
+</document>
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>TITLE</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

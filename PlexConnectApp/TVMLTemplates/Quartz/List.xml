@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+  <head>
+        <style>
+            .lightBackgroundColor {
+            background-color: #efece6;
+            }
+            .layout {
+            margin: 40;
+            }
+            .showTextOnHighlight {
+            tv-text-highlight-style: marquee-on-highlight;
+            }
+            .roundedImageCorners {
+            itml-img-treatment: corner-small;
+            }
+
+        </style>
+    </head>
+    <listTemplate theme="light" class="lightBackgroundColor">
+    <list>
+      <!--<relatedContent>
+        <itemBanner>
+          <heroImg src="{{IMAGEURL(thumb::120)}}" />
+        </itemBanner>
+      </relatedContent>-->
+      <header>
+        <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
+      </header>
+
+      <section>
+{{COPY(MediaContainer/Directory)}}{{
+{{SET(noItems:false)}}
+        <listItemLockup
+            onSelect="Presenter.load('List', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
+            >
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <img src="{{RESOURCEURL(TVMLTemplates/Quartz/images:75folder:png)}}" width="90" height="90" />
+          <decorationImage src="resource://chevron" />
+        </listItemLockup>
+}}
+{{COPY(MediaContainer/Video)}}{{
+{{SET(noItems:false)}}
+        <listItemLockup
+            onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('PlayVideo', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
+            >
+          <img src="{{IMAGEURL(thumb::120)}}" width="160" height="120" />
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <subtitle>{{DURATION_HMS({{VAL(duration)}})}}</subtitle>
+          <relatedContent>
+            <lockup>
+              <img src="{{IMAGEURL(thumb::768)}}" />
+            </lockup>
+          </relatedContent>
+        </listItemLockup>
+}}
+
+      </section>
+      
+    </list>
+  </listTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>TITLE</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}
