@@ -28,6 +28,7 @@ player: null,  // the player
   
 play: function(pmsId, pmsPath) {
   // parse optional argument: "resume"; "startAt",ix; "shuffle"
+  Presenter.closeContext();
   var resume = false;
   var startAt = 0;
   var shuffle = false;
