@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+ Copyright (C) 2015 Baa. All rights reserved.
+ See LICENSE.txt for this sample’s licensing information
+ -->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+<document>
+  <listTemplate>
+    <list>
+      
+      <header>
+        <title>{{TEXT(Plex Media Servers)}}</title>
+      </header>
+      
+      <!-- own servers -->
+      <section>
+{{PMSLOOP(owned)}}{{
+{{SET(noItems:false)}}
+        <listItemLockup
+            id="{{PMSVAL(clientIdentifier)}}"
+            onSelect="myPlex.switchServer(event);"
+            onSuccess="navigationDocument.popDocument(); Presenter.loadAndSwap('Library','{{PMSID()}}','/library/sections');"
+            >
+          <row>
+            <title><![CDATA[{{PMSVAL(name)}}]]></title>
+{{IF(!{{PMSVAL(local)}})}}{{
+            <decorationImage src="{{RESOURCEURL(Images:icon_cloud:png)}}" width="50" height="30" />
+}}
+{{IF({{CHK("{{CUSTOMSETTING(pmsUuid)}}"=="{{PMSVAL(clientIdentifier)}}")}})}}{{
+            <decorationImage src="resource://button-checkmark" />
+}}
+          </row>
+          <relatedContent>
+            <lockup>
+              <img src="{{IMAGEURL(thumb::768)}}" width="" height="" />
+              <title><![CDATA[{{PMSVAL(name)}}]]></title>
+              <description>
+                <![CDATA[{{USRVAL(name)}}]]><br/>
+                <![CDATA[{{PMSVAL(product)}} {{PMSVAL(productVersion)}}]]><br/>
+                <![CDATA[{{PMSVAL(platform)}} {{PMSVAL(platformVersion)}}]]>
+              </description>
+            </lockup>
+          </relatedContent>
+        </listItemLockup>
+}}
+      </section>
+
+      <!--shared servers-->
+      <section>
+        <header>
+          <title>Shared Servers</title>
+        </header>
+        
+{{PMSLOOP(shared)}}{{
+{{SET(noItems:false)}}
+        <listItemLockup
+            id="{{PMSVAL(clientIdentifier)}}"
+            onSelect="myPlex.switchServer(event);"
+            onSuccess="navigationDocument.popDocument(); Presenter.loadAndSwap('Library','{{PMSID()}}','/library/sections');"
+            >
+          <row>
+            <title><![CDATA[{{PMSVAL(name)}}]]></title>
+{{IF(!{{PMSVAL(local)}})}}{{
+            <decorationImage src="{{RESOURCEURL(Images:icon_cloud:png)}}" width="50" height="30" />
+}}
+{{IF({{CHK("{{CUSTOMSETTING(pmsUuid)}}"=="{{PMSVAL(clientIdentifier)}}")}})}}{{
+            <decorationImage src="resource://button-checkmark" />
+}}
+          </row>
+          <relatedContent>
+            <lockup>
+              <img src="{{IMAGEURL(thumb::768)}}" width="" height="" />
+              <title><![CDATA[{{PMSVAL(name)}}]]></title>
+              <description>
+                <![CDATA[{{PMSVAL(sourceTitle)}}]]><br/>
+                <![CDATA[{{PMSVAL(product)}} {{PMSVAL(productVersion)}}]]><br/>
+                <![CDATA[{{PMSVAL(platform)}} {{PMSVAL(platformVersion)}}]]>
+              </description>
+            </lockup>
+          </relatedContent>
+        </listItemLockup>
+}}
+      </section>
+
+    </list>
+  </listTemplate>
+</document>
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>TITLE</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

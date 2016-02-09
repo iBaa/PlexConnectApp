@@ -56,7 +56,7 @@
       <subtitle style="text-align: left;">powered by quartz theme</subtitle>
     <row>
         {{IF({{CHK("{{PMSCNT()}}">"1")}})}}{{
-        <buttonLockup onSelect="Presenter.load('SharedLibraries', '', '')">
+        <buttonLockup onSelect="Presenter.load('MyPlex_Servers', '', '')">
             <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:Server:png)}}" width="50" height="50"/>
             <title>{{TEXT(Server)}}</title>
         </buttonLockup>
