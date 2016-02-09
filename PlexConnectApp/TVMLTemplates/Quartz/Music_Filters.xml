@@ -11,11 +11,11 @@
             }
         </style>
     </head>
-    <alertTemplate theme="dark" class="lightBackgroundColor">
+    <alertTemplate>
     <title>Filters:</title>
 {{COPY(MediaContainer/Directory)}}{{
 	{{IF({{CHK("{{VAL(key:)}}"=="all")}})}}{{
-		<button onSelect="Presenter.load('Music_MenuBarAll', '{{PMSID()}}', '{{PATH()}}/all')">
+		<button onSelect="Presenter.closeContext(); Presenter.load('Music_MenuBarAll', '{{PMSID()}}', '{{PATH()}}/all')">
 			<text>{{TEXT(All Artists)}}</text>
 		</button>
 	}}
@@ -24,14 +24,14 @@
 	
 		{{IF({{VAL(prompt)}})}}{{
 	      	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
-        	<button onSelect="Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/{{VAL(key)}}')">
+        	<button onSelect="Presenter.closeContext(); Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/{{VAL(key)}}')">
             	<text>{{VAL(title)}}</text>
         	</button>
     }}
     {{IF(!{{VAL(prompt)}})}}{{
     	{{IF({{CHK("{{VAL(key:)}}"=="folder")}})}}{{
 		    	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
-        	<button onSelect="Presenter.load('List', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+        	<button onSelect="Presenter.closeContext(); Presenter.load('List', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
             	<text>{{VAL(title)}}</text>
         	</button>
     	}}
@@ -39,13 +39,13 @@
     		{{IF({{CHK("{{VAL(secondary:)}}"=="1")}})}}{{
 		
         	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
-        	<button onSelect="Presenter.load('Music_Secondary', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+        	<button onSelect="Presenter.closeContext(); Presenter.load('Music_Secondary', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
             	<text>{{VAL(title)}}</text>
         	</button>
     		}}
     		{{IF(!{{CHK("{{VAL(secondary:)}}"=="1")}})}}{{
 					{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
-        	<button onSelect="Presenter.load('Music_Grid', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+        	<button onSelect="Presenter.closeContext(); Presenter.load('Music_Grid', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
             	<text>{{VAL(title)}}</text>
         	</button>
     		}}

@@ -11,7 +11,7 @@
             }
         </style>
     </head>
-    <alertTemplate theme="dark" class="lightBackgroundColor">
+    <alertTemplate>
     <title>Filters:</title>
 
 	{{COPY(MediaContainer/Directory)}}
@@ -20,7 +20,7 @@
 		{{
 		
         	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
-        	<button onSelect="Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/{{VAL(key)}}')">
+        	<button onSelect="Presenter.closeContext(); Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/{{VAL(key)}}')">
         	  	<text>{{VAL(title)}}</text>
         	</button>
     	}}
@@ -30,7 +30,7 @@
 		{{
 		
         	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
-        	<button onSelect="Presenter.load('List', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+        	<button onSelect="Presenter.closeContext(); Presenter.load('List', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
             	<text>{{VAL(title)}}</text>
         	</button>
     	}}
@@ -40,7 +40,7 @@
 			{{
 		
         	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
-        	<button onSelect="Presenter.load('TVShow_Secondary', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+        	<button onSelect="Presenter.closeContext(); Presenter.load('TVShow_Secondary', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
             	<text>{{VAL(title)}}</text>
         	</button>
     		}}
@@ -48,7 +48,7 @@
 			{{
 		
         	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
-        	<button onSelect="Presenter.load('TVShow_Grid', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+        	<button onSelect="Presenter.closeContext(); Presenter.load('TVShow_Grid', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
             	<text>{{VAL(title)}}</text>
         	</button>
     		}}
