@@ -56,15 +56,11 @@
       <subtitle style="text-align: left;">powered by quartz theme</subtitle>
     <row>
         {{IF({{CHK("{{PMSCNT()}}">"1")}})}}{{
-        <buttonLockup onSelect="Presenter.load('MyPlex_Servers', '', '')">
+        <buttonLockup onSelect="Presenter.load('SharedLibraries', '', '')">
             <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:Server:png)}}" width="50" height="50"/>
             <title>{{TEXT(Server)}}</title>
         </buttonLockup>
         }}
-        <buttonLockup onSelect="audioPlayer.nowPlaying()">
-        	<badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:Playing:png)}}" width="50" height="50" />
-        	<title>Now playing</title>
-        </buttonLockup>
         <buttonLockup onSelect="Presenter.load('Search_All', '', '')">
             <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:Search:png)}}" width="50" height="50"/>
             <title>Search</title>
@@ -340,40 +336,34 @@
 	}} 
 	}}
 }}    
-{{XML({{PATH(/playlists/?sort=lastViewedAt)}})}}{{
+{{XML({{PATH(/playlists?sort=lastViewedAt)}})}}{{
 	 {{IFNODE(MediaContainer/Playlist)}}{{
 	 <shelf id="Playlists">
 		<header>
 				<title>Playlists</title>
 		</header>
 		<section>
-			{{COPY(MediaContainer/Playlist)}}
-			{{
+			{{COPY(MediaContainer/Playlist)}}{{
 			{{SET(noItems:false)}}
-			{{IF({{CHK("{{VAL(type:)}}"=="playlist")}})}}
-			{{
-			{{IF({{CHK("{{VAL(playlistType:)}}"=="video")}})}}
-			{{
+			{{IF({{CHK("{{VAL(playlistType:)}}"=="video")}})}}{{
 			<lockup
 				onSelect="Presenter.load('Playlists_Video', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
 				onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'shuffle')"
 				onSelectHold="modal">
-				<img class="roundedImageCorners" src="{{IMAGEURL(composite::360)}}" height="250" width="250" />
+				<img src="{{IMAGEURL(composite::360)}}" height="250" width="250" />
 				<title class="shelfLabel"><![CDATA[{{VAL(title)}}]]></title>
 				<subtitle class="shelfLabel">{{DURATION_HM({{VAL(duration)}})}}</subtitle>
 			</lockup>
 			}}
-			{{IF({{CHK("{{VAL(playlistType:)}}"=="audio")}})}}
-			{{
+			{{IF({{CHK("{{VAL(playlistType:)}}"=="audio")}})}}{{
 			<lockup
 				onSelect="Presenter.load('Playlists_Audio', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
 				onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'shuffle')"
 				onSelectHold="modal">
-				<img class="roundedImageCorners" src="{{IMAGEURL(composite::360)}}" height="250" width="250" />
+				<img src="{{IMAGEURL(composite::360)}}" height="250" width="250" />
 				<title class="shelfLabel"><![CDATA[{{VAL(title)}}]]></title>
 				<subtitle class="shelfLabel">{{DURATION_HM({{VAL(duration)}})}}</subtitle>
 			</lockup>
-			}}
 			}}
 			}}
 		</section>
@@ -383,30 +373,42 @@
 
 
 }}
-<!--
 {{PMS(plex.tv)}}{{		
-{{XML(/pms/playlists/queue/all)}}{{		
-{{IFNODE(MediaContainer/Video)}}{{		
-	<shelf class="shelfItems" id="Queue">		
-		<header>		
-				<title>Queue</title>		
-		</header>		
+<shelf id="Queue">		
 		<section>		
-			{{COPY(MediaContainer/Video)}}{{		
-			{{SET(noItems:false)}}		
+{{XML(/pms/playlists/queue/unwatched)}}{{		
+		{{IFNODE(MediaContainer/Video)}}{{		
+		{{COPY(MediaContainer/Video)}}{{		
 			<lockup		
-				onSelect="Presenter.load('Queue_PrePlay', '{{PMS()}}', '{{IMAGEHTTP(key)}}')"
+				onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+				onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
 				onSelectHold="modal">		
-				<img class="roundedImageCorners" src="{{IMAGEHTTP(thumb)}}" height="300" width="390" />		      
-				<title><![CDATA[{{IMAGEHTTP(key)}}]]></title>		
+				<img class="roundedImageCorners" src="{{IMAGEHTTP(thumb)}}" height="300" width="400" />		      
+				<title><![CDATA[{{VAL(title)}}]]></title>		
 			</lockup>		
-			}}		
+			}}
+			}}
+}}
+{{XML(/pms/playlists/queue/watched)}}{{		
+		{{IFNODE(MediaContainer/Video)}}{{		
+		{{COPY(MediaContainer/Video)}}{{		
+			<lockup		
+				onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+				onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+				onSelectHold="modal">		
+				<img class="roundedImageCorners" src="{{IMAGEHTTP(thumb)}}" height="300" width="400" />		      
+				<title><![CDATA[{{VAL(title)}}]]></title>		
+			</lockup>		
+			}}
+			}}
+}}
+			<header>		
+				<title>Queue</title>		
+			</header>		
 		</section>		
 	</shelf>		
-	}}		
-	}}
-	}}
--->
+}}		
+
   </collectionList>
 </stackTemplate>
 </document>
