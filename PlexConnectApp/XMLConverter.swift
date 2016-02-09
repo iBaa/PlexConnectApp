@@ -61,6 +61,7 @@ class cXmlConverter {
             "AUDIOURL": processAUDIOURL!,
             "PHOTOURL": processPHOTOURL!,
             "IMAGEURL": processIMAGEURL!,
+            "IMAGEHTTP": processIMAGEHTTP!,
             "TEXT": processTEXT!,
             "SETTING": processSETTING!,
             "CUSTOMSETTING": processCUSTOMSETTING!,
@@ -792,6 +793,35 @@ class cXmlConverter {
         } else if (key != "") {
             var res: String
             res = getPmsUrl(key, pmsId: _self.pmsId!, pmsPath: _self.pmsPath!)  // todo: pmsId, pmsPath optional?
+            // XML safe?
+            res = res.stringByReplacingOccurrencesOfString("&", withString: "&amp;")  // must be first
+            res = res.stringByReplacingOccurrencesOfString("<", withString: "&lt;")
+            res = res.stringByReplacingOccurrencesOfString(">", withString: "&gt;")
+            res = res.stringByReplacingOccurrencesOfString("'", withString: "&apos;")
+            res = res.stringByReplacingOccurrencesOfString("\"", withString: "&quot;")
+            
+            return res
+        } else {
+            let res = getResourceUrl("missing-image", ext: "png", dir: "Images")
+            return res
+        }
+    }
+    
+    var processIMAGEHTTP: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
+        _self, XML, _par in
+        
+        var par = _par.componentsSeparatedByString(" ")
+        
+        // sanity check
+        if _self.pmsId == nil {
+            return "[[IMAGEURL - pmsId not initialised]]"
+        }
+        
+        let key = _self.getKey(XML, par: &par)
+        if (key != "") {
+            var res: String
+            res = key
+            // res = getPmsUrl(key, pmsId: _self.pmsId!, pmsPath: _self.pmsPath!)  // todo: pmsId, pmsPath optional?
             // XML safe?
             res = res.stringByReplacingOccurrencesOfString("&", withString: "&amp;")  // must be first
             res = res.stringByReplacingOccurrencesOfString("<", withString: "&lt;")
