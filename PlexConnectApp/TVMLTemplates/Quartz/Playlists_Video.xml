@@ -25,17 +25,13 @@
         <itemBanner>
           <heroImg src="{{IMAGEURL(MediaContainer/composite::)}}" />
           <row>
-            <buttonLockup onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', '')">
+            <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', '')">
               <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:PlayAll:png)}}" width="50" height="50"/>
               <title>Play all</title>
             </buttonLockup>
-            <buttonLockup onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', 'shuffle')">
+            <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', 'shuffle')">
               <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:Shuffle:png)}}" width="50" height="50"/>
               <title>Shuffle all</title>
-            </buttonLockup>
-            <buttonLockup onSelect="audioPlayer.nowPlaying()">
-              <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:Playing:png)}}" width="50" height="50" />
-              <title>Now playing</title>
             </buttonLockup>
           </row>
         </itemBanner>
