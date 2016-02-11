@@ -363,6 +363,7 @@ func getVideoPath(video: XMLIndexer, partIx: Int, pmsId: String, pmsPath: String
         res = urlComponents!.string!
     } else {
         // request transcoding
+        let key = getAttribute(video, key: "key", dflt: "")
         let ratingKey = getAttribute(video, key: "ratingKey", dflt: "")
         
         // misc settings: subtitlesize, audioboost
