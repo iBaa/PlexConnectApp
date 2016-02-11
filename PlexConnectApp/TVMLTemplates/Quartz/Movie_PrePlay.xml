@@ -80,7 +80,7 @@ See LICENSE.txt for this sample’s licensing information
           </buttonLockup>
 					}}
 					{{IF({{VAL(MediaContainer/Video/viewOffset)}})}}{{
-					<buttonLockup onSelect="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH()}}');">
+					<buttonLockup onSelect="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH()}}')">
             <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:Play:png)}}" width="50" height="50"/>
             <title>{{TEXT(Play)}}</title>
           </buttonLockup>
@@ -91,29 +91,29 @@ See LICENSE.txt for this sample’s licensing information
             <title>{{TEXT(Trailer)}}</title>
           </buttonLockup>
 					}}
-					<buttonLockup id="audio" onSelect="">
+					<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
             <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:Audio:png)}}" width="50" height="50"/>
             {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{ 
           	 	{{IF({{CHK("{{VAL(streamType:)}}"=="2")}})}}{{
-          	 	<title>Audio<br/>{{UPPERCASE({{VAL(languageCode)}})}}</title>
+          	 	<title>{{UPPERCASE({{VAL(languageCode)}})}}</title>
 							}}
 							{{IF(!{{CHK("{{VAL(streamType:)}}"=="2")}})}}{{
           	 	<data/>
 							}}
 						}}
           </buttonLockup>
-          <buttonLockup id="subtitles" onSelect="">
+          <buttonLockup id="subtitles" onSelect="Presenter.loadContext('Movie_SubsPopUp', '{{PMSID()}}', '{{PATH()}}')">
             <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:Subtitles:png)}}" width="50" height="50"/>
             {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{ 
           	 	{{IF({{CHK("{{VAL(streamType:)}}"=="3")}})}}{{
-          	 	<title>Subtitles<br/>{{UPPERCASE({{VAL(languageCode)}})}}</title>
+          	 	<title>{{UPPERCASE({{VAL(languageCode)}})}}</title>
 							}}
 							{{IF(!{{CHK("{{VAL(streamType:)}}"=="3")}})}}{{
           	 	<data/>
 							}}
 						}}
           </buttonLockup>
-          <buttonLockup id="more" onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH()}}');">
+          <buttonLockup id="more" onSelect="Presenter.loadContext('Movie_MorePopUp', '{{PMSID()}}', '{{PATH()}}')">
             <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:More:png)}}" width="50" height="50"/>
             <title>{{TEXT(More)}}</title>
           </buttonLockup>
@@ -133,7 +133,7 @@ See LICENSE.txt for this sample’s licensing information
         <lockup
             onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             >
-          <img src="{{IMAGEURL(thumb::360)}}" width="310" height="207" />
+          <img src="{{IMAGEURL(thumb::60)}}" width="310" height="207" />
           <title><![CDATA[{{VAL(title)}}]]></title>
           <subtitle>{{TABLE({{VAL(extraType)}}:{{TEXT(Clip)}}:1:{{TEXT(Trailer)}}:2:{{TEXT(Deleted Scene)}}:3:{{TEXT(Interview)}}:4:{{TEXT(Music Video)}}:5:{{TEXT(Behind the Scenes)}}:6:{{TEXT(Scene)}}:7:{{TEXT(Live Video)}}:8:{{TEXT(Lyrics Video)}})}}</subtitle>
         </lockup>
