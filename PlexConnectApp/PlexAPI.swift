@@ -30,17 +30,17 @@ class cPlexUserInformation {
     private var _xmlUser: XMLIndexer?  // store for debugging - XML data this PMS was set up with
     private var _xmlHomeUser: XMLIndexer?
     
-    
     init() {
         _xmlUser = nil
         _xmlHomeUser = nil
-        _attributes = ["adminname": "", "name": "", "email": "", "token": ""]
-
+        _attributes = ["adminname": "", "name": "", "email": "", "token": "", "theme": ""]
+        
         if let name = _storage.stringForKey("adminname") {
             _attributes["adminname"] = name
         }
         if let name = _storage.stringForKey("name") {
             _attributes["name"] = name
+            // _storage.setObject([name: "test1"], forKey: "theme")
         }
         if let email = _storage.stringForKey("email") {
             _attributes["email"] = email
@@ -48,12 +48,17 @@ class cPlexUserInformation {
         if let token = _storage.stringForKey("token") {
             _attributes["token"] = token
         }
+        
+        _attributes["theme"] = "default"
+        
+        print ("1")
+        print(NSUserDefaults.standardUserDefaults().dictionaryRepresentation())
     }
     
     init(xmlUser: XMLIndexer) {
         _xmlUser = xmlUser
         _xmlHomeUser = nil
-        _attributes = ["adminname": "", "name": "", "email": "", "token": ""]
+        _attributes = ["adminname": "", "name": "", "email": "", "token": "", "theme": ""]
        
         // todo: check XML and neccessary nodes
         if let name = xmlUser.element!.attributes["title"] {
@@ -66,8 +71,15 @@ class cPlexUserInformation {
         if let token = xmlUser.element!.attributes["authenticationToken"] {
             _attributes["token"] = token
         }
-
+        
+        let theme = settings.getSetting("theme")
+        _attributes["theme"] = theme
+        
         store()
+        _storage.setObject(_attributes, forKey: _attributes["name"]!)
+        
+        print ("2")
+        print(NSUserDefaults.standardUserDefaults().dictionaryRepresentation())
     }
     
     func switchHomeUser(xmlUser: XMLIndexer) {
@@ -83,7 +95,11 @@ class cPlexUserInformation {
             _attributes["token"] = token
         }
         
+        let theme = settings.getSetting("theme")
+        _attributes["theme"] = theme
+        
         store()
+        _storage.setObject(_attributes, forKey: _attributes["name"]!)
     }
     
     func clear() {
