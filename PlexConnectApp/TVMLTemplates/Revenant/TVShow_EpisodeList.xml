@@ -36,11 +36,11 @@
 					}}
 	       <row>
             <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', '')">
-              <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:PlayAll:png)}}" width="50" height="50"/>
+              <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:PlayAll:png)}}" width="50" height="50"/>
               <title>Play all</title>
             </buttonLockup>
             <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', 'shuffle')">
-              <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:Shuffle:png)}}" width="50" height="50"/>
+              <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Shuffle:png)}}" width="50" height="50"/>
               <title>Shuffle all</title>
             </buttonLockup>
           </row>
