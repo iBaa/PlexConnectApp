@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{SET(noXml:true)}}
+{{PMS(plex.tv)}}{{
+{{XML(/api/home/users)}}{{
+
+{{IFNODE(errors)}}{{
+<!--not signed in to myPlex (well, most likely?)-->
+{{SET(noXml:false)}}
+<document>
+  <alertTemplate
+    onLoad="Presenter.loadAndSwap('Main_SignIn','','');"
+    >
+  </alertTemplate>
+</document>
+}}
+
+{{IFNODE(MediaContainer)}}{{
+{{SET(noXml:false)}}
+
+{{IF({{CHK("{{VAL(MediaContainer/size:0)}}"=="1")}})}}{{
+<!--no PlexHome - use single user--> <!--todo: "don't log out" setting-->
+<document>
+  <alertTemplate
+    onLoad="discover(event);"
+    onSuccess="Presenter.loadAndSwap('Library','{{PMSID(clientIdentifier:{{CUSTOMSETTING(pmsUuid)}})}}', '{{PATH(/library/sections)}}');"
+    >
+  </alertTemplate>
+</document>
+}}
+
+{{IF(!{{CHK("{{VAL(MediaContainer/size:0)}}"=="1")}})}}{{
+<!--select HomeUser-->
+<document>
+  <alertTemplate
+    onLoad="Presenter.loadAndSwap('Main_HomeUsers','','');"
+    >
+  </alertTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noXml)}})}}{{
+<!--no XML received: switch to offline mode--> <!--todo: plexGDM, PMS by IP-->
+<document>
+  <alertTemplate style="color: #888888;">
+    <title>PlexConnect</title>
+    <description>{{TEXT(Can't connect to plex.tv. Check you connection or try again later.)}}</description>
+  </alertTemplate>
+</document>
+}}
+
+}}
+}}

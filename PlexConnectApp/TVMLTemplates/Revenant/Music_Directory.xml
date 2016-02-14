@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+  <stackTemplate>
+
+<!-- album list -->
+{{CUT({{GET(noAlbums)}})}}{{
+{{SET(noAlbums:true)}}
+    <banner>
+      <title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
+    </banner>
+    <collectionList>
+      <grid>
+
+        <section>
+{{COPY(MediaContainer/Directory)}}{{
+{{IF({{CHK("{{VAL(type:)}}"=="album")}})}}{{
+{{SET(noItems:false)}}
+{{SET(noAlbums:false)}}
+          <lockup
+            onSelect="Presenter.load('Music_TrackList', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
+            >
+            <img src="{{IMAGEURL(thumb::768)}}" width="300" height="300" />
+            <title><![CDATA[{{VAL(title)}}]]></title>
+        </lockup>
+}}
+}}
+        </section>
+
+      </grid>
+    </collectionList>
+}}
+
+<!-- generic directoy -->
+{{IF({{GET(noItems)}})}}{{
+    <banner>
+      <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
+    </banner>
+    <collectionList>
+      <grid>
+
+        <section>
+{{COPY(MediaContainer/Directory)}}{{
+{{SET(noItems:false)}}
+          <lockup
+            onSelect="Presenter.load('Music_Directory', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
+            >
+            <img src="{{IMAGEURL(thumb::768)}}" width="300" height="300" />
+            <title><![CDATA[{{VAL(title)}}]]></title>
+        </lockup>
+}}
+        </section>
+
+      </grid>
+    </collectionList>
+}}
+  </stackTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>PlexConnect</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

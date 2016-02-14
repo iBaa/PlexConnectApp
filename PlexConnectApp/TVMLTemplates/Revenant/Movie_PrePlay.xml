@@ -4,8 +4,16 @@ Copyright (C) 2015 Baa. All rights reserved.
 See LICENSE.txt for this sample’s licensing information
 -->
 {{XML(?includeExtras=1)}}{{
+{{SET(sectionID:{{VAL(MediaContainer/librarySectionID)}})}}
 <document>
-  <productTemplate>
+  <head>
+  <style>
+   .shelfLayout {
+      padding: 20 90 50;
+    }
+  </style>
+  </head>
+  <productTemplate theme="light">
     <background>
     </background>
     <banner>
@@ -41,12 +49,14 @@ See LICENSE.txt for this sample’s licensing information
       <stack>
         <title><![CDATA[{{VAL(MediaContainer/Video/title)}}]]></title>
         <row>
-          <!--text>rating(Video/contentRating)</text-->
-          <text>{{DURATION({{VAL(MediaContainer/Video/duration)}})}}</text>
+          <text>{{DURATION_HM({{VAL(MediaContainer/Video/duration)}})}}</text>
+          <text>•</text>
           <text><![CDATA[{{VAL(MediaContainer/Video/Genre/tag)}}]]></text>
+          <text>•</text>
           <text><![CDATA[{{VAL(MediaContainer/Video/year)}}]]></text>
-          <!--badge src="resource://mpaa-pg" class="badge" /-->
-          <!--badge src="resource://cc" class="badge" /-->
+          <text>•</text>
+          <text><![CDATA[{{VAL(MediaContainer/Video/contentRating)}}]]></text>
+           <!--<badge src="resource://cc" /-->
         </row>
         <description allowsZooming="true" moreLabel="more"
             onSelect="Presenter.loadContext('Movie_PrePlayDescription', '{{PMSID()}}', '{{PATH()}}')"
@@ -57,24 +67,24 @@ See LICENSE.txt for this sample’s licensing information
         <row>
           {{IF(!{{VAL(MediaContainer/Video/viewOffset)}})}}{{
           <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH()}}')">
-            <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:Play:png)}}" width="50" height="50"/>
+            <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Play:png)}}" width="50" height="50"/>
             <title>{{TEXT(Play)}}</title>
           </buttonLockup>
 					}}
 					{{IF({{VAL(MediaContainer/Video/viewOffset)}})}}{{
 					<buttonLockup onSelect="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH()}}')">
-            <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:Play:png)}}" width="50" height="50"/>
+            <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Play:png)}}" width="50" height="50"/>
             <title>{{TEXT(Play)}}</title>
           </buttonLockup>
           }}
           {{IF({{CHK("{{VAL(MediaContainer/Video/Extras/Video/index:)}}"=="1")}})}}{{
           <buttonLockup id="trailer" onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(MediaContainer/Video/Extras/Video/key)}})}}')">
-            <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:Trailer:png)}}" width="50" height="50"/>
+            <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Trailer:png)}}" width="50" height="50"/>
             <title>{{TEXT(Trailer)}}</title>
           </buttonLockup>
 					}}
 					<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
-            <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:Audio:png)}}" width="50" height="50"/>
+            <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Audio:png)}}" width="50" height="50"/>
             {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
           	 	{{IF({{CHK("{{VAL(streamType:)}}"=="2")}})}}{{
           	 	<title>{{UPPERCASE({{VAL(languageCode)}})}}</title>
@@ -85,7 +95,7 @@ See LICENSE.txt for this sample’s licensing information
 						}}
           </buttonLockup>
           <buttonLockup id="subtitles" onSelect="Presenter.loadContext('Movie_SubsPopUp', '{{PMSID()}}', '{{PATH()}}')">
-            <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:Subtitles:png)}}" width="50" height="50"/>
+            <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Subtitles:png)}}" width="50" height="50"/>
             {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
           	 	{{IF({{CHK("{{VAL(streamType:)}}"=="3")}})}}{{
           	 	<title>{{UPPERCASE({{VAL(languageCode)}})}}</title>
@@ -96,34 +106,34 @@ See LICENSE.txt for this sample’s licensing information
 						}}
           </buttonLockup>
           <buttonLockup id="more" onSelect="Presenter.loadContext('Movie_MorePopUp', '{{PMSID()}}', '{{PATH()}}')">
-            <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:More:png)}}" width="50" height="50"/>
+            <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:More:png)}}" width="50" height="50"/>
             <title>{{TEXT(More)}}</title>
           </buttonLockup>
         </row>
       </stack>
-      <heroImg src="{{IMAGEURL(MediaContainer/Video/thumb::768)}}" />
+      <heroImg src="{{IMAGEURL(MediaContainer/Video/thumb)}}" />
     </banner>
-
-{{IFNODE(MediaContainer/Video/Extras/Video:)}}{{
+    <!--<progressBar style="margin: 0 0 0 0" value="{{EVAL({{VAL(MediaContainer/Video/viewOffset)}}.0/{{VAL(MediaContainer/Video/duration)}}.0)}}"/>-->
+{{IF({{CHK("{{VAL(MediaContainer/Video/Extras/size:)}}">"1")}})}}{{
     <shelf>
       <header>
         <title>{{TEXT(Extras)}}</title>
       </header>
       <section>
-        {{COPY(MediaContainer/Video/Extras/Video)}}
-        {{
+        {{COPY(MediaContainer/Video/Extras/Video)}}{{
+        {{IF({{CHK("{{VAL(index:)}}"!="1")}})}}{{
         <lockup
             onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             >
-          <img src="{{IMAGEURL(thumb::384)}}" width="150" height="226" />
+          <img src="{{IMAGEURL(thumb::60)}}" width="310" height="207" />
           <title><![CDATA[{{VAL(title)}}]]></title>
           <subtitle>{{TABLE({{VAL(extraType)}}:{{TEXT(Clip)}}:1:{{TEXT(Trailer)}}:2:{{TEXT(Deleted Scene)}}:3:{{TEXT(Interview)}}:4:{{TEXT(Music Video)}}:5:{{TEXT(Behind the Scenes)}}:6:{{TEXT(Scene)}}:7:{{TEXT(Live Video)}}:8:{{TEXT(Lyrics Video)}})}}</subtitle>
         </lockup>
         }}
+        }}
       </section>
     </shelf>
 }}
-<!-- Everything past this is below the fold -->
 
 {{XML(/library/metadata/{{VAL(MediaContainer/Video/ratingKey)}}/similar)}}{{
 {{IFNODE(MediaContainer/Video:)}}{{
@@ -146,6 +156,34 @@ See LICENSE.txt for this sample’s licensing information
     </shelf>
 }}
 }}
+<!-- Actors -->
+{{IFNODE(MediaContainer/Video/Role:)}}{{
+<shelf class="actors">
+      <header>
+        <title>Actors</title>
+      </header>
+      <section>
+        {{COPY(MediaContainer/Video/Role)}}{{
+        {{IF({{VAL(thumb)}})}}{{
+        <monogramLockup onSelect="Presenter.load('Movie_Grid', '{{PMSID()}}', '/library/sections/{{GET(sectionID)}}/actor/{{VAL(id)}}')">
+          <monogram style="width: 207; height: 207" src="{{IMAGEURL(thumb)}}"/>
+          <title><![CDATA[{{VAL(tag)}}]]></title>
+          <subtitle><![CDATA[{{VAL(role)}}]]></subtitle>
+        </monogramLockup>
+        }}
+        {{IF(!{{VAL(thumb)}})}}{{
+        <monogramLockup onSelect="Presenter.load('Movie_Grid', '{{PMSID()}}', '/library/sections/{{GET(sectionID)}}/actor/{{VAL(id)}}')">
+          <monogram style="width: 207; height: 207" firstName="{{VAL(tag)}}" lastName="{{ACTOR_LN({{VAL(tag)}})}}"/>
+          <title><![CDATA[{{VAL(tag)}}]]></title>
+          <subtitle><![CDATA[{{VAL(role)}}]]></subtitle>
+        </monogramLockup>
+        }}
+        }}
+      </section>
+    </shelf>
+}}
+
+
   </productTemplate>
 </document>
 }}

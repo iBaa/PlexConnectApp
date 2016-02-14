@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{XML()}}{{
+<document>
+  <head>
+  <style>
+   .shelfLayout {
+      padding: 20 90 50;
+    }
+  </style>
+  </head>
+  <productTemplate theme="light">
+    <background>
+    </background>
+    <banner>
+      <infoList>
+        <info>
+          <ratingCard style="tv-align: right;">
+            <ratingBadge style="tv-rating-style: star-hollow-l;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
+          </ratingCard>
+        </info>
+
+        <info>
+          <header>
+            <title>{{TEXT(Directors)}}</title>
+          </header>
+{{COPY(MediaContainer/Video/Director)}}{{  <!-- COPY till 5 or so? -->
+          <text>{{VAL(tag)}}</text>
+}}
+        </info>
+        <info>
+          <header>
+            <title>{{TEXT(Writers)}}</title>
+          </header>
+{{COPY(MediaContainer/Video/Writer)}}{{  <!-- COPY till 5 or so? -->
+          <text>{{VAL(tag)}}</text>
+}}
+        </info>
+      </infoList>
+      <stack>
+        <title>{{VAL(MediaContainer/Video/index:)}}. {{VAL(MediaContainer/Video/title)}}</title>
+        <row>
+          <text><![CDATA[{{VAL(MediaContainer/Video/grandparentTitle)}}]]></text>
+          <text>•</text>
+          <text>{{DURATION({{VAL(MediaContainer/Video/duration)}})}}</text>
+          <text>•</text>
+          <text><![CDATA[{{VAL(MediaContainer/Video/originallyAvailableAt)}}]]></text>
+           <!--<badge src="resource://cc" /-->
+        </row>
+        <description allowsZooming="true" moreLabel="more"
+            onSelect="Presenter.loadContext('TVShow_PrePlayDescription', '{{PMSID()}}', '{{PATH()}}')"
+            >
+          <![CDATA[{{VAL(MediaContainer/Video/summary)}}]]>
+        </description>
+        <!--text>Language information can go here</text-->
+        <row>
+          {{IF(!{{VAL(MediaContainer/Video/viewOffset)}})}}{{
+          <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH()}}')">
+            <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Play:png)}}" width="50" height="50"/>
+            <title>{{TEXT(Play)}}</title>
+          </buttonLockup>
+					}}
+					{{IF({{VAL(MediaContainer/Video/viewOffset)}})}}{{
+					<buttonLockup onSelect="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH()}}');">
+            <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Play:png)}}" width="50" height="50"/>
+            <title>{{TEXT(Play)}}</title>
+          </buttonLockup>
+          }}
+          <buttonLockup id="audio" onSelect="">
+            <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Audio:png)}}" width="50" height="50"/>
+            {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
+          	 	{{IF({{CHK("{{VAL(streamType:)}}"=="2")}})}}{{
+          	 	<title>{{VAL(languageCode)}}</title>
+							}}
+							{{IF(!{{CHK("{{VAL(streamType:)}}"=="2")}})}}{{
+          	 	<data/>
+							}}
+						}}
+          </buttonLockup>
+          <buttonLockup id="subtitles" onSelect="">
+            <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Subtitles:png)}}" width="50" height="50"/>
+            {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
+          	 	{{IF({{CHK("{{VAL(streamType:)}}"=="3")}})}}{{
+          	 	<title>{{VAL(languageCode)}}</title>
+							}}
+							{{IF(!{{CHK("{{VAL(streamType:)}}"=="3")}})}}{{
+          	 	<data/>
+							}}
+						}}
+          </buttonLockup>
+          <buttonLockup id="more" onSelect="">
+            <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:More:png)}}" width="50" height="50"/>
+            <title>{{TEXT(More)}}</title>
+          </buttonLockup>
+        </row>
+      </stack>
+      <heroImg src="{{IMAGEURL(MediaContainer/Video/parentThumb::)}}"/>
+    </banner>
+
+
+<!--or cascade: (MediaContainer/Video/parentKey)->(MediaContainer/Directory/key)-->
+{{XML(/library/metadata/{{VAL(MediaContainer/Video/parentRatingKey)}}/children)}}{{
+{{SET(season:{{VAL(MediaContainer/parentIndex:)}})}}
+    <shelf>
+      <header>
+        <title>{{TEXT(Episodes)}}</title>
+      </header>
+      <section>
+        {{COPY(MediaContainer/Video)}}
+        {{
+        <lockup
+            onSelect="Presenter.loadAndSwap('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
+            >
+          <img src="{{IMAGEURL(thumb::360)}}" width="306" height="207" />
+           {{IF({{CHK("{{VAL(viewOffset:)}}">"0")}})}}{{
+           <overlay>
+                <progressBar value="{{EVAL({{VAL(viewOffset)}}.0/{{VAL(duration)}}.0)}}"/>
+            </overlay>
+            }}
+            {{IF({{CHK("{{VAL(viewCount:)}}">="1")}})}}{{
+              <overlay>
+              	<progressBar value="1"/>
+              </overlay>
+              }}
+              <title>{{VAL(index:)}}. {{VAL(title)}}</title>
+        </lockup>
+        }}
+      </section>
+    </shelf>
+}}
+
+<!-- Everything past this is below the fold -->
+  </productTemplate>
+</document>
+}}

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+<document>
+    <head>
+        <style>
+            .lightBackgroundColor {
+            background-color: #efece6;
+            }
+            .layout {
+            margin: 40;
+            }
+            .showTextOnHighlight {
+            tv-text-highlight-style: show-on-highlight;
+            }
+            .roundedImageCorners {
+            itml-img-treatment: corner-small;
+            }
+            .overlay {
+            text-align: right;
+            }
+			.grid {
+      		tv-interitem-spacing: 10;
+      		}
+        </style>
+    </head>
+{{XML(year)}}
+
+{{
+    <stackTemplate class="lightBackgroundColor">
+        <banner>
+            <title>{{VAL(MediaContainer/title1)}}</title>
+        </banner>
+
+
+    <collectionList>
+{{IFNODE(MediaContainer/Directory)}}
+
+{{
+
+<shelf centered="true" id="shelf_Year">
+
+    <section>
+        <header>
+            <title>{{VAL(MediaContainer/title2)}}</title>
+        </header>
+
+        {{COPY(MediaContainer/Directory)}}
+
+        {{
+
+        {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
+        <lockup onSelect="Presenter.load('Photo_Browser', '{{PMSID()}}', '{{PATH({{VAL(fastKey)}})}}')">
+            <img class="roundedImageCorners" src="{{RESOURCEURL(TVMLTemplates/Revenant/images:photoFolderTop:png)}}" width="547" height="270" />
+            <overlay>
+            <title class="overlay"><![CDATA[{{VAL(key)}}]]></title>
+            </overlay>
+        </lockup>
+        }}
+    </section>
+</shelf>
+}}
+
+<separator>
+    <button style="height: 75; margin: -3 60 0 60" onSelect="Presenter.loadContext('Photo_Browser', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+        <text>Library</text>
+    </button>
+</separator>
+
+
+
+{{XML(recentlyAdded)}}{{
+{{IFNODE(MediaContainer/Photo)}}{{
+        <grid class="grid" id="grid_RecentlyAdded">
+        <!--<shelf autoHighlight="true" id="shelf_RecentlyAdded">-->
+		  <header>
+              <title>{{VAL(MediaContainer/title2)}}</title>
+            </header>
+            <section>
+
+{{COPY(MediaContainer/Photo)}}{{
+{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
+            <lockup
+                onSelect="photoPresenter.show('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onPlay="photoPresenter.slideshow('{{PMSID()}}', '{{PATH()}}')"
+                >
+              <img src="{{IMAGEURL(thumb::360)}}" width="254" height="254" />
+              <title class="showTextOnHighlight">{{VAL(year:&#x00AD;)}}</title>
+            </lockup>
+}}
+          </section>
+          </grid>
+}} }}
+
+
+
+    </collectionList>
+}}
+  </stackTemplate>
+</document>
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>PlexConnect</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}
