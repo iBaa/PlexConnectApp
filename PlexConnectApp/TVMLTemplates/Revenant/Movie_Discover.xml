@@ -10,23 +10,23 @@ See LICENSE.txt for this sample’s licensing information
     <head>
         <style>
             .lightBackgroundColor {
-            background-color: #efece6;
+            background-color: #b2b2b2;
             }
             .layout {
             margin: 40;
             }
             .showTextOnHighlight {
-            tv-text-highlight-style: marquee-on-highlight;
+            tv-text-highlight-style: show-on-highlight;
             }
             .rounded {
             itml-img-treatment: corner-small;
             }
-			.grid {
-      		tv-interitem-spacing: 0;
-      		}
-      		.shelfItems {
-      		tv-interitem-spacing: 60;
-      		}
+			      .grid {
+      	   	tv-interitem-spacing: 0;
+      	  	}
+      	  	.shelfItems {
+      	  	tv-interitem-spacing: 60;
+      	  	}
         </style>
     </head>
     <stackTemplate theme="light" class="lightBackgroundColor">

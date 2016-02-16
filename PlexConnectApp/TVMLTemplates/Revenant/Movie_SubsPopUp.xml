@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 {{XML()}}{{
 <document>
-    <alertTemplate>
+    <alertTemplate theme="light">
     <title>Available subtitles:</title>
 			{{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
 			{{IF({{CHK("{{VAL(streamType:)}}"=="3")}})}}{{

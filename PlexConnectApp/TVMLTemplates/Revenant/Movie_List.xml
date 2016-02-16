@@ -9,9 +9,9 @@
 			tv-text-highlight-style: show-on-highlight;
 			}
 			.lightBackgroundColor {
-			background-color: #efece6;
+			background-color: #b2b2b2;
 			}
-			
+
 	</style>
 </head>
   <listTemplate theme="light" class="lightBackgroundColor">
@@ -44,7 +44,7 @@
             <lockup>
               <img src="{{IMAGEURL(thumb::360)}}" />
               <row>
-								<title style="tv-align: left;"><![CDATA[{{VAL(title)}}]]></title> 
+								<title style="tv-align: left;"><![CDATA[{{VAL(title)}}]]></title>
 								<ratingCard style="tv-align: right;">
 									<ratingBadge style="tv-rating-style: star-m; tv-tint-color: #000000" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
 								</ratingCard>
@@ -69,7 +69,7 @@
         </listItemLockup>
 }}
       </section>
-      
+
     </list>
   </listTemplate>
 </document>

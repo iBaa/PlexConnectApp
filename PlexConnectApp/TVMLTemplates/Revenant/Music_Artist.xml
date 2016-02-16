@@ -11,14 +11,14 @@ See LICENSE.txt for this sample’s licensing information
             tv-text-highlight-style: show-on-highlight;
             }
             .lightBackgroundColor {
-            background-color: #efece6;
+            background-color: #b2b2b2;
             }
             .roundedImageCorners {
       			itml-img-treatment: corner-small;
       			}
         </style>
     </head>
-    <productBundleTemplate theme="light">
+    <productBundleTemplate theme="light" class="lightBackgroundColor">
     <background>
     </background>
     <banner>
@@ -28,7 +28,7 @@ See LICENSE.txt for this sample’s licensing information
             <ratingBadge style="tv-rating-style: star-m;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
           </ratingCard>
         </info>
-        
+
         <info>
           <header>
             <title>{{TEXT(Director)}}</title>
@@ -41,7 +41,7 @@ See LICENSE.txt for this sample’s licensing information
           </header>
           <text>{{VAL(MediaContainer/Video/Producer/tag)}}</text>
         </info>
-        
+
         <info>
           <header>
             <title>{{TEXT(Actors)}}</title>
@@ -102,7 +102,7 @@ See LICENSE.txt for this sample’s licensing information
         </lockup>
         }}
       </section>
-    </shelf>    
+    </shelf>
 }}
 }}
 {{XML({{PATH()}}/extras/)}}{{
@@ -120,7 +120,7 @@ See LICENSE.txt for this sample’s licensing information
           <img class="roundedImageCorners" src="{{IMAGEURL(thumb::)}}" height="225" width="400" />
           <title><![CDATA[{{VAL(title)}}]]></title>
         </lockup>
-        }}    
+        }}
       </section>
     </shelf>
 		}}

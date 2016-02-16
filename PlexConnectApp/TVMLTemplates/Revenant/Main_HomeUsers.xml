@@ -1,55 +1,58 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!--
-Copyright (C) 2015 Baa. All rights reserved.
-See LICENSE.txt for this sample’s licensing information
--->
 {{PMS(plex.tv)}}{{
 {{XML(/api/home/users)}}{{
 <document>
-  <descriptiveAlertTemplate style="color: #000000;">
-    <title style="tv-text-style: title3;">PlexConnect</title>
-    <subtitle style="tv-text-style: body;">{{TEXT(To enjoy all your media, select your Plex Home account:)}}</subtitle>
+  <head>
+    <style>
+      .showTextOnHighlight {
+        tv-text-highlight-style: show-on-highlight;
+      }
+      .overlayTextLayout {
+        tv-position: top;
+      }
+      .centeredText {
+        text-align: center;
+      }
+        .lightBackgroundColor {
+        background-color: #b2b2b2;
+        }
+        .rounded {
+        tv-img-treatment: circle;
+        width: 200;
+        height: 200;
+        }
+    </style>
+  </head>
 
-    <shelf centered="true">
+  <descriptiveAlertTemplate theme="light" class="lightBackgroundColor">
+   <title style="margin: 0 0 100 0">{{TEXT(Select HomeUser:)}}</title>
+   <!--<text style="margin: 0 0 100 0">{{TEXT(Admin )}}{{USRVAL(name)}}</text>-->
+    <shelf centered="true" style="tv-interitem-spacing: 60; margin: 0 0 -50 0">
       <section>
 {{COPY(MediaContainer/User)}}{{
-<monogramLockup style="tv-img-treatment: circle" width="220" height="220"
-    {{IF({{CHK("{{USRVAL(name)}}"=="{{VAL(title)}}")}})}}{{ autoHighlight="true" }}
+        <monogramLockup style="tv-img-treatment: circle"
+            {{IF({{CHK("{{USRVAL(name)}}"=="{{VAL(title)}}")}})}}{{autoHighlight="true"}}
             id="{{VAL(id)}}"
             username="{{VAL(title)}}"
             protected="{{VAL(protected)}}"
             onSelect="myPlex.switchHomeUser(event);"
             onSuccess="Presenter.load('Library', '{{PMSID(clientIdentifier:{{CUSTOMSETTING(pmsUuid)}})}}', '{{PATH(/library/sections)}}');"
-            onError="Presenter.load('MyPlex_SignInFailed','','');"
+            onError="Presenter.load('MyPlex_SignInFailed', '', '');"
             >
-          <monogram src="{{VAL(thumb)}}?size=300" width="220" height="220" />
-          <title style="tv-text-style: body;"><![CDATA[{{VAL(title)}}]]></title>
-          <!--todo: overlay/icon: admin, protected-->
-          <!--
-          {{IF({{VAL(admin)}})}}{{
-          <decorationImage src="{{RESOURCEURL(Images:icon_key:png)}}" width="27" height="26" />
-          }}
-          {{IF({{VAL(protected)}})}}{{
-          <decorationImage src="{{RESOURCEURL(Images:icon_lock:png)}}" width="19" height="23" />
-          }}
-          -->
+            <monogram src="{{VAL(thumb)}}?size=256" width="200" height="200" />
+            <title style="tv-text-style: body; margin: 20 0 0 0"><![CDATA[{{VAL(title)}}]]></title>
         </monogramLockup>
 }}
       </section>
     </shelf>
 
-    <description style="text-align: center;">{{TEXT(You may also Sign In with a different MyPlex ID.)}}<br/>{{TEXT(Use Offline Mode to access your local Plex Servers only.)}}</description>
+    <description></description>
 
     <button id="Settings" autoHighlight="true"
       onSelect="Presenter.load('Settings', '', '')">
-
       <text>{{TEXT(Settings)}}</text>
     </button>
 
-    <button id="OfflineMode" disabled="true"
-      onSelect="">
-      <text>{{TEXT(Offline Mode)}}</text>
-    </button>
 
   </descriptiveAlertTemplate>
 </document>

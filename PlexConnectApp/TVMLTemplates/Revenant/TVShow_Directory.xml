@@ -7,13 +7,20 @@ See LICENSE.txt for this sample’s licensing information
 {{SET(noItems:true)}}
 {{XML()}}{{
 <document>
-  <stackTemplate>
+  <head>
+    <style>
+      .lightBackgroundColor {
+      background-color: #b2b2b2;
+      }
+    </style>
+  </head>
+  <stackTemplate theme="light" class="lightBackgroundColor">
     <banner>
       <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
     </banner>
     <collectionList>
       <grid>
-              
+
         <section>
 {{COPY(MediaContainer/Directory)}}{{
 {{SET(noItems:false)}}
@@ -26,7 +33,7 @@ See LICENSE.txt for this sample’s licensing information
           </lockup>
 }}
       </section>
-      
+
       </grid>
     </collectionList>
   </stackTemplate>

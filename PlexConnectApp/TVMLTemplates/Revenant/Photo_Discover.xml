@@ -9,7 +9,7 @@ See LICENSE.txt for this sample’s licensing information
     <head>
         <style>
             .lightBackgroundColor {
-            background-color: #efece6;
+            background-color: #b2b2b2;
             }
             .layout {
             margin: 40;
@@ -31,7 +31,7 @@ See LICENSE.txt for this sample’s licensing information
 {{XML(year)}}
 
 {{
-    <stackTemplate class="lightBackgroundColor">
+    <stackTemplate theme="light" class="lightBackgroundColor">
         <banner>
             <title>{{VAL(MediaContainer/title1)}}</title>
         </banner>

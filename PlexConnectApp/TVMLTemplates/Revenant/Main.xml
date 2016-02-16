@@ -7,7 +7,13 @@
 <!--not signed in to myPlex (well, most likely?)-->
 {{SET(noXml:false)}}
 <document>
-  <alertTemplate
+  <head>
+    <style>
+        .lightBackgroundColor {
+        background-color: #b2b2b2;
+    </style>
+  </head>
+  <alertTemplate theme="light" class="lightBackgroundColor"
     onLoad="Presenter.loadAndSwap('Main_SignIn','','');"
     >
   </alertTemplate>

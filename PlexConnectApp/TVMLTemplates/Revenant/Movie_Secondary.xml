@@ -9,18 +9,17 @@ See LICENSE.txt for this sample’s licensing information
     <head>
         <style>
             .lightBackgroundColor {
-            background-color: #efece6;
+            background-color: #b2b2b2;
             }
             .layout {
             margin: 40;
             }
             .showTextOnHighlight {
-            tv-text-highlight-style: marquee-on-highlight;
+            tv-text-highlight-style: show-on-highlight;
             }
             .roundedImageCorners {
             itml-img-treatment: corner-small;
             }
-
         </style>
     </head>
     <catalogTemplate theme="light" class="lightBackgroundColor">
@@ -32,11 +31,11 @@ See LICENSE.txt for this sample’s licensing information
                 <header>
                     <title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
                 </header>
-    
+
     {{COPY(MediaContainer/Directory)}}{{
 				<listItemLockup>
                     <title><![CDATA[{{VAL(title)}}]]></title>
-                  
+
                    {{XML({{VAL(key)}})}}{{
                    <decorationLabel><![CDATA[{{VAL(MediaContainer/size)}}]]></decorationLabel>
     			    <relatedContent>
@@ -56,7 +55,7 @@ See LICENSE.txt for this sample’s licensing information
                     }}
                 </listItemLockup>
     }}
-                
+
             </section>
         </list>
     </catalogTemplate>

@@ -10,7 +10,7 @@ See LICENSE.txt for this sample’s licensing information
   <head>
         <style>
             .lightBackgroundColor {
-            background-color: #efece6;
+            background-color: #b2b2b2;
             }
             .showTextOnHighlight {
             tv-text-highlight-style: show-on-highlight;
@@ -27,7 +27,7 @@ See LICENSE.txt for this sample’s licensing information
       		}
     </style>
   </head>
-  <stackTemplate class="lightBackgroundColor">
+  <stackTemplate theme="light" class="lightBackgroundColor">
     <banner>
       <title><![CDATA[{{VAL(MediaContainer/title1)}}]]> - <![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
     </banner>
@@ -87,7 +87,7 @@ See LICENSE.txt for this sample’s licensing information
       </section>
       </grid>
 }}
-      
+
     </collectionList>
   </stackTemplate>
 </document>

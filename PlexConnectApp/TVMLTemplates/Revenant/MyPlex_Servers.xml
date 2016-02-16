@@ -6,7 +6,7 @@
 {{CUT({{GET(noItems)}})}}{{
 {{SET(noItems:true)}}
 <document>
-  <listTemplate>
+  <listTemplate theme="light" class="lightBackgroundColor">
     <list>
 
       <header>

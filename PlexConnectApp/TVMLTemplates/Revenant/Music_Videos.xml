@@ -3,6 +3,7 @@
 {{SET(noItems:false)}}
 {{XML()}}{{
 <document>
+
   <head>
     <style>
     .whiteButton {
@@ -15,9 +16,12 @@
       max-height: 400;
       margin: 50;
     }
+    .lightBackgroundColor {
+    background-color: #b2b2b2;
+    }
     </style>
   </head>
-  <compilationTemplate>
+  <compilationTemplate theme="light" class="lightBackgroundColor">
     <list>
       <relatedContent>
         <itemBanner>
@@ -43,21 +47,21 @@
         </header>
 }}
 
-{{XML({{PATH()}}/extras)}}{{        
+{{XML({{PATH()}}/extras)}}{{
 {{COPY(MediaContainer/Video)}}{{
 {{SET(noItems:false)}}
 	<listItemLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH()}}')"
             onSelectHold="modal">
-           
+
           <ordinal minLength="3" class="ordinalLayout">{{EVAL({{VAL(index)}}-1)}}</ordinal>
           <!--<img src="{{IMAGEURL(thumb::120)}}" width="90" height="90" />-->
           <title><![CDATA[{{VAL(title)}}]]></title>
           <subtitle><![CDATA[{{VAL(originallyAvailableAt)}}]]></subtitle>
           <decorationImage style="margin: 0" src="{{IMAGEURL(thumb::384)}}" width="192" height="108"/>
         </listItemLockup>
-    
-}}        
+
+}}
       </section>
     </list>
   </compilationTemplate>
