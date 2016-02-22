@@ -29,7 +29,7 @@ See LICENSE.txt for this sample’s licensing information
       		}
         </style>
     </head>
-    <stackTemplate theme="light" class="lightBackgroundColor">
+    <stackTemplate theme="light">
 {{XML()}}{{
 	<banner>
             <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>

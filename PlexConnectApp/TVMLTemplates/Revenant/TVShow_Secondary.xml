@@ -23,7 +23,7 @@ See LICENSE.txt for this sample’s licensing information
 
         </style>
     </head>
-    <catalogTemplate theme="light" class="lightBackgroundColor">
+    <catalogTemplate theme="light">
         <banner>
             <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
         </banner>

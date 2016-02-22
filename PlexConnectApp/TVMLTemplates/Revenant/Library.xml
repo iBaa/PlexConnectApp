@@ -51,7 +51,7 @@
         }
     </style>
   </head>
-  <stackTemplate theme="light" class="lightBackgroundColor">
+  <stackTemplate>
     <identityBanner class="banner">
       <title style="text-align: left; color: #ff8000">PlexConnect</title>
       <subtitle style="text-align: left;">Revenant Theme by CyberGhost84</subtitle>
@@ -60,7 +60,6 @@
         <buttonLockup onSelect="Presenter.load('MyPlex_Servers', '', '')">
             <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Server:png)}}" width="50" height="50"/>
             <title>{{TEXT(Server)}}</title>
-            <subtitle style="tv-text-style: body;">{{TEXT(Current Servrer:)}} {{PMSVAL(name)}}</subtitle>
         </buttonLockup>
         }}
 
@@ -168,7 +167,7 @@
     {{IFNODE(MediaContainer/Video)}}{{
     <shelf id="onDeck">
       <header>
-          <title class="title">On Deck</title>
+          <title>On Deck</title>
       </header>
       <section>
         {{COPY(MediaContainer/Video)}}
@@ -183,7 +182,7 @@
           <overlay>
          		<progressBar value="{{EVAL({{VAL(viewOffset)}}.0/{{VAL(duration)}}.0)}}"/>
           </overlay>
-          <title class="shelfLabels"><![CDATA[{{VAL(title)}}]]></title>
+          <title><![CDATA[{{VAL(title)}}]]></title>
           <subtitle class="showTextOnHighlight">{{TEXT(S)}}{{VAL(parentIndex)}} • {{TEXT(E)}}{{VAL(index)}}</subtitle>
         </lockup>
         }}
@@ -196,7 +195,7 @@
           <overlay>
          		<progressBar style="color: #ff8000" value="{{EVAL({{VAL(viewOffset)}}.0/{{VAL(duration)}}.0)}}"/>
           </overlay>
- 					<title class="shelfLabels"><![CDATA[{{VAL(title)}}]]></title>
+ 					<title><![CDATA[{{VAL(title)}}]]></title>
           <subtitle class="showTextOnHighlight">{{VAL(year)}}</subtitle>
         </lockup>
         }}
@@ -225,7 +224,7 @@
             <img style="tv-position: top-right; margin: -30 -24 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images:overlayUnwatched:png)}}"  width="33" height="33" />
           </overlay>
           }}
-          <title class="shelfLabels"><![CDATA[{{VAL(title)}}]]></title>
+          <title><![CDATA[{{VAL(title)}}]]></title>
           <subtitle class="showTextOnHighlight">{{VAL(year)}}</subtitle>
         </lockup>
         }}
@@ -299,7 +298,7 @@
     				onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'shuffle')"
     				onSelectHold="modal">
     				<img src="{{IMAGEURL(thumb::360)}}" height="250" width="250" />
-    				<title class="shelfLabels"><![CDATA[{{VAL(title)}}]]></title>
+    				<title><![CDATA[{{VAL(title)}}]]></title>
     				<subtitle class="showTextOnHighlight"><![CDATA[{{VAL(parentTitle)}}]]></subtitle>
     			</lockup>
     			}}
@@ -327,7 +326,7 @@
           onSelect="Presenter.load('Channel_Video', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
           onSelectHold="modal">
           <img src="{{IMAGEURL(thumb::360)}}" height="250" width="250" />
-          <title class="shelfLabels"><![CDATA[{{VAL(title)}}]]></title>
+          <title><![CDATA[{{VAL(title)}}]]></title>
           <subtitle class="showTextOnHighlight">Video</subtitle>
         </lockup>
         }}
@@ -336,7 +335,7 @@
           onSelect="Presenter.load('Channel_Music', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
           onSelectHold="modal">
           <img src="{{IMAGEURL(thumb::360)}}" height="250" width="250" />
-          <title class="shelfLabels"><![CDATA[{{VAL(title)}}]]></title>
+          <title><![CDATA[{{VAL(title)}}]]></title>
           <subtitle class="showTextOnHighlight">Music</subtitle>
         </lockup>
         }}
@@ -345,7 +344,7 @@
           onSelect="Presenter.load('Photo_Browser', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
           onSelectHold="modal">
           <img src="{{IMAGEURL(thumb::360)}}" height="250" width="250" />
-          <title class="shelfLabels"><![CDATA[{{VAL(title)}}]]></title>
+          <title><![CDATA[{{VAL(title)}}]]></title>
           <subtitle class="showTextOnHighlight">Photos</subtitle>
         </lockup>
         }}
@@ -370,7 +369,7 @@
     				onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'shuffle')"
     				onSelectHold="modal">
     				<img src="{{IMAGEURL(composite::360)}}" height="250" width="250" />
-    				<title class="shelfLabel"><![CDATA[{{VAL(title)}}]]></title>
+    				<title><![CDATA[{{VAL(title)}}]]></title>
     				<subtitle class="showTextOnHighlight">{{DURATION_HM({{VAL(duration)}})}}</subtitle>
     			</lockup>
     			}}
@@ -380,7 +379,7 @@
     				onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'shuffle')"
     				onSelectHold="modal">
     				<img src="{{IMAGEURL(composite::360)}}" height="250" width="250" />
-    				<title class="shelfLabel"><![CDATA[{{VAL(title)}}]]></title>
+    				<title><![CDATA[{{VAL(title)}}]]></title>
     				<subtitle class="showTextOnHighlight">{{DURATION_HM({{VAL(duration)}})}}</subtitle>
     			</lockup>
     			}}

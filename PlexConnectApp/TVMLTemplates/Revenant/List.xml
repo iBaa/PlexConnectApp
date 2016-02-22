@@ -24,7 +24,7 @@ See LICENSE.txt for this sample’s licensing information
 
         </style>
     </head>
-    <listTemplate theme="light" class="lightBackgroundColor">
+    <listTemplate theme="light">
     <list>
       <!--<relatedContent>
         <itemBanner>

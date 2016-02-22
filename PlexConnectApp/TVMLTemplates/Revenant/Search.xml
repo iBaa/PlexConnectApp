@@ -11,7 +11,7 @@ See LICENSE.txt for this sample’s licensing information
       }
     </style>
   </head>
-  <searchTemplate theme="light" class="lightBackgroundColor"
+  <searchTemplate theme="light"
     onLoad="Search.onLoad(event)">
     <!-- search -->
     <searchField

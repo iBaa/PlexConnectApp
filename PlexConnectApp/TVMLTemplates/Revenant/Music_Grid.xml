@@ -18,7 +18,7 @@ See LICENSE.txt for this sample’s licensing information
             
         </style>
     </head>
-    <stackTemplate theme="light" class="lightBackgroundColor">
+    <stackTemplate theme="light">
         <banner>
             <title><![CDATA[{{VAL(MediaContainer/title1)}}]]> - <![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
         </banner>
