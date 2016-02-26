@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+<head>
+	<style>
+			.showTextOnHighlight {
+			tv-text-highlight-style: show-on-highlight;
+			}
+			.lightBackgroundColor {
+			background-color: #b2b2b2;
+			}
+
+	</style>
+</head>
+  <listTemplate theme="light">
+    <list>
+		<relatedContent>
+        <!--<itemBanner>
+          <heroImg src="{{IMAGEURL(thumb::360)}}" />
+        </itemBanner>-->
+      </relatedContent>
+      <header>
+        <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
+      </header>
+      <section>
+      <header>
+          <title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
+        </header>
+{{COPY(MediaContainer/Video)}}{{
+{{SET(noItems:false)}}
+        <listItemLockup style="height: 90"
+            onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
+            >
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <decorationLabel><![CDATA[{{VAL(year)}}]]></decorationLabel>
+          {{IF({{CHK(!"{{VAL(viewCount:)}}">="1")}})}}{{
+           	<img style="margin: 0 0 0 10" src="{{RESOURCEURL(TVMLTemplates/Quartz/images:overlayUnwatched:png)}}"  width="33" height="90" />
+          }}
+          <relatedContent>
+            <lockup>
+              <img src="{{IMAGEURL(thumb::360)}}" />
+              <row>
+								<title style="tv-align: left;"><![CDATA[{{VAL(title)}}]]></title>
+								<ratingCard style="tv-align: right;">
+									<ratingBadge style="tv-rating-style: star-m; tv-tint-color: #000000" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
+								</ratingCard>
+        			</row>
+        			<separator />
+              <description moreLabel="more">
+          			<![CDATA[{{VAL(summary)}}]]>
+        			</description>
+        			<separator />
+        			{{IF({{VAL(duration)}})}}{{
+        			<subtitle>Duration:  {{DURATION_HM({{VAL(duration)}})}}</subtitle>
+        			}}
+        			{{IF({{VAL(Genre/tag)}})}}{{
+        			<subtitle>Genre:  <![CDATA[{{VAL(Genre/tag)}}]]></subtitle>
+              }}
+              {{IF({{VAL(contentRating)}})}}{{
+              <subtitle>Rated:  <![CDATA[{{VAL(contentRating)}}]]></subtitle>
+              }}
+              <separator />
+            </lockup>
+          </relatedContent>
+        </listItemLockup>
+}}
+      </section>
+
+    </list>
+  </listTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>PlexConnect</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

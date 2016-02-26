@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+  <head>
+    <style>
+    .whiteButton {
+      tv-tint-color: rgb(255, 255, 255);
+      width: 500;
+      height: 200;
+    }
+    .plot {
+      min-height: 300;
+      max-height: 400;
+      margin: 50;
+    }
+    </style>
+  </head>
+  <compilationTemplate>
+    <list>
+      <relatedContent>
+        <itemBanner>
+          {{IF({{VAL(MediaContainer/thumb)}})}}{{
+          <heroImg src="{{IMAGEURL(MediaContainer/thumb::)}}" />
+          }}
+          {{IF(!{{VAL(MediaContainer/thumb)}})}}{{
+          	{{IF({{VAL(MediaContainer/grandparentThumb)}})}}{{
+          		<heroImg src="{{IMAGEURL(MediaContainer/grandparentThumb::)}}" />
+          	}}
+          	{{IF(!{{VAL(MediaContainer/grandparentThumb)}})}}{{
+						{{XML(/library/metadata/{{VAL(MediaContainer/key)}})}}{{
+          		<heroImg src="{{IMAGEURL(MediaContainer/Directory/thumb::)}}" />
+						}}
+						}}
+					}}
+	       <row>
+            <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', '')">
+              <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:PlayAll:png)}}" width="50" height="50"/>
+              <title>Play all</title>
+            </buttonLockup>
+            <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', 'shuffle')">
+              <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Shuffle:png)}}" width="50" height="50"/>
+              <title>Shuffle all</title>
+            </buttonLockup>
+          </row>
+        </itemBanner>
+      </relatedContent>
+      <header>
+        <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
+        <subtitle><![CDATA[{{VAL(MediaContainer/title2)}}]]></subtitle>
+        <row>
+          <text><![CDATA[{{VAL(MediaContainer/size)}} episodes]]></text>
+          <text><![CDATA[Rating: {{VAL(MediaContainer/grandparentContentRating)}}]]></text>
+        </row>
+
+      </header>
+      <section>
+        <header>
+          <title>EPISODES</title>
+        </header>
+	{{COPY(MediaContainer/Video)}}{{
+	{{SET(noItems:false)}}
+	<listItemLockup autoHighlight="true" onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal">
+          {{IF({{VAL(parentIndex)}})}}{{
+          <ordinal minLength="4" class="ordinalLayout">{{VAL(parentIndex)}}.{{VAL(index)}}</ordinal>
+          }}
+          {{IF(!{{VAL(parentIndex)}})}}{{
+          <ordinal minLength="2" class="ordinalLayout">{{VAL(index)}}</ordinal>
+          }}
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <subtitle><![CDATA[{{TEXT(Aired )}}{{VAL(originallyAvailableAt)}}  •  {{EVAL({{VAL(duration)}}/1000/60)}}{{TEXT( minutes)}}]]></subtitle>
+          <!--<decorationLabel><![CDATA[{{VAL(leafCount)}}]]></decorationLabel>-->
+        	<decorationImage style="margin: 0; tv-align: right" src="{{IMAGEURL(thumb::384)}}" width="192" height="108"/>
+      </listItemLockup>
+
+	}}
+      </section>
+    </list>
+  </compilationTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}
+{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>PlexConnect</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

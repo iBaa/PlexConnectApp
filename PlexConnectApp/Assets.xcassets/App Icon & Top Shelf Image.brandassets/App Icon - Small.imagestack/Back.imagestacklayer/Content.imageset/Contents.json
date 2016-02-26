@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "tv",
-      "filename" : "Background 400x240.png",
+      "filename" : "Background-small.png",
       "scale" : "1x"
     }
   ],

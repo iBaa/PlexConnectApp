@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+<document>
+    <head>
+        <style>
+            .lightBackgroundColor {
+            background-color: #b2b2b2;
+            }
+            .layout {
+            margin: 40;
+            }
+            .showTextOnHighlight {
+            tv-text-highlight-style: show-on-highlight;
+            }
+            .rounded {
+            itml-img-treatment: corner-small;
+            }
+			.grid {
+      		tv-interitem-spacing: 0;
+      		}
+      		.shelfItems {
+      		tv-interitem-spacing: 60;
+      		}
+        </style>
+    </head>
+    <stackTemplate theme="light">
+	{{XML()}}{{
+        <banner>
+            <title>{{VAL(MediaContainer/title1)}}</title>
+        </banner>
+    }}
+    <collectionList>
+
+<shelf class="shelfItems" style="margin: -45 0 0 0" id="shelf_OnDeck">
+    <section>
+        <header>
+            <title>{{TEXT(On Deck)}}</title>
+        </header>
+        {{XML(onDeck)}}{{
+		{{IFNODE(MediaContainer/Video)}}{{
+		{{COPY(MediaContainer/Video)}}{{
+        {{SET(noItems:false)}}
+        <lockup onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="ScrobbleMenu">
+            <img src="{{IMAGEURL(grandparentThumb::360)}}" width="240" height="360" />
+			{{IF({{VAL(viewOffset)}})}}{{
+          <overlay>
+                <progressBar value="{{EVAL({{VAL(viewOffset)}}.0/{{VAL(duration)}}.0)}}"/>
+            </overlay>
+			}}
+      <title><![CDATA[{{VAL(title)}}]]></title>
+            <subtitle class="showTextOnHighlight">{{TEXT(S)}}{{VAL(parentIndex)}} • {{TEXT(E)}}{{VAL(index)}}</subtitle>
+
+        </lockup>
+        }}
+        }}
+        }}
+   	</section>
+	</shelf>
+
+{{XML(all)}}{{
+<separator>
+
+</separator>
+	{{IFNODE(MediaContainer/Directory)}}{{
+        <grid id="shelf_all">
+          <header>
+                  <title>{{VAL(MediaContainer/title2)}}</title>
+                </header>
+          <section>
+    {{COPY(MediaContainer/Directory)}}{{
+	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
+            <lockup
+                onSelect="Presenter.load('TVShow_SeasonList', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onSelectHold="ScrobbleMenu">
+              <img src="{{IMAGEURL(thumb::360)}}" width="240" height="360" />
+              <title><![CDATA[{{VAL(title)}}]]></title>
+              <subtitle class="showTextOnHighlight"><![CDATA[{{VAL(leafCount)}} episodes]]></subtitle>
+            </lockup>
+	}}
+          </section>
+        </grid>
+	}}
+}}
+
+    </collectionList>
+
+  </stackTemplate>
+</document>
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>PlexConnect</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

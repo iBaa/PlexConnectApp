@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{XML()}}{{
+<document>
+    <alertTemplate theme="light">
+    <title>Available subtitles:</title>
+			{{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
+			{{IF({{CHK("{{VAL(streamType:)}}"=="3")}})}}{{
+			<button onSelect="">
+       	{{IF({{CHK("{{VAL(default:)}}"=="1")}})}}{{
+       	<text>✓   {{VAL(language)}} - {{VAL(codec)}}</text>
+      	}}
+      	{{IF({{CHK("{{VAL(default:)}}"!="1")}})}}{{
+       	<text>{{VAL(language)}} - {{VAL(codec)}}</text>
+      	}}
+      </button>
+      }}
+      }}
+    </alertTemplate>
+</document>
+}}

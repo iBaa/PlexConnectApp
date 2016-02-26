@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{XML()}}
+{{
+<document>
+	<head>
+        <style>
+            .lightBackgroundColor {
+            background-color: #b2b2b2;
+            }
+            .layout {
+            margin: 40;
+            }
+            .showTextOnHighlight {
+            tv-text-highlight-style: show-on-highlight;
+            }
+            .roundedImageCorners {
+            itml-img-treatment: corner-small;
+            }
+
+        </style>
+    </head>
+  	<catalogTemplate theme="light">
+    	<banner>
+            <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
+        </banner>
+      <list>
+        <section>
+        	<header>
+          	<title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
+          </header>
+    		{{COPY(MediaContainer/Directory)}}{{
+					<listItemLockup>
+          	<title><![CDATA[{{VAL(title)}}]]></title>
+      	{{XML({{VAL(key)}})}}{{
+            <decorationLabel><![CDATA[{{VAL(MediaContainer/size)}}]]></decorationLabel>
+    			  <relatedContent>
+            	<grid>
+              <section>
+				{{COPY(MediaContainer/Directory)}}{{
+        {{IF({{CHK("{{VAL(type)}}"!="artist")}})}}{{
+        				<lockup onSelect="Presenter.load('Music_Albums', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onSelectHold="ScrobbleMenu">
+      						<img src="{{IMAGEURL(thumb::360)}}" height="330" width="330" />
+                	<title class="whiteText"><![CDATA[{{VAL(title)}}]]></title>
+                </lockup>
+        }}
+        {{IF({{CHK("{{VAL(type)}}"=="artist")}})}}{{
+        				<lockup onSelect="Presenter.load('Music_Artist', '{{PMSID()}}', '/library/metadata/{{VAL(ratingKey)}}')"
+                onSelectHold="ScrobbleMenu">
+      						<img style="tv-img-treatment: corner-medium" src="{{IMAGEURL(thumb::360)}}" height="330" width="330" />
+                	<title style="tv-text-highlight-style: marquee-on-highlight"><![CDATA[{{VAL(title)}}]]></title>
+                </lockup>
+        }}
+        }}
+        			</section>
+              </grid>
+            </relatedContent>
+        }}
+        	</listItemLockup>
+    }}
+        </section>
+      </list>
+    </catalogTemplate>
+</document>
+}}

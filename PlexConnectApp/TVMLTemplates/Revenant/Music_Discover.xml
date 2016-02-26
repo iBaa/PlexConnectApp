@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(root:{{PATH()}})}}
+{{SET(noItems:true)}}
+<document>
+    <head>
+        <style>
+            .lightBackgroundColor {
+            background-color: #b2b2b2;
+            }
+            .layout {
+            margin: 40;
+            }
+            .showTextOnHighlight {
+            tv-text-highlight-style: show-on-highlight;
+            }
+            .rounded {
+            itml-img-treatment: corner-small;
+            }
+			.grid {
+      		tv-interitem-spacing: 0;
+      		}
+      		.shelfItems {
+      		tv-interitem-spacing: 60;
+      		}
+        </style>
+    </head>
+    <stackTemplate theme="light">
+{{XML()}}{{
+	<banner>
+            <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
+        </banner>
+}}
+
+    <collectionList>
+
+	<shelf class="shelfItems" style="margin: -45 0 0 0" id="shelf_recentlyAdded">
+    {{XML(recentlyAdded)}}{{
+	{{IFNODE(MediaContainer/Directory)}}{{
+    <section>
+        <header>
+            <title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
+        </header>
+        {{COPY(MediaContainer/Directory)}}{{
+        {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
+        <lockup onSelect="Presenter.load('Music_Album', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="ScrobbleMenu">
+            <img src="{{IMAGEURL(thumb::360)}}" width="300" height="300" />
+            <!--
+            <title class="showTextOnHighlight">{{VAL(parentTitle)}}</title>
+            <subtitle class="showTextOnHighlight">{{VAL(title)}}</subtitle>
+            -->
+
+        </lockup>
+        }}
+    }}
+    }}
+    </section>
+	</shelf>
+	{{XML(all)}}{{
+	{{IFNODE(MediaContainer/Directory)}}{{
+  <separator>
+      
+  </separator>
+
+
+        <grid class="grid" id="shelf_albums">
+          <header>
+                  <title>{{VAL(MediaContainer/title2)}}</title>
+                </header>
+            <section>
+        {{COPY(MediaContainer/Directory)}}{{
+		{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
+            <lockup
+                onSelect="Presenter.load('Music_Artist', '{{PMSID()}}', '{{PATH(/library/metadata/{{VAL(ratingKey)}})}}')"
+                onSelectHold="ScrobbleMenu"
+                >
+              <img style="tv-img-treatment: corner-medium" src="{{IMAGEURL(thumb::360)}}" width="300" height="300" />
+              <title><![CDATA[{{VAL(title)}}]]></title>
+            </lockup>
+		}}
+          </section>
+        </grid>
+	}}
+	}}
+
+
+
+    </collectionList>
+
+  </stackTemplate>
+</document>
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>PlexConnect</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

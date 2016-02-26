@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{XML()}}{{
+<document>
+    <alertTemplate theme="light">
+    <title>Options:</title>
+			<button onSelect="">
+       	<text>{{TEXT(Mark as Watched)}}</text>
+      </button>
+      <button onSelect="">
+       	<text>{{TEXT(Mark as Unwatched)}}</text>
+      </button>
+    </alertTemplate>
+</document>
+}}
