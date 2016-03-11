@@ -42,8 +42,12 @@ class cXmlConverter {
             "TABLE": processTABLE!,
             "EVAL": processEVAL!,
             "DURATION": processDURATION!,
+            "DURATION_HM": processDURATION_HM!,
             "DURATION_HMS": processDURATION_HMS!,
             "SEASONEPISODE": processSEASONEPISODE!,
+            "EP_INDEX": processEP_INDEX!,
+            "ACTOR_LN": processACTOR_LN!,
+            "UPPERCASE": processUPPERCASE!,
             "CHK": processCHK!,
             "PMSCNT": processPMSCNT!,
             "PMSID": processPMSID!,
@@ -57,6 +61,7 @@ class cXmlConverter {
             "AUDIOURL": processAUDIOURL!,
             "PHOTOURL": processPHOTOURL!,
             "IMAGEURL": processIMAGEURL!,
+            "IMAGEHTTP": processIMAGEHTTP!,
             "TEXT": processTEXT!,
             "SETTING": processSETTING!,
             "CUSTOMSETTING": processCUSTOMSETTING!,
@@ -445,6 +450,50 @@ class cXmlConverter {
         return res
     }
     
+    var processDURATION_HM: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
+        _self, XML, _par in
+        
+        var par = _par.componentsSeparatedByString(":")
+        var hours: Int = 0, minutes: Int = 0, seconds: Int = 0
+        if let duration = Int(_self.getParam(XML, par: &par)) {  // duration in ms
+            var sec: Int
+            sec = duration / 1000  // duration in sec
+            hours = sec / 60/60
+            sec = sec - hours * 60*60  // duration (after hours) in sec
+            minutes = sec / 60
+            sec = sec - minutes * 60  // duration (after hours/minutes) in sec
+            seconds = sec
+        }
+        var res: String
+        if (hours>0) {
+            res = String("\(hours) h \(minutes) min")
+        } else {
+            res = String("\(minutes) min")
+        }
+        return res
+    }
+    
+    var processACTOR_LN: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
+        _self, XML, _par in
+        
+        var par = _par.componentsSeparatedByString(" ")
+        let firstName = String(_self.getParam(XML, par: &par))
+        let lastName = String(_self.getParam(XML, par: &par))
+        let res = String (lastName)
+        return res
+        
+    }
+    
+    var processUPPERCASE: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
+        _self, XML, _par in
+        
+        var par = _par.componentsSeparatedByString(":")
+        let label = String(_self.getParam(XML, par: &par))
+        let res = label.uppercaseString
+        return res
+        
+    }
+    
     var processSEASONEPISODE: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
         _self, XML, _par in
         
@@ -453,6 +502,21 @@ class cXmlConverter {
         let episode = Int(_self.getParam(XML, par: &par))
         let res = String(format: "%0dx%02d", season!, episode!)
         return res
+    }
+    
+    var processEP_INDEX: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
+        _self, XML, _par in
+        
+        var par = _par.componentsSeparatedByString(":")
+        let season = String(_self.getParam(XML, par: &par))
+        let episode = String(_self.getParam(XML, par: &par))
+        if !(season=="") {
+            let res = String(season + "." + episode)
+            return res
+        } else {
+            let res = String(episode)
+            return res
+        }
     }
     
     var processPATH: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
@@ -729,6 +793,35 @@ class cXmlConverter {
         } else if (key != "") {
             var res: String
             res = getPmsUrl(key, pmsId: _self.pmsId!, pmsPath: _self.pmsPath!)  // todo: pmsId, pmsPath optional?
+            // XML safe?
+            res = res.stringByReplacingOccurrencesOfString("&", withString: "&amp;")  // must be first
+            res = res.stringByReplacingOccurrencesOfString("<", withString: "&lt;")
+            res = res.stringByReplacingOccurrencesOfString(">", withString: "&gt;")
+            res = res.stringByReplacingOccurrencesOfString("'", withString: "&apos;")
+            res = res.stringByReplacingOccurrencesOfString("\"", withString: "&quot;")
+            
+            return res
+        } else {
+            let res = getResourceUrl("missing-image", ext: "png", dir: "Images")
+            return res
+        }
+    }
+    
+    var processIMAGEHTTP: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
+        _self, XML, _par in
+        
+        var par = _par.componentsSeparatedByString(" ")
+        
+        // sanity check
+        if _self.pmsId == nil {
+            return "[[IMAGEURL - pmsId not initialised]]"
+        }
+        
+        let key = _self.getKey(XML, par: &par)
+        if (key != "") {
+            var res: String
+            res = key
+            // res = getPmsUrl(key, pmsId: _self.pmsId!, pmsPath: _self.pmsPath!)  // todo: pmsId, pmsPath optional?
             // XML safe?
             res = res.stringByReplacingOccurrencesOfString("&", withString: "&amp;")  // must be first
             res = res.stringByReplacingOccurrencesOfString("<", withString: "&lt;")

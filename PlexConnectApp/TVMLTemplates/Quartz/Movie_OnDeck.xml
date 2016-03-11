@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+    <head>
+        <style>
+            .lightBackgroundColor {
+            background-color: #efece6;
+            }
+            .layout {
+            margin: 40;
+            }
+            .showTextOnHighlight {
+            tv-text-highlight-style: marquee-on-highlight;
+            }
+            .rounded {
+            itml-img-treatment: corner-small;
+            }
+			.grid {
+      		tv-interitem-spacing: 0;
+      		}
+      		.shelfItems {
+      		tv-interitem-spacing: 60;
+      		}
+        </style>
+    </head>
+    <stackTemplate theme="light" class="lightBackgroundColor">
+
+	<banner>
+            <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
+        </banner>
+    <collectionList>
+{{XML(all?viewCount=0&sort=originallyAvailableAt%3Adesc&limit=25)}}{{
+{{IFNODE(MediaContainer/Video)}}{{
+{{SET(noItems:false)}}
+	<shelf style="margin: -45 0 0 0" id="shelf_OnDeck">   
+		<header>
+      <title>OnShelf</title>
+    </header>
+    <section>
+    {{COPY(MediaContainer/Video)}}{{
+      <lockup onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+        onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+        onSelectHold="ScrobbleMenu">
+            <img src="{{IMAGEURL(thumb::360)}}" height="310" width="207" />
+              {{IF({{CHK(!"{{VAL(viewCount:)}}">="1")}})}}{{
+              <overlay>
+              	<img style="tv-position: top-right; margin: -30 -24 120 120" src="{{RESOURCEURL(TVMLTemplates/Quartz/images:overlayUnwatched:png)}}"  width="33" height="33" />
+              </overlay>
+              }}
+            <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
+            
+        </lockup>
+    }}
+    </section>
+	</shelf>
+}}
+}}
+	
+	{{XML(all)}}{{
+	{{IFNODE(MediaContainer/Video)}}{{
+	{{SET(noItems:false)}}
+		<separator>
+    		<button style="height: 75; margin: -3 60 0 60" onSelect="Presenter.loadContext('Movie_Filters', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+        		<text><![CDATA[{{VAL(MediaContainer/title2)}}    ]]><badge src="resource://button-dropdown" width="36" height="21" /></text>
+   			</button>
+		</separator>
+        <grid id="all">
+          <section>
+         	{{COPY(MediaContainer/Video)}}{{
+					  <lockup
+                onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onSelectHold="ScrobbleMenu"
+                >
+              <img src="{{IMAGEURL(thumb::360)}}" height="310" width="207" />
+              <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
+              <subtitle class="showTextOnHighlight">{{VAL(year:&#x00AD;)}}</subtitle>
+              {{IF({{CHK("{{VAL(viewCount:)}}"=="")}})}}{{
+              <overlay>
+              	<img style="tv-position: top-right; margin: -30 -24 120 120" src="{{RESOURCEURL(TVMLTemplates/Quartz/images:overlayUnwatched:png)}}"  width="33" height="33" />
+              </overlay>
+              }}
+            </lockup>
+			}}
+          </section>
+        </grid>
+	}} 
+	}}
+
+    </collectionList>
+	</stackTemplate>
+</document>
+}}
+}}
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>TITLE</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}
+

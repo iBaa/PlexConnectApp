@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{XML()}}{{
+<document>
+    <alertTemplate>
+    <title>Audio tracks:</title>
+			{{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
+			{{IF({{CHK("{{VAL(streamType:)}}"=="2")}})}}{{
+			<button onSelect="">
+       	{{IF({{CHK("{{VAL(default:)}}"=="1")}})}}{{
+       	<text>✓   {{VAL(language)}} - {{UPPERCASE({{VAL(channels)}})}} {{TEXT(channels)}}  {{UPPERCASE({{VAL(codec)}})}}</text>
+       	}}
+      	{{IF({{CHK("{{VAL(default:)}}"!="1")}})}}{{
+       	<text>{{VAL(language)}} - {{UPPERCASE({{VAL(channels)}})}} {{TEXT(channels)}}  {{UPPERCASE({{VAL(codec)}})}}</text>
+      	}}
+      </button>
+      }}
+      }}
+    </alertTemplate>
+</document>
+}}

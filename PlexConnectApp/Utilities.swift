@@ -117,13 +117,17 @@ func readTVMLTemplate(name: String, theme: String) -> String {
         if let extContent = readExternalContent("http://" + "127.0.0.1:1844" + "/" + name + ".xml") {  // todo: flexible IP:port
             content = extContent
         } else {
-            if let noContent = readResource("Theme_NoExternal", ext: "xml", dir: "TVMLTemplates") {
-                content = noContent
+            if let defaultContent = readResource(name, ext: "xml", dir: "TVMLTemplates"+"/"+"Default") {
+                content = defaultContent
             } else {
-                content = ""
+                if let noContent = readResource("Theme_NoExternal", ext: "xml", dir: "TVMLTemplates") {
+                    content = noContent
+                } else {
+                    content = ""
             }
         }
 
+        }
     }
     
     //print(content)

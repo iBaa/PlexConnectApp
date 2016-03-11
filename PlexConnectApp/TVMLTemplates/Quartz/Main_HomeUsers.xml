@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{PMS(plex.tv)}}{{
+{{XML(/api/home/users)}}{{
+<document>
+  <head>
+    <style>
+      .showTextOnHighlight {
+        tv-text-highlight-style: show-on-highlight;
+      }
+      .overlayTextLayout {
+        tv-position: top;
+      }
+      .centeredText {
+        text-align: center;
+      }
+        .lightBackgroundColor {
+        background-color: #505050;
+        }
+        .rounded {
+        tv-img-treatment: circle;
+        width: 200;
+        height: 200;
+        } 
+    </style>
+  </head>
+  
+  <descriptiveAlertTemplate theme="dark" class="lightBackgroundColor">
+   <title style="margin: 0 0 100 0">{{TEXT(Users)}}</title>
+   <!--<text style="margin: 0 0 100 0">{{TEXT(Admin )}}{{USRVAL(name)}}</text>-->
+    <shelf centered="true" style="tv-interitem-spacing: 60; margin: 0 0 -50 0">
+      <section>
+{{COPY(MediaContainer/User)}}{{
+        <monogramLockup style="tv-img-treatment: circle" 
+            {{IF({{CHK("{{USRVAL(name)}}"=="{{VAL(title)}}")}})}}{{autoHighlight="true"}}
+            id="{{VAL(id)}}"
+            username="{{VAL(title)}}"
+            protected="{{VAL(protected)}}"
+            onSelect="myPlex.switchHomeUser(event);"
+            onSuccess="Presenter.load('Library', '{{PMSID(clientIdentifier:{{CUSTOMSETTING(pmsUuid)}})}}', '{{PATH(/library/sections)}}');"
+            onError="Presenter.load('MyPlex_SignInFailed', '', '');"
+            >
+            <monogram src="{{VAL(thumb)}}?size=256" width="200" height="200" />
+            <title style="tv-text-style: body; margin: 20 0 0 0"><![CDATA[{{VAL(title)}}]]></title>
+        </monogramLockup>
+}}
+      </section>
+      
+    </shelf>
+    <button style="margin: 150 0 0 0; width: 450; height: 80" id="OfflineMode" disabled="true"
+      onSelect="">
+      <text>{{TEXT(Offline Mode)}}</text>
+    </button>
+    <!--<button style="margin: 150 0 0 0; width: 450; height: 80" 
+      onSelect="myPlex.signIn(event);"
+      onSuccess="Presenter.loadAndSwap('Main', '', '');"
+      onError="Presenter.load('MyPlex_SignInFailed', '', '');"
+      >
+      <text>{{TEXT(Sign In)}}</text>
+    </button>-->
+  </descriptiveAlertTemplate>
+</document>
+}}
+}}
+
+
