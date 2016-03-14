@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+  <head>
+    <style>
+      .lightBackgroundColor {
+      background-color: #efece6;
+      }
+      .darkBackgroundColor {
+      background-color: #333333;
+      }
+    </style>
+  </head>
+  <paradeTemplate theme="light" class="lightBackgroundColor">
+    <list>
+      {{XML(library/all?sort=random&amp;limit=5)}}{{
+      {{IF({{CHK("{{VAL(MediaContainer/size)}}">"0")}})}}{{
+      {{SET(noItems:false)}}
+      <relatedContent>
+        <imgDeck>
+          {{IF({{CHK("{{VAL(MediaContainer/size)}}">"4")}})}}{{
+          {{COPY(MediaContainer/Video)}}{{
+          {{IF({{VAL(thumb:)}})}}{{
+          <img src="{{IMAGEURL(thumb::)}}" />
+          }}
+          }}
+          {{COPY(MediaContainer/Directory)}}{{
+          {{IF({{VAL(thumb:)}})}}{{
+          <img src="{{IMAGEURL(thumb::)}}" />
+          }}
+          }}
+          }}
+          {{IF(!{{CHK("{{VAL(MediaContainer/size)}}">"4")}})}}{{
+          {{COPY(MediaContainer/Video)}}{{
+          {{IF({{VAL(thumb:)}})}}{{
+          <img src="{{IMAGEURL(thumb::)}}" />
+          }}
+          }}
+          {{COPY(MediaContainer/Video)}}{{
+          {{IF({{VAL(thumb:)}})}}{{
+          <img src="{{IMAGEURL(thumb::)}}" />
+          }}
+          }}
+          {{COPY(MediaContainer/Directory)}}{{
+          {{IF({{VAL(thumb:)}})}}{{
+          <img src="{{IMAGEURL(thumb::)}}" />
+          }}
+          }}
+          {{COPY(MediaContainer/Directory)}}{{
+          {{IF({{VAL(thumb:)}})}}{{
+          <img src="{{IMAGEURL(thumb::)}}" />
+          }}
+          }}
+          }}
+        </imgDeck>
+      </relatedContent>
+      }}
+      }}
+      <header>
+        <title>{{PMSVAL(name)}}</title>
+      </header>
+      <section>
+        <header>
+          <title>{{TEXT(Sections)}}</title>
+        </header>
+        
+        {{XML(playlists?sort=addedAt%3Adesc&amp;excludeFields=summary&amp;X-Plex-Container-Start=0&amp;X-Plex-Container-Size=5)}}{{
+        {{IF({{CHK("{{VAL(MediaContainer/size)}}">"0")}})}}{{
+        <listItemLockup onSelect="Presenter.load('Playlists_Secondary', '{{PMSID()}}', '{{PATH(/playlists)}}')">
+          <title>{{TEXT(Playlists)}}</title>
+          <relatedContent>
+            <imgDeck>
+              {{IF({{CHK("{{VAL(MediaContainer/size)}}">"3")}})}}{{
+              {{COPY(MediaContainer/Playlist)}}{{
+              {{IF({{VAL(composite:)}})}}{{
+              <img src="{{IMAGEURL(composite:)}}" />
+              }}
+              }}
+              }}
+              {{IF(!{{CHK("{{VAL(MediaContainer/size)}}">"3")}})}}{{
+              {{COPY(MediaContainer/Playlist)}}{{
+              {{IF({{VAL(composite:)}})}}{{
+              <img src="{{IMAGEURL(composite:)}}" />
+              }}
+              }}
+              {{COPY(MediaContainer/Playlist)}}{{
+              {{IF({{VAL(composite:)}})}}{{
+              <img src="{{IMAGEURL(composite:)}}" />
+              }}
+              }}
+              }}
+            </imgDeck>
+          </relatedContent>
+        </listItemLockup>
+        }}
+        }}
+        {{XML(library/sections)}}{{
+        {{COPY(MediaContainer/Directory)}}{{
+        {{IF({{CHK("{{VAL(type:)}}"=="movie")}})}}{{
+        {{IF({{CHK("{{VAL(scanner:)}}"=="Plex Video Files Scanner")}})}}{{
+        <listItemLockup onSelect="Presenter.load('Videos_List', '{{PMSID()}}', '{{PATH(/library/sections/{{VAL(key)}}/folder)}}')">
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          {{XML(library/sections/{{VAL(key)}}/all?sort=addedAt%3Adesc&amp;excludeFields=summary&amp;limit=5)}}{{
+          <relatedContent>
+            <imgDeck>
+              {{IF({{CHK("{{VAL(MediaContainer/size)}}">"3")}})}}{{
+              {{COPY(MediaContainer/Video)}}{{
+              {{IF({{VAL(thumb:)}})}}{{
+              <img src="{{IMAGEURL(thumb:)}}" />
+              }}
+              }}
+              }}
+              {{IF(!{{CHK("{{VAL(MediaContainer/size)}}">"3")}})}}{{
+              {{COPY(MediaContainer/Video)}}{{
+              {{IF({{VAL(thumb:)}})}}{{
+              <img src="{{IMAGEURL(thumb:)}}" />
+              }}
+              }}
+              {{COPY(MediaContainer/Video)}}{{
+              {{IF({{VAL(thumb:)}})}}{{
+              <img src="{{IMAGEURL(thumb:)}}" />
+              }}
+              }}
+              }}
+            </imgDeck>
+          </relatedContent>
+          }}
+        </listItemLockup>
+        }}
+        {{IF(!{{CHK("{{VAL(scanner:)}}"=="Plex Video Files Scanner")}})}}{{
+        <listItemLockup onSelect="Presenter.load('Movie_OnDeck', '{{PMSID()}}', '{{PATH(/library/sections/{{VAL(key)}})}}')">
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          {{XML(library/sections/{{VAL(key)}}/all?sort=addedAt%3Adesc&amp;excludeFields=summary&amp;limit=8)}}{{
+          <relatedContent>
+            <imgDeck>
+              {{IF({{CHK("{{VAL(MediaContainer/size)}}">"3")}})}}{{
+              {{COPY(MediaContainer/Video)}}{{
+              {{IF({{VAL(thumb:)}})}}{{
+              <img src="{{IMAGEURL(thumb:)}}" />
+              }}
+              }}
+              }}
+              {{IF(!{{CHK("{{VAL(MediaContainer/size)}}">"3")}})}}{{
+              {{COPY(MediaContainer/Video)}}{{
+              {{IF({{VAL(thumb:)}})}}{{
+              <img src="{{IMAGEURL(thumb:)}}" />
+              }}
+              }}
+              {{COPY(MediaContainer/Video)}}{{
+              {{IF({{VAL(thumb:)}})}}{{
+              <img src="{{IMAGEURL(thumb:)}}" />
+              }}
+              }}
+              }}
+            </imgDeck>
+          </relatedContent>
+          }}
+        </listItemLockup>
+        }}
+        }}
+        
+        {{IF({{CHK("{{VAL(type:)}}"=="show")}})}}{{
+        <listItemLockup onSelect="Presenter.load('TVShow_OnDeck', '{{PMSID()}}', '{{PATH(/library/sections/{{VAL(key)}})}}')">
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          {{XML(library/sections/{{VAL(key)}}/all?sort=addedAt%3Adesc&amp;excludeFields=summary&amp;limit=8)}}{{
+          <relatedContent>
+            <imgDeck>
+              {{IF({{CHK("{{VAL(MediaContainer/size)}}">"3")}})}}{{
+              {{COPY(MediaContainer/Directory)}}{{
+              {{IF({{VAL(thumb:)}})}}{{
+              <img src="{{IMAGEURL(thumb:)}}" />
+              }}
+              }}
+              }}
+              {{IF(!{{CHK("{{VAL(MediaContainer/size)}}">"3")}})}}{{
+              {{COPY(MediaContainer/Directory)}}{{
+              {{IF({{VAL(thumb:)}})}}{{
+              <img src="{{IMAGEURL(thumb:)}}" />
+              }}
+              }}
+              {{COPY(MediaContainer/Directory)}}{{
+              {{IF({{VAL(thumb:)}})}}{{
+              <img src="{{IMAGEURL(thumb:)}}" />
+              }}
+              }}
+              }}
+            </imgDeck>
+          </relatedContent>
+          }}
+        </listItemLockup>
+        }}
+        {{IF({{CHK("{{VAL(type:)}}"=="artist")}})}}{{
+        <listItemLockup onSelect="Presenter.load('Music_OnDeck', '{{PMSID()}}', '{{PATH(/library/sections/{{VAL(key)}})}}')">
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          {{XML(library/sections/{{VAL(key)}}/search?type=9&amp;sort=viewCount%3Adesc&amp;excludeFields=summary&amp;limit=8)}}{{
+          <relatedContent>
+            <imgDeck>
+              {{IF({{CHK("{{VAL(MediaContainer/size)}}">"3")}})}}{{
+              {{COPY(MediaContainer/Directory)}}{{
+              {{IF({{VAL(thumb:)}})}}{{
+              <img src="{{IMAGEURL(thumb)}}" />
+              }}
+              }}
+              }}
+              {{IF(!{{CHK("{{VAL(MediaContainer/size)}}">"3")}})}}{{
+              {{COPY(MediaContainer/Directory)}}{{
+              {{IF({{VAL(thumb:)}})}}{{
+              <img src="{{IMAGEURL(thumb)}}" />
+              }}
+              }}
+              {{COPY(MediaContainer/Track)}}{{
+              {{IF({{VAL(thumb:)}})}}{{
+              <img src="{{IMAGEURL(thumb)}}" />
+              }}
+              }}
+              }}
+            </imgDeck>
+          </relatedContent>
+          }}
+        </listItemLockup>
+        }}
+        {{IF({{CHK("{{VAL(type:)}}"=="photo")}})}}{{
+        <listItemLockup onSelect="Presenter.load('Photo_OnDeck', '{{PMSID()}}', '{{PATH(/library/sections/{{VAL(key)}})}}')">
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          {{XML(library/sections/{{VAL(key)}}/all?sort=addedAt%3Adesc&amp;excludeFields=summary&amp;limit=8)}}{{
+          <relatedContent>
+            <imgDeck>
+              {{IF({{CHK("{{VAL(MediaContainer/size)}}">"3")}})}}{{
+              {{COPY(MediaContainer/Photo)}}{{
+              {{IF({{VAL(thumb:)}})}}{{
+              <img src="{{IMAGEURL(thumb:)}}" />
+              }}
+              }}
+              }}
+              {{IF(!{{CHK("{{VAL(MediaContainer/size)}}">"3")}})}}{{
+              {{COPY(MediaContainer/Photo)}}{{
+              {{IF({{VAL(thumb:)}})}}{{
+              <img src="{{IMAGEURL(thumb:)}}" />
+              }}
+              }}
+              {{COPY(MediaContainer/Photo)}}{{
+              {{IF({{VAL(thumb:)}})}}{{
+              <img src="{{IMAGEURL(thumb:)}}" />
+              }}
+              }}
+              }}
+            </imgDeck>
+          </relatedContent>
+          }}
+        </listItemLockup>
+        }}
+        }}
+        }}
+        {{PMS(plex.tv)}}{{
+        {{XML(/pms/playlists/queue/all)}}{{
+        {{IF({{CHK("{{VAL(MediaContainer/size)}}">"0")}})}}{{
+        
+        <listItemLockup onSelect="Presenter.load('Queue_Secondary', '', '')">
+          <title>{{TEXT(Queue)}}</title>
+        </listItemLockup>
+        
+        }}
+        }}
+        }}
+        <listItemLockup onSelect="Presenter.load('Search_All', '{{PMSID(clientIdentifier:{{CUSTOMSETTING(pmsUuid)}})}}', '')">
+          <title>Search All</title>
+        </listItemLockup>
+      </section>   
+    </list>
+  </paradeTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>TITLE</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

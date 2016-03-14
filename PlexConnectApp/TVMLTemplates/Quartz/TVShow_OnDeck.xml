@@ -35,62 +35,24 @@ See LICENSE.txt for this sample’s licensing information
         </banner>
     }}    
     <collectionList>
-	
-	<shelf class="shelfItems" style="margin: -45 0 0 0" id="shelf_OnDeck">
-    <section>
-        <header>
-            <title>{{TEXT(OnShelf)}}</title>
-        </header>
-        {{XML(onDeck)}}{{
-		{{IFNODE(MediaContainer/Video)}}{{
-		{{COPY(MediaContainer/Video)}}{{
-        {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
-        <lockup onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-            onSelectHold="ScrobbleMenu">
-            <img src="{{IMAGEURL(grandparentThumb::360)}}" width="240" height="360" />
-			{{IF({{VAL(viewOffset)}})}}{{
-          <overlay>
-                <progressBar value="{{EVAL({{VAL(viewOffset)}}.0/{{VAL(duration)}}.0)}}"/>
-            </overlay>
-			}}
-            <title class="showTextOnHighlight">{{EP_INDEX({{VAL(parentIndex:)}}:{{VAL(index:)}})}}</title>
-            <subtitle class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></subtitle>
-        </lockup>
-        }}
-        }}
-        }}
-		{{XML(unwatched)}}{{
-		{{COPY(MediaContainer/Directory)}}{{
-        {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
-        <lockup onSelect="Presenter.load('TVShow_SeasonList', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-            onSelectHold="ScrobbleMenu">
-            <img src="{{IMAGEURL(thumb::360)}}" width="240" height="360" />
-	         <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
-            <subtitle class="showTextOnHighlight">Unwatched {{EVAL({{VAL(leafCount)}}-{{VAL(viewedLeafCount)}})}}</subtitle>
-        </lockup>
-        }}
-        }}
-   	</section>
-	</shelf>
-		
 {{XML(all)}}{{
+<!--
 <separator>
     <button style="height: 75; margin: -3 60 0 60" onSelect="Presenter.loadContext('TVShow_Filters', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
         <text><![CDATA[{{VAL(MediaContainer/title2)}}    ]]><badge src="resource://button-dropdown" width="36" height="21" /></text>
     </button>
 </separator>
+-->
 	{{IFNODE(MediaContainer/Directory)}}{{
         <grid id="shelf_all">
           <section>
     {{COPY(MediaContainer/Directory)}}{{
 	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
             <lockup
-                onSelect="Presenter.load('TVShow_SeasonList', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onSelect="Presenter.load('TVShow_EpisodeList', '{{PMSID()}}', '{{PATH(/library/metadata/{{VAL(ratingKey)}}/allLeaves)}}')"
                 onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                 onSelectHold="ScrobbleMenu">
-              <img src="{{IMAGEURL(thumb::360)}}" width="240" height="360" />
+              <img src="{{IMAGE_T(thumb::360)}}" height="375" width="250" />
               <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
               <subtitle class="showTextOnHighlight"><![CDATA[{{VAL(leafCount)}} episodes]]></subtitle>
             </lockup>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{XML(recentlyAdded?stack=1&amp;X-Plex-Container-Start=0&amp;X-Plex-Container-Size=3)}}{{
+<document>
+  <relatedContent>
+    <imgDeck>
+{{COPY(MediaContainer/Video)}}{{
+{{IF({{VAL(thumb:)}})}}{{
+      <img src="{{IMAGEURL(thumb)}}" />
+}}
+}}
+    </imgDeck>
+  </relatedContent>
+</document>
+}}

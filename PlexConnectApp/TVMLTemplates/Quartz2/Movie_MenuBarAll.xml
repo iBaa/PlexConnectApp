@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document>
+  <menuBarTemplate>
+    <menuBar>
+      <menuItem id="List"
+          onSelect="Presenter.loadMenuContent('Movie_List', '{{PMSID()}}', '{{PATH()}}')">
+        <title>{{TEXT(List)}}</title>
+      </menuItem>
+      
+      <menuItem id="Title"
+          autoHighlight="true"
+          onSelect="Presenter.loadMenuContent('Movie_Grid', '{{PMSID()}}', '{{PATH()}}')">
+        <title>{{TEXT(By Title)}}</title>
+      </menuItem>
+
+      <menuItem id="Duration"
+          onSelect="Presenter.loadMenuContent('Movie_Grid', '{{PMSID()}}', '{{PATH()}}?sort=duration')">
+        <title>{{TEXT(By Duration)}}</title>
+      </menuItem>
+      
+      <menuItem id="Rating"
+          onSelect="Presenter.loadMenuContent('Movie_Grid', '{{PMSID()}}', '{{PATH()}}?sort=rating%3Adesc')">
+        <title>{{TEXT(By Rating)}}</title>
+      </menuItem>
+      
+      <menuItem id="Year"
+          onSelect="Presenter.loadMenuContent('Movie_Grid', '{{PMSID()}}', '{{PATH()}}?sort=year%3Adesc')">
+        <title>{{TEXT(By Year)}}</title>
+      </menuItem>
+    </menuBar>
+  </menuBarTemplate>
+</document>

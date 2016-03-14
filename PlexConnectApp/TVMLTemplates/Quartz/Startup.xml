@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document>
+  <alertTemplate onLoad="Presenter.loadAndSwap('Library','{{PMSID(clientIdentifier:{{CUSTOMSETTING(pmsUuid)}})}}', '{{PATH(/library/sections)}}');">
+  </alertTemplate>
+</document>

@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{XML(?includeExtras=1&amp;includeRelated=1&amp;includeRelatedCount=10&amp;includeReviews=1)}}{{
+{{SET(sectionID:{{VAL(MediaContainer/librarySectionID)}})}}
+<document>
+  <head>
+  <style>
+   .shelfLayout {
+      padding: 20 90 50;
+    }
+  </style>
+  </head>
+  <productBundleTemplate theme="light">
+    <background>
+    </background>
+    <banner>
+      <infoList style="margin: 265 0 0 60;">
+        <!--<info>
+          <ratingCard style="tv-align: right;">
+            <ratingBadge style="tv-rating-style: star-m;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
+          </ratingCard>
+        </info>-->
+        {{IFNODE(MediaContainer/Video/Director:)}}{{
+        <info>
+          <header>
+            <title>{{TEXT(Director)}}</title>
+          </header>
+          {{COPY(MediaContainer/Video/Director)}}{{ 
+          <text>{{VAL(tag)}}</text>
+					}}
+        </info>
+        }}
+        {{IFNODE(MediaContainer/Video/Role)}}{{
+        <info>
+          <header>
+            <title>{{TEXT(Actors)}}</title>
+          </header>
+          {{COPY(MediaContainer/Video/Role)}}{{ 
+          <text>{{VAL(tag)}}</text>
+					}}
+        </info>
+        }}
+      </infoList>
+      <stack style="margin: 90 0 0 90;">
+        <title><![CDATA[{{VAL(MediaContainer/Video/title)}}]]></title>
+        <row style="margin: 0 0 6 0;">
+          <text><![CDATA[{{VAL(MediaContainer/Video/year)}}]]></text>
+          <text><![CDATA[{{VAL(MediaContainer/Video/Genre/tag)}}]]></text>
+          {{IF(!{{VAL(MediaContainer/Video/viewOffset)}})}}{{
+          <text>{{DURATION_HM({{VAL(MediaContainer/Video/duration)}})}}</text>
+          }}
+          {{IF({{VAL(MediaContainer/Video/viewOffset)}})}}{{
+          <text><![CDATA[({{DURATION_HM({{VAL(MediaContainer/Video/duration:)}})}})  {{DURATION_HM({{EVAL({{VAL(MediaContainer/Video/duration:)}}-{{VAL(MediaContainer/Video/viewOffset:)}})}})}}]]></text>
+          }}
+        </row>
+        <row>  
+          {{IF({{VAL(MediaContainer/Video/ratingImage)}})}}{{
+          <text><badge src="resource://tomato-{{RTBADGE(MediaContainer/Video/ratingImage)}}"/> {{EVAL({{VAL(MediaContainer/Video/rating:0)}}*10)}}%</text>
+          }}
+          {{IF({{VAL(MediaContainer/Video/audienceRatingImage)}})}}{{
+          <text><badge src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/RT:{{RTBADGE(MediaContainer/Video/audienceRatingImage)}}:png)}}" width="28" height="28"/> {{EVAL({{VAL(MediaContainer/Video/audienceRating:0)}}*10)}}%</text>
+          }}
+          {{IF(!{{VAL(MediaContainer/Video/audienceRatingImage)}})}}{{
+          <ratingBadge style="tv-rating-style: star-m;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
+          }}
+          {{IF({{VAL(MediaContainer/Video/contentRating)}})}}{{
+          <textBadge> <![CDATA[{{UPPERCASE({{VAL(MediaContainer/Video/contentRating)}})}}]]> </textBadge>
+          }}
+          <!--<ratingCard style="tv-align: right;">
+            <ratingBadge style="tv-rating-style: star-m;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
+          </ratingCard>-->
+        </row>
+        <description allowsZooming="true" moreLabel="more"
+            onSelect="Presenter.loadContext('Movie_PrePlayDescription', '{{PMSID()}}', '{{PATH()}}')">
+          <![CDATA[{{VAL(MediaContainer/Video/summary)}}]]>
+        </description>
+        <row>
+          
+          <buttonLockup 
+          	{{IF(!{{VAL(MediaContainer/Video/viewOffset)}})}}{{
+          	onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH()}}')"
+          	}}
+          	{{IF({{VAL(MediaContainer/Video/viewOffset)}})}}{{
+          	onSelect="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH()}}')"
+          	}}
+          	>
+            <badge src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/buttons:Play:png)}}" width="50" height="50"/>
+            <title>{{TEXT(Play)}}</title>
+          </buttonLockup>
+					
+					{{IF({{CHK("{{VAL(MediaContainer/Video/Extras/Video/index:)}}"=="1")}})}}{{
+          <buttonLockup id="trailer" onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(MediaContainer/Video/Extras/Video/key)}})}}')">
+            <badge src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/buttons:Trailer:png)}}" width="50" height="50"/>
+            <title>{{TEXT(Trailer)}}</title>
+          </buttonLockup>
+					}}
+					{{COPY(MediaContainer/Video/Media/Part/Stream)}}{{ 
+					{{IF({{CHK("{{VAL(streamType:)}}"="2")}})}}{{
+						{{IF({{CHK("{{VAL(selected)}}"="1")}})}}{{
+						{{SET(AudioIsDefault:false)}}
+						<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
+							<badge src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/buttons:Audio:png)}}" width="50" height="50"/>
+							<title>{{UPPERCASE({{VAL(languageCode)}})}}</title>
+						</buttonLockup>
+						}}
+					}}	
+					}}
+					{{IF({{GET(AudioIsDefault)}})}}{{
+						{{COPY(MediaContainer/Video/Media/Part/Stream)}}{{ 
+						{{IF({{CHK("{{VAL(streamType:)}}"="2")}})}}{{
+						{{IF({{CHK("{{VAL(default)}}"="1")}})}}{{
+						<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
+							<badge src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/buttons:Audio:png)}}" width="50" height="50"/>
+							<title>{{UPPERCASE({{VAL(languageCode)}})}}</title>
+						</buttonLockup>
+						}}
+						}}	
+						}}
+					}}
+					
+					{{COPY(MediaContainer/Video/Media/Part/Stream)}}{{ 
+          {{IF({{CHK("{{VAL(streamType:)}}"="3")}})}}{{
+						{{IF({{CHK("{{VAL(selected)}}"="1")}})}}{{
+						{{SET(SubsIsDefault:false)}}
+						<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_SubsPopUp', '{{PMSID()}}', '{{PATH()}}')">
+							<badge src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/buttons:Subtitles:png)}}" width="50" height="50"/>
+							<title>{{UPPERCASE({{VAL(languageCode)}})}}</title>
+						</buttonLockup>
+						}}
+					}}
+					}}
+					{{IF({{GET(SubsIsDefault)}})}}{{	
+          {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{ 
+          {{IF({{CHK("{{VAL(streamType:)}}"="3")}})}}{{
+						{{IF({{CHK("{{VAL(default)}}"="1")}})}}{{
+						<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_SubsPopUp', '{{PMSID()}}', '{{PATH()}}')">
+							<badge src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/buttons:Subtitles:png)}}" width="50" height="50"/>
+							<title>{{UPPERCASE({{VAL(languageCode)}})}}</title>
+						</buttonLockup>
+						}}
+					}}
+					}}
+					}}
+          <buttonLockup id="more" onSelect="Presenter.loadContext('Movie_MorePopUp', '{{PMSID()}}', '{{VAL(MediaContainer/Video/ratingKey)}}')">
+            <badge src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/buttons:More:png)}}" width="50" height="50"/>
+            <title>{{TEXT(More)}}</title>
+          </buttonLockup>
+        </row>
+      </stack>
+      <heroImg style="margin: 60 60 0 0;" src="{{IMAGEURL(MediaContainer/Video/thumb)}}" />
+    </banner>
+{{IFNODE(MediaContainer/Video/Review:)}}{{
+    <shelf style="margin: 0 0 90 0;">
+      <header>
+        <title>{{TEXT(Reviews)}}</title>
+      </header>
+      <section>
+        <ratingCard>
+               {{IF({{VAL(MediaContainer/Video/ratingImage)}})}}{{
+               <title><badge src="resource://tomato-{{RTBADGE(MediaContainer/Video/ratingImage)}}-m" /> {{EVAL({{VAL(MediaContainer/Video/rating:0)}}*10)}}%</title>
+               }}
+               <text>Tomatometer</text>
+               {{IF({{VAL(MediaContainer/Video/audienceRating)}})}}{{
+               <title><badge src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/RT:{{RTBADGE(MediaContainer/Video/audienceRatingImage)}}:png)}}" /> {{EVAL({{VAL(MediaContainer/Video/audienceRating)}}*10)}}%</title>
+               }}
+               <text>Audience</text>
+            </ratingCard>
+            {{COPY(MediaContainer/Video/Review)}}{{
+        <reviewCard>
+          <badge src="resource://tomato-{{RTBADGE(image)}}-m" />
+          <title>{{VAL(source)}}</title>
+          <description>{{VAL(text)}}</description>
+          <text>{{VAL(tag)}}</text>
+        </reviewCard>
+        }}
+      </section>
+    </shelf>
+}}
+      
+{{IF({{CHK("{{VAL(MediaContainer/Video/Extras/size:)}}">"1")}})}}{{
+    <shelf style="margin: 0 0 90 0;">
+      <header>
+        <title>{{TEXT(Extras)}}</title>
+      </header>
+      <section>
+        {{COPY(MediaContainer/Video/Extras/Video)}}{{
+        {{IF({{CHK("{{VAL(index:)}}"!="1")}})}}{{
+        <lockup
+            onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            >
+          <img src="{{IMAGEURL(thumb::60)}}" width="384" height="216" />
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <subtitle>{{TABLE({{VAL(extraType)}}:{{TEXT(Clip)}}:1:{{TEXT(Trailer)}}:2:{{TEXT(Deleted Scene)}}:3:{{TEXT(Interview)}}:4:{{TEXT(Music Video)}}:5:{{TEXT(Behind the Scenes)}}:6:{{TEXT(Scene)}}:7:{{TEXT(Live Video)}}:8:{{TEXT(Lyrics Video)}})}}</subtitle>
+        </lockup>
+        }}
+        }}
+      </section>
+    </shelf>
+}}
+{{IFNODE(MediaContainer/Video/Related:)}}{{
+{{COPY(MediaContainer/Video/Related/Hub)}}{{ 
+{{IF({{CHK("{{VAL(hubIdentifier:)}}"=="movie.similar")}})}}{{
+    <shelf style="margin: 0 0 90 0;">
+      <header>
+        <title><![CDATA[{{VAL(title)}}]]></title>
+      </header>
+      <section>
+        {{COPY(Video)}}{{
+        <lockup
+            onSelect="Presenter.loadAndSwap('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            >
+          <img src="{{IMAGEURL(thumb::360)}}" width="206" height="309" />
+          <title><![CDATA[{{VAL(title)}}]]></title>
+        </lockup>
+        }}
+      </section>
+    </shelf>
+}}
+}}
+}}
+{{IFNODE(MediaContainer/Video/Role:)}}{{
+<shelf style="margin: 0 0 90 0;">
+      <header>
+        <title>Actors</title>
+      </header>
+      <section>
+        {{COPY(MediaContainer/Video/Role)}}{{ 
+        {{IF({{VAL(thumb)}})}}{{
+        <monogramLockup onSelect="Presenter.load('Movie_Grid', '{{PMSID()}}', '/library/sections/{{GET(sectionID)}}/actor/{{VAL(id)}}')">
+          <monogram style="width: 207; height: 207" src="{{IMAGEURL(thumb)}}"/>
+          <title><![CDATA[{{VAL(tag)}}]]></title>
+          <subtitle><![CDATA[{{VAL(role)}}]]></subtitle>
+        </monogramLockup>
+        }}
+        {{IF(!{{VAL(thumb)}})}}{{
+        <monogramLockup onSelect="Presenter.load('Movie_Grid', '{{PMSID()}}', '/library/sections/{{GET(sectionID)}}/actor/{{VAL(id)}}')">
+          <monogram style="width: 207; height: 207" firstName="{{VAL(tag)}}" lastName="{{ACTOR_LN({{VAL(tag)}})}}"/>
+          <title><![CDATA[{{VAL(tag)}}]]></title>
+          <subtitle><![CDATA[{{VAL(role)}}]]></subtitle>
+        </monogramLockup>
+        }}
+        }}
+      </section>
+    </shelf>
+}}
+
+<separator/>
+<productInfo>
+         <infoTable style="tv-line-spacing:10;">
+            <header>
+               <title>Crew</title>
+            </header>
+            <info>
+               {{IFNODE(MediaContainer/Video/Director)}}{{
+               <header>
+                  <title>Director</title>
+               </header>
+               {{COPY(MediaContainer/Video/Director)}}{{
+               <text><![CDATA[{{VAL(tag)}}]]></text>
+               }}
+               }}
+            </info>
+            <info>
+               {{IFNODE(MediaContainer/Video/Writer)}}{{
+               <header>
+                  <title>Writer</title>
+               </header>
+               {{COPY(MediaContainer/Video/Writer)}}{{
+               <text><![CDATA[{{VAL(tag)}}]]></text>
+               }}
+               }}
+            </info>
+            <info>
+               {{IFNODE(MediaContainer/Video/Producer)}}{{
+               <header>
+                  <title>Producer</title>
+               </header>
+               {{COPY(MediaContainer/Video/Producer)}}{{
+               <text><![CDATA[{{VAL(tag)}}]]></text>
+               }}
+               }}
+            </info>
+         </infoTable>
+         <infoTable style="tv-line-spacing:5;">
+            <header>
+               <title>Media</title>
+            </header>
+            <info>
+               <header>
+                  <title>Runtime</title>
+               </header>
+               <text><![CDATA[{{DURATION_HMS({{VAL(MediaContainer/Video/duration)}})}}]]></text>
+            </info>
+            <info>
+               <header>
+                  <title>Format</title>
+               </header>
+               <text><![CDATA[{{VAL(MediaContainer/Video/Media/aspectRatio)}}]]></text>
+            </info>
+            <info>
+               <header>
+                  <title>Resolution</title>
+               </header>
+               <text><![CDATA[{{VAL(MediaContainer/Video/Media/videoResolution)}}]]></text>
+            </info>
+            <info>
+               <header>
+                  <title>Codec</title>
+               </header>
+               <text><![CDATA[{{UPPERCASE({{VAL(MediaContainer/Video/Media/videoCodec)}}/{{VAL(MediaContainer/Video/Media/container)}})}}]]></text>
+            </info>
+            <info>
+               <header>
+                  <title>Frame rate</title>
+               </header>
+               <text><![CDATA[{{VAL(MediaContainer/Video/Media/videoFrameRate)}}]]></text>
+            </info>
+         </infoTable>
+         <infoTable style="tv-line-spacing:10;">
+            <header>
+               <title>Languages</title>
+            </header>
+            <info>
+               {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{ 
+               {{IF({{CHK("{{VAL(streamType:)}}"="2")}})}}{{
+               <header>
+                  <title>Audio</title>
+               </header>
+               <text><![CDATA[{{VAL(language)}} {{UPPERCASE({{VAL(codec)}})}}/{{VAL(audioChannelLayout)}}]]></text>
+               }}
+               }}
+        		</info>
+        		<info>
+               {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{ 
+               {{IF({{CHK("{{VAL(streamType:)}}"="3")}})}}{{
+               <header>
+                  <title>Subtitles</title>
+               </header>
+               <text><![CDATA[{{VAL(language)}} {{UPPERCASE({{VAL(codec)}})}}]]></text>
+               }}
+               }}
+            </info>
+         </infoTable>
+         
+         <text><![CDATA[{{VAL(MediaContainer/Video/studio)}}]]></text>
+      </productInfo>
+  </productBundleTemplate>
+</document>
+}}

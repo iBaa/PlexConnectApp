@@ -35,7 +35,7 @@ See LICENSE.txt for this sample’s licensing information
             <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
         </banner>
     <collectionList>
-{{XML(all?viewCount=0&sort=originallyAvailableAt%3Adesc&limit=25)}}{{
+{{XML(recentlyAdded?X-Plex-Container-Start=0&amp;X-Plex-Container-Size=6)}}{{
 {{IFNODE(MediaContainer/Video)}}{{
 {{SET(noItems:false)}}
 	<shelf style="margin: -45 0 0 0" id="shelf_OnDeck">   
@@ -44,10 +44,10 @@ See LICENSE.txt for this sample’s licensing information
     </header>
     <section>
     {{COPY(MediaContainer/Video)}}{{
-      <lockup onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+      <lockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
         onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
         onSelectHold="ScrobbleMenu">
-            <img src="{{IMAGEURL(thumb::360)}}" height="310" width="207" />
+            <img src="{{IMAGE_T(thumb::360)}}" height="375" width="250" />
               {{IF({{CHK(!"{{VAL(viewCount:)}}">="1")}})}}{{
               <overlay>
               	<img style="tv-position: top-right; margin: -30 -24 120 120" src="{{RESOURCEURL(TVMLTemplates/Quartz/images:overlayUnwatched:png)}}"  width="33" height="33" />
@@ -65,20 +65,22 @@ See LICENSE.txt for this sample’s licensing information
 	{{XML(all)}}{{
 	{{IFNODE(MediaContainer/Video)}}{{
 	{{SET(noItems:false)}}
+<!--
 		<separator>
     		<button style="height: 75; margin: -3 60 0 60" onSelect="Presenter.loadContext('Movie_Filters', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
         		<text><![CDATA[{{VAL(MediaContainer/title2)}}    ]]><badge src="resource://button-dropdown" width="36" height="21" /></text>
    			</button>
 		</separator>
+-->
         <grid id="all">
           <section>
          	{{COPY(MediaContainer/Video)}}{{
 					  <lockup
-                onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                 onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                 onSelectHold="ScrobbleMenu"
                 >
-              <img src="{{IMAGEURL(thumb::360)}}" height="310" width="207" />
+              <img src="{{IMAGE_T(thumb::360)}}" height="375" width="250" />
               <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
               <subtitle class="showTextOnHighlight">{{VAL(year:&#x00AD;)}}</subtitle>
               {{IF({{CHK("{{VAL(viewCount:)}}"=="")}})}}{{

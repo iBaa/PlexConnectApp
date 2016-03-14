@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+  <head>
+    <style>
+      .lightBackgroundColor {
+      background-color: #85837e;
+      }
+    </style>
+  </head>
+  {{IFNODE(MediaContainer/Directory)}}{{
+  {{SET(noItems:false)}}
+  <alertTemplate>
+    <title>{{VAL(MediaContainer/title1)}}</title>
+    {{COPY(MediaContainer/Directory)}}{{
+    {{IF({{VAL(prompt)}})}}{{
+    <button onSelect="Presenter.closeContext(); Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/{{VAL(key)}}')">
+      <text>{{VAL(title)}}</text>
+    </button>
+    }}
+    {{IF(!{{VAL(prompt)}})}}{{
+    {{IF({{CHK("{{VAL(key:)}}"=="folder")}})}}{{
+    <button onSelect="Presenter.closeContext(); Presenter.load('List', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+      <text>{{VAL(title)}}</text>
+    </button>
+    }}
+    {{IF(!{{CHK("{{VAL(key:)}}"=="folder")}})}}{{
+    {{IF({{CHK("{{VAL(secondary:)}}"=="1")}})}}{{
+    <button onSelect="Presenter.closeContext(); Presenter.load('Movie_Secondary', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+      <text>{{VAL(title)}}</text>
+    </button>
+    }}
+    {{IF(!{{CHK("{{VAL(secondary:)}}"=="1")}})}}{{
+    <button onSelect="Presenter.closeContext(); Presenter.load('Movie_Grid', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}?excludeFields=summary')">
+      <text>{{VAL(title)}}</text>
+    </button>
+    }}
+    }}
+    }}
+    }}
+  </alertTemplate>
+  }}
+</document>
+}}
+}}
+{{IF({{GET(noItems)}})}}{{
+<document>
+  <alertTemplate>
+    <title>TITLE</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

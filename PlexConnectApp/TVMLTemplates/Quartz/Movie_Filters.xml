@@ -4,71 +4,71 @@
 {{XML()}}
 {{
 <document>
-    <head>
-        <style>
-            .lightBackgroundColor {
-            background-color: #85837e;
-            }
-        </style>
-    </head>
-    <alertTemplate>
+  <head>
+    <style>
+      .lightBackgroundColor {
+      background-color: #85837e;
+      }
+    </style>
+  </head>
+  <alertTemplate>
     <title>Filters</title>
-		<button onSelect="Presenter.closeContext(); Presenter.load('Movie_MenuBarAll', '{{PMSID()}}', '{{PATH()}}/all')">
-				<text>All {{VAL(MediaContainer/title1)}}</text>
-		</button>
-		<button onSelect="Presenter.closeContext(); Presenter.load('Movie_MenuBarUnwatched', '{{PMSID()}}', '{{PATH()}}/all?unwatched=1')">
-				<text>{{TEXT(Unwatched)}}</text>
-		</button>
-		<button onSelect="Presenter.closeContext(); Presenter.load('Movie_MenuBarFilters', '{{PMSID()}}', '{{PATH()}}/newest')">
-				<text>{{TEXT(Recently Released)}}</text>
-		</button>
-		<button onSelect="Presenter.closeContext(); Presenter.load('Movie_MenuBarFilters', '{{PMSID()}}', '{{PATH()}}/recentlyAdded')">
-				<text>{{TEXT(Recently Added)}}</text>
-		</button>
-		<button onSelect="Presenter.closeContext(); Presenter.load('Movie_MenuBarFilters', '{{PMSID()}}', '{{PATH()}}/recentlyViewed')">
-				<text>{{TEXT(Recently Viewed)}}</text>
-		</button>
-		<button onSelect="Presenter.closeContext(); Presenter.load('Movie_MenuBarFilters', '{{PMSID()}}', '{{PATH()}}/onDeck')">
-				<text>{{TEXT(Continue Watching)}}</text>
-		</button>
-	{{COPY(MediaContainer/Directory)}}{{
-		{{IF({{VAL(prompt)}})}}
-		{{
-		
-        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
-        	<button onSelect="Presenter.closeContext(); Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/{{VAL(key)}}')">
-        	  	<text>{{VAL(title)}}</text>
-        	</button>
-    	}}
-    	{{IF(!{{VAL(prompt)}})}}
-		{{
-    	{{IF({{CHK("{{VAL(key:)}}"=="folder")}})}}
-		{{
-		
-        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
-        	<button onSelect="Presenter.closeContext(); Presenter.load('List', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
-            	<text>{{VAL(title)}}</text>
-        	</button>
-    	}}
-    	{{IF(!{{CHK("{{VAL(key:)}}"=="folder")}})}}
-		{{
-    		{{IF({{CHK("{{VAL(secondary:)}}"=="1")}})}}
-			{{
-		
-        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
-        	<button onSelect="Presenter.closeContext(); Presenter.load('Movie_Secondary', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
-            	<text>{{VAL(title)}}</text>
-        	</button>
-    		}}
-    		{{IF(!{{CHK("{{VAL(secondary:)}}"=="1")}})}}
-			{{
-        	<data/>
-    		}}
-    	}}
-    	}}
-    }}    
-}}        
-    </alertTemplate>
+    <button onSelect="Presenter.closeContext(); Presenter.load('Movie_MenuBarAll', '{{PMSID()}}', '{{PATH()}}/all')">
+      <text>All {{VAL(MediaContainer/title1)}}</text>
+    </button>
+    <button onSelect="Presenter.closeContext(); Presenter.load('Movie_MenuBarUnwatched', '{{PMSID()}}', '{{PATH()}}/all?unwatched=1')">
+      <text>{{TEXT(Unwatched)}}</text>
+    </button>
+    <button onSelect="Presenter.closeContext(); Presenter.load('Movie_MenuBarFilters', '{{PMSID()}}', '{{PATH()}}/newest')">
+      <text>{{TEXT(Recently Released)}}</text>
+    </button>
+    <button onSelect="Presenter.closeContext(); Presenter.load('Movie_MenuBarFilters', '{{PMSID()}}', '{{PATH()}}/recentlyAdded')">
+      <text>{{TEXT(Recently Added)}}</text>
+    </button>
+    <button onSelect="Presenter.closeContext(); Presenter.load('Movie_MenuBarFilters', '{{PMSID()}}', '{{PATH()}}/recentlyViewed')">
+      <text>{{TEXT(Recently Viewed)}}</text>
+    </button>
+    <button onSelect="Presenter.closeContext(); Presenter.load('Movie_MenuBarFilters', '{{PMSID()}}', '{{PATH()}}/onDeck')">
+      <text>{{TEXT(Continue Watching)}}</text>
+    </button>
+    {{COPY(MediaContainer/Directory)}}{{
+    {{IF({{VAL(prompt)}})}}
+    {{
+    
+    {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
+    <button onSelect="Presenter.closeContext(); Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/{{VAL(key)}}')">
+      <text>{{VAL(title)}}</text>
+    </button>
+    }}
+    {{IF(!{{VAL(prompt)}})}}
+    {{
+    {{IF({{CHK("{{VAL(key:)}}"=="folder")}})}}
+    {{
+    
+    {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
+    <button onSelect="Presenter.closeContext(); Presenter.load('List', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+      <text>{{VAL(title)}}</text>
+    </button>
+    }}
+    {{IF(!{{CHK("{{VAL(key:)}}"=="folder")}})}}
+    {{
+    {{IF({{CHK("{{VAL(secondary:)}}"=="1")}})}}
+    {{
+    
+    {{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
+    <button onSelect="Presenter.closeContext(); Presenter.load('Movie_Secondary', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+      <text>{{VAL(title)}}</text>
+    </button>
+    }}
+    {{IF(!{{CHK("{{VAL(secondary:)}}"=="1")}})}}
+    {{
+    <data/>
+    }}
+    }}
+    }}
+    }}
+    }}
+  </alertTemplate>
 </document>
 }}
 

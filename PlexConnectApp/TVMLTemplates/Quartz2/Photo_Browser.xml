@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+{{IF({{CHK("{{VAL(MediaContainer/size)}}">"0")}})}}{{
+{{SET(noItems:false)}}
+<document>
+  <head>
+        <style>
+            .lightBackgroundColor {
+            background-color: #efece6;
+            }
+            .showTextOnHighlight {
+            tv-text-highlight-style: show-on-highlight;
+            }
+            .roundedImageCorners {
+            itml-img-treatment: corner-medium;
+            }
+            .button {
+    	    tv-align: right;
+    	    margin: 10;
+      		}
+      		.buttonText {
+        	tv-text-style: subtitle1
+      		}
+    </style>
+  </head>
+  <stackTemplate class="lightBackgroundColor">
+    <banner>
+      <title><![CDATA[{{VAL(MediaContainer/title1)}}]]> - <![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
+    </banner>
+    <collectionList>
+      <separator>
+        <button class="button"
+            onSelect="photoPresenter.slideshow('{{PMSID()}}', '{{PATH()}}')"
+            >
+          <title class="buttonText">{{TEXT(Slideshow)}}</title>
+        </button>
+      </separator>
+      <grid>
+        <section>
+{{COPY(MediaContainer/Photo)}}{{
+        <lockup
+            onSelect="photoPresenter.show('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal">
+          <img src="{{IMAGE_T(thumb:)}}" width="308" height="308" />
+          <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
+        </lockup>
+}}
+      </section>
+      </grid>
+   </collectionList>
+  </stackTemplate>
+</document>
+}}
+}}
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>TITLE</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+<document>
+<head>
+    <style>
+    .whiteButton {
+      tv-tint-color: rgb(255, 255, 255);
+      width: 500;
+      height: 200;
+    }
+    .plot {
+      min-height: 300;
+      max-height: 400;
+      margin: 50;
+    }
+    .lightBackgroundColor {
+      background-color: #efece6;
+      }
+      .darkBackgroundColor {
+      background-color: #333333;
+      }
+    </style>
+  </head>
+  <listTemplate theme="light" class="lightBackgroundColor">
+    <list>
+      <header>
+        <title>{{TEXT(Plex Media Servers)}}</title>
+      </header>
+      
+      <!-- own servers -->
+      <section>
+{{PMSLOOP(owned)}}{{
+{{SET(noItems:false)}}
+				<header>
+        <title>{{TEXT(Available Servers)}}: {{PMSCNT(all)}}</title>
+      </header>
+        <listItemLockup style="height: 108;"
+            id="{{PMSVAL(clientIdentifier)}}"
+            onSelect="myPlex.switchServer(event);"
+            onSuccess="Presenter.load('Library','{{PMSID()}}', '');"
+            >
+            <title><![CDATA[{{PMSVAL(name)}}]]></title>
+            <subtitle style="tv-text-style: subtitle3;"><![CDATA[{{USRVAL(name)}}]]></subtitle>
+{{IF({{PMSVAL(local)}})}}{{
+            <decorationImage src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/servers:Local:png)}}" width="50" height="50" />
+}}
+{{IF(!{{PMSVAL(local)}})}}{{
+            <decorationImage src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/servers:Remote:png)}}" width="50" height="50" />
+}}
+
+          <relatedContent>
+            <lockup>
+              <img style="margin: 0 0 90 0;" src="https://static.plex.tv/assets/img/googleplus-photo-2dd7a8ed5c3577eb826cebdfe3edda76.png" width="256" height="256" />
+              <title style="text-align: center;"><![CDATA[{{PMSVAL(name)}}]]></title>
+            <subtitle style="text-align: center;"> </subtitle>
+         		<subtitle style="text-align: center;">Admin: <![CDATA[{{USRVAL(name)}}]]></subtitle>
+         		<subtitle style="text-align: center;"><![CDATA[{{PMSVAL(product)}} {{PMSVAL(productVersion)}}]]></subtitle>
+         		<subtitle style="text-align: center;">Platform: <![CDATA[{{PMSVAL(platform)}} {{PMSVAL(platformVersion)}}]]></subtitle>
+            </lockup>
+          </relatedContent>
+        </listItemLockup>
+}}
+
+{{PMSLOOP(shared)}}{{
+{{SET(noItems:false)}}
+        <listItemLockup style="height: 108;"
+            id="{{PMSVAL(clientIdentifier)}}"
+            onSelect="myPlex.switchServer(event);"
+            onSuccess="Presenter.load('Library','{{PMSID()}}','');"
+            >
+          
+            <title><![CDATA[{{PMSVAL(name)}}]]></title>
+            <subtitle style="tv-text-style: subtitle3;"><![CDATA[{{PMSVAL(sourceTitle)}}]]></subtitle>
+{{IF({{PMSVAL(local)}})}}{{
+            <decorationImage src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/servers:Local:png)}}" width="50" height="50" />
+}}
+{{IF(!{{PMSVAL(local)}})}}{{
+            <decorationImage src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/servers:Remote:png)}}" width="50" height="50" />
+}}
+
+          <relatedContent>
+            <lockup>
+              <img style="margin: 0 0 90 0;" src="https://static.plex.tv/assets/img/googleplus-photo-2dd7a8ed5c3577eb826cebdfe3edda76.png" width="256" height="256" />
+              <title style="text-align: center;"><![CDATA[{{PMSVAL(name)}}]]></title>
+         		<subtitle style="text-align: center;"> </subtitle>
+         		<subtitle style="text-align: center;">Admin: <![CDATA[{{USRVAL(name)}}]]></subtitle>
+         		<subtitle style="text-align: center;"><![CDATA[{{PMSVAL(product)}} {{PMSVAL(productVersion)}}]]></subtitle>
+         		<subtitle style="text-align: center;">Platform: <![CDATA[{{PMSVAL(platform)}} {{PMSVAL(platformVersion)}}]]></subtitle>
+            </lockup>
+          </relatedContent>
+        </listItemLockup>
+}}
+      </section>
+
+    </list>
+  </listTemplate>
+</document>
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>TITLE</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

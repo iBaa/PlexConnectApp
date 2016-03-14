@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{XML()}}{{
+{{SET(partID:{{VAL(MediaContainer/Video/Media/Part/id)}})}}
+<document>
+    <alertTemplate>
+    <title>Available subtitles:</title>
+			<!-- Check for selected track first -->
+			{{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
+			{{IF({{CHK("{{VAL(streamType:)}}"=="3")}})}}{{
+			{{IF({{CHK("{{VAL(selected:)}}"=="1")}})}}{{
+			{{SET(SubsIsDefault:false)}}
+			<button onSelect="putData('https:{{VAL({{PMSVAL(uri)}})}}:32400/library/parts/{{GET(partID)}}?subtitleStreamID={{VAL(id)}}&amp;X-Plex-Token={{PMSVAL(accessToken)}}')">
+       	<text>✓   {{VAL(language)}} - {{VAL(codec)}}</text>
+      </button>
+      }}
+      }}
+      }}
+  		<!-- Check for default if NO selected available -->
+  		{{IF({{GET(SubsIsDefault)}})}}{{
+  		{{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
+			{{IF({{CHK("{{VAL(streamType:)}}"=="3")}})}}{{
+			{{IF({{CHK("{{VAL(default:)}}"=="1")}})}}{{
+			<button onSelect="putData('https:{{VAL({{PMSVAL(uri)}})}}:32400/library/parts/{{GET(partID)}}?subtitleStreamID={{VAL(id)}}&amp;X-Plex-Token={{PMSVAL(accessToken)}}')">
+       	<text>✓   {{VAL(language)}} - {{VAL(codec)}}</text>
+      </button>
+      }}
+      }}
+      }}
+      }}
+      <!-- Finaly get other track that have no flags -->
+      {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{ 
+      {{IF({{CHK("{{VAL(streamType:)}}"="3")}})}}{{
+			{{IF(!{{CHK("{{VAL(selected)}}"="1")}})}}{{
+			{{IF(!{{CHK("{{VAL(default)}}"="1")}})}}{{
+			<button onSelect="putData('https:{{VAL({{PMSVAL(uri)}})}}:32400/library/parts/{{GET(partID)}}?subtitleStreamID={{VAL(id)}}&amp;X-Plex-Token={{PMSVAL(accessToken)}}')">
+				<title>{{VAL(language)}} - {{VAL(codec)}}</title>
+			</button>
+			}}
+			}}
+			}}
+      }}
+    </alertTemplate>
+</document>
+}}
