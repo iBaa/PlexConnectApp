@@ -100,11 +100,12 @@ function loadPage(url)
   req.send();
 };
 
+// Send http PUT request - disregard response
 function putData(url)
 {
-    var req = new XMLHttpRequest();
-    req.open('PUT', url, true);
-    req.send();
+  var req = new XMLHttpRequest();
+  req.open('PUT', url, true);
+  req.send();
 };
 
 // prepare for localisation - currently just return string

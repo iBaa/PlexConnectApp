@@ -43,7 +43,7 @@ class cSettings {
             ], 0
         ),
         "theme": ([
-            "Default", "Fanart", "Quartz"
+            "Default", "Quartz2", "Quartz"
             ], 0
         ),
         "themeExternalOverride": ([

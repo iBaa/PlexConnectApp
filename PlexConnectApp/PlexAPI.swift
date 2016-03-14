@@ -33,14 +33,13 @@ class cPlexUserInformation {
     init() {
         _xmlUser = nil
         _xmlHomeUser = nil
-        _attributes = ["adminname": "", "name": "", "email": "", "token": "", "theme": ""]
+        _attributes = ["adminname": "", "name": "", "email": "", "token": ""]
         
         if let name = _storage.stringForKey("adminname") {
             _attributes["adminname"] = name
         }
         if let name = _storage.stringForKey("name") {
             _attributes["name"] = name
-            // _storage.setObject([name: "test1"], forKey: "theme")
         }
         if let email = _storage.stringForKey("email") {
             _attributes["email"] = email
@@ -49,21 +48,25 @@ class cPlexUserInformation {
             _attributes["token"] = token
         }
         
-        _attributes["theme"] = "default"
-        
-        print ("1")
-        print(NSUserDefaults.standardUserDefaults().dictionaryRepresentation())
+        print ("Preferences stored by init():")
+        print(_storage.dictionaryRepresentation())
     }
     
     init(xmlUser: XMLIndexer) {
         _xmlUser = xmlUser
         _xmlHomeUser = nil
         _attributes = ["adminname": "", "name": "", "email": "", "token": "", "theme": ""]
-       
+        
         // todo: check XML and neccessary nodes
         if let name = xmlUser.element!.attributes["title"] {
             _attributes["adminname"] = name
             _attributes["name"] = name
+            
+            if name == "Annicka" {
+                settings.setSetting("theme", ix: 2)
+            } else {
+                settings.setSetting("theme", ix: 1)
+            }
         }
         if let email = xmlUser.element!.attributes["email"] {
             _attributes["email"] = email
@@ -76,10 +79,10 @@ class cPlexUserInformation {
         _attributes["theme"] = theme
         
         store()
-        _storage.setObject(_attributes, forKey: _attributes["name"]!)
-        
-        print ("2")
-        print(NSUserDefaults.standardUserDefaults().dictionaryRepresentation())
+        // _storage.setObject(_attributes, forKey: _attributes["name"]!)
+
+        print ("Preferences stored by init(user):")
+        print(_storage.dictionaryRepresentation())
     }
     
     func switchHomeUser(xmlUser: XMLIndexer) {
@@ -87,6 +90,11 @@ class cPlexUserInformation {
 
         if let name = xmlUser.element!.attributes["title"] {
             _attributes["name"] = name
+            if name == "Annicka" {
+                settings.setSetting("theme", ix: 2)
+            } else {
+                settings.setSetting("theme", ix: 1)
+            }
         }
         if let email = xmlUser.element!.attributes["email"] {
             _attributes["email"] = email
@@ -99,7 +107,9 @@ class cPlexUserInformation {
         _attributes["theme"] = theme
         
         store()
-        _storage.setObject(_attributes, forKey: _attributes["name"]!)
+        // _storage.setObject(_attributes, forKey: _attributes["name"]!)
+        print ("Preferences stored by switchHomeUser:")
+        print(_storage.dictionaryRepresentation())
     }
     
     func clear() {
@@ -209,10 +219,13 @@ func getPmsUrl(key: String, pmsId: String, pmsPath: String) -> String {
         // pmsId not pointing to real PMS - try plex.tv and user token
         url = "https://plex.tv"
         token = plexUserInformation.getAttribute("token")
+        
     }
 
     // path
-    if (key.hasPrefix("/")) {  // internal full path
+    if (pmsPath.hasPrefix("/photo/")) {  // transcode path
+        url = pmsPath + url
+    } else if (key.hasPrefix("/")) {  // internal full path
         url = url + key
     } else if (key=="") {  // keep current path
         url = url + pmsPath
