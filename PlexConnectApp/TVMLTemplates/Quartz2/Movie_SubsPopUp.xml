@@ -1,43 +1,46 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 {{XML()}}{{
 {{SET(partID:{{VAL(MediaContainer/Video/Media/Part/id)}})}}
+{{SET(SelectedFound:false)}}
 <document>
     <alertTemplate>
     <title>Available subtitles:</title>
-			<!-- Check for selected track first -->
+			<!-- Check for selected and flag them.Add other tracks that are NOT selected or default -->
 			{{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
 			{{IF({{CHK("{{VAL(streamType:)}}"=="3")}})}}{{
-			{{IF({{CHK("{{VAL(selected:)}}"=="1")}})}}{{
-			{{SET(SubsIsDefault:false)}}
-			<button onSelect="putData('https:{{VAL({{PMSVAL(uri)}})}}:32400/library/parts/{{GET(partID)}}?subtitleStreamID={{VAL(id)}}&amp;X-Plex-Token={{PMSVAL(accessToken)}}')">
+			{{IF({{VAL(selected)}})}}{{
+			{{SET(SelectedFound:true)}}
+			<button onSelect="putData('https:{{VAL({{PMSVAL(uri)}})}}:32400/library/parts/{{GET(partID)}}?subtitleStreamID={{VAL(id)}}&amp;allParts=1&amp;X-Plex-Token={{PMSVAL(accessToken)}}'); Presenter.closeContext(); Presenter.loadAndSwap('Movie_PrePlay', '{{PMSID()}}', '{{PATH()}}');">
        	<text>✓   {{VAL(language)}} - {{VAL(codec)}}</text>
+      </button>
+      }}
+      {{IF(!{{VAL(selected)}})}}{{
+			{{IF(!{{VAL(default)}})}}{{
+			<button onSelect="putData('https:{{VAL({{PMSVAL(uri)}})}}:32400/library/parts/{{GET(partID)}}?subtitleStreamID={{VAL(id)}}&amp;allParts=1&amp;X-Plex-Token={{PMSVAL(accessToken)}}'); Presenter.closeContext(); Presenter.loadAndSwap('Movie_PrePlay', '{{PMSID()}}', '{{PATH()}}');">
+       	<text>{{VAL(language)}} - {{VAL(codec)}}</text>
       </button>
       }}
       }}
       }}
-  		<!-- Check for default if NO selected available -->
-  		{{IF({{GET(SubsIsDefault)}})}}{{
-  		{{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
+      }}
+      <!-- Check ONLY for default tracks and flag them if selected were NOT found -->
+      {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
 			{{IF({{CHK("{{VAL(streamType:)}}"=="3")}})}}{{
-			{{IF({{CHK("{{VAL(default:)}}"=="1")}})}}{{
-			<button onSelect="putData('https:{{VAL({{PMSVAL(uri)}})}}:32400/library/parts/{{GET(partID)}}?subtitleStreamID={{VAL(id)}}&amp;X-Plex-Token={{PMSVAL(accessToken)}}')">
+			{{IF(!{{VAL(selected)}})}}{{
+			{{IF({{VAL(default)}})}}{{
+			{{IF({{CHK("{{GET(SelectedFound)}}"=="true")}})}}{{
+			<button onSelect="putData('https:{{VAL({{PMSVAL(uri)}})}}:32400/library/parts/{{GET(partID)}}?subtitleStreamID={{VAL(id)}}&amp;allParts=1&amp;X-Plex-Token={{PMSVAL(accessToken)}}'); Presenter.closeContext(); Presenter.loadAndSwap('Movie_PrePlay', '{{PMSID()}}', '{{PATH()}}');">
+       	<text>{{VAL(language)}} - {{VAL(codec)}}</text>
+      </button>
+      }}
+      {{IF({{CHK("{{GET(SelectedFound)}}"=="false")}})}}{{
+      <button onSelect="putData('https:{{VAL({{PMSVAL(uri)}})}}:32400/library/parts/{{GET(partID)}}?subtitleStreamID={{VAL(id)}}&amp;allParts=1&amp;X-Plex-Token={{PMSVAL(accessToken)}}'); Presenter.closeContext(); Presenter.loadAndSwap('Movie_PrePlay', '{{PMSID()}}', '{{PATH()}}');">
        	<text>✓   {{VAL(language)}} - {{VAL(codec)}}</text>
       </button>
       }}
       }}
       }}
       }}
-      <!-- Finaly get other track that have no flags -->
-      {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{ 
-      {{IF({{CHK("{{VAL(streamType:)}}"="3")}})}}{{
-			{{IF(!{{CHK("{{VAL(selected)}}"="1")}})}}{{
-			{{IF(!{{CHK("{{VAL(default)}}"="1")}})}}{{
-			<button onSelect="putData('https:{{VAL({{PMSVAL(uri)}})}}:32400/library/parts/{{GET(partID)}}?subtitleStreamID={{VAL(id)}}&amp;X-Plex-Token={{PMSVAL(accessToken)}}')">
-				<title>{{VAL(language)}} - {{VAL(codec)}}</title>
-			</button>
-			}}
-			}}
-			}}
       }}
     </alertTemplate>
 </document>

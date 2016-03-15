@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 {{XML(?includeExtras=1&amp;includeRelated=1&amp;includeRelatedCount=10&amp;includeReviews=1)}}{{
 {{SET(sectionID:{{VAL(MediaContainer/librarySectionID)}})}}
+{{SET(AudioIsDefault:true)}}
+{{SET(SubsIsDefault:true)}}
 <document>
   <head>
   <style>
@@ -99,7 +101,7 @@
 						{{SET(AudioIsDefault:false)}}
 						<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
 							<badge src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/buttons:Audio:png)}}" width="50" height="50"/>
-							<title>{{UPPERCASE({{VAL(languageCode)}})}}</title>
+							<title>{{UPPERCASE({{VAL(languageCode)}})}} {{VAL(codec)}}</title>
 						</buttonLockup>
 						}}
 					}}	
@@ -110,7 +112,7 @@
 						{{IF({{CHK("{{VAL(default)}}"="1")}})}}{{
 						<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
 							<badge src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/buttons:Audio:png)}}" width="50" height="50"/>
-							<title>{{UPPERCASE({{VAL(languageCode)}})}}</title>
+							<title>{{UPPERCASE({{VAL(languageCode)}})}} {{VAL(codec)}}</title>
 						</buttonLockup>
 						}}
 						}}	
@@ -123,7 +125,7 @@
 						{{SET(SubsIsDefault:false)}}
 						<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_SubsPopUp', '{{PMSID()}}', '{{PATH()}}')">
 							<badge src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/buttons:Subtitles:png)}}" width="50" height="50"/>
-							<title>{{UPPERCASE({{VAL(languageCode)}})}}</title>
+							<title>{{UPPERCASE({{VAL(languageCode)}})}} {{VAL(codec)}}</title>
 						</buttonLockup>
 						}}
 					}}
@@ -134,7 +136,7 @@
 						{{IF({{CHK("{{VAL(default)}}"="1")}})}}{{
 						<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_SubsPopUp', '{{PMSID()}}', '{{PATH()}}')">
 							<badge src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/buttons:Subtitles:png)}}" width="50" height="50"/>
-							<title>{{UPPERCASE({{VAL(languageCode)}})}}</title>
+							<title>{{UPPERCASE({{VAL(languageCode)}})}} {{VAL(codec)}}</title>
 						</buttonLockup>
 						}}
 					}}
