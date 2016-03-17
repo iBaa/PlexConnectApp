@@ -673,11 +673,11 @@ func getDeviceInfoXArgs() -> [NSURLQueryItem] {
     let device = UIDevice()
     
     let xargs: [NSURLQueryItem] = [
-        NSURLQueryItem(name: "X-Plex-Device", value: device.model),
-        NSURLQueryItem(name: "X-Plex-Model", value: "4,1"),  // todo: hardware version
+        NSURLQueryItem(name: "X-Plex-Device", value: device.name),
+        NSURLQueryItem(name: "X-Plex-Model", value: device.model),  // todo: hardware version
         NSURLQueryItem(name: "X-Plex-Device-Name", value: device.name),  // todo: "friendly" name: aTV-Settings->General->Name
-        NSURLQueryItem(name: "X-Plex-Platform", value: "iOS" /*device.systemName*/),  // todo: have PMS to accept tvOS
-        NSURLQueryItem(name: "X-Plex-Client-Platform", value: "iOS" /*device.systemName*/),
+        NSURLQueryItem(name: "X-Plex-Platform", value: device.systemName /*device.systemName*/),  // todo: have PMS to accept tvOS
+        NSURLQueryItem(name: "X-Plex-Client-Platform", value: device.systemName /*device.systemName*/),
         NSURLQueryItem(name: "X-Plex-Platform-Version", value: device.systemVersion),
 
         NSURLQueryItem(name: "X-Plex-Client-Identifier", value: device.identifierForVendor?.UUIDString),
