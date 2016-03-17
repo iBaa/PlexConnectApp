@@ -167,7 +167,7 @@
                <text>Audience</text>
             </ratingCard>
             {{COPY(MediaContainer/Video/Review)}}{{
-        <reviewCard>
+        <reviewCard onSelect="Presenter.loadContext('Movie_PrePlayDescription', '{{PMSID()}}', '{{PATH()}}')">
           <badge src="resource://tomato-{{RTBADGE(image)}}-m" />
           <title>{{VAL(source)}}</title>
           <description>{{VAL(text)}}</description>
