@@ -34,7 +34,7 @@
           <badge src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/buttons:Library:png)}}" width="50" height="50"/>
           <title>Library</title>
         </buttonLockup>
-        <buttonLockup onSelect="Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/search?type=2')">
+        <buttonLockup onSelect="Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/search?type=2&amp;query')">
           <badge src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/buttons:Search:png)}}" width="50" height="50"/>
           <title>Search</title>
         </buttonLockup>

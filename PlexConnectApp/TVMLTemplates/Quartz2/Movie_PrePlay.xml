@@ -247,8 +247,8 @@
 }}
 
 <separator/>
-<productInfo>
-         <infoTable style="tv-line-spacing:10;">
+		<productInfo>
+      <infoTable style="tv-line-spacing:10;">
             <header>
                <title>Crew</title>
             </header>
@@ -283,7 +283,7 @@
                }}
             </info>
          </infoTable>
-         <infoTable style="tv-line-spacing:5;">
+      <infoTable style="tv-line-spacing:5;">
             <header>
                <title>Media</title>
             </header>
@@ -318,7 +318,7 @@
                <text><![CDATA[{{VAL(MediaContainer/Video/Media/videoFrameRate)}}]]></text>
             </info>
          </infoTable>
-         <infoTable style="tv-line-spacing:10;">
+      <infoTable style="tv-line-spacing:10;">
             <header>
                <title>Languages</title>
             </header>
@@ -343,9 +343,8 @@
                }}
             </info>
          </infoTable>
-         
-         <text><![CDATA[{{VAL(MediaContainer/Video/studio)}}]]></text>
-      </productInfo>
+    	<text><![CDATA[{{VAL(MediaContainer/Video/studio)}}]]></text>
+  	</productInfo>
   </productBundleTemplate>
 </document>
 }}

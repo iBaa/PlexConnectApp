@@ -30,28 +30,47 @@
       
       <!-- own servers -->
       <section>
-{{PMSLOOP(owned)}}{{
-{{SET(noItems:false)}}
-				<header>
+      <header>
         <title>{{TEXT(Available Servers)}}: {{PMSCNT(all)}}</title>
       </header>
-        <listItemLockup style="height: 108;"
+				<listItemLockup
+            id="{{PMSVAL(clientIdentifier)}}"
+            onSelect="Presenter.load('All_Servers_MenuBar','', '');"
+            >
+            <title>All Servers</title>
+            <subtitle style="tv-text-style: subtitle3;">Media shelves</subtitle>
+            <decorationImage src="resource://chevron" />
+          <relatedContent>
+            <lockup>
+              <img src="{{RESOURCEURL(TVMLTemplates/Quartz2/images:Shelves:png)}}" />
+              <title style="text-align: center;"><![CDATA[Quick overview]]></title>
+            <subtitle style="text-align: center;"> </subtitle>
+         		<subtitle style="text-align: center;"><![CDATA[Media shelves from all servers]]></subtitle>
+         		<subtitle style="text-align: center;"><![CDATA[]]></subtitle>
+         		<subtitle style="text-align: center;"><![CDATA[]]></subtitle>
+            </lockup>
+            </relatedContent>
+        </listItemLockup>
+{{PMSLOOP(owned)}}{{
+{{SET(noItems:false)}}
+        <listItemLockup
             id="{{PMSVAL(clientIdentifier)}}"
             onSelect="myPlex.switchServer(event);"
             onSuccess="Presenter.load('Library','{{PMSID()}}', '');"
             >
-            <title><![CDATA[{{PMSVAL(name)}}]]></title>
-            <subtitle style="tv-text-style: subtitle3;"><![CDATA[{{USRVAL(name)}}]]></subtitle>
+            <title style="color: #00753A;"><![CDATA[{{PMSVAL(name)}}]]></title>
+            
 {{IF({{PMSVAL(local)}})}}{{
-            <decorationImage src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/servers:Local:png)}}" width="50" height="50" />
+            <subtitle style="tv-text-style: subtitle3;"><![CDATA[Nearby ({{USRVAL(name)}})]]></subtitle>
+            
 }}
 {{IF(!{{PMSVAL(local)}})}}{{
-            <decorationImage src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/servers:Remote:png)}}" width="50" height="50" />
+            <subtitle style="tv-text-style: subtitle3;"><![CDATA[Remote ({{USRVAL(name)}})]]></subtitle>
 }}
-
+						<decorationImage src="resource://chevron" />
           <relatedContent>
             <lockup>
-              <img style="margin: 0 0 90 0;" src="https://static.plex.tv/assets/img/googleplus-photo-2dd7a8ed5c3577eb826cebdfe3edda76.png" width="256" height="256" />
+              <img src="{{RESOURCEURL(TVMLTemplates/Quartz2/images:Plex2:png)}}" />
               <title style="text-align: center;"><![CDATA[{{PMSVAL(name)}}]]></title>
             <subtitle style="text-align: center;"> </subtitle>
          		<subtitle style="text-align: center;">Admin: <![CDATA[{{USRVAL(name)}}]]></subtitle>
@@ -64,27 +83,27 @@
 
 {{PMSLOOP(shared)}}{{
 {{SET(noItems:false)}}
-        <listItemLockup style="height: 108;"
+        <listItemLockup
             id="{{PMSVAL(clientIdentifier)}}"
             onSelect="myPlex.switchServer(event);"
             onSuccess="Presenter.load('Library','{{PMSID()}}','');"
             >
           
-            <title><![CDATA[{{PMSVAL(name)}}]]></title>
-            <subtitle style="tv-text-style: subtitle3;"><![CDATA[{{PMSVAL(sourceTitle)}}]]></subtitle>
+            <title style="color: #FF7435;"><![CDATA[{{PMSVAL(name)}}]]></title>
 {{IF({{PMSVAL(local)}})}}{{
-            <decorationImage src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/servers:Local:png)}}" width="50" height="50" />
+            <subtitle style="tv-text-style: subtitle3;"><![CDATA[Nearby ({{PMSVAL(sourceTitle)}})]]></subtitle>
+            
 }}
 {{IF(!{{PMSVAL(local)}})}}{{
-            <decorationImage src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/servers:Remote:png)}}" width="50" height="50" />
+            <subtitle style="tv-text-style: subtitle3;"><![CDATA[Remote ({{PMSVAL(sourceTitle)}})]]></subtitle>
 }}
-
+					<decorationImage src="resource://chevron" />
           <relatedContent>
             <lockup>
-              <img style="margin: 0 0 90 0;" src="https://static.plex.tv/assets/img/googleplus-photo-2dd7a8ed5c3577eb826cebdfe3edda76.png" width="256" height="256" />
+              <img src="{{RESOURCEURL(TVMLTemplates/Quartz2/images:Plex2:png)}}" />
               <title style="text-align: center;"><![CDATA[{{PMSVAL(name)}}]]></title>
          		<subtitle style="text-align: center;"> </subtitle>
-         		<subtitle style="text-align: center;">Admin: <![CDATA[{{USRVAL(name)}}]]></subtitle>
+         		<subtitle style="text-align: center;">Admin: <![CDATA[{{PMSVAL(sourceTitle)}}]]></subtitle>
          		<subtitle style="text-align: center;"><![CDATA[{{PMSVAL(product)}} {{PMSVAL(productVersion)}}]]></subtitle>
          		<subtitle style="text-align: center;">Platform: <![CDATA[{{PMSVAL(platform)}} {{PMSVAL(platformVersion)}}]]></subtitle>
             </lockup>

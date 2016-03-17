@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+ Copyright (C) 2015 Baa. All rights reserved.
+ See LICENSE.txt for this sample’s licensing information
+ -->
+<document>
+  <menuBarTemplate>
+    <menuBar>
+      <menuItem id="Search"
+        onSelect="Presenter.loadMenuContent('Search_All', '', '')">
+        <title>{{TEXT(Search All)}}</title>
+      </menuItem>
+      {{PMSLOOP(owned)}}{{
+      {{SET(noItems:false)}}
+      <menuItem id="{{PMSVAL(clientIdentifier)}}"
+        onSelect="myPlex.switchServer(event);"
+        onSuccess="Presenter.loadMenuContent('All_Servers_Shelves','{{PMSID()}}','');"
+        >
+        <title><![CDATA[{{PMSVAL(name)}}]]></title>
+      </menuItem>
+      }}
+      {{PMSLOOP(shared)}}{{
+      {{SET(noItems:false)}}
+      <menuItem id="{{PMSVAL(clientIdentifier)}}"
+        onSelect="myPlex.switchServer(event);"
+        onSuccess="Presenter.loadMenuContent('All_Servers_Shelves','{{PMSID()}}','');"
+        >
+        <title><![CDATA[{{PMSVAL(name)}}]]></title>
+      </menuItem>
+      }}
+    </menuBar>
+  </menuBarTemplate>
+</document>

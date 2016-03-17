@@ -264,9 +264,9 @@
         }}
         }}
         }}
-        <listItemLockup onSelect="Presenter.load('Search_All', '{{PMSID(clientIdentifier:{{CUSTOMSETTING(pmsUuid)}})}}', '')">
+        <!--<listItemLockup onSelect="Presenter.load('Search_All', '{{PMSID(clientIdentifier:{{CUSTOMSETTING(pmsUuid)}})}}', '')">
           <title>Search All</title>
-        </listItemLockup>
+        </listItemLockup>-->
       </section>   
     </list>
   </paradeTemplate>

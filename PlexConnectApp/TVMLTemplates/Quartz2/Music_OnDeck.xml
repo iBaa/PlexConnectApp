@@ -52,7 +52,7 @@
 				</buttonLockup>
 				}}
 				}}
-				<buttonLockup onSelect="Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/search?type=8')">
+				<buttonLockup onSelect="Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/search?type=8&amp;query')">
 					<badge src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/buttons:Search:png)}}" width="50" height="50"/>
 					<title>Search</title>
 				</buttonLockup>

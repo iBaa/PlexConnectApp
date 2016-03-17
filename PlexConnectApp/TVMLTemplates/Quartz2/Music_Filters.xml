@@ -24,7 +24,7 @@
 	
 		{{IF({{VAL(prompt)}})}}{{
 	      	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
-        	<button onSelect="Presenter.closeContext(); Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/{{VAL(key)}}')">
+        	<button onSelect="Presenter.closeContext(); Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/{{VAL(key)}}&amp;query')">
             	<text>{{VAL(title)}}</text>
         	</button>
     }}
