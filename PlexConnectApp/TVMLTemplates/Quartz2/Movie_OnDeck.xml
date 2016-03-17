@@ -59,7 +59,7 @@
       {{IF({{CHK("{{VAL(hubIdentifier)}}"="movie.inprogress")}})}}{{
       <shelf id="{{VAL(hubIdentifier)}}">
         <header>
-          <title>{{VAL(title)}}</title>
+          <title><![CDATA[{{VAL(title)}}]]></title>
         </header>
         <section>
           {{COPY(Video)}}{{
@@ -100,7 +100,7 @@
       {{IF(!{{CHK("{{VAL(hubIdentifier)}}"="movie.inprogress")}})}}{{
       <shelf id="{{VAL(hubIdentifier)}}">
         <header>
-          <title>{{VAL(title)}}</title>
+          <title><![CDATA[{{VAL(title)}}]]></title>
         </header>
         <section>
           {{COPY(Video)}}{{
