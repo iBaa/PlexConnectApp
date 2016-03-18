@@ -9,12 +9,12 @@
 			tv-text-highlight-style: show-on-highlight;
 			}
 			.lightBackgroundColor {
-			background-color: #b2b2b2;
+			background-color: #efece6;
 			}
-
+			
 	</style>
 </head>
-  <listTemplate theme="light">
+  <listTemplate theme="light" class="lightBackgroundColor">
     <list>
 		<relatedContent>
         <!--<itemBanner>
@@ -45,7 +45,7 @@
               {{IF(!{{VAL(art)}})}}{{
               <img src="{{IMAGEURL(thumb::360)}}" />
               }}
-              <title style="tv-align: left;"><![CDATA[{{VAL(title)}}]]></title>
+              <title style="tv-align: left;"><![CDATA[{{VAL(title)}}]]></title> 
 							<separator />
               <description moreLabel="more">
           			<![CDATA[{{VAL(summary)}}]]>
@@ -63,7 +63,7 @@
         </listItemLockup>
 }}
       </section>
-
+      
     </list>
   </listTemplate>
 </document>

@@ -1,59 +1,100 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
-Copyright (C) 2015 Baa. All rights reserved.
-See LICENSE.txt for this sample’s licensing information
--->
+ Copyright (C) 2015 Baa. All rights reserved.
+ See LICENSE.txt for this sample’s licensing information
+ -->
 {{CUT({{GET(noItems)}})}}{{
 {{SET(noItems:true)}}
 {{XML()}}{{
 <document>
-    <head>
-        <style>
-            .showTextOnHighlight {
-            tv-text-highlight-style: show-on-highlight;
-            }
-            .lightBackgroundColor {
-            background-color: #b2b2b2;
-            }
-            
-        </style>
-    </head>
-    <stackTemplate theme="light">
-        <banner>
-            <title><![CDATA[{{VAL(MediaContainer/title1)}}]]> - <![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
-        </banner>
-        <collectionList>
-            
-            <grid>
-                <section>
-                    {{COPY(MediaContainer/Directory)}}{{
-                    {{SET(noItems:false)}}
-                    <lockup
-            onSelect="Presenter.load('TVShow_SeasonList', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+  <head>
+    <style>
+      .rounded {
+      itml-img-treatment: corner-small;
+      }
+      .lightBackgroundColor {
+      background-color: #efece6;
+      }
+      .darkBackgroundColor {
+      background-color: #333333;
+      }
+      .count {
+      font-weight: bold;
+      font-size: 19;
+      text-align: center;
+      tv-position: bottom-right;
+      margin: -307 -89 307 89;
+      }
+    </style>
+  </head>
+  <stackTemplate theme="light" class="lightBackgroundColor">
+    <identityBanner>
+      <title class="header"><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
+      <subtitle class="header"><![CDATA[{{VAL(MediaContainer/title1)}}]]> - <![CDATA[{{VAL(MediaContainer/size)}}]]></subtitle>
+      <row>
+        <!--<buttonLockup onSelect="Presenter.loadContext('Movie_Filters', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+         <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Library:png)}}" width="50" height="50"/>
+         <title>Library</title>
+         </buttonLockup>-->
+        <buttonLockup onSelect="Presenter.load('Search', '{{PMSID()}}', '/library/sections/{{VAL(MediaContainer/librarySectionID)}}/search?type=2')">
+          <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Search:png)}}" width="50" height="50"/>
+          <title>Search</title>
+        </buttonLockup>
+        <buttonLockup onSelect="Presenter.loadAndSwap('TVShow_Grid', '{{PMSID()}}', '{{PATH()}}')">
+          <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Reload:png)}}" width="50" height="50"/>
+          <title>Reload</title>
+        </buttonLockup>
+      </row>
+    </identityBanner>
+    <collectionList>
+      
+      <grid>
+        <section>
+          {{COPY(MediaContainer/Directory)}}{{
+          {{SET(noItems:false)}}
+          <lockup onSelect="Presenter.load('TVShow_SeasonList', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-            onSelectHold="modal">
-            
-                        <img src="{{IMAGEURL(thumb::360)}}" height="360" width="240"/>
-                        <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
-                        <subtitle class="showTextOnHighlight">{{VAL(year:&#x00AD;)}}</subtitle>
-                    </lockup>
-                    }}
-                    {{COPY(MediaContainer/Video)}}{{
-                    {{SET(noItems:false)}}
-                    <lockup
-            onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onHoldSelect="Presenter.loadContext('Movie_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
+            <img src="{{IMAGE_T(thumb::360)}}" height="375" width="250" />
+            {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
+            <overlay>
+              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched:png)}}"  width="72" height="72" />
+              <decorationLabel class="count">{{EVAL({{VAL(leafCount)}}-{{VAL(viewedLeafCount)}})}}</decorationLabel>
+            </overlay>
+            }}
+            <title><![CDATA[{{VAL(title)}}]]></title>
+            <subtitle><![CDATA[ ]]></subtitle>
+          </lockup>
+          }}
+          {{COPY(MediaContainer/Video)}}{{
+          <lockup onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onHoldSelect="Presenter.loadContext('Movie_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')"
+            {{IF(!{{VAL(viewOffset)}})}}{{
             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-            onSelectHold="modal">
-            
-                        <img src="{{IMAGEURL(grandparentThumb::360)}}" height="360" width="240"/>
-                        <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
-                        <subtitle class="showTextOnHighlight"><![CDATA[S{{VAL(parentIndex)}}.E{{VAL(index)}}]]></subtitle>
-                    </lockup>
-                    }}
-                </section>
-          </grid>
-}}
-      </collectionList>
+            }}
+            {{IF({{VAL(viewOffset)}})}}{{
+            onPlay="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            }}
+            >
+            <img src="{{IMAGE_T(grandparentThumb::360)}}" height="375" width="250" />
+            <overlay>
+              {{IF({{VAL(viewOffset)}})}}{{
+              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:watching:png)}}"  width="72" height="72" />
+              }}
+              {{IF(!{{VAL(viewOffset)}})}}{{
+              {{IF(!{{VAL(viewCount)}})}}{{
+              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched:png)}}"  width="72" height="72" />
+              }}
+              }}
+            </overlay>
+            <title><![CDATA[{{VAL(title)}}]]></title>
+            <subtitle>{{EP_INDEX({{VAL(parentIndex:)}}:{{VAL(index:)}})}}</subtitle>
+          </lockup>
+          }}
+        </section>
+      </grid>
+      }}
+    </collectionList>
   </stackTemplate>
 </document>
 }}

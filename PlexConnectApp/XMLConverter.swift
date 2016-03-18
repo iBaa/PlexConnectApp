@@ -39,6 +39,7 @@ class cXmlConverter {
         // jump table to commands processing attributes: VAL, VIDEOURL, ...
         processAttrib = [
             "VAL": processVAL!,
+            "ESCVAL": processESCVAL!,
             "TABLE": processTABLE!,
             "EVAL": processEVAL!,
             "DURATION": processDURATION!,
@@ -61,7 +62,10 @@ class cXmlConverter {
             "AUDIOURL": processAUDIOURL!,
             "PHOTOURL": processPHOTOURL!,
             "IMAGEURL": processIMAGEURL!,
+            "IMAGE_T": processIMAGE_T!,
             "IMAGEHTTP": processIMAGEHTTP!,
+            "RTBADGE": processRTBADGE!,
+            "IMAGEPARADE": processIMAGEPARADE!,
             "TEXT": processTEXT!,
             "SETTING": processSETTING!,
             "CUSTOMSETTING": processCUSTOMSETTING!,
@@ -466,7 +470,7 @@ class cXmlConverter {
         }
         var res: String
         if (hours>0) {
-            res = String("\(hours) h \(minutes) min")
+            res = String("\(hours) hr \(minutes) min")
         } else {
             res = String("\(minutes) min")
         }
@@ -807,6 +811,53 @@ class cXmlConverter {
         }
     }
     
+    var processIMAGE_T: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
+        _self, XML, _par in
+        
+        var par = _par.componentsSeparatedByString(":")
+        
+        // sanity check
+        if _self.pmsId == nil {
+            return "[[IMAGEURL - pmsId not initialised]]"
+        }
+        
+        let key = _self.getKey(XML, par: &par)
+        if key.hasPrefix("http://") || key.hasPrefix("https://") {  // external address, eg. channels - keep
+            return key
+        } else if (key != "") {
+            var res: String
+            let key = "/photo/:/transcode?height=400&width=400&url=" + key
+            res = getPmsUrl(key, pmsId: _self.pmsId!, pmsPath: _self.pmsPath!)  // todo: pmsId, pmsPath optional?
+            // XML safe?
+            res = res.stringByReplacingOccurrencesOfString("&", withString: "&amp;")  // must be first
+            res = res.stringByReplacingOccurrencesOfString("<", withString: "&lt;")
+            res = res.stringByReplacingOccurrencesOfString(">", withString: "&gt;")
+            res = res.stringByReplacingOccurrencesOfString("'", withString: "&apos;")
+            res = res.stringByReplacingOccurrencesOfString("\"", withString: "&quot;")
+            
+            return res
+        } else {
+            let res = getResourceUrl("missing-image", ext: "png", dir: "Images")
+            return res
+        }
+    }
+    
+    var processESCVAL: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
+        _self, XML, _par in
+        
+        var par = _par.componentsSeparatedByString(":")
+        var res: String
+        
+        res = _self.getKey(XML, par: &par)
+        res = res.stringByReplacingOccurrencesOfString("&", withString: "&amp;")  // must be first
+        res = res.stringByReplacingOccurrencesOfString("<", withString: "&lt;")
+        res = res.stringByReplacingOccurrencesOfString(">", withString: "&gt;")
+        res = res.stringByReplacingOccurrencesOfString("'", withString: "&apos;")
+        res = res.stringByReplacingOccurrencesOfString("\"", withString: "&quot;")
+        
+        return res
+    }
+    
     var processIMAGEHTTP: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
         _self, XML, _par in
         
@@ -836,11 +887,73 @@ class cXmlConverter {
         }
     }
     
+    var processRTBADGE: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
+        _self, XML, _par in
+        
+        var par = _par.componentsSeparatedByString(" ")
+        var res : String
+        // sanity check
+        if _self.pmsId == nil {
+            return "[[IMAGEURL - pmsId not initialised]]"
+        }
+        
+        let key: String = _self.getKey(XML, par: &par)
+        if (key != "") {
+            let res_array = key.componentsSeparatedByString(".")
+            res = res_array[2]
+            if res == "rotten" {
+                res = "splat"
+                return res
+            } else if res == "ripe" {
+                res = "fresh"
+                return res
+            }
+        
+            return res
+        
+        } else {
+            res = key
+            return res
+        }
+    }
+    
+    var processIMAGEPARADE: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
+        _self, XML, _par in
+        
+        var par = _par.componentsSeparatedByString(" ")
+        
+        // sanity check
+        if _self.pmsId == nil {
+            return "[[IMAGEURL - pmsId not initialised]]"
+        }
+        
+        let key = _self.getKey(XML, par: &par)
+        if (key != "") {
+            var res: String
+            res = key
+            res = getPmsUrl(key, pmsId: _self.pmsId!, pmsPath: _self.pmsPath!)  // todo: pmsId, pmsPath optional?
+            
+            // XML safe?
+            res = res.stringByReplacingOccurrencesOfString("/art/", withString: "/thumb/")  // must be first
+            res = res.stringByReplacingOccurrencesOfString("&", withString: "&amp;")  // must be first
+            res = res.stringByReplacingOccurrencesOfString("<", withString: "&lt;")
+            res = res.stringByReplacingOccurrencesOfString(">", withString: "&gt;")
+            res = res.stringByReplacingOccurrencesOfString("'", withString: "&apos;")
+            res = res.stringByReplacingOccurrencesOfString("\"", withString: "&quot;")
+            
+            return res
+        } else {
+            let res = getResourceUrl("missing-image", ext: "png", dir: "Images")
+            return res
+        }
+    }
+
     var processEVAL: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {
         _self, XML, _par in
     
         var par = _par.componentsSeparatedByString(":")
         let param = _self.getParam(XML, par: &par)
+        
         let expr = NSExpression(format: param)
         let res = expr.expressionValueWithObject(nil, context: nil)
         

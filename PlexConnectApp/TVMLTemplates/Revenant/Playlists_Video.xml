@@ -7,33 +7,30 @@
 <document>
   <head>
     <style>
-      .lightBackgroundColor {
-      background-color: #b2b2b2;
-      }
-      .whiteButton {
+    .whiteButton {
       tv-tint-color: rgb(255, 255, 255);
       width: 500;
       height: 200;
-      }
-      .plot {
+    }
+    .plot {
       min-height: 300;
       max-height: 400;
       margin: 50;
-      }
+    }
     </style>
   </head>
-  <compilationTemplate theme="light">
+  <compilationTemplate>
     <list>
       <relatedContent>
         <itemBanner>
           <heroImg src="{{IMAGEURL(MediaContainer/composite::)}}" />
           <row>
             <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', '')">
-              <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:PlayAll:png)}}" width="50" height="50"/>
+              <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:PlayAll:png)}}" width="50" height="50"/>
               <title>Play all</title>
             </buttonLockup>
             <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', 'shuffle')">
-              <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:Shuffle:png)}}" width="50" height="50"/>
+              <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Shuffle:png)}}" width="50" height="50"/>
               <title>Shuffle all</title>
             </buttonLockup>
           </row>
@@ -46,7 +43,7 @@
           <text><![CDATA[{{VAL(MediaContainer/leafCount)}} items]]></text>
           <text><![CDATA[{{EVAL({{VAL(MediaContainer/duration)}}/60)}}{{TEXT( minutes)}}]]></text>
         </row>
-
+        
       </header>
       <section>
         <!-- shuffle -->
@@ -55,8 +52,8 @@
             onSelectHold="modal"
             >
           <title>{{TEXT(Shuffle all)}}</title>
-          <img src="{{RESOURCEURL(TVMLTemplates/Quartz/images:null:png)}}" width="90" height="90" />
-          <decorationImage src="{{RESOURCEURL(TVMLTemplates/Quartz/images:ShuffleList:png)}}" width="50" height="50" />
+          <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:null:png)}}" width="90" height="90" />
+          <decorationImage src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ShuffleList:png)}}" width="50" height="50" />
         </listItemLockup>
       </section>
       <section>
@@ -68,27 +65,27 @@
             onSelectHold="modal"
             >
           <title>{{TEXT(Shuffle all tracks)}}</title>
-          <img src="{{RESOURCEURL(TVMLTemplates/Quartz/images:null:png)}}" width="90" height="90" />
-          <decorationImage src="{{RESOURCEURL(TVMLTemplates/Quartz/images:50shuffle:png)}}" width="50" height="50"/>
+          <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:null:png)}}" width="90" height="90" />
+          <decorationImage src="{{RESOURCEURL(TVMLTemplates/Revenant/images:50shuffle:png)}}" width="50" height="50"/>
         </listItemLockup>-->
 {{COPY(MediaContainer/Video)}}
 {{
 {{SET(noItems:false)}}
-	<listItemLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+	<listItemLockup style="height: 108;" onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH()}}')"
             onSelectHold="modal">
-
+           
           <!--<ordinal minLength="3" class="ordinalLayout">{{VAL(index)}}</ordinal-->
-          <img src="{{IMAGEURL(thumb::120)}}" width="160" height="90" />
+          <img src="{{IMAGEURL(thumb::120)}}" width="192" height="192" />
           <title><![CDATA[{{VAL(title)}}]]></title>
           <subtitle><![CDATA[{{VAL(grandparentTitle)}}]]></subtitle>
-
+          
           <decorationLabel>{{DURATION_HMS({{VAL(duration)}})}}</decorationLabel>
-
+          
           <!--<decorationImage src="{{IMAGEURL(thumb::384)}}" width="100" height="150"/>-->
         </listItemLockup>
-
-}}
+    
+}}        
       </section>
     </list>
   </compilationTemplate>

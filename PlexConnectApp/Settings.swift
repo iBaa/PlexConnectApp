@@ -43,7 +43,7 @@ class cSettings {
             ], 0
         ),
         "theme": ([
-            "Default", "Fanart", "Grids'n'Posters", "Revenant"
+            "Default", "Revenant", "Fanart", "Grids'n'Posters"
             ], 0
         ),
         "themeExternalOverride": ([
@@ -113,7 +113,7 @@ class cSettings {
     }
     
     func setDefaults() {
-        for (key, (_, dflt)) in _settings {
+        for (key, (choices, dflt)) in _settings {
             _storage.setInteger(dflt+1, forKey: key)  // store +1, as get returns 0 if uninitialised
         }
     }

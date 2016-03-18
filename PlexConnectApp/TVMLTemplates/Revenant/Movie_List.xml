@@ -9,12 +9,12 @@
 			tv-text-highlight-style: show-on-highlight;
 			}
 			.lightBackgroundColor {
-			background-color: #b2b2b2;
+			background-color: #efece6;
 			}
-
+			
 	</style>
 </head>
-  <listTemplate theme="light">
+  <listTemplate theme="light" class="lightBackgroundColor">
     <list>
 		<relatedContent>
         <!--<itemBanner>
@@ -33,18 +33,25 @@
         <listItemLockup style="height: 90"
             onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-            onSelectHold="modal"
-            >
+            onHoldSelect="Presenter.loadContext('ContextMenu', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
           <title><![CDATA[{{VAL(title)}}]]></title>
           <decorationLabel><![CDATA[{{VAL(year)}}]]></decorationLabel>
-          {{IF({{CHK(!"{{VAL(viewCount:)}}">="1")}})}}{{
-           	<img style="margin: 0 0 0 10" src="{{RESOURCEURL(TVMLTemplates/Quartz/images:overlayUnwatched:png)}}"  width="33" height="90" />
-          }}
+          {{IF(!{{VAL(viewCount)}})}}{{
+						{{IF(!{{VAL(viewOffset)}})}}{{
+						<img src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:000:png)}}"  width="72" height="72" />
+						}}
+						{{IF({{VAL(viewOffset)}})}}{{
+						<img src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:030:png)}}"  width="72" height="72" />
+						}}
+					}}
+					{{IF({{VAL(viewCount)}})}}{{
+					<img src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:100:png)}}"  width="72" height="72" />
+					}}
           <relatedContent>
             <lockup>
               <img src="{{IMAGEURL(thumb::360)}}" />
               <row>
-								<title style="tv-align: left;"><![CDATA[{{VAL(title)}}]]></title>
+								<title style="tv-align: left;"><![CDATA[{{VAL(title)}}]]></title> 
 								<ratingCard style="tv-align: right;">
 									<ratingBadge style="tv-rating-style: star-m; tv-tint-color: #000000" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
 								</ratingCard>
@@ -69,7 +76,7 @@
         </listItemLockup>
 }}
       </section>
-
+      
     </list>
   </listTemplate>
 </document>

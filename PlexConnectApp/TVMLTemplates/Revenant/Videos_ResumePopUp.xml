@@ -2,9 +2,8 @@
 {{XML()}}{{
 <document>
     <alertTemplate theme="light">
-    <title></title>
 			<button onSelect="Presenter.closeContext(); videoPlayer.play('{{PMSID()}}', '{{PATH()}}', 'resume')">
-       	<text>{{TEXT(Continue watching)}}</text>
+       	<text>{{TEXT(Continue watching from: )}}{{DURATION_HMS({{VAL(MediaContainer/Video/viewOffset:)}})}}</text>
       </button>
       <button onSelect="Presenter.closeContext(); videoPlayer.play('{{PMSID()}}', '{{PATH()}}')">
        	<text>{{TEXT(Play from beginning)}}</text>

@@ -9,35 +9,32 @@
 <document>
   <head>
     <style>
-      .lightBackgroundColor {
-      background-color: #b2b2b2;
-      }
-      .whiteButton {
+    .whiteButton {
       tv-tint-color: rgb(255, 255, 255);
       width: 500;
       height: 200;
-      }
-      .plot {
+    }
+    .plot {
       min-height: 300;
       max-height: 400;
       margin: 50;
-      }
-      .customRightText {
+    }
+    .customRightText {
       font-size: 26pt;
       font-weight: normal;
       color: rgba(0, 0, 0, 0.6);
       text-align: right;
       itml-text-max-lines: 1;
       margin: 0 20;
-      }
-      .customRightTextImage {
+    }
+    .customRightTextImage {
       itml-position: left;
       margin: 0 20;
       tv-highlight-color: rgb(0, 0, 0);
-      }
+    }
     </style>
   </head>
-  <compilationTemplate theme="light">
+  <compilationTemplate>
     <list>
       <relatedContent>
         <itemBanner>
@@ -69,7 +66,7 @@
           <text><![CDATA[{{VAL(MediaContainer/parentYear)}}]]></text>
           <text><![CDATA[{{VAL(MediaContainer/size)}} tracks]]></text>
         </row>
-
+        
       </header>
  		{{IF({{VAL(MediaContainer/summary)}})}}{{
       <section>
@@ -83,7 +80,7 @@
         <header>
           <title>TRACKS</title>
         </header>
-
+        
 {{COPY(MediaContainer/Track)}}{{
 	{{SET(noItems:false)}}
 	{{IF(!{{VAL(primaryExtraKey)}})}}{{
@@ -104,11 +101,11 @@
           <title><![CDATA[{{VAL(title)}}]]></title>
           <subtitle><![CDATA[{{VAL(grandparentTitle)}}]]></subtitle>
           <decorationLabel>{{DURATION_HMS({{VAL(duration)}})}}</decorationLabel>
-      		<decorationImage src="{{RESOURCEURL(TVMLTemplates/Revenant/images:MusicVideoBadge:png)}}" width="62" height="36" />
+      		<decorationImage src="{{RESOURCEURL(TVMLTemplates/Revenant/images:MusicVideoBadge:png)}}" width="62" height="36" />  
 					{{SET(videoItems:true)}}
 				 </listItemLockup>
 	}}
-	}}
+	}}        
       </section>
     </list>
   </compilationTemplate>

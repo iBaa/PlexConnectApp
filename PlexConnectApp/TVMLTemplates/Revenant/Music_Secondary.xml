@@ -9,13 +9,13 @@ See LICENSE.txt for this sample’s licensing information
 	<head>
         <style>
             .lightBackgroundColor {
-            background-color: #b2b2b2;
+            background-color: #efece6;
             }
             .layout {
             margin: 40;
             }
             .showTextOnHighlight {
-            tv-text-highlight-style: show-on-highlight;
+            tv-text-highlight-style: marquee-on-highlight;
             }
             .roundedImageCorners {
             itml-img-treatment: corner-small;
@@ -23,7 +23,7 @@ See LICENSE.txt for this sample’s licensing information
 
         </style>
     </head>
-  	<catalogTemplate theme="light">
+  	<catalogTemplate theme="light" class="lightBackgroundColor">
     	<banner>
             <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
         </banner>
@@ -45,14 +45,14 @@ See LICENSE.txt for this sample’s licensing information
         				<lockup onSelect="Presenter.load('Music_Albums', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                 onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                 onSelectHold="ScrobbleMenu">
-      						<img src="{{IMAGEURL(thumb::360)}}" height="330" width="330" />
+      						<img src="{{IMAGEURL(thumb::360)}}" height="308" width="308" />
                 	<title class="whiteText"><![CDATA[{{VAL(title)}}]]></title>
                 </lockup>
         }}
         {{IF({{CHK("{{VAL(type)}}"=="artist")}})}}{{
         				<lockup onSelect="Presenter.load('Music_Artist', '{{PMSID()}}', '/library/metadata/{{VAL(ratingKey)}}')"
                 onSelectHold="ScrobbleMenu">
-      						<img style="tv-img-treatment: corner-medium" src="{{IMAGEURL(thumb::360)}}" height="330" width="330" />
+      						<img style="tv-img-treatment: corner-medium" src="{{IMAGEURL(thumb::360)}}" height="308" width="308" />
                 	<title style="tv-text-highlight-style: marquee-on-highlight"><![CDATA[{{VAL(title)}}]]></title>
                 </lockup>
         }}

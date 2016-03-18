@@ -4,15 +4,7 @@ Copyright (C) 2015 Baa. All rights reserved.
 See LICENSE.txt for this sample’s licensing information
 -->
 <document>
-  <head>
-    <style>
-      .lightBackgroundColor {
-      background-color: #b2b2b2;
-      }
-    </style>
-  </head>
-  <searchTemplate theme="light"
-    onLoad="Search.onLoad(event)">
+  <searchTemplate onLoad="Search.onLoad(event)">
     <!-- search -->
     <searchField
         view="Search"
@@ -120,7 +112,7 @@ See LICENSE.txt for this sample’s licensing information
         </section>
       </shelf>
 }}
-
+      
       <!-- artists -->
 {{CUT({{GET(noArtists)}})}}{{
 {{SET(noArtists:true)}}

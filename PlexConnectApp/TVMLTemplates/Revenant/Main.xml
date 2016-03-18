@@ -26,7 +26,7 @@ See LICENSE.txt for this sample’s licensing information
 <document>
   <alertTemplate
     onLoad="discover(event);"
-    onSelect="Presenter.loadMenuContent('Library','{{PMSID(clientIdentifier:{{CUSTOMSETTING(pmsUuid)}})}}', '{{PATH(/library/sections)}}')"
+    onSuccess="Presenter.loadAndSwap('Startup','','');"
     >
   </alertTemplate>
 </document>
@@ -46,7 +46,7 @@ See LICENSE.txt for this sample’s licensing information
 {{IF({{GET(noXml)}})}}{{
 <!--no XML received: switch to offline mode--> <!--todo: plexGDM, PMS by IP-->
 <document>
-  <alertTemplate style="color: #888888;">
+  <alertTemplate>
     <title>PlexConnect</title>
     <description>{{TEXT(No answer from plex.tv. For now I'm stuck.)}}</description>
   </alertTemplate>

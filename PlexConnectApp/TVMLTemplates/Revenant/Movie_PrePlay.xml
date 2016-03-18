@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!--
-Copyright (C) 2015 Baa. All rights reserved.
-See LICENSE.txt for this sample’s licensing information
--->
-{{XML(?includeExtras=1)}}{{
+{{XML(?includeExtras=1&amp;includeRelated=1&amp;includeRelatedCount=10&amp;includeReviews=1)}}{{
 {{SET(sectionID:{{VAL(MediaContainer/librarySectionID)}})}}
+{{SET(AudioIsDefault:true)}}
+{{SET(SubsIsDefault:true)}}
 <document>
   <head>
   <style>
@@ -13,109 +11,175 @@ See LICENSE.txt for this sample’s licensing information
     }
   </style>
   </head>
-  <productTemplate theme="light">
+  <productBundleTemplate theme="light">
     <background>
     </background>
     <banner>
-      <infoList>
-        <info>
+      <infoList style="margin: 265 0 0 60;">
+        <!--<info>
           <ratingCard style="tv-align: right;">
-            <ratingBadge style="tv-rating-style: star-hollow-l;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
+            <ratingBadge style="tv-rating-style: star-m;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
           </ratingCard>
-        </info>
-
+        </info>-->
+        {{IFNODE(MediaContainer/Video/Director:)}}{{
         <info>
           <header>
             <title>{{TEXT(Director)}}</title>
           </header>
-          <text>{{VAL(MediaContainer/Video/Director/tag)}}</text>
+          {{COPY(MediaContainer/Video/Director)}}{{ 
+          <text>{{VAL(tag)}}</text>
+					}}
         </info>
-        <info>
-          <header>
-            <title>{{TEXT(Producer)}}</title>
-          </header>
-          <text>{{VAL(MediaContainer/Video/Producer/tag)}}</text>
-        </info>
-
+        }}
+        {{IFNODE(MediaContainer/Video/Role)}}{{
         <info>
           <header>
             <title>{{TEXT(Actors)}}</title>
           </header>
-{{COPY(MediaContainer/Video/Role)}}{{  <!-- COPY till 5 or so? -->
+          {{COPY(MediaContainer/Video/Role)}}{{ 
           <text>{{VAL(tag)}}</text>
-}}
+					}}
         </info>
+        }}
       </infoList>
-      <stack>
+      <stack style="margin: 90 0 0 90;">
         <title><![CDATA[{{VAL(MediaContainer/Video/title)}}]]></title>
-        <row>
-          <text>{{DURATION_HM({{VAL(MediaContainer/Video/duration)}})}}</text>
-          <text>•</text>
-          <text><![CDATA[{{VAL(MediaContainer/Video/Genre/tag)}}]]></text>
-          <text>•</text>
+        <row style="margin: 0 0 6 0;">
           <text><![CDATA[{{VAL(MediaContainer/Video/year)}}]]></text>
-          <text>•</text>
-          <text><![CDATA[{{VAL(MediaContainer/Video/contentRating)}}]]></text>
-           <!--<badge src="resource://cc" /-->
+          <text><![CDATA[{{VAL(MediaContainer/Video/Genre/tag)}}]]></text>
+          {{IF(!{{VAL(MediaContainer/Video/viewOffset)}})}}{{
+          <text>{{DURATION_HM({{VAL(MediaContainer/Video/duration)}})}}</text>
+          }}
+          {{IF({{VAL(MediaContainer/Video/viewOffset)}})}}{{
+          <text><![CDATA[({{DURATION_HM({{VAL(MediaContainer/Video/duration:)}})}})  {{DURATION_HM({{EVAL({{VAL(MediaContainer/Video/duration:)}}-{{VAL(MediaContainer/Video/viewOffset:)}})}})}}]]></text>
+          }}
+        </row>
+        <row>  
+          {{IF({{VAL(MediaContainer/Video/ratingImage)}})}}{{
+          <text><badge src="resource://tomato-{{RTBADGE(MediaContainer/Video/ratingImage)}}"/> {{EVAL({{VAL(MediaContainer/Video/rating:0)}}*10)}}%</text>
+          }}
+          {{IF({{VAL(MediaContainer/Video/audienceRatingImage)}})}}{{
+          <text><badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/RT:{{RTBADGE(MediaContainer/Video/audienceRatingImage)}}:png)}}" width="28" height="28"/> {{EVAL({{VAL(MediaContainer/Video/audienceRating:0)}}*10)}}%</text>
+          }}
+          {{IF(!{{VAL(MediaContainer/Video/audienceRatingImage)}})}}{{
+          <ratingBadge style="tv-rating-style: star-m;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
+          }}
+          {{IF({{VAL(MediaContainer/Video/contentRating)}})}}{{
+          <textBadge> <![CDATA[{{UPPERCASE({{VAL(MediaContainer/Video/contentRating)}})}}]]> </textBadge>
+          }}
+          <!--<ratingCard style="tv-align: right;">
+            <ratingBadge style="tv-rating-style: star-m;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
+          </ratingCard>-->
         </row>
         <description allowsZooming="true" moreLabel="more"
-            onSelect="Presenter.loadContext('Movie_PrePlayDescription', '{{PMSID()}}', '{{PATH()}}')"
-            >
+            onSelect="Presenter.loadContext('Movie_PrePlayDescription', '{{PMSID()}}', '{{PATH()}}')">
           <![CDATA[{{VAL(MediaContainer/Video/summary)}}]]>
         </description>
-        <!--text>Language information can go here</text-->
         <row>
-          {{IF(!{{VAL(MediaContainer/Video/viewOffset)}})}}{{
-          <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH()}}')">
+          
+          <buttonLockup 
+          	{{IF(!{{VAL(MediaContainer/Video/viewOffset)}})}}{{
+          	onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH()}}')"
+          	}}
+          	{{IF({{VAL(MediaContainer/Video/viewOffset)}})}}{{
+          	onSelect="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH()}}')"
+          	}}
+          	>
             <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Play:png)}}" width="50" height="50"/>
             <title>{{TEXT(Play)}}</title>
           </buttonLockup>
-					}}
-					{{IF({{VAL(MediaContainer/Video/viewOffset)}})}}{{
-					<buttonLockup onSelect="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH()}}')">
-            <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Play:png)}}" width="50" height="50"/>
-            <title>{{TEXT(Play)}}</title>
-          </buttonLockup>
-          }}
-          {{IF({{CHK("{{VAL(MediaContainer/Video/Extras/Video/index:)}}"=="1")}})}}{{
+					
+					{{IF({{CHK("{{VAL(MediaContainer/Video/Extras/Video/index:)}}"=="1")}})}}{{
           <buttonLockup id="trailer" onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(MediaContainer/Video/Extras/Video/key)}})}}')">
             <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Trailer:png)}}" width="50" height="50"/>
             <title>{{TEXT(Trailer)}}</title>
           </buttonLockup>
 					}}
-					<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
-            <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Audio:png)}}" width="50" height="50"/>
-            {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
-          	 	{{IF({{CHK("{{VAL(streamType:)}}"=="2")}})}}{{
-          	 	<title>{{UPPERCASE({{VAL(languageCode)}})}}</title>
-							}}
-							{{IF(!{{CHK("{{VAL(streamType:)}}"=="2")}})}}{{
-          	 	<data/>
-							}}
+					{{COPY(MediaContainer/Video/Media/Part/Stream)}}{{ 
+					{{IF({{CHK("{{VAL(streamType:)}}"="2")}})}}{{
+						{{IF({{CHK("{{VAL(selected)}}"="1")}})}}{{
+						{{SET(AudioIsDefault:false)}}
+						<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
+							<badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Audio:png)}}" width="50" height="50"/>
+							<title>{{UPPERCASE({{VAL(languageCode)}})}} {{VAL(codec)}}</title>
+						</buttonLockup>
 						}}
-          </buttonLockup>
-          <buttonLockup id="subtitles" onSelect="Presenter.loadContext('Movie_SubsPopUp', '{{PMSID()}}', '{{PATH()}}')">
-            <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Subtitles:png)}}" width="50" height="50"/>
-            {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
-          	 	{{IF({{CHK("{{VAL(streamType:)}}"=="3")}})}}{{
-          	 	<title>{{UPPERCASE({{VAL(languageCode)}})}}</title>
-							}}
-							{{IF(!{{CHK("{{VAL(streamType:)}}"=="3")}})}}{{
-          	 	<data/>
-							}}
+					}}	
+					}}
+					{{IF({{GET(AudioIsDefault)}})}}{{
+						{{COPY(MediaContainer/Video/Media/Part/Stream)}}{{ 
+						{{IF({{CHK("{{VAL(streamType:)}}"="2")}})}}{{
+						{{IF({{CHK("{{VAL(default)}}"="1")}})}}{{
+						<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
+							<badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Audio:png)}}" width="50" height="50"/>
+							<title>{{UPPERCASE({{VAL(languageCode)}})}} {{VAL(codec)}}</title>
+						</buttonLockup>
 						}}
-          </buttonLockup>
-          <buttonLockup id="more" onSelect="Presenter.loadContext('Movie_MorePopUp', '{{PMSID()}}', '{{PATH()}}')">
+						}}	
+						}}
+					}}
+					
+					{{COPY(MediaContainer/Video/Media/Part/Stream)}}{{ 
+          {{IF({{CHK("{{VAL(streamType:)}}"="3")}})}}{{
+						{{IF({{CHK("{{VAL(selected)}}"="1")}})}}{{
+						{{SET(SubsIsDefault:false)}}
+						<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_SubsPopUp', '{{PMSID()}}', '{{PATH()}}')">
+							<badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Subtitles:png)}}" width="50" height="50"/>
+							<title>{{UPPERCASE({{VAL(languageCode)}})}} {{VAL(codec)}}</title>
+						</buttonLockup>
+						}}
+					}}
+					}}
+					{{IF({{GET(SubsIsDefault)}})}}{{	
+          {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{ 
+          {{IF({{CHK("{{VAL(streamType:)}}"="3")}})}}{{
+						{{IF({{CHK("{{VAL(default)}}"="1")}})}}{{
+						<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_SubsPopUp', '{{PMSID()}}', '{{PATH()}}')">
+							<badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Subtitles:png)}}" width="50" height="50"/>
+							<title>{{UPPERCASE({{VAL(languageCode)}})}} {{VAL(codec)}}</title>
+						</buttonLockup>
+						}}
+					}}
+					}}
+					}}
+          <buttonLockup id="more" onSelect="Presenter.loadContext('Movie_MorePopUp', '{{PMSID()}}', '{{VAL(MediaContainer/Video/ratingKey)}}')">
             <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:More:png)}}" width="50" height="50"/>
             <title>{{TEXT(More)}}</title>
           </buttonLockup>
         </row>
       </stack>
-      <heroImg src="{{IMAGEURL(MediaContainer/Video/thumb)}}" />
+      <heroImg style="margin: 60 60 0 0;" src="{{IMAGEURL(MediaContainer/Video/thumb)}}" />
     </banner>
-    <!--<progressBar style="margin: 0 0 0 0" value="{{EVAL({{VAL(MediaContainer/Video/viewOffset)}}.0/{{VAL(MediaContainer/Video/duration)}}.0)}}"/>-->
+{{IFNODE(MediaContainer/Video/Review:)}}{{
+    <shelf style="margin: 0 0 90 0;">
+      <header>
+        <title>{{TEXT(Reviews)}}</title>
+      </header>
+      <section>
+        <ratingCard>
+               {{IF({{VAL(MediaContainer/Video/ratingImage)}})}}{{
+               <title><badge src="resource://tomato-{{RTBADGE(MediaContainer/Video/ratingImage)}}-m" /> {{EVAL({{VAL(MediaContainer/Video/rating:0)}}*10)}}%</title>
+               }}
+               <text>Tomatometer</text>
+               {{IF({{VAL(MediaContainer/Video/audienceRating)}})}}{{
+               <title><badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/RT:{{RTBADGE(MediaContainer/Video/audienceRatingImage)}}:png)}}" /> {{EVAL({{VAL(MediaContainer/Video/audienceRating)}}*10)}}%</title>
+               }}
+               <text>Audience</text>
+            </ratingCard>
+            {{COPY(MediaContainer/Video/Review)}}{{
+        <reviewCard>
+          <badge src="resource://tomato-{{RTBADGE(image)}}-m" />
+          <title>{{VAL(source)}}</title>
+          <description>{{VAL(text)}}</description>
+          <text>{{VAL(tag)}}</text>
+        </reviewCard>
+        }}
+      </section>
+    </shelf>
+}}
+      
 {{IF({{CHK("{{VAL(MediaContainer/Video/Extras/size:)}}">"1")}})}}{{
-    <shelf>
+    <shelf style="margin: 0 0 90 0;">
       <header>
         <title>{{TEXT(Extras)}}</title>
       </header>
@@ -125,7 +189,7 @@ See LICENSE.txt for this sample’s licensing information
         <lockup
             onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             >
-          <img src="{{IMAGEURL(thumb::60)}}" width="310" height="207" />
+          <img src="{{IMAGEURL(thumb::60)}}" width="384" height="216" />
           <title><![CDATA[{{VAL(title)}}]]></title>
           <subtitle>{{TABLE({{VAL(extraType)}}:{{TEXT(Clip)}}:1:{{TEXT(Trailer)}}:2:{{TEXT(Deleted Scene)}}:3:{{TEXT(Interview)}}:4:{{TEXT(Music Video)}}:5:{{TEXT(Behind the Scenes)}}:6:{{TEXT(Scene)}}:7:{{TEXT(Live Video)}}:8:{{TEXT(Lyrics Video)}})}}</subtitle>
         </lockup>
@@ -134,21 +198,20 @@ See LICENSE.txt for this sample’s licensing information
       </section>
     </shelf>
 }}
-
-{{XML(/library/metadata/{{VAL(MediaContainer/Video/ratingKey)}}/similar)}}{{
-{{IFNODE(MediaContainer/Video:)}}{{
-    <shelf>
+{{IFNODE(MediaContainer/Video/Related:)}}{{
+{{COPY(MediaContainer/Video/Related/Hub)}}{{ 
+{{IF({{CHK("{{VAL(hubIdentifier:)}}"=="movie.similar")}})}}{{
+    <shelf style="margin: 0 0 90 0;">
       <header>
-        <title>{{TEXT(Related Movies)}}</title>
+        <title><![CDATA[{{VAL(title)}}]]></title>
       </header>
       <section>
-        {{COPY(MediaContainer/Video)}}
-        {{
+        {{COPY(Video)}}{{
         <lockup
             onSelect="Presenter.loadAndSwap('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             >
-          <img src="{{IMAGEURL(thumb::384)}}" width="150" height="226" />
+          <img src="{{IMAGEURL(thumb::360)}}" width="206" height="309" />
           <title><![CDATA[{{VAL(title)}}]]></title>
         </lockup>
         }}
@@ -156,14 +219,14 @@ See LICENSE.txt for this sample’s licensing information
     </shelf>
 }}
 }}
-<!-- Actors -->
+}}
 {{IFNODE(MediaContainer/Video/Role:)}}{{
-<shelf class="actors">
+<shelf style="margin: 0 0 90 0;">
       <header>
         <title>Actors</title>
       </header>
       <section>
-        {{COPY(MediaContainer/Video/Role)}}{{
+        {{COPY(MediaContainer/Video/Role)}}{{ 
         {{IF({{VAL(thumb)}})}}{{
         <monogramLockup onSelect="Presenter.load('Movie_Grid', '{{PMSID()}}', '/library/sections/{{GET(sectionID)}}/actor/{{VAL(id)}}')">
           <monogram style="width: 207; height: 207" src="{{IMAGEURL(thumb)}}"/>
@@ -183,7 +246,106 @@ See LICENSE.txt for this sample’s licensing information
     </shelf>
 }}
 
-
-  </productTemplate>
+<separator/>
+<productInfo>
+         <infoTable style="tv-line-spacing:10;">
+            <header>
+               <title>Crew</title>
+            </header>
+            <info>
+               {{IFNODE(MediaContainer/Video/Director)}}{{
+               <header>
+                  <title>Director</title>
+               </header>
+               {{COPY(MediaContainer/Video/Director)}}{{
+               <text><![CDATA[{{VAL(tag)}}]]></text>
+               }}
+               }}
+            </info>
+            <info>
+               {{IFNODE(MediaContainer/Video/Writer)}}{{
+               <header>
+                  <title>Writer</title>
+               </header>
+               {{COPY(MediaContainer/Video/Writer)}}{{
+               <text><![CDATA[{{VAL(tag)}}]]></text>
+               }}
+               }}
+            </info>
+            <info>
+               {{IFNODE(MediaContainer/Video/Producer)}}{{
+               <header>
+                  <title>Producer</title>
+               </header>
+               {{COPY(MediaContainer/Video/Producer)}}{{
+               <text><![CDATA[{{VAL(tag)}}]]></text>
+               }}
+               }}
+            </info>
+         </infoTable>
+         <infoTable style="tv-line-spacing:5;">
+            <header>
+               <title>Media</title>
+            </header>
+            <info>
+               <header>
+                  <title>Runtime</title>
+               </header>
+               <text><![CDATA[{{DURATION_HMS({{VAL(MediaContainer/Video/duration)}})}}]]></text>
+            </info>
+            <info>
+               <header>
+                  <title>Format</title>
+               </header>
+               <text><![CDATA[{{VAL(MediaContainer/Video/Media/aspectRatio)}}]]></text>
+            </info>
+            <info>
+               <header>
+                  <title>Resolution</title>
+               </header>
+               <text><![CDATA[{{VAL(MediaContainer/Video/Media/videoResolution)}}]]></text>
+            </info>
+            <info>
+               <header>
+                  <title>Codec</title>
+               </header>
+               <text><![CDATA[{{UPPERCASE({{VAL(MediaContainer/Video/Media/videoCodec)}}/{{VAL(MediaContainer/Video/Media/container)}})}}]]></text>
+            </info>
+            <info>
+               <header>
+                  <title>Frame rate</title>
+               </header>
+               <text><![CDATA[{{VAL(MediaContainer/Video/Media/videoFrameRate)}}]]></text>
+            </info>
+         </infoTable>
+         <infoTable style="tv-line-spacing:10;">
+            <header>
+               <title>Languages</title>
+            </header>
+            <info>
+               {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{ 
+               {{IF({{CHK("{{VAL(streamType:)}}"="2")}})}}{{
+               <header>
+                  <title>Audio</title>
+               </header>
+               <text><![CDATA[{{VAL(language)}} {{UPPERCASE({{VAL(codec)}})}}/{{VAL(audioChannelLayout)}}]]></text>
+               }}
+               }}
+        		</info>
+        		<info>
+               {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{ 
+               {{IF({{CHK("{{VAL(streamType:)}}"="3")}})}}{{
+               <header>
+                  <title>Subtitles</title>
+               </header>
+               <text><![CDATA[{{VAL(language)}} {{UPPERCASE({{VAL(codec)}})}}]]></text>
+               }}
+               }}
+            </info>
+         </infoTable>
+         
+         <text><![CDATA[{{VAL(MediaContainer/Video/studio)}}]]></text>
+      </productInfo>
+  </productBundleTemplate>
 </document>
 }}

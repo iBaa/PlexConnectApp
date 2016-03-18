@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!--
-Copyright (C) 2015 Baa. All rights reserved.
-See LICENSE.txt for this sample’s licensing information
--->
 {{CUT({{GET(noItems)}})}}{{
 {{SET(noItems:true)}}
 {{XML()}}{{
+{{IF({{CHK("{{VAL(MediaContainer/size)}}">"0")}})}}{{
+{{SET(noItems:false)}}
 <document>
   <head>
         <style>
             .lightBackgroundColor {
-            background-color: #b2b2b2;
+            background-color: #efece6;
             }
             .showTextOnHighlight {
             tv-text-highlight-style: show-on-highlight;
@@ -27,43 +25,11 @@ See LICENSE.txt for this sample’s licensing information
       		}
     </style>
   </head>
-  <stackTemplate theme="light">
+  <stackTemplate class="lightBackgroundColor">
     <banner>
       <title><![CDATA[{{VAL(MediaContainer/title1)}}]]> - <![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
     </banner>
     <collectionList>
-
-      <!-- directories: shelf -->
-{{CUT({{GET(noDirs)}})}}{{
-{{SET(noDirs:true)}}
-      <shelf>
-        <header>
-          <title>{{TEXT(Folder)}}</title>
-        </header>
-        <section>
-{{COPY(MediaContainer/Directory)}}{{
-{{SET(noItems:false)}}
-{{SET(noDirs:false)}}
-          <lockup
-              onSelect="Presenter.load('Photo_Browser', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-              onSelectHold="modal"
-              >
-            <img class="roundedImageCorners" src="{{IMAGEURL(thumb::360)}}" width="350" height="350" />
-            <title><![CDATA[{{VAL(title)}}]]></title>
-            <relatedContent>
-              <lockup>
-              <!--folder image -->
-              </lockup>
-            </relatedContent>
-          </lockup>
-}}
-        </section>
-      </shelf>
-}}
-
-      <!-- photos: grid -->
-{{CUT({{GET(noPhotos)}})}}{{
-{{SET(noPhotos:true)}}
       <separator>
         <button class="button"
             onSelect="photoPresenter.slideshow('{{PMSID()}}', '{{PATH()}}')"
@@ -74,23 +40,19 @@ See LICENSE.txt for this sample’s licensing information
       <grid>
         <section>
 {{COPY(MediaContainer/Photo)}}{{
-{{SET(noItems:false)}}
-{{SET(noPhotos:false)}}
         <lockup
             onSelect="photoPresenter.show('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-            onSelectHold="modal"
-            >
-          <img src="{{PHOTOURL(thumb::360)}}" width="350" height="350" />
+            onSelectHold="modal">
+          <img src="{{IMAGE_T(thumb:)}}" width="308" height="308" />
           <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
         </lockup>
 }}
       </section>
       </grid>
-}}
-
-    </collectionList>
+   </collectionList>
   </stackTemplate>
 </document>
+}}
 }}
 }}
 

@@ -9,13 +9,13 @@ See LICENSE.txt for this sample’s licensing information
     <head>
         <style>
             .lightBackgroundColor {
-            background-color: #b2b2b2;
+            background-color: #efece6;
             }
             .layout {
             margin: 40;
             }
             .showTextOnHighlight {
-            tv-text-highlight-style: show-on-highlight;
+            tv-text-highlight-style: marquee-on-highlight;
             }
             .roundedImageCorners {
             itml-img-treatment: corner-small;
@@ -23,7 +23,7 @@ See LICENSE.txt for this sample’s licensing information
 
         </style>
     </head>
-    <catalogTemplate theme="light">
+    <catalogTemplate theme="light" class="lightBackgroundColor">
         <banner>
             <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
         </banner>

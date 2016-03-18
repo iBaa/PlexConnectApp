@@ -13,18 +13,19 @@ See LICENSE.txt for this sample’s licensing information
             tv-text-highlight-style: show-on-highlight;
             }
             .lightBackgroundColor {
-            background-color: #b2b2b2;
+            background-color: #efece6;
             }
             
         </style>
     </head>
-    <stackTemplate theme="light">
+    <stackTemplate theme="light" class="lightBackgroundColor">
         <banner>
             <title><![CDATA[{{VAL(MediaContainer/title1)}}]]> - <![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
         </banner>
         <collectionList>
             
             <grid>
+                {{IFNODE(MediaContainer/Directory)}}{{
                 <section>
                 {{COPY(MediaContainer/Directory)}}{{
                 {{SET(noItems:false)}}
@@ -34,7 +35,7 @@ See LICENSE.txt for this sample’s licensing information
             onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onSelectHold="modal">
             
-                        <img src="{{IMAGEURL(thumb::360)}}" height="300" width="300"/>
+                        <img src="{{IMAGEURL(thumb::360)}}" height="308" width="308"/>
                         <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
                         <subtitle class="showTextOnHighlight">{{VAL(year:&#x00AD;)}}</subtitle>
                     </lockup>
@@ -51,6 +52,22 @@ See LICENSE.txt for this sample’s licensing information
                     }}
                 }}
                 </section>
+                }}
+                {{IFNODE(MediaContainer/Playlist)}}{{
+                <section>
+                {{COPY(MediaContainer/Playlist)}}{{
+                {{SET(noItems:false)}}
+                    <lockup
+            onSelect="Presenter.load('Playlists_Audio', '{{PMSID()}}', '{{VAL(key)}}')"
+            onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal">
+            
+                        <img src="{{IMAGEURL(composite::360)}}" height="308" width="308"/>
+                        <title><![CDATA[{{VAL(title)}}]]></title>
+                    </lockup>
+                }}
+                </section>
+                }}
           </grid>
 }}
       </collectionList>

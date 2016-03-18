@@ -33,14 +33,13 @@ class cPlexUserInformation {
     init() {
         _xmlUser = nil
         _xmlHomeUser = nil
-        _attributes = ["adminname": "", "name": "", "email": "", "token": "", "theme": ""]
+        _attributes = ["adminname": "", "name": "", "email": "", "token": ""]
         
         if let name = _storage.stringForKey("adminname") {
             _attributes["adminname"] = name
         }
         if let name = _storage.stringForKey("name") {
             _attributes["name"] = name
-            // _storage.setObject([name: "test1"], forKey: "theme")
         }
         if let email = _storage.stringForKey("email") {
             _attributes["email"] = email
@@ -49,21 +48,25 @@ class cPlexUserInformation {
             _attributes["token"] = token
         }
         
-        _attributes["theme"] = "default"
-        
-        print ("1")
-        print(NSUserDefaults.standardUserDefaults().dictionaryRepresentation())
+        print ("Preferences stored by init():")
+        print(_storage.dictionaryRepresentation())
     }
     
     init(xmlUser: XMLIndexer) {
         _xmlUser = xmlUser
         _xmlHomeUser = nil
         _attributes = ["adminname": "", "name": "", "email": "", "token": "", "theme": ""]
-       
+        
         // todo: check XML and neccessary nodes
         if let name = xmlUser.element!.attributes["title"] {
             _attributes["adminname"] = name
             _attributes["name"] = name
+            
+            if name == "Annicka" {
+                settings.setSetting("theme", ix: 2)
+            } else {
+                settings.setSetting("theme", ix: 1)
+            }
         }
         if let email = xmlUser.element!.attributes["email"] {
             _attributes["email"] = email
@@ -76,10 +79,10 @@ class cPlexUserInformation {
         _attributes["theme"] = theme
         
         store()
-        _storage.setObject(_attributes, forKey: _attributes["name"]!)
-        
-        print ("2")
-        print(NSUserDefaults.standardUserDefaults().dictionaryRepresentation())
+        // _storage.setObject(_attributes, forKey: _attributes["name"]!)
+
+        print ("Preferences stored by init(user):")
+        print(_storage.dictionaryRepresentation())
     }
     
     func switchHomeUser(xmlUser: XMLIndexer) {
@@ -87,6 +90,11 @@ class cPlexUserInformation {
 
         if let name = xmlUser.element!.attributes["title"] {
             _attributes["name"] = name
+            if name == "Annicka" {
+                settings.setSetting("theme", ix: 2)
+            } else {
+                settings.setSetting("theme", ix: 1)
+            }
         }
         if let email = xmlUser.element!.attributes["email"] {
             _attributes["email"] = email
@@ -99,7 +107,9 @@ class cPlexUserInformation {
         _attributes["theme"] = theme
         
         store()
-        _storage.setObject(_attributes, forKey: _attributes["name"]!)
+        // _storage.setObject(_attributes, forKey: _attributes["name"]!)
+        print ("Preferences stored by switchHomeUser:")
+        print(_storage.dictionaryRepresentation())
     }
     
     func clear() {
@@ -160,7 +170,7 @@ class cPlexMediaServerInformation {
 
                 let task = session.dataTaskWithRequest(request) {
                     (data, response, error) -> Void in
-                    if let _ = response as? NSHTTPURLResponse {
+                    if let httpResp = response as? NSHTTPURLResponse {
                         //print(String(data: data!, encoding: NSUTF8StringEncoding))
                         if self._fastestConnection == nil {  // todo: thread safe?
                             self._fastestConnection = _ix
@@ -209,10 +219,13 @@ func getPmsUrl(key: String, pmsId: String, pmsPath: String) -> String {
         // pmsId not pointing to real PMS - try plex.tv and user token
         url = "https://plex.tv"
         token = plexUserInformation.getAttribute("token")
+        
     }
 
     // path
-    if (key.hasPrefix("/")) {  // internal full path
+    if (pmsPath.hasPrefix("/photo/")) {  // transcode path
+        url = pmsPath + url
+    } else if (key.hasPrefix("/")) {  // internal full path
         url = url + key
     } else if (key=="") {  // keep current path
         url = url + pmsPath
@@ -274,7 +287,7 @@ func getVideoPath(video: XMLIndexer, partIx: Int, pmsId: String, pmsPath: String
     // video format
     //    HTTP live stream
     // or native aTV media
-    let videoATVNative =
+    var videoATVNative =
         ["hls"].contains(getAttribute(media, key: "protocol", dflt: ""))
         ||
         ["mov", "mp4"].contains(getAttribute(media, key: "container", dflt: "")) &&
@@ -491,7 +504,7 @@ func getAudioPath(audio: XMLIndexer, partIx: Int, pmsId: String, pmsPath: String
     
     // todo: transcoder action setting?
     
-    let audioATVNative =
+    var audioATVNative =
         // todo: check Media.get('container') as well - mp3, m4a, ...?
         ["mp3", "aac", "ac3", "drms", "alac", "aiff", "wav"].contains(getAttribute(media, key: "audioCodec", dflt: ""))
     print("audioATVNative: " + String(audioATVNative))
@@ -685,7 +698,7 @@ func reqXML(url: String, fn_success: (NSData) -> (), fn_error: (NSError) -> ()) 
     let session = NSURLSession.sharedSession()
     let task = session.dataTaskWithURL(_nsurl!, completionHandler: { (data, response, error) -> Void in
         // get response
-        if let _ = response as? NSHTTPURLResponse {
+        if let httpResp = response as? NSHTTPURLResponse {
             // todo: check statusCode: 200 ok, 404 not not found...
             //let data_str = NSString(data: data!, encoding: NSUTF8StringEncoding)
             //print("NSData \(data_str)")
@@ -713,7 +726,7 @@ func getXMLWait(url: String) -> XMLIndexer? {
         let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
         let task = session.dataTaskWithURL(_nsurl!, completionHandler: { (data, response, error) -> Void in
             // get response
-            if let _ = response as? NSHTTPURLResponse {  // todo: check error, statusCode code
+            if let httpResp = response as? NSHTTPURLResponse {  // todo: check error, statusCode code
                 XML = SWXMLHash.parse(data!)
             } else {
                 // error: what to do?
@@ -753,7 +766,7 @@ func myPlexSignIn(username: String, password: String) {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
         let task = session.dataTaskWithRequest(request) {
             (data, response, error) -> Void in
-            if let _ = response as? NSHTTPURLResponse {
+            if let httpResp = response as? NSHTTPURLResponse {
                 XML = SWXMLHash.parse(data!)
             } else {
                 // error: what to do?
@@ -829,7 +842,7 @@ func myPlexSwitchHomeUser(id: String, pin: String) {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
         let task = session.dataTaskWithRequest(request) {
             (data, response, error) -> Void in
-            if let _ = response as? NSHTTPURLResponse {
+            if let httpResp = response as? NSHTTPURLResponse {
                 XML = SWXMLHash.parse(data!)
             } else {
                 // error: what to do?

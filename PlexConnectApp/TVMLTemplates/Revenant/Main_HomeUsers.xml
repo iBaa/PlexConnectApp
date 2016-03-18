@@ -1,71 +1,71 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!--
-Copyright (C) 2015 Baa. All rights reserved.
-See LICENSE.txt for this sample’s licensing information
--->
 {{PMS(plex.tv)}}{{
 {{XML(/api/home/users)}}{{
 <document>
   <head>
     <style>
-        .showTextOnHighlight {
-        tv-text-highlight-style: show-on-highlight;
-        }
-        .rounded {
-        tv-img-treatment: circle;
-        width: 200;
-        height: 200;
-        }
+      .showTextOnHighlight {
+      tv-text-highlight-style: show-on-highlight;
+      }
+      .overlayTextLayout {
+      tv-position: top;
+      }
+      .centeredText {
+      text-align: center;
+      }
+      .rounded {
+      tv-img-treatment: circle;
+      width: 200;
+      height: 200;
+      }
+      .hero {
+      margin: -323 -280 0 0;
+      }
+      .lightBackgroundColor {
+      background-color: #efece6;
+      }
+      .darkBackgroundColor {
+      background-color: #333333;
+      }
+      .title {
+      font-size: 26;
+      text-align: center;
+      color: #a7a5a0;
+      font-weight: medium;
+      tv-highlight-color: white;
+      }
     </style>
   </head>
-  <descriptiveAlertTemplate style="color: #000000;">
-    <title style="tv-text-style: title3;">PlexConnect</title>
-    <subtitle style="tv-text-style: body;">{{TEXT(Current home:)}} {{USRVAL(adminname)}}</subtitle>
-
-    <shelf centered="true">
+  <stackTemplate theme="light" class="lightBackgroundColor">
+    <identityBanner>
+      <title class="header">Home Users</title>
+      <subtitle class="header">{{TEXT(Admin )}}{{USRVAL(name)}}</subtitle>
+      <row>
+        <buttonLockup onSelect="Presenter.load('Settings', '', '')">
+          <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Settings:png)}}" width="50" height="50"/>
+          <title>Settings</title>
+        </buttonLockup>
+      </row>
+    </identityBanner>
+    <shelf centered="true" style="tv-interitem-spacing: 60; margin: 280 50 0 50;">
       <section>
-{{COPY(MediaContainer/User)}}{{
+        {{COPY(MediaContainer/User)}}{{
         <monogramLockup style="tv-img-treatment: circle"
-            {{IF({{CHK("{{USRVAL(name)}}"=="{{VAL(title)}}")}})}}{{autoHighlight="true"}}
-            id="{{VAL(id)}}"
-            username="{{VAL(title)}}"
-            protected="{{VAL(protected)}}"
-            onSelect="myPlex.switchHomeUser(event);"
-            onSuccess="Presenter.load('Library', '{{PMSID(clientIdentifier:{{CUSTOMSETTING(pmsUuid)}})}}', '{{PATH(/library/sections)}}');"
-            onError="Presenter.load('MyPlex_SignInFailed', '', '');"
-            >
-            <monogram src="{{VAL(thumb)}}?size=256" width="200" height="200" />
-            <title style="tv-text-style: body; margin: 20 0 0 0"><![CDATA[{{VAL(title)}}]]></title>
-          <!--todo: overlay/icon: admin, protected-->
-          <!--
-          {{IF({{VAL(admin)}})}}{{
-          <decorationImage src="{{RESOURCEURL(Images:icon_key:png)}}" width="27" height="26" />
-          }}
-          {{IF({{VAL(protected)}})}}{{
-          <decorationImage src="{{RESOURCEURL(Images:icon_lock:png)}}" width="19" height="23" />
-          }}
-          -->
+          {{IF({{CHK("{{USRVAL(name)}}"=="{{VAL(title)}}")}})}}{{autoHighlight="true"}}
+          id="{{VAL(id)}}"
+          username="{{VAL(title)}}"
+          protected="{{VAL(protected)}}"
+          onSelect="myPlex.switchHomeUser(event);"
+          onSuccess="Presenter.load('Startup', '', '');"
+          onError="Presenter.load('MyPlex_SignInFailed', '', '');"
+          >
+          <monogram src="{{VAL(thumb)}}?size=256" width="180" height="180" />
+          <title class="title"><![CDATA[{{VAL(title)}}]]></title>
         </monogramLockup>
-}}
+        }}
       </section>
     </shelf>
-
-    <description style="text-align: center;">{{TEXT(To enjoy all your media, select your Plex Home account.)}}<br/>{{TEXT(You may also Sign In with a different MyPlex ID.)}}<br/>{{TEXT(Use Offline Mode to access your local Plex Servers only.)}}</description>
-
-    <button id="MyPlexSignIn" autoHighlight="true"
-      onSelect="myPlex.signIn(event);"
-      onSuccess="Presenter.loadAndSwap('Main','','');"
-      onError="Presenter.load('MyPlex_SignInFailed','','');"
-      >
-      <text>{{TEXT(Sign In)}}</text>
-    </button>
-
-    <button id="OfflineMode" disabled="true"
-      onSelect="">
-      <text>{{TEXT(Offline Mode)}}</text>
-    </button>
-
-  </descriptiveAlertTemplate>
+  </stackTemplate>
 </document>
 }}
 }}

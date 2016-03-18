@@ -11,7 +11,7 @@ See LICENSE.txt for this sample’s licensing information
             tv-text-highlight-style: show-on-highlight;
             }
             .lightBackgroundColor {
-            background-color: #b2b2b2;
+            background-color: #efece6;
             }
             .roundedImageCorners {
       			itml-img-treatment: corner-small;
@@ -28,7 +28,7 @@ See LICENSE.txt for this sample’s licensing information
             <ratingBadge style="tv-rating-style: star-m;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
           </ratingCard>
         </info>
-
+        
         <info>
           <header>
             <title>{{TEXT(Director)}}</title>
@@ -41,7 +41,7 @@ See LICENSE.txt for this sample’s licensing information
           </header>
           <text>{{VAL(MediaContainer/Video/Producer/tag)}}</text>
         </info>
-
+        
         <info>
           <header>
             <title>{{TEXT(Actors)}}</title>
@@ -76,10 +76,10 @@ See LICENSE.txt for this sample’s licensing information
               <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:MusicVideo:png)}}" width="50" height="50"/>
               <title>Videos</title>
             </buttonLockup>
-            <buttonLockup onSelect="audioPlayer.nowPlaying()">
+            <!--<buttonLockup onSelect="audioPlayer.nowPlaying()">
               <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Playing:png)}}" width="50" height="50" />
               <title>Now playing</title>
-            </buttonLockup>
+            </buttonLockup>-->
         </row>
       </stack>
       <heroImg style="tv-img-treatment: corner-medium" src="{{IMAGEURL(MediaContainer/Directory/thumb::)}}" />
@@ -102,7 +102,7 @@ See LICENSE.txt for this sample’s licensing information
         </lockup>
         }}
       </section>
-    </shelf>
+    </shelf>    
 }}
 }}
 {{XML({{PATH()}}/extras/)}}{{
@@ -120,7 +120,7 @@ See LICENSE.txt for this sample’s licensing information
           <img class="roundedImageCorners" src="{{IMAGEURL(thumb::)}}" height="225" width="400" />
           <title><![CDATA[{{VAL(title)}}]]></title>
         </lockup>
-        }}
+        }}    
       </section>
     </shelf>
 		}}

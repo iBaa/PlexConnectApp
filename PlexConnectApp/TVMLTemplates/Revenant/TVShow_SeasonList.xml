@@ -1,36 +1,76 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!--
-Copyright (C) 2015 Baa. All rights reserved.
-See LICENSE.txt for this sample’s licensing information
--->
 {{CUT({{GET(noItems)}})}}{{
 {{SET(noItems:true)}}
 {{XML()}}{{
 <document>
-  <stackTemplate>
-    <banner>
-      <title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
-    </banner>
-    <collectionList>
-      <grid>
-
-        <section>
+  <head>
+    <style>
+    .whiteButton {
+      tv-tint-color: rgb(255, 255, 255);
+      width: 500;
+      height: 200;
+    }
+    .plot {
+      min-height: 300;
+      max-height: 400;
+      margin: 50;
+    }
+    </style>
+  </head>
+  <compilationTemplate>
+    <list>
+      <relatedContent>
+        <itemBanner>
+          <heroImg src="{{IMAGEURL(MediaContainer/thumb::)}}" />
+        </itemBanner>
+      </relatedContent>
+      <header>
+        <title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
+        <subtitle><![CDATA[{{VAL(MediaContainer/parentYear)}}]]><![CDATA[  {{VAL(MediaContainer/rating)}}]]></subtitle>
+        <row>
+          <text><![CDATA[{{VAL(MediaContainer/Directory/leafCount)}}]]> episodes</text>
+          <text><![CDATA[{{EVAL({{VAL(MediaContainer/Directory/leafCount)}}-{{VAL(MediaContainer/Directory/viewedLeafCount)}})}} unwatched]]></text>
+        </row>
+        
+      </header>
+      <section>
+      	<description style="tv-text-max-lines: 3" allowsZooming="true" moreLabel="MORE"
+            onSelect="Presenter.loadContext('Movie_PrePlayDescription', '{{PMSID()}}', '{{PATH()}}')">
+          <![CDATA[{{VAL(MediaContainer/summary)}}]]>
+        </description>
+      </section>
+      <section>
+        <header>
+          <title>SEASONS</title>
+        </header>
+{{XML(/library/metadata/{{VAL(MediaContainer/key)}}/allLeaves?unwatched=1)}}{{
+{{IFNODE(MediaContainer/Video)}}{{
+		<listItemLockup autoHighlight="true" onSelect="Presenter.load('TVShow_EpisodeList', '{{PMSID()}}', '{{PATH(/library/metadata/{{VAL(MediaContainer/key)}}/allLeaves?unwatched=1)}}')"
+           onSelectHold="modal">
+         <title>{{TEXT(Unwatched)}}</title>
+         <subtitle><![CDATA[{{VAL(MediaContainer/size)}} episodes]]></subtitle>
+         <decorationLabel><![CDATA[Unwatched {{VAL(MediaContainer/size)}}]]></decorationLabel>
+    </listItemLockup>
+}}
+}} 
 {{COPY(MediaContainer/Directory)}}{{
 {{SET(noItems:false)}}
-          <lockup
-            onSelect="Presenter.load('TVShow_EpisodeList', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-            onSelectHold="modal"
-            >
-            <img src="{{IMAGEURL(thumb::384)}}" width="200" height="300" />
-            <title><![CDATA[{{VAL(title)}}]]></title>
-            <subtitle>{{VAL(leafCount)}} {{TEXT(Episodes)}}</subtitle>
-          </lockup>
-}}
-        </section>
-
-      </grid>
-    </collectionList>
-  </stackTemplate>
+	<listItemLockup autoHighlight="true" onSelect="Presenter.load('TVShow_EpisodeList', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal">
+           
+          <!--<ordinal minLength="2" class="ordinalLayout">{{VAL(index)}}</ordinal>-->
+          <!-- <img src="{{IMAGEURL(thumb::384)}}" width="100" height="150" /-->
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <subtitle><![CDATA[{{VAL(leafCount)}} episodes]]></subtitle>
+          
+          <decorationLabel><![CDATA[Unwatched {{EVAL({{VAL(leafCount)}}-{{VAL(viewedLeafCount)}})}}]]></decorationLabel>
+          
+          <!--<decorationImage src="{{IMAGEURL(thumb::384)}}" width="100" height="150"/>-->
+        </listItemLockup>
+}}        
+      </section>
+    </list>
+  </compilationTemplate>
 </document>
 }}
 }}
