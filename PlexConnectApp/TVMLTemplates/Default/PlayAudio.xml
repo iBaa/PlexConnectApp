@@ -14,10 +14,10 @@ See LICENSE.txt for this sample’s licensing information
     <track>
       <!-- player -->
       <mediaUrl>{{AUDIOURL()}}</mediaUrl>
-      <title><![CDATA[{{VAL(title)}} - {{VAL(grandparentTitle)}}]]></title>
-      <subtitle><![CDATA[{{VAL(grandparentTitle)}} – {{VAL(parentTitle)}}]]></subtitle>
+      <title><![CDATA[{{VAL(title)}}]]></title>
+      <subtitle><![CDATA[{{VAL(subtitle)}}]]></subtitle>
       <description><![CDATA[{{VAL(summary)}}]]></description>
-      <imageURL>{{IMAGEURL(thumb::)}}</imageURL>
+      <imageURL>{{IMAGEURL(grandparentThumb::384)}}</imageURL>
     
       <!-- PMS -->
       <key><![CDATA[{{VAL(key)}}]]></key>

@@ -23,7 +23,7 @@ See LICENSE.txt for this sample’s licensing information
             <lockup
                 onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                 onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-                onSelectHold="ScrobbleMenu"
+                onHoldSelect="Presenter.loadContext('Movie_MovieContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                 >
               <img src="{{IMAGEURL(thumb::384)}}" width="200" height="300" /> <!-- example: w=150;h=226 -->
               <title><![CDATA[{{VAL(title)}}]]></title>
@@ -46,7 +46,7 @@ See LICENSE.txt for this sample’s licensing information
             <lockup
                 onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                 onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-                onSelectHold="ScrobbleMenu"
+                onHoldSelect="Presenter.loadContext('Movie_MovieContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                 >
               <img src="{{IMAGEURL(thumb::384)}}" width="150" height="226" />
               <title><![CDATA[{{VAL(title)}}]]></title>
@@ -68,7 +68,7 @@ See LICENSE.txt for this sample’s licensing information
             <lockup
                 onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                 onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-                onSelectHold="ScrobbleMenu"
+                onHoldSelect="Presenter.loadContext('Movie_MovieContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                 >
               <img src="{{IMAGEURL(thumb::384)}}" width="150" height="226" />
               <title><![CDATA[{{VAL(title)}}]]></title>

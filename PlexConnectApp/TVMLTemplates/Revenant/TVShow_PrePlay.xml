@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 {{XML()}}{{
+{{SET(sectionID:{{VAL(MediaContainer/librarySectionID)}})}}
+{{SET(AudioIsDefault:true)}}
+{{SET(SubsIsDefault:true)}}
 <document>
   <head>
   <style>
@@ -64,33 +67,59 @@
             <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Play:png)}}" width="50" height="50"/>
             <title>{{TEXT(Play)}}</title>
           </buttonLockup>
-          }}
-          <buttonLockup id="audio" onSelect="">
-            <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Audio:png)}}" width="50" height="50"/>
-            {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
-          	 	{{IF({{CHK("{{VAL(streamType:)}}"=="2")}})}}{{
-          	 	<title>{{VAL(languageCode)}}</title>
-							}}
-							{{IF(!{{CHK("{{VAL(streamType:)}}"=="2")}})}}{{
-          	 	<data/>
-							}}
-						}}
-          </buttonLockup>
-          <buttonLockup id="subtitles" onSelect="">
-            <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Subtitles:png)}}" width="50" height="50"/>
-            {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
-          	 	{{IF({{CHK("{{VAL(streamType:)}}"=="3")}})}}{{
-          	 	<title>{{VAL(languageCode)}}</title>
-							}}
-							{{IF(!{{CHK("{{VAL(streamType:)}}"=="3")}})}}{{
-          	 	<data/>
-							}}
-						}}
-          </buttonLockup>
-          <buttonLockup id="more" onSelect="">
-            <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:More:png)}}" width="50" height="50"/>
-            <title>{{TEXT(More)}}</title>
-          </buttonLockup>
+                    }}
+                    {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
+                    {{IF({{CHK("{{VAL(streamType:)}}"="2")}})}}{{
+                    {{IF({{CHK("{{VAL(selected)}}"="1")}})}}{{
+                    {{SET(AudioIsDefault:false)}}
+                    <buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
+                        <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Audio:png)}}" width="50" height="50"/>
+                        <title>{{UPPERCASE({{VAL(languageCode)}})}} {{VAL(codec)}}</title>
+                    </buttonLockup>
+                    }}
+                    }}
+                    }}
+                    {{IF({{GET(AudioIsDefault)}})}}{{
+                    {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
+                    {{IF({{CHK("{{VAL(streamType:)}}"="2")}})}}{{
+                    {{IF({{CHK("{{VAL(default)}}"="1")}})}}{{
+                    <buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
+                        <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Audio:png)}}" width="50" height="50"/>
+                        <title>{{UPPERCASE({{VAL(languageCode)}})}} {{VAL(codec)}}</title>
+                    </buttonLockup>
+                    }}
+                    }}
+                    }}
+                    }}
+                    
+                    {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
+                    {{IF({{CHK("{{VAL(streamType:)}}"="3")}})}}{{
+                    {{IF({{CHK("{{VAL(selected)}}"="1")}})}}{{
+                    {{SET(SubsIsDefault:false)}}
+                    <buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_SubsPopUp', '{{PMSID()}}', '{{PATH()}}')">
+                        <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Subtitles:png)}}" width="50" height="50"/>
+                        <title>{{UPPERCASE({{VAL(languageCode)}})}} {{VAL(codec)}}</title>
+                    </buttonLockup>
+                    }}
+                    }}
+                    }}
+                    {{IF({{GET(SubsIsDefault)}})}}{{
+                    {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{ 
+                    {{IF({{CHK("{{VAL(streamType:)}}"="3")}})}}{{
+                    {{IF({{CHK("{{VAL(default)}}"="1")}})}}{{
+                    <buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_SubsPopUp', '{{PMSID()}}', '{{PATH()}}')">
+                        <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Subtitles:png)}}" width="50" height="50"/>
+                        <title>{{UPPERCASE({{VAL(languageCode)}})}} {{VAL(codec)}}</title>
+                    </buttonLockup>
+                    }}
+                    }}
+                    }}
+                    }}
+                    
+                    <buttonLockup id="more" onSelect="Presenter.loadContext('TVShow_MorePopUp', '{{PMSID()}}', '{{VAL(MediaContainer/Video/ratingKey)}}')">
+                        <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:More:png)}}" width="50" height="50"/>
+                        <title>{{TEXT(More)}}</title>
+                    </buttonLockup>
         </row>
       </stack>
       <heroImg src="{{IMAGEURL(MediaContainer/Video/parentThumb::)}}"/>
@@ -102,7 +131,7 @@
 {{SET(season:{{VAL(MediaContainer/parentIndex:)}})}}
     <shelf>
       <header>
-        <title>{{TEXT(Episodes)}}</title>
+        <title>{{TEXT(All Episodes)}}</title>
       </header>
       <section>
         {{COPY(MediaContainer/Video)}}
@@ -110,7 +139,7 @@
         <lockup
             onSelect="Presenter.loadAndSwap('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-            onSelectHold="modal"
+            onHoldSelect="Presenter.loadContext('TVShow_EpisodeContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             >
           <img src="{{IMAGEURL(thumb::360)}}" width="306" height="207" />
            {{IF({{CHK("{{VAL(viewOffset:)}}">"0")}})}}{{
@@ -120,7 +149,6 @@
             }}
             {{IF({{CHK("{{VAL(viewCount:)}}">="1")}})}}{{
               <overlay>
-              	<progressBar value="1"/>
               </overlay>
               }}
               <title>{{VAL(index:)}}. {{VAL(title)}}</title>

@@ -53,7 +53,7 @@
           <text><![CDATA[{{VAL(MediaContainer/size)}} episodes]]></text>
           <text><![CDATA[Rating: {{VAL(MediaContainer/grandparentContentRating)}}]]></text>
         </row>
-        
+
       </header>
       <section>
         <header>
@@ -62,7 +62,9 @@
 	{{COPY(MediaContainer/Video)}}{{
 	{{SET(noItems:false)}}
 	<listItemLockup style="height: 108;" onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-            onSelectHold="modal">
+  onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+  onHoldSelect="Presenter.loadContext('TVShow_EpisodeContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+  >
           {{IF({{VAL(parentIndex)}})}}{{
           <ordinal minLength="4">{{VAL(parentIndex)}}.{{VAL(index)}}</ordinal>
           }}
@@ -85,8 +87,8 @@
           <!--<decorationLabel><![CDATA[{{VAL(leafCount)}}]]></decorationLabel>-->
         	<decorationImage style="margin: 0 0 0 0; tv-align: right" src="{{IMAGEURL(thumb::384)}}" width="192" height="192"/>
       </listItemLockup>
-        
-	}}        
+
+	}}
       </section>
     </list>
   </compilationTemplate>

@@ -26,7 +26,7 @@
           <header>
             <title>{{TEXT(Director)}}</title>
           </header>
-          {{COPY(MediaContainer/Video/Director)}}{{ 
+          {{COPY(MediaContainer/Video/Director)}}{{
           <text>{{VAL(tag)}}</text>
 					}}
         </info>
@@ -36,7 +36,7 @@
           <header>
             <title>{{TEXT(Actors)}}</title>
           </header>
-          {{COPY(MediaContainer/Video/Role)}}{{ 
+          {{COPY(MediaContainer/Video/Role)}}{{
           <text>{{VAL(tag)}}</text>
 					}}
         </info>
@@ -54,7 +54,7 @@
           <text><![CDATA[({{DURATION_HM({{VAL(MediaContainer/Video/duration:)}})}})  {{DURATION_HM({{EVAL({{VAL(MediaContainer/Video/duration:)}}-{{VAL(MediaContainer/Video/viewOffset:)}})}})}}]]></text>
           }}
         </row>
-        <row>  
+        <row>
           {{IF({{VAL(MediaContainer/Video/ratingImage)}})}}{{
           <text><badge src="resource://tomato-{{RTBADGE(MediaContainer/Video/ratingImage)}}"/> {{EVAL({{VAL(MediaContainer/Video/rating:0)}}*10)}}%</text>
           }}
@@ -76,8 +76,8 @@
           <![CDATA[{{VAL(MediaContainer/Video/summary)}}]]>
         </description>
         <row>
-          
-          <buttonLockup 
+
+          <buttonLockup
           	{{IF(!{{VAL(MediaContainer/Video/viewOffset)}})}}{{
           	onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH()}}')"
           	}}
@@ -88,14 +88,14 @@
             <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Play:png)}}" width="50" height="50"/>
             <title>{{TEXT(Play)}}</title>
           </buttonLockup>
-					
+
 					{{IF({{CHK("{{VAL(MediaContainer/Video/Extras/Video/index:)}}"=="1")}})}}{{
           <buttonLockup id="trailer" onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(MediaContainer/Video/Extras/Video/key)}})}}')">
             <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Trailer:png)}}" width="50" height="50"/>
             <title>{{TEXT(Trailer)}}</title>
           </buttonLockup>
 					}}
-					{{COPY(MediaContainer/Video/Media/Part/Stream)}}{{ 
+					{{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
 					{{IF({{CHK("{{VAL(streamType:)}}"="2")}})}}{{
 						{{IF({{CHK("{{VAL(selected)}}"="1")}})}}{{
 						{{SET(AudioIsDefault:false)}}
@@ -104,10 +104,10 @@
 							<title>{{UPPERCASE({{VAL(languageCode)}})}} {{VAL(codec)}}</title>
 						</buttonLockup>
 						}}
-					}}	
+					}}
 					}}
 					{{IF({{GET(AudioIsDefault)}})}}{{
-						{{COPY(MediaContainer/Video/Media/Part/Stream)}}{{ 
+						{{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
 						{{IF({{CHK("{{VAL(streamType:)}}"="2")}})}}{{
 						{{IF({{CHK("{{VAL(default)}}"="1")}})}}{{
 						<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
@@ -115,11 +115,11 @@
 							<title>{{UPPERCASE({{VAL(languageCode)}})}} {{VAL(codec)}}</title>
 						</buttonLockup>
 						}}
-						}}	
+						}}
 						}}
 					}}
-					
-					{{COPY(MediaContainer/Video/Media/Part/Stream)}}{{ 
+
+					{{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
           {{IF({{CHK("{{VAL(streamType:)}}"="3")}})}}{{
 						{{IF({{CHK("{{VAL(selected)}}"="1")}})}}{{
 						{{SET(SubsIsDefault:false)}}
@@ -130,8 +130,8 @@
 						}}
 					}}
 					}}
-					{{IF({{GET(SubsIsDefault)}})}}{{	
-          {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{ 
+					{{IF({{GET(SubsIsDefault)}})}}{{
+          {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
           {{IF({{CHK("{{VAL(streamType:)}}"="3")}})}}{{
 						{{IF({{CHK("{{VAL(default)}}"="1")}})}}{{
 						<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_SubsPopUp', '{{PMSID()}}', '{{PATH()}}')">
@@ -150,34 +150,7 @@
       </stack>
       <heroImg style="margin: 60 60 0 0;" src="{{IMAGEURL(MediaContainer/Video/thumb)}}" />
     </banner>
-{{IFNODE(MediaContainer/Video/Review:)}}{{
-    <shelf style="margin: 0 0 90 0;">
-      <header>
-        <title>{{TEXT(Reviews)}}</title>
-      </header>
-      <section>
-        <ratingCard>
-               {{IF({{VAL(MediaContainer/Video/ratingImage)}})}}{{
-               <title><badge src="resource://tomato-{{RTBADGE(MediaContainer/Video/ratingImage)}}-m" /> {{EVAL({{VAL(MediaContainer/Video/rating:0)}}*10)}}%</title>
-               }}
-               <text>Tomatometer</text>
-               {{IF({{VAL(MediaContainer/Video/audienceRating)}})}}{{
-               <title><badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/RT:{{RTBADGE(MediaContainer/Video/audienceRatingImage)}}:png)}}" /> {{EVAL({{VAL(MediaContainer/Video/audienceRating)}}*10)}}%</title>
-               }}
-               <text>Audience</text>
-            </ratingCard>
-            {{COPY(MediaContainer/Video/Review)}}{{
-        <reviewCard>
-          <badge src="resource://tomato-{{RTBADGE(image)}}-m" />
-          <title>{{VAL(source)}}</title>
-          <description>{{VAL(text)}}</description>
-          <text>{{VAL(tag)}}</text>
-        </reviewCard>
-        }}
-      </section>
-    </shelf>
-}}
-      
+
 {{IF({{CHK("{{VAL(MediaContainer/Video/Extras/size:)}}">"1")}})}}{{
     <shelf style="margin: 0 0 90 0;">
       <header>
@@ -198,8 +171,35 @@
       </section>
     </shelf>
 }}
+{{IFNODE(MediaContainer/Video/Review:)}}{{
+<shelf style="margin: 0 0 90 0;">
+    <header>
+        <title>{{TEXT(Reviews)}}</title>
+    </header>
+    <section>
+        <ratingCard>
+            {{IF({{VAL(MediaContainer/Video/ratingImage)}})}}{{
+            <title><badge src="resource://tomato-{{RTBADGE(MediaContainer/Video/ratingImage)}}-m" /> {{EVAL({{VAL(MediaContainer/Video/rating:0)}}*10)}}%</title>
+            }}
+            <text>Tomatometer</text>
+            {{IF({{VAL(MediaContainer/Video/audienceRating)}})}}{{
+            <title><badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/RT:{{RTBADGE(MediaContainer/Video/audienceRatingImage)}}:png)}}" /> {{EVAL({{VAL(MediaContainer/Video/audienceRating)}}*10)}}%</title>
+            }}
+            <text>Audience</text>
+        </ratingCard>
+        {{COPY(MediaContainer/Video/Review)}}{{
+        <reviewCard>
+            <badge src="resource://tomato-{{RTBADGE(image)}}-m" />
+            <title>{{VAL(source)}}</title>
+            <description>{{VAL(text)}}</description>
+            <text>{{VAL(tag)}}</text>
+        </reviewCard>
+        }}
+    </section>
+</shelf>
+}}
 {{IFNODE(MediaContainer/Video/Related:)}}{{
-{{COPY(MediaContainer/Video/Related/Hub)}}{{ 
+{{COPY(MediaContainer/Video/Related/Hub)}}{{
 {{IF({{CHK("{{VAL(hubIdentifier:)}}"=="movie.similar")}})}}{{
     <shelf style="margin: 0 0 90 0;">
       <header>
@@ -226,7 +226,7 @@
         <title>Actors</title>
       </header>
       <section>
-        {{COPY(MediaContainer/Video/Role)}}{{ 
+        {{COPY(MediaContainer/Video/Role)}}{{
         {{IF({{VAL(thumb)}})}}{{
         <monogramLockup onSelect="Presenter.load('Movie_Grid', '{{PMSID()}}', '/library/sections/{{GET(sectionID)}}/actor/{{VAL(id)}}')">
           <monogram style="width: 207; height: 207" src="{{IMAGEURL(thumb)}}"/>
@@ -323,7 +323,7 @@
                <title>Languages</title>
             </header>
             <info>
-               {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{ 
+               {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
                {{IF({{CHK("{{VAL(streamType:)}}"="2")}})}}{{
                <header>
                   <title>Audio</title>
@@ -333,7 +333,7 @@
                }}
         		</info>
         		<info>
-               {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{ 
+               {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
                {{IF({{CHK("{{VAL(streamType:)}}"="3")}})}}{{
                <header>
                   <title>Subtitles</title>
@@ -343,7 +343,7 @@
                }}
             </info>
          </infoTable>
-         
+
          <text><![CDATA[{{VAL(MediaContainer/Video/studio)}}]]></text>
       </productInfo>
   </productBundleTemplate>

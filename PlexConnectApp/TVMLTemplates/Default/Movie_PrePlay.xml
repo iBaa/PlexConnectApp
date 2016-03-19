@@ -15,7 +15,7 @@ See LICENSE.txt for this sample’s licensing information
             <ratingBadge style="tv-rating-style: star-hollow-l;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
           </ratingCard>
         </info>
-
+        
         <info>
           <header>
             <title>{{TEXT(Director)}}</title>
@@ -28,7 +28,7 @@ See LICENSE.txt for this sample’s licensing information
           </header>
           <text>{{VAL(MediaContainer/Video/Producer/tag)}}</text>
         </info>
-
+        
         <info>
           <header>
             <title>{{TEXT(Actors)}}</title>
@@ -55,50 +55,23 @@ See LICENSE.txt for this sample’s licensing information
         </description>
         <!--text>Language information can go here</text-->
         <row>
-          {{IF(!{{VAL(MediaContainer/Video/viewOffset)}})}}{{
-          <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH()}}')">
-            <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:Play:png)}}" width="50" height="50"/>
+          <buttonLockup
+              onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH()}}')"
+              >
+            <badge src="resource://button-play" />
             <title>{{TEXT(Play)}}</title>
           </buttonLockup>
-					}}
-					{{IF({{VAL(MediaContainer/Video/viewOffset)}})}}{{
-					<buttonLockup onSelect="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH()}}')">
-            <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:Play:png)}}" width="50" height="50"/>
-            <title>{{TEXT(Play)}}</title>
+
+          <buttonLockup
+              id="resume"
+              {{IF(!{{VAL(MediaContainer/Video/viewOffset:0)}})}}{{disabled="true"}}
+              autoHighlight="true"
+              onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH()}}', 'resume')"
+              >
+            <badge src="{{RESOURCEURL(Images:button-resume:png)}}" width="58" height="29" />
+            <title>{{TEXT(Resume)}}</title>
           </buttonLockup>
-          }}
-          {{IF({{CHK("{{VAL(MediaContainer/Video/Extras/Video/index:)}}"=="1")}})}}{{
-          <buttonLockup id="trailer" onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(MediaContainer/Video/Extras/Video/key)}})}}')">
-            <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:Trailer:png)}}" width="50" height="50"/>
-            <title>{{TEXT(Trailer)}}</title>
-          </buttonLockup>
-					}}
-					<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
-            <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:Audio:png)}}" width="50" height="50"/>
-            {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
-          	 	{{IF({{CHK("{{VAL(streamType:)}}"=="2")}})}}{{
-          	 	<title>{{UPPERCASE({{VAL(languageCode)}})}}</title>
-							}}
-							{{IF(!{{CHK("{{VAL(streamType:)}}"=="2")}})}}{{
-          	 	<data/>
-							}}
-						}}
-          </buttonLockup>
-          <buttonLockup id="subtitles" onSelect="Presenter.loadContext('Movie_SubsPopUp', '{{PMSID()}}', '{{PATH()}}')">
-            <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:Subtitles:png)}}" width="50" height="50"/>
-            {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
-          	 	{{IF({{CHK("{{VAL(streamType:)}}"=="3")}})}}{{
-          	 	<title>{{UPPERCASE({{VAL(languageCode)}})}}</title>
-							}}
-							{{IF(!{{CHK("{{VAL(streamType:)}}"=="3")}})}}{{
-          	 	<data/>
-							}}
-						}}
-          </buttonLockup>
-          <buttonLockup id="more" onSelect="Presenter.loadContext('Movie_MorePopUp', '{{PMSID()}}', '{{PATH()}}')">
-            <badge src="{{RESOURCEURL(TVMLTemplates/Quartz/images/buttons:More:png)}}" width="50" height="50"/>
-            <title>{{TEXT(More)}}</title>
-          </buttonLockup>
+
         </row>
       </stack>
       <heroImg src="{{IMAGEURL(MediaContainer/Video/thumb::768)}}" />
