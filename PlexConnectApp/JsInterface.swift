@@ -30,7 +30,6 @@ import TVMLKit
     func switchHomeUserId(id: String, pin: String, view: String) -> String
     
     func sendPms(id: String, path: String) -> Void
-    func putPms(id: String, path: String) -> Void
 }
 
 
@@ -94,9 +93,5 @@ class cJsInterface: NSObject, jsInterfaceProtocol {
         let url = getPmsUrl("", pmsId: id, pmsPath: path)
         reqXML(url, fn_success: {_ in }, fn_error: {_ in })  // send notification to PMS, don't care about response
     }
-    
-    func putPms(id: String, path: String) -> Void {
-        let url = getPmsUrl("", pmsId: id, pmsPath: path)
-        reqXML(url, fn_success: {_ in }, fn_error: {_ in })  // send notification to PMS, don't care about response
-    }
+
 }
