@@ -18,19 +18,16 @@
       width: 200;
       height: 200;
       }
-      .hero {
-      margin: -323 -280 0 0;
-      }
-      .lightBackgroundColor {
-      background-color: #efece6;
+       .lightBackgroundColor {
+      background-color: rgba(239, 236, 230, 0.5);
       }
       .darkBackgroundColor {
-      background-color: #333333;
+      background-color: rgb(51, 51, 51);
       }
       .title {
       font-size: 26;
       text-align: center;
-      color: #a7a5a0;
+      color: rgb(167, 165, 160);
       font-weight: medium;
       tv-highlight-color: white;
       }
@@ -59,7 +56,7 @@
           onSuccess="Presenter.load('Startup', '', '');"
           onError="Presenter.load('MyPlex_SignInFailed', '', '');"
           >
-          <monogram src="{{VAL(thumb)}}?size=256" width="180" height="180" />
+          <monogram src="{{VAL(thumb)}}?size=256" width="200" height="200" />
           <title class="title"><![CDATA[{{VAL(title)}}]]></title>
         </monogramLockup>
         }}

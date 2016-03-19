@@ -101,7 +101,7 @@
 						{{SET(AudioIsDefault:false)}}
 						<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
 							<badge src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/buttons:Audio:png)}}" width="50" height="50"/>
-							<title>{{UPPERCASE({{VAL(languageCode)}})}} {{VAL(codec)}}</title>
+							<title><![CDATA[{{UPPERCASE({{VAL(languageCode)}}/{{VAL(codec)}})}}]]></title>
 						</buttonLockup>
 						}}
 					}}	
@@ -112,7 +112,7 @@
 						{{IF({{CHK("{{VAL(default)}}"="1")}})}}{{
 						<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
 							<badge src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/buttons:Audio:png)}}" width="50" height="50"/>
-							<title>{{UPPERCASE({{VAL(languageCode)}})}} {{VAL(codec)}}</title>
+							<title><![CDATA[{{UPPERCASE({{VAL(languageCode)}}/{{VAL(codec)}})}}]]></title>
 						</buttonLockup>
 						}}
 						}}	
@@ -125,7 +125,7 @@
 						{{SET(SubsIsDefault:false)}}
 						<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_SubsPopUp', '{{PMSID()}}', '{{PATH()}}')">
 							<badge src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/buttons:Subtitles:png)}}" width="50" height="50"/>
-							<title>{{UPPERCASE({{VAL(languageCode)}})}} {{VAL(codec)}}</title>
+							<title><![CDATA[{{UPPERCASE({{VAL(languageCode)}})}}/{{VAL(codec)}}]]></title>
 						</buttonLockup>
 						}}
 					}}
@@ -136,7 +136,7 @@
 						{{IF({{CHK("{{VAL(default)}}"="1")}})}}{{
 						<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_SubsPopUp', '{{PMSID()}}', '{{PATH()}}')">
 							<badge src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/buttons:Subtitles:png)}}" width="50" height="50"/>
-							<title>{{UPPERCASE({{VAL(languageCode)}})}} {{VAL(codec)}}</title>
+							<title><![CDATA[{{UPPERCASE({{VAL(languageCode)}})}}/{{VAL(codec)}}]]></title>
 						</buttonLockup>
 						}}
 					}}
@@ -169,9 +169,9 @@
             {{COPY(MediaContainer/Video/Review)}}{{
         <reviewCard onSelect="Presenter.loadContext('Movie_PrePlayDescription', '{{PMSID()}}', '{{PATH()}}')">
           <badge src="resource://tomato-{{RTBADGE(image)}}-m" />
-          <title>{{VAL(source)}}</title>
-          <description>{{VAL(text)}}</description>
-          <text>{{VAL(tag)}}</text>
+          <title><![CDATA[{{VAL(source)}}]]></title>
+          <description><![CDATA[{{VAL(text)}}]]></description>
+          <text><![CDATA[{{VAL(tag)}}]]></text>
         </reviewCard>
         }}
       </section>

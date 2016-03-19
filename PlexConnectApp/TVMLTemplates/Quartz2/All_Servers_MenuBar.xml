@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!--
- Copyright (C) 2015 Baa. All rights reserved.
- See LICENSE.txt for this sample’s licensing information
- -->
 <document>
   <menuBarTemplate>
     <menuBar>
@@ -10,24 +6,15 @@
         onSelect="Presenter.loadMenuContent('Search_All', '', '')">
         <title>{{TEXT(Search All)}}</title>
       </menuItem>
-      {{PMSLOOP(owned)}}{{
-      {{SET(noItems:false)}}
-      <menuItem id="{{PMSVAL(clientIdentifier)}}"
-        onSelect="myPlex.switchServer(event);"
-        onSuccess="Presenter.loadMenuContent('All_Servers_Shelves','{{PMSID()}}','');"
-        >
-        <title><![CDATA[{{PMSVAL(name)}}]]></title>
+      <menuItem id="All.Shelves"
+        autoHighlight="true"
+        onSelect="Presenter.loadMenuContent('All_Servers_Shelves', '', '')">
+        <title>{{TEXT(Media Shelves)}}</title>
       </menuItem>
-      }}
-      {{PMSLOOP(shared)}}{{
-      {{SET(noItems:false)}}
-      <menuItem id="{{PMSVAL(clientIdentifier)}}"
-        onSelect="myPlex.switchServer(event);"
-        onSuccess="Presenter.loadMenuContent('All_Servers_Shelves','{{PMSID()}}','');"
-        >
-        <title><![CDATA[{{PMSVAL(name)}}]]></title>
+      <menuItem id="All.Sections"
+        onSelect="Presenter.loadMenuContentNoRefresh('All_Servers_Library', '', '')">
+        <title>{{TEXT(Shared Libraries)}}</title>
       </menuItem>
-      }}
     </menuBar>
   </menuBarTemplate>
 </document>

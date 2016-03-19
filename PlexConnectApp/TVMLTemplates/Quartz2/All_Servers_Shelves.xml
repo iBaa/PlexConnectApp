@@ -33,32 +33,19 @@
   </head>
   <stackTemplate theme="light" class="lightBackgroundColor">
     <identityBanner>
-      <title class="header">Shelves</title>
-      <subtitle class="header"><![CDATA[{{PMSVAL(name)}}    ]]></subtitle>
-      <row>
-        <buttonLockup onSelect="Presenter.load('Library','{{PMSID()}}','');">
-          <badge src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/buttons:Library:png)}}" width="50" height="50"/>
-          <title>Sections</title>
-        </buttonLockup>
-        <buttonLockup onSelect="Presenter.load('Search', '{{PMSID()}}', '/search?query')">
-          <badge src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/buttons:Search:png)}}" width="50" height="50"/>
-          <title>Search</title>
-        </buttonLockup>
-        <buttonLockup onSelect="Presenter.loadAndSwap('All_Servers_MenuBar', '{{PMSID()}}', '{{PATH()}}')">
-          <badge src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/buttons:Reload:png)}}" width="50" height="50"/>
-          <title>Reload</title>
-        </buttonLockup>
-      </row>
+      <title class="header">Media Shelves</title>
+      <subtitle class="header">All servers</subtitle>
     </identityBanner>
-    {{XML(/hubs?excludeFields=summary)}}{{
-    {{IFNODE(MediaContainer/Hub)}}{{
-    {{SET(noItems:false)}}
     <collectionList>
-      {{COPY(MediaContainer/Hub)}}{{
+  		{{PMSLOOP(shared)}}{{
+      {{XML(/hubs?excludeFields=summary)}}{{
+    	{{IFNODE(MediaContainer/Hub)}}{{
+    	{{SET(noItems:false)}}
+    	{{COPY(MediaContainer/Hub)}}{{
       {{IF({{CHK("{{VAL(size)}}">"0")}})}}{{
       <shelf id="{{VAL(hubIdentifier)}}">
         <header>
-          <title><![CDATA[{{VAL(title)}}]]></title>
+          <title><![CDATA[{{PMSVAL(name)}} - ]]><![CDATA[{{VAL(title)}}]]></title>
         </header>
         <section>
           {{IFNODE(Video)}}{{
@@ -165,8 +152,9 @@
       </shelf>
       }}
       }}
-    }}
-    }}
+    	}}
+    	}}
+    	}}
     </collectionList>
   </stackTemplate>
 </document>
