@@ -28,7 +28,9 @@ requestAndUpdateSearch: function() {
   var pmsPath = searchField.getAttribute("pmsPath").format(encodeURIComponent(query));
   
   var docString = swiftInterface.getViewIdPath(view, pmsId, pmsPath);
-  var parser = new DOMParser();
+  if (!parser) {
+    var parser = new DOMParser();
+  }
   var doc = parser.parseFromString(docString, "application/xml");
 
   // update view
