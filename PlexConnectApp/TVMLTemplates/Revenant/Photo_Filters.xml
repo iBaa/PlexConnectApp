@@ -18,9 +18,9 @@
 	{{
 		{{IF({{VAL(prompt)}})}}
 		{{
-		
-        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
-        	<button onSelect="Presenter.closeContext(); Presenter.load('Search', '{{PMSID()}}', '{{VAL(key)}}')">
+
+        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
+        	<button onSelect="Presenter.closeContext(); Presenter.load('Search', '{{PMSID()}}', '{{VAL(key)}}&amp;query')">
             	<text>{{VAL(title)}}</text>
         	</button>
     	}}
@@ -28,8 +28,8 @@
 		{{
     	{{IF({{CHK("{{VAL(key:)}}"=="folder")}})}}
 		{{
-		
-        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
+
+        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
         	<button onSelect="Presenter.closeContext(); Presenter.load('List', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
             	<text>{{VAL(title)}}</text>
         	</button>
@@ -38,24 +38,24 @@
 		{{
     		{{IF({{CHK("{{VAL(secondary:)}}"=="1")}})}}
 			{{
-		
-        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
+
+        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
         	<button onSelect="Presenter.closeContext(); Presenter.load('Photo_Secondary', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
             	<text>{{VAL(title)}}</text>
         	</button>
     		}}
     		{{IF(!{{CHK("{{VAL(secondary:)}}"=="1")}})}}
 			{{
-		
-        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
+
+        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
         	<button onSelect="Presenter.closeContext(); Presenter.load('Photo_Browser', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
             	<text>{{VAL(title)}}</text>
         	</button>
     		}}
     	}}
     	}}
-    }}    
-}}        
+    }}
+}}
     </alertTemplate>
 </document>
 }}
@@ -63,7 +63,7 @@
 {{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
 <document>
   <alertTemplate>
-    <title>PlexConnect</title>
+    <title style="text-align: left; color: #ff8000">PlexConnect</title>
     <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
   </alertTemplate>
 </document>

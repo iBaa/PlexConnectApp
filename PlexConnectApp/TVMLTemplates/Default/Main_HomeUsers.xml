@@ -9,7 +9,7 @@ See LICENSE.txt for this sample’s licensing information
   <descriptiveAlertTemplate style="color: #000000;">
     <title style="tv-text-style: title3;">TITLE</title>
     <subtitle style="tv-text-style: body;">{{TEXT(Current home:)}} {{USRVAL(adminname)}}</subtitle>
-    
+
     <shelf centered="true">
       <section>
 {{COPY(MediaContainer/User)}}{{
@@ -22,7 +22,7 @@ See LICENSE.txt for this sample’s licensing information
             onSuccess="Presenter.loadAndSwap('Main_MenuBar','','');"
             onError="Presenter.load('MyPlex_SignInFailed','','');"
             >
-          <monogram src="{{VAL(thumb)}}" width="220" height="220" />
+          <monogram src="{{VAL(thumb)}}" width="250" height="250" />
           <title style="tv-text-style: body;"><![CDATA[{{VAL(title)}}]]></title>
           <!--todo: overlay/icon: admin, protected-->
           <!--
@@ -47,12 +47,12 @@ See LICENSE.txt for this sample’s licensing information
       >
       <text>{{TEXT(Sign In)}}</text>
     </button>
-    
+
     <button id="OfflineMode" disabled="true"
       onSelect="">
       <text>{{TEXT(Offline Mode)}}</text>
     </button>
-    
+
   </descriptiveAlertTemplate>
 </document>
 }}

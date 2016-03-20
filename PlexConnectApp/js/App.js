@@ -69,7 +69,9 @@ var createAlert = function(title, description) {
       <description>${description}</description>
     </alertTemplate>
   </document>`
-  var parser = new DOMParser();
+  if (!parser) {
+    var parser = new DOMParser();
+  }
   var alertDoc = parser.parseFromString(alertString, "application/xml");
   return alertDoc;
 }

@@ -16,7 +16,7 @@
     <title>{{VAL(MediaContainer/title1)}}</title>
     {{COPY(MediaContainer/Directory)}}{{
     {{IF({{VAL(prompt)}})}}{{
-    <button onSelect="Presenter.closeContext(); Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/{{VAL(key)}}')">
+    <button onSelect="Presenter.closeContext(); Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/{{VAL(key)}}&amp;query')">
       <text>{{VAL(title)}}</text>
     </button>
     }}
@@ -48,7 +48,7 @@
 {{IF({{GET(noItems)}})}}{{
 <document>
   <alertTemplate>
-    <title>PlexConnect</title>
+    <title style="text-align: left; color: #ff8000">PlexConnect</title>
     <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
   </alertTemplate>
 </document>

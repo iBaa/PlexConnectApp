@@ -16,11 +16,11 @@
     </background>
     <banner>
       <infoList style="margin: 265 0 0 60;">
-        <!--<info>
-          <ratingCard style="tv-align: right;">
-            <ratingBadge style="tv-rating-style: star-m;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
-          </ratingCard>
-        </info>-->
+        <info>
+            <ratingCard style="tv-align: right;">
+             <ratingBadge style="tv-rating-style: star-m;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
+             </ratingCard>
+        </info>
         {{IFNODE(MediaContainer/Video/Director:)}}{{
         <info>
           <header>
@@ -43,34 +43,26 @@
         }}
       </infoList>
       <stack style="margin: 90 0 0 90;">
-        <title><![CDATA[{{VAL(MediaContainer/Video/title)}}]]></title>
+        <title><![CDATA[{{VAL(MediaContainer/Video/title)}} ({{VAL(MediaContainer/Video/year)}})]]></title>
         <row style="margin: 0 0 6 0;">
-          <text><![CDATA[{{VAL(MediaContainer/Video/year)}}]]></text>
+            {{IF({{VAL(MediaContainer/Video/ratingImage)}})}}{{
+            <text><badge src="resource://tomato-{{RTBADGE(MediaContainer/Video/ratingImage)}}"/> {{EVAL({{VAL(MediaContainer/Video/rating:0)}}*10)}}%</text>
+            }}
+            {{IF({{VAL(MediaContainer/Video/audienceRatingImage)}})}}{{
+            <text><badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/RT:{{RTBADGE(MediaContainer/Video/audienceRatingImage)}}:png)}}" width="28" height="28"/> {{EVAL({{VAL(MediaContainer/Video/audienceRating:0)}}*10)}}%</text>
+            }}
+            <text>•</text>
           <text><![CDATA[{{VAL(MediaContainer/Video/Genre/tag)}}]]></text>
-          {{IF(!{{VAL(MediaContainer/Video/viewOffset)}})}}{{
+          <text>•</text>
           <text>{{DURATION_HM({{VAL(MediaContainer/Video/duration)}})}}</text>
-          }}
-          {{IF({{VAL(MediaContainer/Video/viewOffset)}})}}{{
-          <text><![CDATA[({{DURATION_HM({{VAL(MediaContainer/Video/duration:)}})}})  {{DURATION_HM({{EVAL({{VAL(MediaContainer/Video/duration:)}}-{{VAL(MediaContainer/Video/viewOffset:)}})}})}}]]></text>
-          }}
-        </row>
-        <row>
-          {{IF({{VAL(MediaContainer/Video/ratingImage)}})}}{{
-          <text><badge src="resource://tomato-{{RTBADGE(MediaContainer/Video/ratingImage)}}"/> {{EVAL({{VAL(MediaContainer/Video/rating:0)}}*10)}}%</text>
-          }}
-          {{IF({{VAL(MediaContainer/Video/audienceRatingImage)}})}}{{
-          <text><badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/RT:{{RTBADGE(MediaContainer/Video/audienceRatingImage)}}:png)}}" width="28" height="28"/> {{EVAL({{VAL(MediaContainer/Video/audienceRating:0)}}*10)}}%</text>
-          }}
-          {{IF(!{{VAL(MediaContainer/Video/audienceRatingImage)}})}}{{
-          <ratingBadge style="tv-rating-style: star-m;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
-          }}
+          <text>•</text>
+          <text><![CDATA[{{VAL(MediaContainer/Video/Media/videoResolution)}}]]></text>
           {{IF({{VAL(MediaContainer/Video/contentRating)}})}}{{
-          <textBadge> <![CDATA[{{UPPERCASE({{VAL(MediaContainer/Video/contentRating)}})}}]]> </textBadge>
+          <text>•</text>
+          <textBadge><![CDATA[{{UPPERCASE({{VAL(MediaContainer/Video/contentRating)}})}}]]> </textBadge>
           }}
-          <!--<ratingCard style="tv-align: right;">
-            <ratingBadge style="tv-rating-style: star-m;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
-          </ratingCard>-->
         </row>
+
         <description allowsZooming="true" moreLabel="more"
             onSelect="Presenter.loadContext('Movie_PrePlayDescription', '{{PMSID()}}', '{{PATH()}}')">
           <![CDATA[{{VAL(MediaContainer/Video/summary)}}]]>
@@ -101,7 +93,7 @@
 						{{SET(AudioIsDefault:false)}}
 						<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
 							<badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Audio:png)}}" width="50" height="50"/>
-							<title>{{UPPERCASE({{VAL(languageCode)}})}} {{VAL(codec)}}</title>
+							<title><![CDATA[{{UPPERCASE({{VAL(languageCode)}}/{{VAL(codec)}})}}]]></title>
 						</buttonLockup>
 						}}
 					}}
@@ -112,7 +104,7 @@
 						{{IF({{CHK("{{VAL(default)}}"="1")}})}}{{
 						<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
 							<badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Audio:png)}}" width="50" height="50"/>
-							<title>{{UPPERCASE({{VAL(languageCode)}})}} {{VAL(codec)}}</title>
+							<title><![CDATA[{{UPPERCASE({{VAL(languageCode)}}/{{VAL(codec)}})}}]]></title>
 						</buttonLockup>
 						}}
 						}}
@@ -125,7 +117,7 @@
 						{{SET(SubsIsDefault:false)}}
 						<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_SubsPopUp', '{{PMSID()}}', '{{PATH()}}')">
 							<badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Subtitles:png)}}" width="50" height="50"/>
-							<title>{{UPPERCASE({{VAL(languageCode)}})}} {{VAL(codec)}}</title>
+							<title><![CDATA[{{UPPERCASE({{VAL(languageCode)}}/{{VAL(codec)}})}}]]></title>
 						</buttonLockup>
 						}}
 					}}
@@ -136,7 +128,7 @@
 						{{IF({{CHK("{{VAL(default)}}"="1")}})}}{{
 						<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_SubsPopUp', '{{PMSID()}}', '{{PATH()}}')">
 							<badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Subtitles:png)}}" width="50" height="50"/>
-							<title>{{UPPERCASE({{VAL(languageCode)}})}} {{VAL(codec)}}</title>
+							<title><![CDATA[{{UPPERCASE({{VAL(languageCode)}}/{{VAL(codec)}})}}]]></title>
 						</buttonLockup>
 						}}
 					}}
@@ -188,11 +180,11 @@
             <text>Audience</text>
         </ratingCard>
         {{COPY(MediaContainer/Video/Review)}}{{
-        <reviewCard>
+         <reviewCard onSelect="Presenter.loadContext('Movie_PrePlayDescription', '{{PMSID()}}', '{{PATH()}}')">
             <badge src="resource://tomato-{{RTBADGE(image)}}-m" />
-            <title>{{VAL(source)}}</title>
-            <description>{{VAL(text)}}</description>
-            <text>{{VAL(tag)}}</text>
+            <title><![CDATA[{{VAL(source)}}]]></title>
+          <description><![CDATA[{{VAL(text)}}]]></description>
+          <text><![CDATA[{{VAL(tag)}}]]></text>
         </reviewCard>
         }}
     </section>

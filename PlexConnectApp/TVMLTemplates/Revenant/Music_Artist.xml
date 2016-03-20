@@ -28,7 +28,7 @@ See LICENSE.txt for this sample’s licensing information
             <ratingBadge style="tv-rating-style: star-m;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
           </ratingCard>
         </info>
-        
+
         <info>
           <header>
             <title>{{TEXT(Director)}}</title>
@@ -41,7 +41,7 @@ See LICENSE.txt for this sample’s licensing information
           </header>
           <text>{{VAL(MediaContainer/Video/Producer/tag)}}</text>
         </info>
-        
+
         <info>
           <header>
             <title>{{TEXT(Actors)}}</title>
@@ -102,14 +102,14 @@ See LICENSE.txt for this sample’s licensing information
         </lockup>
         }}
       </section>
-    </shelf>    
+    </shelf>
 }}
 }}
 {{XML({{PATH()}}/extras/)}}{{
      {{IFNODE(MediaContainer/Video)}}{{
      <shelf style="margin: 0 0 70 0">
       <header>
-          <title>{{VAL(MediaContainer/size)}}{{TEXT( Music video(s))}}</title>
+          <title>{{VAL(MediaContainer/size)}}{{TEXT( Music Video(s))}}</title>
       </header>
       <section>
         {{COPY(MediaContainer/Video)}}{{
@@ -120,7 +120,7 @@ See LICENSE.txt for this sample’s licensing information
           <img class="roundedImageCorners" src="{{IMAGEURL(thumb::)}}" height="225" width="400" />
           <title><![CDATA[{{VAL(title)}}]]></title>
         </lockup>
-        }}    
+        }}
       </section>
     </shelf>
 		}}

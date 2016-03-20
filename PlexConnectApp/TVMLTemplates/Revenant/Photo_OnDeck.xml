@@ -47,11 +47,11 @@
                 </buttonLockup>
                 }}
                 }}
-                <buttonLockup onSelect="Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/search?type=13')">
+                <buttonLockup onSelect="Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/search?type=13&amp;query')">
                     <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Search:png)}}" width="50" height="50"/>
                     <title>Search</title>
                 </buttonLockup>
-                
+
                 <buttonLockup onSelect="Presenter.loadAndSwap('Photo_OnDeck', '{{PMSID()}}', '{{PATH()}}')">
                     <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Reload:png)}}" width="50" height="50"/>
                     <title>Reload</title>
@@ -95,7 +95,7 @@
                         onSelectHold="ScrobbleMenu">
                         <img src="{{IMAGEURL(thumb::360)}}" height="308" width="308" />
                         <title class="showTextOnHighlight"><![CDATA[{{VAL(originallyAvailableAt)}}]]></title>
-                        
+
                     </lockup>
                     }}
                 </section>
@@ -117,12 +117,12 @@
                         onSelectHold="ScrobbleMenu">
                         <img src="{{IMAGEURL(thumb::360)}}" height="308" width="308" />
                         <title class="showTextOnHighlight"><![CDATA[{{VAL(originallyAvailableAt)}}]]></title>
-                        
+
                     </lockup>
                     }}
                 </section>
             </shelf>
-}}            
+}}
 }}
 }}
 }}
@@ -136,9 +136,8 @@
 {{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
 <document>
     <alertTemplate>
-        <title>PlexConnect</title>
+        <title style="text-align: left; color: #ff8000">PlexConnect</title>
         <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
     </alertTemplate>
 </document>
 }}
-

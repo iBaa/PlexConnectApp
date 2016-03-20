@@ -59,7 +59,7 @@
 {{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
 <document>
   <alertTemplate>
-    <title>PlexConnect</title>
+    <title style="text-align: left; color: #ff8000">PlexConnect</title>
     <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
   </alertTemplate>
 </document>

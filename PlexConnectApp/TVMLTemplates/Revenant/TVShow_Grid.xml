@@ -36,7 +36,7 @@
          <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Library:png)}}" width="50" height="50"/>
          <title>Library</title>
          </buttonLockup>-->
-        <buttonLockup onSelect="Presenter.load('Search', '{{PMSID()}}', '/library/sections/{{VAL(MediaContainer/librarySectionID)}}/search?type=2')">
+        <buttonLockup onSelect="Presenter.load('Search', '{{PMSID()}}', '/library/sections/{{VAL(MediaContainer/librarySectionID)}}/search?type=2&amp;query')">
           <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Search:png)}}" width="50" height="50"/>
           <title>Search</title>
         </buttonLockup>
@@ -47,7 +47,7 @@
       </row>
     </identityBanner>
     <collectionList>
-      
+
       <grid>
         <section>
           {{COPY(MediaContainer/Directory)}}{{
@@ -88,7 +88,7 @@
               }}
             </overlay>
             <title><![CDATA[{{VAL(title)}}]]></title>
-            <subtitle>{{EP_INDEX({{VAL(parentIndex:)}}:{{VAL(index:)}})}}</subtitle>
+            <subtitle>{{TEXT(S)}}{{VAL(parentIndex)}} • {{TEXT(E)}}{{VAL(index)}}</subtitle>
           </lockup>
           }}
         </section>
@@ -102,7 +102,7 @@
 {{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
 <document>
   <alertTemplate>
-    <title>PlexConnect</title>
+    <title style="text-align: left; color: #ff8000">PlexConnect</title>
     <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
   </alertTemplate>
 </document>

@@ -41,12 +41,17 @@
       </infoList>
       <stack>
         <title>{{VAL(MediaContainer/Video/index:)}}. {{VAL(MediaContainer/Video/title)}}</title>
+        <subtitle style="tv-text-style: subtitle3;"><![CDATA[{{VAL(MediaContainer/Video/grandparentTitle)}}]]></subtitle>
         <row>
-          <text><![CDATA[{{VAL(MediaContainer/Video/grandparentTitle)}}]]></text>
-          <text>•</text>
           <text>{{DURATION({{VAL(MediaContainer/Video/duration)}})}}</text>
           <text>•</text>
           <text><![CDATA[{{VAL(MediaContainer/Video/originallyAvailableAt)}}]]></text>
+          <text>•</text>
+          <text><![CDATA[{{VAL(MediaContainer/Video/Media/videoResolution)}}]]></text>
+          {{IF({{VAL(MediaContainer/Video/contentRating)}})}}{{
+          <text>•</text>
+          <textBadge><![CDATA[{{UPPERCASE({{VAL(MediaContainer/Video/contentRating)}})}}]]> </textBadge>
+          }}
            <!--<badge src="resource://cc" /-->
         </row>
         <description allowsZooming="true" moreLabel="more"
@@ -91,7 +96,7 @@
                     }}
                     }}
                     }}
-                    
+
                     {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
                     {{IF({{CHK("{{VAL(streamType:)}}"="3")}})}}{{
                     {{IF({{CHK("{{VAL(selected)}}"="1")}})}}{{
@@ -104,7 +109,7 @@
                     }}
                     }}
                     {{IF({{GET(SubsIsDefault)}})}}{{
-                    {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{ 
+                    {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
                     {{IF({{CHK("{{VAL(streamType:)}}"="3")}})}}{{
                     {{IF({{CHK("{{VAL(default)}}"="1")}})}}{{
                     <buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_SubsPopUp', '{{PMSID()}}', '{{PATH()}}')">
@@ -115,7 +120,7 @@
                     }}
                     }}
                     }}
-                    
+
                     <buttonLockup id="more" onSelect="Presenter.loadContext('TVShow_MorePopUp', '{{PMSID()}}', '{{VAL(MediaContainer/Video/ratingKey)}}')">
                         <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:More:png)}}" width="50" height="50"/>
                         <title>{{TEXT(More)}}</title>

@@ -9,7 +9,7 @@ See LICENSE.txt for this sample’s licensing information
     <searchField
         view="Search"
         pmsId="{{PMSID()}}"
-        pmsPath="{{PATH()}}&amp;query={0}"/>
+        pmsPath="{{PATH()}}={0}"/>
     <!-- results -->
     <collectionList id="searchResults">
 {{XML()}}{{
@@ -30,6 +30,16 @@ See LICENSE.txt for this sample’s licensing information
               onSelectHold="ScrobbleMenu"
               >
             <img src="{{IMAGEURL(thumb::384)}}" width="200" height="300" />
+            <overlay>
+              {{IF({{VAL(viewOffset)}})}}{{
+              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:watching:png)}}"  width="72" height="72" />
+              }}
+              {{IF(!{{VAL(viewOffset)}})}}{{
+              {{IF(!{{VAL(viewCount)}})}}{{
+              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched:png)}}"  width="72" height="72" />
+            	}}
+            	}}
+            </overlay>
             <title><![CDATA[{{VAL(title)}}]]></title>
           </lockup>
 }}
@@ -54,6 +64,16 @@ See LICENSE.txt for this sample’s licensing information
               onSelectHold="ScrobbleMenu"
               >
             <img src="{{IMAGEURL(thumb::384)}}" width="200" height="300" />
+            <overlay>
+              {{IF({{VAL(viewOffset)}})}}{{
+              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:watching:png)}}"  width="72" height="72" />
+              }}
+              {{IF(!{{VAL(viewOffset)}})}}{{
+              {{IF(!{{VAL(viewCount)}})}}{{
+              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched:png)}}"  width="72" height="72" />
+            	}}
+            	}}
+            </overlay>
             <title><![CDATA[{{VAL(title)}}]]></title>
           </lockup>
 }}
@@ -79,8 +99,19 @@ See LICENSE.txt for this sample’s licensing information
               onHoldSelect="Presenter.loadContext('TVShow_EpisodeContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
               >
             <img src="{{IMAGEURL(thumb::384)}}" width="300" height="200" />
+            <overlay>
+              {{IF({{VAL(viewOffset)}})}}{{
+              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:watching:png)}}"  width="72" height="72" />
+              }}
+              {{IF(!{{VAL(viewOffset)}})}}{{
+              {{IF(!{{VAL(viewCount)}})}}{{
+              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched:png)}}"  width="72" height="72" />
+            	}}
+            	}}
+            </overlay>
             <title><![CDATA[{{VAL(title)}}]]></title>
             <subtitle><![CDATA[{{VAL(grandparentTitle)}}]]></subtitle>
+            <subtitle>{{TEXT(S)}}{{VAL(parentIndex)}} • {{TEXT(E)}}{{VAL(index)}}</subtitle>
           </lockup>
 }}
 }}
@@ -112,7 +143,7 @@ See LICENSE.txt for this sample’s licensing information
         </section>
       </shelf>
 }}
-      
+
       <!-- artists -->
 {{CUT({{GET(noArtists)}})}}{{
 {{SET(noArtists:true)}}

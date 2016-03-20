@@ -20,31 +20,31 @@
 		</button>
 	}}
 	{{IF({{CHK("{{VAL(key:)}}"!="all")}})}}{{
-	
-	
+
+
 		{{IF({{VAL(prompt)}})}}{{
-	      	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
-        	<button onSelect="Presenter.closeContext(); Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/{{VAL(key)}}')">
+	      	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
+        	<button onSelect="Presenter.closeContext(); Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/{{VAL(key)}}&amp;query')">
             	<text>{{VAL(title)}}</text>
         	</button>
     }}
     {{IF(!{{VAL(prompt)}})}}{{
     	{{IF({{CHK("{{VAL(key:)}}"=="folder")}})}}{{
-		    	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
+		    	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
         	<button onSelect="Presenter.closeContext(); Presenter.load('List', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
             	<text>{{VAL(title)}}</text>
         	</button>
     	}}
     	{{IF(!{{CHK("{{VAL(key:)}}"=="folder")}})}}{{
     		{{IF({{CHK("{{VAL(secondary:)}}"=="1")}})}}{{
-		
-        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
+
+        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
         	<button onSelect="Presenter.closeContext(); Presenter.load('Music_Secondary', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
             	<text>{{VAL(title)}}</text>
         	</button>
     		}}
     		{{IF(!{{CHK("{{VAL(secondary:)}}"=="1")}})}}{{
-					{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
+					{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
         	<button onSelect="Presenter.closeContext(); Presenter.load('Music_Grid', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
             	<text>{{VAL(title)}}</text>
         	</button>
@@ -52,9 +52,9 @@
     	}}
     }}
   }}
-}}    
+}}
 
-}}        
+}}
     </alertTemplate>
 </document>
 }}
@@ -62,7 +62,7 @@
 {{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
 <document>
   <alertTemplate>
-    <title>PlexConnect</title>
+    <title style="text-align: left; color: #ff8000">PlexConnect</title>
     <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
   </alertTemplate>
 </document>

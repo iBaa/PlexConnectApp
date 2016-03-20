@@ -14,7 +14,7 @@
       .lightBackgroundColor {
       background-color: #efece6;
       }
-      
+
     </style>
   </head>
   {{IFNODE(MediaContainer/Playlist)}}{{
@@ -30,7 +30,7 @@
                   onSelect="Presenter.load('Playlists_Video', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                   onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'shuffle')"
                   onSelectHold="modal">
-                  
+
                   <img src="{{IMAGEURL(composite::360)}}" height="308" width="308"/>
                   <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
                   <subtitle class="showTextOnHighlight">{{VAL(year:&#x00AD;)}}</subtitle>
@@ -51,7 +51,7 @@
           <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Library:png)}}" width="50" height="50"/>
           <title>Library</title>
         </buttonLockup>-->
-        <buttonLockup onSelect="Presenter.load('Search', '{{PMSID()}}', '/library/sections/{{VAL(MediaContainer/librarySectionID)}}/search?type=1')">
+        <buttonLockup onSelect="Presenter.load('Search', '{{PMSID()}}', '/library/sections/{{VAL(MediaContainer/librarySectionID)}}/search?type=1&amp;query')">
           <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Search:png)}}" width="50" height="50"/>
           <title>Search</title>
         </buttonLockup>
@@ -103,7 +103,7 @@
 {{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
 <document>
   <alertTemplate>
-    <title>PlexConnect</title>
+    <title style="text-align: left; color: #ff8000">PlexConnect</title>
     <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
   </alertTemplate>
 </document>

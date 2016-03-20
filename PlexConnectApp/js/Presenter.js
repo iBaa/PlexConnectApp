@@ -33,7 +33,10 @@ setupViewDocument: function(view, pmsId, pmsPath) {
   console.log("load");
   
   var docString = swiftInterface.getViewIdPath(view, pmsId, pmsPath);
-  var parser = new DOMParser();
+  if (!parser) {
+    var parser = new DOMParser();
+  }
+  // var parser = new DOMParser();
   var doc = parser.parseFromString(docString, "application/xml");
   
   // events: https://developer.apple.com/library/tvos/documentation/TVMLKit/Reference/TVViewElement_Ref/index.html#//apple_ref/c/tdef/TVElementEventType
@@ -42,28 +45,98 @@ setupViewDocument: function(view, pmsId, pmsPath) {
   doc.addEventListener("play", Presenter.onPlay.bind(Presenter));
   doc.addEventListener("highlight", Presenter.onHighlight.bind(Presenter));
   doc.addEventListener("load", Presenter.onLoad.bind(Presenter));  // setup search for char entered
+  // doc.addEventListener("unload", Presenter.onUnload.bind(Presenter));  // setup search for char entered
+  // doc.addEventListener("appear", Presenter.onAppear.bind(Presenter));  // setup search for char entered
+  // doc.addEventListener("disappear", Presenter.onDisappear.bind(Presenter));  // setup search for char entered
+  // doc.addEventListener("update", Presenter.onUpdate.bind(Presenter));  // setup search for char entered
+  // doc.addEventListener("didupdate", Presenter.onDidupdate.bind(Presenter));  // setup search for char entered
   
   return doc
 },
 
+refreshDocument: function(view, pmsId, pmsPath) {
+  console.log("setting up refresh doc");
+  var previousDoc = navigationDocument.documents[navigationDocument.documents.length-2];
+  //console.log('===== currentDoc: ' + view + ' currentPMS: ' + pmsId + ' currentPath: ' + pmsPath);
+  console.log("setting up refresh doc");
+  
+  var docString = "<document><alertTemplate onLoad=\"Presenter.loadAndSwap('"+ref_view+"','"+pmsId+"','"+ref_pmsPath+"');\"></alertTemplate></document>";
+  if (!parser) {
+    var parser = new DOMParser();
+  }
+  var doc = parser.parseFromString(docString, "application/xml");
+  
+  doc.addEventListener("select", Presenter.onSelect.bind(Presenter));
+  doc.addEventListener("holdselect", Presenter.onHoldSelect.bind(Presenter));
+  doc.addEventListener("play", Presenter.onPlay.bind(Presenter));
+  doc.addEventListener("highlight", Presenter.onHighlight.bind(Presenter));
+  doc.addEventListener("load", Presenter.onLoad.bind(Presenter));  // setup search for char entered
+  navigationDocument.replaceDocument(doc, previousDoc);
+},
+  
 load: function(view, pmsId, pmsPath) {
   var loadingDoc = createSpinner("");
   loadingDoc.addEventListener("load", function() {
       var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
       navigationDocument.replaceDocument(doc, loadingDoc);
+      console.log('Doc loaded: ' + view);
   });
   navigationDocument.pushDocument(loadingDoc);
-  //navigationDocument.dismissModal();  // just in case?!  // todo: if (isModal)...?
 },
-
+  
 loadAndSwap: function(view, pmsId, pmsPath) {
   var currentDoc = navigationDocument.documents[navigationDocument.documents.length-1];
+  var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
+  navigationDocument.replaceDocument(doc, currentDoc);
+},
+  
+/*
+ loadAndSwap: function(view, pmsId, pmsPath) {
+ var currentDoc = navigationDocument.documents[navigationDocument.documents.length-1];
+ var loadingDoc = createSpinner("");
+ loadingDoc.addEventListener("load", function() {
+ var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
+ navigationDocument.replaceDocument(doc, loadingDoc);
+ });
+ navigationDocument.replaceDocument(loadingDoc, currentDoc);
+ // navigationDocument.dismissModal();  // just in case?!  // todo: if (isModal)...?
+ },
+*/
+ 
+loadAndReload: function(view, pmsId, pmsPath, ref_view, ref_pmsPath) {
   var loadingDoc = createSpinner("");
   loadingDoc.addEventListener("load", function() {
       var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
       navigationDocument.replaceDocument(doc, loadingDoc);
-  });
-  navigationDocument.replaceDocument(loadingDoc, currentDoc);
+      console.log('Doc loaded: ' + view);
+      });
+  navigationDocument.pushDocument(loadingDoc);
+  var previousDoc = navigationDocument.documents[navigationDocument.documents.length-2];
+  //console.log('===== currentDoc: ' + view + ' currentPMS: ' + pmsId + ' currentPath: ' + pmsPath);
+  console.log("setting up refresh doc");
+  
+  var docString = "<document><alertTemplate onLoad=\"Presenter.loadAndSwap('"+ref_view+"','"+pmsId+"','"+ref_pmsPath+"');\"></alertTemplate></document>";
+  if (!parser) {
+    var parser = new DOMParser();
+  }
+  var doc = parser.parseFromString(docString, "application/xml");
+  
+  doc.addEventListener("select", Presenter.onSelect.bind(Presenter));
+  doc.addEventListener("holdselect", Presenter.onHoldSelect.bind(Presenter));
+  doc.addEventListener("play", Presenter.onPlay.bind(Presenter));
+  doc.addEventListener("highlight", Presenter.onHighlight.bind(Presenter));
+  doc.addEventListener("load", Presenter.onLoad.bind(Presenter));  // setup search for char entered
+  navigationDocument.replaceDocument(doc, previousDoc);
+ 
+},
+
+  
+loadAndSwap2: function(view, pmsId, pmsPath) {
+  var currentDoc = navigationDocument.documents[navigationDocument.documents.length-2];
+  console.log('===== currentDoc: ' + view + ' currentPMS: ' + pmsId + ' currentPath: ' + pmsPath);
+  var doc = Presenter.setupRefreshDocument(view, pmsId, pmsPath);
+  console.log('===== newDoc: ' + view + ' newPMS: ' + pmsId + ' newPath: ' + pmsPath);
+  navigationDocument.replaceDocument(doc, currentDoc);
   // navigationDocument.dismissModal();  // just in case?!  // todo: if (isModal)...?
 },
 
@@ -88,11 +161,22 @@ loadMenuContent: function(view, pmsId, pmsPath) {
   var feature = elem.parentNode.getFeature("MenuBarDocument");
   if (feature) {
     var currentDoc = feature.getDocument(elem);
-    if (!currentDoc  // todo: better algorithm to decide on doc reload
-        || (id!="Search" && id!="Settings")) {  // currently: force reload on each but Settings, Search
-
-      var loadingDoc = createSpinner("");
-      feature.setDocument(loadingDoc, elem);
+     if (!currentDoc || (id!="Search" && id!="Settings")) {  // todo: better algorithm to decide on doc reload now force reload if not Settings, Search
+     var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
+     feature.setDocument(doc, elem);
+    }
+  }
+},
+  
+loadMenuContentNoRefresh: function(view, pmsId, pmsPath) {
+  console.log("loadMenuContent");
+  var elem = this.event.target;  // todo: check event existing
+  var id = elem.getAttribute("id");
+  
+  var feature = elem.parentNode.getFeature("MenuBarDocument");
+  if (feature) {
+    var currentDoc = feature.getDocument(elem);
+    if (!currentDoc) {
       var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
       feature.setDocument(doc, elem);
     }

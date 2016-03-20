@@ -52,7 +52,7 @@
 				</buttonLockup>
 				}}
 				}}
-				<buttonLockup onSelect="Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/search?type=8')">
+				<buttonLockup onSelect="Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/search?type=8&amp;query')">
 					<badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Search:png)}}" width="50" height="50"/>
 					<title>Search</title>
 				</buttonLockup>
@@ -115,7 +115,7 @@
       {{IF(!{{CHK("{{VAL(hubIdentifier)}}"="music.recent.genre")}})}}{{
       <shelf id="{{VAL(hubIdentifier)}}">
         <header>
-          <title>{{VAL(title)}}</title>
+          <title><![CDATA[{{VAL(title)}}]]></title>
         </header>
         <section>
           {{IFNODE(Directory)}}{{
@@ -167,9 +167,8 @@
 {{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
 <document>
   <alertTemplate>
-    <title>PlexConnect</title>
+    <title style="text-align: left; color: #ff8000">PlexConnect</title>
     <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
   </alertTemplate>
 </document>
 }}
-
