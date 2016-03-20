@@ -15,7 +15,7 @@
   </head>
   {{IFNODE(MediaContainer/Directory)}}{{
   {{SET(noItems:false)}}
-  <alertTemplate theme="light" class="lightBackgroundColor">
+  <alertTemplate theme="dark" class="darkBackgroundColor">
     <title>{{VAL(MediaContainer/title1)}}</title>
     {{COPY(MediaContainer/Directory)}}{{
     {{IF({{VAL(prompt)}})}}{{

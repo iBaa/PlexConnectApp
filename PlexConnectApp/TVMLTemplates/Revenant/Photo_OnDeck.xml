@@ -38,7 +38,7 @@
 {{SET(noItems:false)}}
         <identityBanner>
             <heroImg class="hero" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/bg:11:png)}}" width="400" height="400" />
-            <title class="header"><![CDATA[{{VAL(MediaContainer/title1)}}     ]]></title>
+            <title class="header">Discover <![CDATA[{{VAL(MediaContainer/title1)}}     ]]></title>
             <subtitle class="header"><![CDATA[{{PMSVAL(name)}}    ]]></subtitle>
             <row>
                 <buttonLockup onSelect="Presenter.loadContext('Photo_Filters', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">

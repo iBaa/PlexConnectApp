@@ -33,7 +33,7 @@
   </head>
   <stackTemplate theme="light" class="lightBackgroundColor">
     <identityBanner>
-      <title class="header"><![CDATA[{{VAL(MediaContainer/title1)}}     ]]></title>
+      <title class="header">Discover <![CDATA[{{VAL(MediaContainer/title1)}}     ]]></title>
       <subtitle class="header"><![CDATA[{{PMSVAL(name)}}    ]]></subtitle>
       <row>
         <buttonLockup onSelect="audioPlayer.nowPlaying()">
@@ -167,7 +167,7 @@
 {{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
 <document>
   <alertTemplate>
-    <title style="text-align: left; color: #ff8000">PlexConnect</title>
+    <title>PlexConnect</title>
     <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
   </alertTemplate>
 </document>

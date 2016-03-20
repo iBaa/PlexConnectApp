@@ -89,7 +89,7 @@
 						}}
           }}
           <title><![CDATA[{{VAL(title)}}]]></title>
-          <subtitle><![CDATA[Episode {{VAL(index)}}  •  {{EVAL({{VAL(duration)}}/1000/60)}}{{TEXT( minutes)}}]]></subtitle>
+          <subtitle><![CDATA[{{EVAL({{VAL(duration)}}/1000/60)}}{{TEXT( minutes)}}]]></subtitle>
           <!--<decorationLabel><![CDATA[{{VAL(leafCount)}}]]></decorationLabel>-->
         	<decorationImage style="margin: 0 0 0 0; tv-align: right" src="{{IMAGEURL(thumb::384)}}" width="192" height="192"/>
       </listItemLockup>

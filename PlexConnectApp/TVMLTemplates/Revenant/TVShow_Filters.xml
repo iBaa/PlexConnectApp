@@ -14,7 +14,7 @@
           }
         </style>
     </head>
-    <alertTemplate theme="light" class="lightBackgroundColor">
+    <alertTemplate theme="dark" class="darkBackgroundColor">
     <title>Filters:</title>
 
 	{{COPY(MediaContainer/Directory)}}
@@ -66,7 +66,7 @@
 {{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
 <document>
   <alertTemplate>
-    <title>TITLE</title>
+    <title>PlexConnect</title>
     <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
   </alertTemplate>
 </document>

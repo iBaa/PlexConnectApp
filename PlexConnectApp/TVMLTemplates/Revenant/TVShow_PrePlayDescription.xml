@@ -14,12 +14,12 @@ See LICENSE.txt for this sample’s licensing information
       }
     </style>
   </head>
-  
+
   <descriptiveAlertTemplate>
-    <title><![CDATA[{{SEASONEPISODE({{VAL(MediaContainer/Video/parentIndex)}}:{{VAL(MediaContainer/Video/index)}})}} {{VAL(MediaContainer/Video/title)}}]]></title>
+    <title>{{TEXT(S)}}{{VAL(MediaContainer/Video/parentIndex)}} • {{TEXT(E)}}{{VAL(MediaContainer/Video/index)}} - {{VAL(MediaContainer/Video/title)}}</title>
     <subtitle class="subtitleStyle"><![CDATA[{{VAL(MediaContainer/Video/grandparentTitle)}}]]></subtitle>  <!--subtitleStyle - why is this black and small per default? -->
     <description><![CDATA[{{VAL(MediaContainer/Video/summary)}}]]></description>
-    
+
     <button
         onSelect="Presenter.closeContext()"
         >

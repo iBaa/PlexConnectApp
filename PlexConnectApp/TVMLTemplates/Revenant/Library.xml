@@ -266,7 +266,7 @@
           {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
           <overlay>
             <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched:png)}}"  width="72" height="72" />
-            <decorationLabel class="count">{{EVAL({{VAL(viewedLeafCount)}})}}</decorationLabel>
+            <decorationLabel class="count">{{EVAL({{VAL(leafCount)}}-{{VAL(viewedLeafCount)}})}}</decorationLabel>
           </overlay>
           }}
           <title><![CDATA[{{VAL(title)}}]]></title>

@@ -41,11 +41,15 @@
       </infoList>
       <stack>
         <title>{{VAL(MediaContainer/Video/index:)}}. {{VAL(MediaContainer/Video/title)}}</title>
-        <subtitle style="tv-text-style: subtitle3;"><![CDATA[{{VAL(MediaContainer/Video/grandparentTitle)}}]]></subtitle>
+        <row>
+        <text><![CDATA[{{VAL(MediaContainer/Video/grandparentTitle)}}]]></text>
+        <text>•</text>
+        <text><![CDATA[{{TEXT(S)}}{{VAL(MediaContainer/Video/parentIndex)}}]]> • <![CDATA[{{TEXT(E)}}{{VAL(MediaContainer/Video/index)}}]]></text>
+        <text>•</text>
+        <text><![CDATA[{{VAL(MediaContainer/Video/originallyAvailableAt)}}]]></text>
+      </row>
         <row>
           <text>{{DURATION({{VAL(MediaContainer/Video/duration)}})}}</text>
-          <text>•</text>
-          <text><![CDATA[{{VAL(MediaContainer/Video/originallyAvailableAt)}}]]></text>
           <text>•</text>
           <text><![CDATA[{{VAL(MediaContainer/Video/Media/videoResolution)}}]]></text>
           {{IF({{VAL(MediaContainer/Video/contentRating)}})}}{{
