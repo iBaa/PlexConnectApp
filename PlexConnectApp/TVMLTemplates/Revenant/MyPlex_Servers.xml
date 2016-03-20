@@ -62,7 +62,7 @@
         <listItemLockup
             id="{{PMSVAL(clientIdentifier)}}"
             onSelect="myPlex.switchServer(event);"
-            onSuccess="Presenter.load('Library', '{{PMSID(clientIdentifier:{{CUSTOMSETTING(pmsUuid)}})}}', '{{PATH(/library/sections)}}');"
+            onSuccess="Presenter.load('Library', '{{PMSID()}}', '{{PATH(/library/sections)}}');"
             >
             <title style="color: #00753A;"><![CDATA[{{PMSVAL(name)}}]]></title>
 

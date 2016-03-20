@@ -78,7 +78,7 @@
       </row>
     </identityBanner>
     <collectionList>
-    <shelf centered="true" autoHighlight="true">
+    <shelf autoHighlight="true">
       <header>
       	<title>{{PMSVAL(name)}}</title>
       </header>
