@@ -49,9 +49,16 @@
         .title {
         color: #ffffff;
         }
+        .count {
+        font-weight: bold;
+        font-size: 19;
+        text-align: center;
+        tv-position: bottom-right;
+        margin: -307 -89 307 89;
+        }
     </style>
   </head>
-  <stackTemplate>
+  <stackTemplate theme="light" class="lightBackgroundColor">
     <identityBanner class="banner">
       <title style="text-align: left; color: #ff8000">PlexConnect</title>
       <subtitle style="text-align: left;">Revenant Theme</subtitle>

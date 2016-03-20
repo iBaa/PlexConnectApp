@@ -7,19 +7,19 @@
 <document>
   <head>
     <style>
-    .whiteButton {
+      .whiteButton {
       tv-tint-color: rgb(255, 255, 255);
       width: 500;
       height: 200;
-    }
-    .plot {
+      }
+      .plot {
       min-height: 300;
       max-height: 400;
       margin: 50;
-    }
+      }
     </style>
   </head>
-  <compilationTemplate>
+  <compilationTemplate theme="light" class="lightBackgroundColor">
     <list>
       <relatedContent>
         <itemBanner>
@@ -43,7 +43,7 @@
           <text><![CDATA[{{VAL(MediaContainer/leafCount)}} items]]></text>
           <text><![CDATA[{{EVAL({{VAL(MediaContainer/duration)}}/60)}}{{TEXT( minutes)}}]]></text>
         </row>
-        
+
       </header>
       <section>
         <!-- shuffle -->
@@ -74,18 +74,18 @@
 	<listItemLockup style="height: 108;" onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH()}}')"
             onSelectHold="modal">
-           
+
           <!--<ordinal minLength="3" class="ordinalLayout">{{VAL(index)}}</ordinal-->
           <img src="{{IMAGEURL(thumb::120)}}" width="192" height="192" />
           <title><![CDATA[{{VAL(title)}}]]></title>
           <subtitle><![CDATA[{{VAL(grandparentTitle)}}]]></subtitle>
-          
+
           <decorationLabel>{{DURATION_HMS({{VAL(duration)}})}}</decorationLabel>
-          
+
           <!--<decorationImage src="{{IMAGEURL(thumb::384)}}" width="100" height="150"/>-->
         </listItemLockup>
-    
-}}        
+
+}}
       </section>
     </list>
   </compilationTemplate>
