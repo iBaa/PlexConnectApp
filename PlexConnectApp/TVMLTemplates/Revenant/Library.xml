@@ -61,7 +61,7 @@
   <stackTemplate theme="light" class="lightBackgroundColor">
     <identityBanner class="banner">
       <title style="text-align: left;">Discover {{PMSVAL(name)}}</title>
-      <subtitle style="text-align: left;">Library</subtitle>
+      <subtitle style="text-align: left;">{{USRVAL(name)}}</subtitle>
       <row>
         <buttonLockup onSelect="Presenter.loadAndSwap('Library', '{{PMSID(clientIdentifier:{{CUSTOMSETTING(pmsUuid)}})}}', '{{PATH(/library/sections)}}')">
           <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Reload:png)}}" width="50" height="50"/>
@@ -181,7 +181,7 @@
         <lockup
           onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
           onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-          onSelectHold="modal">
+          onHoldSelect="Presenter.loadContext('TVShow_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
           <img src="{{IMAGEURL(grandparentThumb::360)}}" height="310" width="207" />
           <overlay>
          		<img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:watching:png)}}"  width="72" height="72" />
@@ -194,7 +194,7 @@
         <lockup
           onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
           onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'resume')"
-          onSelectHold="modal">
+          onHoldSelect="Presenter.loadContext('Movie_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
           <img src="{{IMAGEURL(thumb::360)}}" height="310" width="207" />
           <overlay>
          		<img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:watching:png)}}"  width="72" height="72" />
