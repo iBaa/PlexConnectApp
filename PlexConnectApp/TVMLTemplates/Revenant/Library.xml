@@ -60,8 +60,8 @@
   </head>
   <stackTemplate theme="light" class="lightBackgroundColor">
     <identityBanner class="banner">
-      <title style="text-align: left; color: #ff8000">PlexConnect</title>
-      <subtitle style="text-align: left;">Revenant Theme</subtitle>
+      <title style="text-align: left;">Discover {{PMSVAL(name)}}</title>
+      <subtitle style="text-align: left;">Library</subtitle>
       <row>
         <buttonLockup onSelect="Presenter.loadAndSwap('Library', '{{PMSID(clientIdentifier:{{CUSTOMSETTING(pmsUuid)}})}}', '{{PATH(/library/sections)}}')">
           <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Reload:png)}}" width="50" height="50"/>
@@ -80,7 +80,7 @@
     <collectionList>
     <shelf autoHighlight="true">
       <header>
-      	<title>{{PMSVAL(name)}}</title>
+      	<title>Sections</title>
       </header>
       <section>
         {{COPY(MediaContainer/Directory)}}
