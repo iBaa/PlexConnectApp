@@ -17,19 +17,6 @@ See LICENSE.txt for this sample’s licensing information
   </head>
   <alertTemplate theme="dark" class="darkBackgroundColor">
     <title><![CDATA[{{VAL(MediaContainer/Video/title)}}]]></title>
-    <description><![CDATA[{{VAL(MediaContainer/Video/grandparentTitle)}}]]></description>
-
-    <button
-        onSelect="Presenter.load('TVShow_SeasonGrid', '{{PMSID()}}', '{{PATH({{VAL(MediaContainer/Video/grandparentKey)}}/children)}}'); Presenter.closeContext();"
-        >
-      <text>{{TEXT(View Show)}}</text>
-    </button>
-
-    <button
-        onSelect="Presenter.load('TVShow_EpisodeGrid', '{{PMSID()}}', '{{PATH({{VAL(MediaContainer/Video/parentKey)}}/children)}}'); Presenter.closeContext();"
-        >
-      <text>{{TEXT(View Season)}}</text>
-    </button>
 
 {{SET(showMarkWatched:false)}}  <!--default-->
 {{SET(showMarkUnwatched:false)}}
@@ -58,7 +45,7 @@ See LICENSE.txt for this sample’s licensing information
     </button>
 }}
 
-    <!--mark change artwork-->
+    <!--change artwork-->
 
   </alertTemplate>
 </document>

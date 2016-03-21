@@ -12,10 +12,11 @@
       </style>
   </head>
   <alertTemplate theme="dark" class="darkBackgroundColor">
-			<button onSelect="swiftInterface.sendPmsPath('{{PMSID()}}', '/:/scrobble?key={{PATH()}}&amp;identifier=com.plexapp.plugins.library'); Presenter.closeContext();">
+    <title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
+			<button onSelect="swiftInterface.sendPmsPath('{{PMSID()}}', '/:/scrobble?key={{VAL(MediaContainer/raitingKey)}}&amp;identifier=com.plexapp.plugins.library'); Presenter.closeContext();">
        	<text>{{TEXT(Mark as Watched)}}</text>
       </button>
-      <button onSelect="swiftInterface.sendPmsPath('{{PMSID()}}', '/:/unscrobble?key={{PATH()}}&amp;identifier=com.plexapp.plugins.library'); Presenter.closeContext();">
+      <button onSelect="swiftInterface.sendPmsPath('{{PMSID()}}', '/:/unscrobble?key={{VAL(MediaContainer/raitingKey)}}&amp;identifier=com.plexapp.plugins.library'); Presenter.closeContext();">
        	<text>{{TEXT(Mark as Unwatched)}}</text>
       </button>
     </alertTemplate>

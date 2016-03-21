@@ -48,7 +48,7 @@
             <grid>
               <section>
                 {{COPY(MediaContainer/Directory)}}{{
-                <lockup onSelect="Presenter.load('TVShow_SeasonList', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                <lockup onSelect="Presenter.load('TVShow_SeasonGrid', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                   onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                   onHoldSelect="Presenter.loadContext('Movie_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
                   <img src="{{IMAGE_T(thumb::360)}}" height="375" width="250" />

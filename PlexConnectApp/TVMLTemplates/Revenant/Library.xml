@@ -181,7 +181,7 @@
         <lockup
           onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
           onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-          onHoldSelect="Presenter.loadContext('TVShow_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
+          onHoldSelect="Presenter.loadContext('TVShow_EpisodeContext', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
           <img src="{{IMAGEURL(grandparentThumb::360)}}" height="310" width="207" />
           <overlay>
          		<img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:watching:png)}}"  width="72" height="72" />
@@ -194,7 +194,7 @@
         <lockup
           onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
           onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'resume')"
-          onHoldSelect="Presenter.loadContext('Movie_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
+          onHoldSelect="Presenter.loadContext('Movie_MovieContext', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
           <img src="{{IMAGEURL(thumb::360)}}" height="310" width="207" />
           <overlay>
          		<img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:watching:png)}}"  width="72" height="72" />
@@ -221,7 +221,7 @@
         {{IF({{VAL(viewOffset)}})}}{{
         <lockup onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
           onPlay="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-          onHoldSelect="Presenter.loadContext('Movie_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
+          onHoldSelect="Presenter.loadContext('Movie_MovieContext', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
           <img src="{{IMAGE_T(thumb::360)}}" height="375" width="250" />
           <overlay>
             <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:watching:png)}}"  width="72" height="72" />
@@ -233,7 +233,7 @@
         {{IF(!{{VAL(viewOffset)}})}}{{
         <lockup onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
           onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-          onHoldSelect="Presenter.loadContext('Movie_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
+          onHoldSelect="Presenter.loadContext('Movie_MovieContext', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
           <img src="{{IMAGE_T(thumb::360)}}" height="375" width="250" />
           {{IF(!{{VAL(viewCount)}})}}{{
           <overlay>
@@ -257,9 +257,9 @@
     {{COPY(MediaContainer/Directory)}}{{
         {{IF({{CHK("{{VAL(type:)}}"=="season")}})}}{{
         {{SET(noItems:false)}}
-        <lockup onSelect="Presenter.load('TVShow_EpisodeList', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+        <lockup onSelect="Presenter.load('TVShow_EpisodeGrid', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
           onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-          onHoldSelect="Presenter.loadContext('TVShow_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
+          onHoldSelect="Presenter.loadContext('TVShow_ShowContext', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
           <img src="{{IMAGE_T(thumb::360)}}" height="375" width="250" />
           {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
           <overlay>

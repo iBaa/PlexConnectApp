@@ -47,7 +47,7 @@
   <stackTemplate theme="light" class="lightBackgroundColor">
     <identityBanner>
       <title class="header"><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
-      <subtitle class="header"><![CDATA[{{VAL(MediaContainer/title1)}}]]> - <![CDATA[{{VAL(MediaContainer/size)}}]]></subtitle>
+      <subtitle class="header"><![CDATA[{{VAL(MediaContainer/title1)}}]]>  <![CDATA[  ({{VAL(MediaContainer/size)}})]]></subtitle>
       <row>
         <!--<buttonLockup onSelect="Presenter.loadContext('Movie_Filters', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
           <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Library:png)}}" width="50" height="50"/>

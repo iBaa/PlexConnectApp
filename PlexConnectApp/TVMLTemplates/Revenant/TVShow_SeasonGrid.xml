@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+  <head>
+    <style>
+    .plot {
+      min-height: 300;
+      max-height: 400;
+      margin: 50;
+    }
+    </style>
+  </head>
+   <productBundleTemplate>
+      <background>
+      </background>
+      <banner>
+         <stack>
+            <title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
+            <row>
+              <text><![CDATA[{{VAL(MediaContainer/parentYear)}}]]></text>
+               <text><![CDATA[{{VAL(MediaContainer/parentGenre)}}]]></text>
+               <text><![CDATA[{{VAL(MediaContainer/Directory/parentStudio)}}]]></text>
+            </row>
+            <row>
+              <text><![CDATA[{{VAL(MediaContainer/Directory/leafCount)}}]]> episodes</text>
+              <text><![CDATA[({{EVAL({{VAL(MediaContainer/Directory/leafCount)}}-{{VAL(MediaContainer/Directory/viewedLeafCount)}})}} unwatched)]]></text>
+            </row>
+
+            <description style="tv-text-max-lines: 6" allowsZooming="true" moreLabel="MORE"
+                onSelect="Presenter.loadContext('TVShow_Description', '{{PMSID()}}', '{{PATH()}}')">
+              <![CDATA[{{VAL(MediaContainer/summary)}}]]>
+            </description>
+            <row>
+              <buttonLockup onSelect="Presenter.load('TVShow_ShowContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+                <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Eye:png)}}" width="50" height="50"/>
+                <title>Watch Status</title>
+              </buttonLockup>
+            </row>
+         </stack>
+         <heroImg src="{{IMAGEURL(MediaContainer/thumb::)}}" />
+      </banner>
+      <shelf style="margin: 0 0 90 0;">
+         <header>
+            <title>Seasons</title>
+         </header>
+         <section>
+           {{COPY(MediaContainer/Directory)}}{{
+           {{SET(noItems:false)}}
+                     <lockup
+                       onSelect="Presenter.load('TVShow_EpisodeGrid', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                       onSelectHold="modal"
+                       >
+                       <img src="{{IMAGEURL(thumb::384)}}" width="250" height="375" />
+
+                       <title><![CDATA[{{VAL(title)}}]]></title>
+                       <subtitle>{{VAL(leafCount)}} {{TEXT(Episodes)}}</subtitle>
+                       <subtitle><![CDATA[{{EVAL({{VAL(leafCount)}}-{{VAL(viewedLeafCount)}})}} unwatched]]></subtitle>
+                     </lockup>
+           }}
+         </section>
+      </shelf>
+    </productBundleTemplate>
+  </document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>PlexConnect</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

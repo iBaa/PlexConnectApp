@@ -30,7 +30,7 @@
   <stackTemplate theme="light" class="lightBackgroundColor">
     <identityBanner>
       <title class="header"><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
-      <subtitle class="header"><![CDATA[{{VAL(MediaContainer/title1)}}]]> - <![CDATA[{{VAL(MediaContainer/size)}}]]></subtitle>
+      <subtitle class="header"><![CDATA[{{VAL(MediaContainer/title1)}}]]>  <![CDATA[  ({{VAL(MediaContainer/size)}})]]></subtitle>
       <row>
         <!--<buttonLockup onSelect="Presenter.loadContext('Movie_Filters', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
          <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Library:png)}}" width="50" height="50"/>
@@ -52,7 +52,7 @@
         <section>
           {{COPY(MediaContainer/Directory)}}{{
           {{SET(noItems:false)}}
-          <lockup onSelect="Presenter.load('TVShow_SeasonList', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+          <lockup onSelect="Presenter.load('TVShow_SeasonGrid', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onHoldSelect="Presenter.loadContext('Movie_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
             <img src="{{IMAGE_T(thumb::360)}}" height="375" width="250" />
