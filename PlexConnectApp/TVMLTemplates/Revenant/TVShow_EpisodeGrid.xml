@@ -29,7 +29,7 @@
             <row>
               <text><![CDATA[{{VAL(MediaContainer/size)}} episodes]]></text>
             </row>
-            <description style="tv-text-max-lines: 6" allowsZooming="true" moreLabel="MORE"
+            <description style="tv-text-max-lines: 3" allowsZooming="true" moreLabel="MORE"
                 onSelect="Presenter.loadContext('TVShow_Description', '{{PMSID()}}', '{{PATH()}}')">
               <![CDATA[{{VAL(MediaContainer/summary)}}]]>
             </description>

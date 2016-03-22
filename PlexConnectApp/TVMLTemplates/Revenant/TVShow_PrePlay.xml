@@ -81,7 +81,7 @@
                     {{IF({{CHK("{{VAL(streamType:)}}"="2")}})}}{{
                     {{IF({{CHK("{{VAL(selected)}}"="1")}})}}{{
                     {{SET(AudioIsDefault:false)}}
-                    <buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
+                    <buttonLockup id="audio" onSelect="Presenter.loadContext('TVShow_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
                         <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Audio:png)}}" width="50" height="50"/>
                         <title>{{UPPERCASE({{VAL(languageCode)}})}} {{VAL(codec)}}</title>
                     </buttonLockup>
@@ -92,7 +92,7 @@
                     {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
                     {{IF({{CHK("{{VAL(streamType:)}}"="2")}})}}{{
                     {{IF({{CHK("{{VAL(default)}}"="1")}})}}{{
-                    <buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
+                    <buttonLockup id="audio" onSelect="Presenter.loadContext('TVShow_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
                         <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Audio:png)}}" width="50" height="50"/>
                         <title>{{UPPERCASE({{VAL(languageCode)}})}} {{VAL(codec)}}</title>
                     </buttonLockup>
@@ -105,7 +105,7 @@
                     {{IF({{CHK("{{VAL(streamType:)}}"="3")}})}}{{
                     {{IF({{CHK("{{VAL(selected)}}"="1")}})}}{{
                     {{SET(SubsIsDefault:false)}}
-                    <buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_SubsPopUp', '{{PMSID()}}', '{{PATH()}}')">
+                    <buttonLockup id="audio" onSelect="Presenter.loadContext('TVShow_SubsPopUp', '{{PMSID()}}', '{{PATH()}}')">
                         <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Subtitles:png)}}" width="50" height="50"/>
                         <title>{{UPPERCASE({{VAL(languageCode)}})}} {{VAL(codec)}}</title>
                     </buttonLockup>
@@ -116,7 +116,7 @@
                     {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
                     {{IF({{CHK("{{VAL(streamType:)}}"="3")}})}}{{
                     {{IF({{CHK("{{VAL(default)}}"="1")}})}}{{
-                    <buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_SubsPopUp', '{{PMSID()}}', '{{PATH()}}')">
+                    <buttonLockup id="audio" onSelect="Presenter.loadContext('TVShow_SubsPopUp', '{{PMSID()}}', '{{PATH()}}')">
                         <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Subtitles:png)}}" width="50" height="50"/>
                         <title>{{UPPERCASE({{VAL(languageCode)}})}} {{VAL(codec)}}</title>
                     </buttonLockup>
