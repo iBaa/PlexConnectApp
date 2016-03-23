@@ -47,26 +47,17 @@ class cPlexUserInformation {
         if let token = _storage.stringForKey("token") {
             _attributes["token"] = token
         }
-        
-        print ("Preferences stored by init():")
-        print(_storage.dictionaryRepresentation())
     }
     
     init(xmlUser: XMLIndexer) {
         _xmlUser = xmlUser
         _xmlHomeUser = nil
-        _attributes = ["adminname": "", "name": "", "email": "", "token": "", "theme": ""]
-        
+        _attributes = ["adminname": "", "name": "", "email": "", "token": ""]
+       
         // todo: check XML and neccessary nodes
         if let name = xmlUser.element!.attributes["title"] {
             _attributes["adminname"] = name
             _attributes["name"] = name
-            
-            if name == "Annicka" {
-                settings.setSetting("theme", ix: 2)
-            } else {
-                settings.setSetting("theme", ix: 1)
-            }
         }
         if let email = xmlUser.element!.attributes["email"] {
             _attributes["email"] = email
@@ -74,15 +65,8 @@ class cPlexUserInformation {
         if let token = xmlUser.element!.attributes["authenticationToken"] {
             _attributes["token"] = token
         }
-        
-        let theme = settings.getSetting("theme")
-        _attributes["theme"] = theme
-        
-        store()
-        // _storage.setObject(_attributes, forKey: _attributes["name"]!)
 
-        print ("Preferences stored by init(user):")
-        print(_storage.dictionaryRepresentation())
+        store()
     }
     
     func switchHomeUser(xmlUser: XMLIndexer) {
@@ -90,11 +74,6 @@ class cPlexUserInformation {
 
         if let name = xmlUser.element!.attributes["title"] {
             _attributes["name"] = name
-            if name == "Annicka" {
-                settings.setSetting("theme", ix: 2)
-            } else {
-                settings.setSetting("theme", ix: 1)
-            }
         }
         if let email = xmlUser.element!.attributes["email"] {
             _attributes["email"] = email
@@ -103,13 +82,7 @@ class cPlexUserInformation {
             _attributes["token"] = token
         }
         
-        let theme = settings.getSetting("theme")
-        _attributes["theme"] = theme
-        
         store()
-        // _storage.setObject(_attributes, forKey: _attributes["name"]!)
-        print ("Preferences stored by switchHomeUser:")
-        print(_storage.dictionaryRepresentation())
     }
     
     func clear() {

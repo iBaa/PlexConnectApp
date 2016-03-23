@@ -26,7 +26,7 @@ See LICENSE.txt for this sample’s licensing information
 <document>
   <alertTemplate
     onLoad="discover(event);"
-    onSuccess="Presenter.loadAndSwap('Startup','','');"
+    onSuccess="Presenter.loadAndSwap('Main_MenuBar','','');"
     >
   </alertTemplate>
 </document>
@@ -47,7 +47,7 @@ See LICENSE.txt for this sample’s licensing information
 <!--no XML received: switch to offline mode--> <!--todo: plexGDM, PMS by IP-->
 <document>
   <alertTemplate style="color: #888888;">
-    <title>PlexConnect</title>
+    <title>TITLE</title>
     <description>{{TEXT(No answer from plex.tv. For now I'm stuck.)}}</description>
   </alertTemplate>
 </document>
