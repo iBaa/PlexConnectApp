@@ -62,12 +62,21 @@ See LICENSE.txt for this sample’s licensing information
         .text-align: left;
         .margin: 0 0 0 -200;
         }
+        .count {
+        tv-text-style: none;
+        color: #000000;
+        font-weight: bold;
+        font-size: 19;
+        text-align: center;
+        tv-position: bottom-right;
+        margin: -307 -89 307 89;
+        }
     </style>
   </head>
   <stackTemplate theme="light" class="lightBackgroundColor">
     <identityBanner class="banner">
       <title style="text-align: left;">Shared Libraries</title>
-      <subtitle style="text-align: left;">All Servers</subtitle>
+      <subtitle style="text-align: left;">All Shared Servers</subtitle>
       <row>
         <buttonLockup onSelect="Presenter.loadAndSwap('SharedLibries', '{{PMSID()}}', '{{PATH(/library/sections)}}')">
           <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Reload:png)}}" width="50" height="50"/>

@@ -10,6 +10,15 @@
       max-height: 400;
       margin: 50;
     }
+    .count {
+    tv-text-style: none;
+    color: #000000;
+    font-weight: bold;
+    font-size: 19;
+    text-align: center;
+    tv-position: bottom-right;
+    margin: -307 -89 307 89;
+    }
     </style>
   </head>
    <productBundleTemplate>
@@ -33,7 +42,7 @@
               <![CDATA[{{VAL(MediaContainer/summary)}}]]>
             </description>
             <row>
-              <buttonLockup onSelect="Presenter.load('TVShow_ShowContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+              <buttonLockup onSelect="Presenter.load('ContextMenu', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
                 <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Eye:png)}}" width="50" height="50"/>
                 <title>Watch Status</title>
               </buttonLockup>
@@ -52,7 +61,12 @@
                        onSelect="Presenter.load('TVShow_EpisodeGrid', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                        onSelectHold="modal"
                        >
-                       <img src="{{IMAGEURL(thumb::384)}}" width="250" height="375" />
+                       <img src="{{IMAGEURL(thumb::384)}}" width="250" height="375" />{{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
+                       <overlay>
+                         <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched:png)}}"  width="72" height="72" />
+                         <decorationLabel class="count">{{EVAL({{VAL(leafCount)}}-{{VAL(viewedLeafCount)}})}}</decorationLabel>
+                       </overlay>
+                       }}
 
                        <title><![CDATA[{{VAL(title)}}]]></title>
                        <subtitle>{{VAL(leafCount)}} {{TEXT(Episodes)}}</subtitle>

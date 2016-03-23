@@ -233,7 +233,7 @@
         {{IF(!{{VAL(viewOffset)}})}}{{
         <lockup onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
           onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-          onHoldSelect="Presenter.loadContext('Movie_MovieContext', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
+          onHoldSelect="Presenter.loadContext('Library_MovieContext', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
           <img src="{{IMAGE_T(thumb::360)}}" height="375" width="250" />
           {{IF(!{{VAL(viewCount)}})}}{{
           <overlay>
@@ -259,7 +259,7 @@
         {{SET(noItems:false)}}
         <lockup onSelect="Presenter.load('TVShow_EpisodeGrid', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
           onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-          onHoldSelect="Presenter.loadContext('TVShow_ShowContext', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
+          onHoldSelect="Presenter.loadContext('Library_ShowContext', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
           <img src="{{IMAGE_T(thumb::360)}}" height="375" width="250" />
           {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
           <overlay>

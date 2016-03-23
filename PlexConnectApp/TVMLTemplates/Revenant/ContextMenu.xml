@@ -11,7 +11,7 @@
         }
       </style>
   </head>
-  <alertTemplate theme="dark" class="darkBackgroundColor">
+  <alertTemplate theme="light">
     <title>Menu:</title>
 			<button onSelect="swiftInterface.sendPmsPath('{{PMSID()}}', '/:/scrobble?key={{VAL(MediaContainer/Video/ratingKey)}}&amp;identifier=com.plexapp.plugins.library'); Presenter.closeContext();">
        	<text>{{TEXT(Mark as Watched)}}</text>
