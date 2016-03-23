@@ -43,7 +43,7 @@ class cSettings {
             ], 0
         ),
         "theme": ([
-            "Default", "Revenant", "Fanart", "Grids'n'Posters"
+            "Default", "Revenant", "Fanart"
             ], 0
         ),
         "themeExternalOverride": ([

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+<document>
+  <loadingTemplate>
+    <activityIndicator>
+      <title>{{TEXT(Connecting to your Plex Media Servers...)}}</title>
+    </activityIndicator>
+  </loadingTemplate>
+</document>

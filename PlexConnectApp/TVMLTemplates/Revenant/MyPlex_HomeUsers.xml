@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{PMS(plex.tv)}}{{
+{{XML(/api/home/users)}}{{
+<document>
+  <listTemplate>
+    <list>
+
+      <header>
+        <title>{{TEXT(Plex Home Users)}}</title>
+      </header>
+
+      <section>
+{{COPY(MediaContainer/User)}}{{
+{{SET(noItems:false)}}
+        <listItemLockup
+            {{IF({{CHK("{{USRVAL(name)}}"=="{{VAL(title)}}")}})}}{{ autoHighlight="true" }}
+            id="{{VAL(id)}}"
+            username="{{VAL(title)}}"
+            protected="{{VAL(protected)}}"
+            onSelect="myPlex.switchHomeUser(event);"
+            onSuccess="navigationDocument.popDocument();  // remove this page"
+            onError="Presenter.load('MyPlex_SignInFailed','','');"
+            >
+          <row>
+            <title><![CDATA[{{VAL(title)}}]]></title>
+{{IF({{VAL(admin)}})}}{{
+            <decorationImage src="{{RESOURCEURL(Images:icon_key:png)}}" width="27" height="26" />
+}}
+{{IF({{VAL(protected)}})}}{{
+            <decorationImage src="{{RESOURCEURL(Images:icon_lock:png)}}" width="19" height="23" />
+}}
+{{IF({{CHK("{{USRVAL(name)}}"=="{{VAL(title)}}")}})}}{{
+            <decorationImage src="resource://button-checkmark" />
+}}
+          </row>
+          <relatedContent>
+            <lockup>
+              <img src="{{IMAGEURL(thumb::768)}}" width="" height="" />
+              <title><![CDATA[{{VAL(title)}}]]></title>
+              <description><![CDATA[{{VAL(email)}}]]></description>
+            </lockup>
+          </relatedContent>
+        </listItemLockup>
+}}
+      </section>
+      
+    </list>
+  </listTemplate>
+</document>
+}}
+}}
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>TITLE</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}
