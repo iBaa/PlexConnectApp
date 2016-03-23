@@ -69,11 +69,11 @@ See LICENSE.txt for this sample’s licensing information
       <title style="text-align: left;">Shared Libraries</title>
       <subtitle style="text-align: left;">All Servers</subtitle>
       <row>
-        <buttonLockup onSelect="Presenter.loadAndSwap('SharedLibries', '{{PMSID(clientIdentifier:{{CUSTOMSETTING(pmsUuid)}})}}', '{{PATH(/library/sections)}}')">
+        <buttonLockup onSelect="Presenter.loadAndSwap('SharedLibries', '{{PMSID()}}', '{{PATH(/library/sections)}}')">
           <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Reload:png)}}" width="50" height="50"/>
           <title>Reload</title>
         </buttonLockup>
-          <buttonLockup onSelect="Presenter.load('Search_All', '{{PMSID(clientIdentifier:{{CUSTOMSETTING(pmsUuid)}})}}', '')">
+          <buttonLockup onSelect="Presenter.load('Search_All', '{{PMSID()}}', '')">
               <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Search:png)}}" width="50" height="50"/>
               <title>Search</title>
           </buttonLockup>
@@ -222,7 +222,7 @@ See LICENSE.txt for this sample’s licensing information
 
       {{IF({{CHK("{{VAL(type)}}"="episode")}})}}{{
       <lockup onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-      onHoldSelect="Presenter.loadContext('Movie_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')"
+      onHoldSelect="Presenter.loadContext('TVShow_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')"
       {{IF(!{{VAL(viewOffset)}})}}{{
       onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
       }}
@@ -252,9 +252,9 @@ See LICENSE.txt for this sample’s licensing information
       {{IFNODE(Directory)}}{{
       {{COPY(Directory)}}{{
       {{IF({{CHK("{{VAL(type)}}"="season")}})}}{{
-      <lockup onSelect="Presenter.load('TVShow_SeasonGrid', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+      <lockup onSelect="Presenter.load('TVShow_EpisodeGrid', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
         onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-        onHoldSelect="Presenter.loadContext('Movie_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
+        onHoldSelect="Presenter.loadContext('TVShow_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
         <img src="{{IMAGE_T(thumb::360)}}" height="375" width="250" />
         {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
         <overlay>
