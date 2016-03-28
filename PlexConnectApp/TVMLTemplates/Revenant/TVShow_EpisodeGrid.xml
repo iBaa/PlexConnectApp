@@ -57,7 +57,7 @@
           <lockup
               onSelect="Presenter.loadAndSwap('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
               onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-              onHoldSelect="Presenter.loadContext('TVShow_EpisodeContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+              onHoldSelect="Presenter.loadContext('TVShow_MorePopUp', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
               >
             <img src="{{IMAGEURL(thumb::360)}}" width="300" height="201" />
             {{IF({{CHK("{{VAL(viewOffset:)}}">"0")}})}}{{
