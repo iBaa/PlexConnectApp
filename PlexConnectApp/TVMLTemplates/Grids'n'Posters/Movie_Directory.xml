@@ -31,7 +31,7 @@ See LICENSE.txt for this sample’s licensing information
           <lockup
             onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-            onSelectHold="modal"
+            onHoldSelect="Presenter.loadContext('Movie_MovieContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             >
             <img src="{{IMAGEURL(thumb::384)}}" width="200" height="300" />
             <title><![CDATA[{{VAL(title)}}]]></title>

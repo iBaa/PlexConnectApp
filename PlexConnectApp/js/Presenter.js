@@ -43,6 +43,13 @@ setupViewDocument: function(view, pmsId, pmsPath) {
   doc.addEventListener("highlight", Presenter.onHighlight.bind(Presenter));
   doc.addEventListener("load", Presenter.onLoad.bind(Presenter));  // setup search for char entered
   
+  // store address in DOM - eg for later page refresh
+  doc.source = {
+    view: view,
+    pmsId: pmsId,
+    pmsPath: pmsPath,
+  };
+  
   return doc
 },
 
