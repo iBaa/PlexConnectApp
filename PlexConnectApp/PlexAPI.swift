@@ -34,7 +34,7 @@ class cPlexUserInformation {
     init() {
         _xmlUser = nil
         _xmlHomeUser = nil
-        _attributes = ["adminname": "", "name": "", "email": "", "token": ""]
+        _attributes = ["adminname": "", "name": "", "email": "", "token": "", "id": ""]
 
         if let name = _storage.stringForKey("adminname") {
             _attributes["adminname"] = name
@@ -48,12 +48,15 @@ class cPlexUserInformation {
         if let token = _storage.stringForKey("token") {
             _attributes["token"] = token
         }
+        if let id = _storage.stringForKey("id") {  // todo: store XML and direct access into nodes/attributes
+            _attributes["id"] = id
+        }
     }
     
     init(xmlUser: XMLIndexer) {
         _xmlUser = xmlUser
         _xmlHomeUser = nil
-        _attributes = ["adminname": "", "name": "", "email": "", "token": ""]
+        _attributes = ["adminname": "", "name": "", "email": "", "token": "", "id": ""]
        
         // todo: check XML and neccessary nodes
         if let name = xmlUser.element!.attributes["title"] {
@@ -65,6 +68,9 @@ class cPlexUserInformation {
         }
         if let token = xmlUser.element!.attributes["authenticationToken"] {
             _attributes["token"] = token
+        }
+        if let id = _storage.stringForKey("id") {
+            _attributes["id"] = id
         }
 
         store()
@@ -82,6 +88,9 @@ class cPlexUserInformation {
         if let token = xmlUser.element!.attributes["authenticationToken"] {
             _attributes["token"] = token
         }
+        if let id = xmlUser.element!.attributes["id"] {
+            _attributes["id"] = id
+        }
         
         store()
     }
@@ -89,7 +98,7 @@ class cPlexUserInformation {
     func clear() {
         _xmlUser = nil
         _xmlHomeUser = nil
-        _attributes = ["adminname": "", "name": "", "email": "", "token": ""]
+        _attributes = ["adminname": "", "name": "", "email": "", "token": "", "id": ""]
     
         store()
     }
@@ -99,6 +108,7 @@ class cPlexUserInformation {
         _storage.setObject(_attributes["name"], forKey: "name")
         _storage.setObject(_attributes["email"], forKey: "email")
         _storage.setObject(_attributes["token"], forKey: "token")
+        _storage.setObject(_attributes["id"], forKey: "id")
     }
     
     func getAttribute(key: String) -> String {
