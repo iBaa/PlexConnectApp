@@ -154,7 +154,7 @@
         <lockup
             onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             >
-          <img src="{{IMAGEURL(thumb::60)}}" width="384" height="216" />
+          <img src="{{IMAGEURL(thumb::360)}}" width="306" height="207" />
           <title><![CDATA[{{VAL(title)}}]]></title>
           <subtitle>{{TABLE({{VAL(extraType)}}:{{TEXT(Clip)}}:1:{{TEXT(Trailer)}}:2:{{TEXT(Deleted Scene)}}:3:{{TEXT(Interview)}}:4:{{TEXT(Music Video)}}:5:{{TEXT(Behind the Scenes)}}:6:{{TEXT(Scene)}}:7:{{TEXT(Live Video)}}:8:{{TEXT(Lyrics Video)}})}}</subtitle>
         </lockup>

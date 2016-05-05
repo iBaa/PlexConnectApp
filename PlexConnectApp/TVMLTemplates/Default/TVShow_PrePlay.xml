@@ -73,6 +73,7 @@ See LICENSE.txt for this sample’s licensing information
       <heroImg src="{{IMAGEURL(MediaContainer/Video/thumb::768)}}" />
     </banner>
 
+{{SET(ratingKey:{{VAL(MediaContainer/Video/ratingKey)}})}}  <!-- see IF CHK: centers shelf at current episode -->
 {{XML(/library/metadata/{{VAL(MediaContainer/Video/parentRatingKey)}}/children)}}{{
 <!--or cascade: (MediaContainer/Video/parentKey)->(MediaContainer/Directory/key)-->
 
@@ -86,7 +87,8 @@ See LICENSE.txt for this sample’s licensing information
         <lockup
             onSelect="Presenter.loadAndSwap('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-            onSelectHold="modal"
+            onHoldSelect="Presenter.loadContext('TVShow_EpisodeContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            {{IF({{CHK("{{VAL(ratingKey)}}"=="{{GET(ratingKey)}}")}})}}{{ autoHighlight = "True" }}
             >
           <img src="{{IMAGEURL(thumb::384)}}" width="150" height="226" />
           <title><![CDATA[{{VAL(index)}}. {{VAL(title)}}]]></title>

@@ -56,13 +56,23 @@ class cSettings {
         
     }
     
+    
+    func getUserKey(key: String) -> String {
+        let userId = plexUserInformation.getAttribute("id")
+        if userId == "" {
+            return key  // provision for "offline" // fallback to original setting
+        } else {
+            return userId+"#"+key
+        }
+    }
+    
     func getSetting(key: String) -> String {
         if let setting = _settings[key] {
             let (choices, dflt) = setting
             
             // get current selection ix
             var ix: Int
-            let storedIx = _storage.integerForKey(key)-1  // -1 to work around 0==uninitialised
+            let storedIx = _storage.integerForKey(getUserKey(key))-1  // -1 to work around 0==uninitialised
             if storedIx < 0 || storedIx >= choices.count {  // ==0: uninitialised; >count: out of range
                 ix = dflt
             } else {
@@ -79,9 +89,9 @@ class cSettings {
             let (choices, dflt) = setting
             
             if ix < 0 || ix >= choices.count {  // ==0: uninitialised; >count: out of range
-                _storage.setInteger(dflt+1, forKey: key)
+                _storage.setInteger(dflt+1, forKey: getUserKey(key))
             } else {
-                _storage.setInteger(ix+1, forKey: key)
+                _storage.setInteger(ix+1, forKey: getUserKey(key))
             }
         }
     }
@@ -92,7 +102,7 @@ class cSettings {
 
             // get current selection ix
             var ix: Int
-            let storedIx = _storage.integerForKey(key)-1  // -1 to work around 0==uninitialised
+            let storedIx = _storage.integerForKey(getUserKey(key))-1  // -1 to work around 0==uninitialised
             if storedIx < 0 || storedIx >= choices.count {  // <0: uninitialised; >count: out of range
                 ix = dflt
             } else {
@@ -106,7 +116,7 @@ class cSettings {
             }
             
             // store selection ix
-            _storage.setInteger(ix+1, forKey: key)
+            _storage.setInteger(ix+1, forKey: getUserKey(key))
             return choices[ix]
         }
         return ""
@@ -114,18 +124,18 @@ class cSettings {
     
     func setDefaults() {
         for (key, (choices, dflt)) in _settings {
-            _storage.setInteger(dflt+1, forKey: key)  // store +1, as get returns 0 if uninitialised
+            _storage.setInteger(dflt+1, forKey: getUserKey(key))  // store +1, as get returns 0 if uninitialised
         }
     }
     
     func getCustomString(key: String) -> String {
-        if let value = _storage.stringForKey(key) {
+        if let value = _storage.stringForKey(getUserKey(key)) {
             return value
         }
         return ""
     }
     
     func setCustomString(key: String, value: String) {
-        _storage.setObject(value, forKey: key)
+        _storage.setObject(value, forKey: getUserKey(key))
     }
 }
