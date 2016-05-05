@@ -51,14 +51,8 @@
             {{IF({{VAL(MediaContainer/Video/audienceRatingImage)}})}}{{
             <text><badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/RT:{{RTBADGE(MediaContainer/Video/audienceRatingImage)}}:png)}}" width="28" height="28"/> {{EVAL({{VAL(MediaContainer/Video/audienceRating:0)}}*10)}}%</text>
             }}
-            <text>•</text>
-          <text><![CDATA[{{VAL(MediaContainer/Video/Genre/tag)}}]]></text>
-          <text>•</text>
-          <text>{{DURATION_HM({{VAL(MediaContainer/Video/duration)}})}}</text>
-          <text>•</text>
-          <text><![CDATA[{{VAL(MediaContainer/Video/Media/videoResolution)}}]]></text>
+          <text><![CDATA[{{VAL(MediaContainer/Video/Genre/tag)}}]]> • {{DURATION_HM({{VAL(MediaContainer/Video/duration)}})}} • <![CDATA[{{VAL(MediaContainer/Video/Media/videoResolution)}}]]></text>
           {{IF({{VAL(MediaContainer/Video/contentRating)}})}}{{
-          <text>•</text>
           <textBadge><![CDATA[{{UPPERCASE({{VAL(MediaContainer/Video/contentRating)}})}}]]> </textBadge>
           }}
         </row>

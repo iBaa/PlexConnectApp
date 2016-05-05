@@ -42,22 +42,12 @@
       <stack>
         <title>{{VAL(MediaContainer/Video/index:)}}. {{VAL(MediaContainer/Video/title)}}</title>
         <row>
-        <text><![CDATA[{{VAL(MediaContainer/Video/grandparentTitle)}}]]></text>
-        <text>•</text>
-        <text><![CDATA[{{TEXT(S)}}{{VAL(MediaContainer/Video/parentIndex)}}]]> • <![CDATA[{{TEXT(E)}}{{VAL(MediaContainer/Video/index)}}]]></text>
-        <text>•</text>
-        <text><![CDATA[{{VAL(MediaContainer/Video/originallyAvailableAt)}}]]></text>
-      </row>
-        <row>
-          <text>{{DURATION({{VAL(MediaContainer/Video/duration)}})}}</text>
-          <text>•</text>
-          <text><![CDATA[{{VAL(MediaContainer/Video/Media/videoResolution)}}]]></text>
-          {{IF({{VAL(MediaContainer/Video/contentRating)}})}}{{
-          <text>•</text>
-          <textBadge><![CDATA[{{UPPERCASE({{VAL(MediaContainer/Video/contentRating)}})}}]]> </textBadge>
-          }}
-           <!--<badge src="resource://cc" /-->
+        <text><![CDATA[{{VAL(MediaContainer/Video/grandparentTitle)}}]]> • <![CDATA[{{TEXT(S)}}{{VAL(MediaContainer/Video/parentIndex)}}]]>-<![CDATA[{{TEXT(E)}}{{VAL(MediaContainer/Video/index)}}]]> • <![CDATA[{{VAL(MediaContainer/Video/originallyAvailableAt)}}]]> • {{DURATION({{VAL(MediaContainer/Video/duration)}})}} • <![CDATA[{{VAL(MediaContainer/Video/Media/videoResolution)}}]]></text>
+        {{IF({{VAL(MediaContainer/Video/contentRating)}})}}{{
+        <textBadge><![CDATA[{{UPPERCASE({{VAL(MediaContainer/Video/contentRating)}})}}]]> </textBadge>
+        }}
         </row>
+
         <description allowsZooming="true" moreLabel="more"
             onSelect="Presenter.loadContext('TVShow_PrePlayDescription', '{{PMSID()}}', '{{PATH()}}')"
             >
