@@ -58,7 +58,7 @@ See LICENSE.txt for this sample’s licensing information
 <!--no XML received: switch to offline mode--> <!--todo: plexGDM, PMS by IP-->
 <document>
   <alertTemplate style="color: #888888;">
-    <title>TITLE</title>
+    <title>PlexConnect</title>
     <description>{{TEXT(No answer from plex.tv. For now I'm stuck.)}}</description>
   </alertTemplate>
 </document>

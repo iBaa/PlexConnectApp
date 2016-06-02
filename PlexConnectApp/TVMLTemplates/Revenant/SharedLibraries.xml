@@ -126,7 +126,7 @@ See LICENSE.txt for this sample’s licensing information
                     onHoldSelect="Presenter.loadContext('TVShow_EpisodeContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                     onSelectHold="modal">
 
-                    <!--https://lsrdb.com/search?title={TITLE}&year={RELEASEYEAR}&fallback={FALLBACKURL}-->
+                    <!--https://lsrdb.com/search?title={PlexConnect}&year={RELEASEYEAR}&fallback={FALLBACKURL}-->
                     <img aspectFill="true" src="{{IMAGEURL(art::768)}}" height="378" width="672" class="bannerImage"/>
                     <overlay>
                         <title class="bannerText"><![CDATA[{{VAL(title)}}]]></title>
@@ -406,7 +406,7 @@ See LICENSE.txt for this sample’s licensing information
 {{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
 <document>
 <alertTemplate>
-    <title>TITLE</title>
+    <title>PlexConnect</title>
     <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
 </alertTemplate>
 </document>
