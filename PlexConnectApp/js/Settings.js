@@ -11,9 +11,7 @@ toggle: function(event) {
   // toggle setting
   var setting = elem.getAttribute("id");
   var docString = swiftInterface.toggleSettingView(setting, "Settings");
-  if (!parser) {
-    var parser = new DOMParser();
-  }
+  var parser = new DOMParser();
   var doc = parser.parseFromString(docString, "application/xml");
 
   // update view

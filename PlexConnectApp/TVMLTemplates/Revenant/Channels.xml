@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+<document>
+  <stackTemplate>
+    <collectionList>
+      <banner>
+      </banner>
+
+{{PMSLOOP(all)}}{{
+{{XML(/channels/all)}}{{  <!--hit /video, /music, /photos for specific media types-->
+
+{{IF({{VAL(MediaContainer/size)}})}}{{
+      <shelf>
+        <header>
+          <title>{{PMSVAL(name)}}</title>
+        </header>
+        
+        <section>
+{{COPY(MediaContainer/Directory)}}{{
+{{SET(noItems:false)}}
+
+          <!--video-->  <!--"/" is asc 0x2F, "0" asc 0x30-->
+{{IF({{TABLE(${{VAL(key)}}:0:/video/:1)}})}}{{
+          <lockup
+            onSelect="Presenter.load('Movie_Directory', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
+            >
+            <img src="{{IMAGEURL(thumb::384)}}" height="300" width="300" />
+            <title><![CDATA[{{VAL(title)}}]]></title>
+            <subtitle>{{TEXT(video)}}</subtitle>
+          </lockup>
+}}
+
+          <!--music-->
+{{IF({{TABLE(${{VAL(key)}}:0:/music/:1)}})}}{{
+          <lockup
+            onSelect="Presenter.load('Music_Directory', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
+            >
+            <img src="{{IMAGEURL(thumb::384)}}" height="300" width="300" />
+            <title><![CDATA[{{VAL(title)}}]]></title>
+            <subtitle>{{TEXT(music)}}</subtitle>
+          </lockup>
+}}
+
+          <!--photo-->
+{{IF({{TABLE(${{VAL(key)}}:0:/photos/:1)}})}}{{
+          <lockup
+            onSelect="Presenter.load('Photo_Browser', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
+            >
+            <img src="{{IMAGEURL(thumb::384)}}" height="300" width="300" />
+            <title><![CDATA[{{VAL(title)}}]]></title>
+            <subtitle>{{TEXT(photos)}}</subtitle>
+          </lockup>
+}}
+}}
+        </section>
+      </shelf>
+}}
+
+}}
+}}
+    </collectionList>
+  </stackTemplate>
+</document>
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>TITLE</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

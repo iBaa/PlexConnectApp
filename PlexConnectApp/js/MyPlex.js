@@ -13,9 +13,7 @@ discover = function(event) {
   navigationDocument.pushDocument(doc);
   
   var docString = swiftInterface.discover("Settings");
-  if (!parser) {
-    var parser = new DOMParser();
-  }
+  var parser = new DOMParser();
   var doc = parser.parseFromString(docString, "application/xml");
   
   // update view
@@ -29,6 +27,7 @@ discover = function(event) {
   var func = elem.getAttribute('onSuccess');
   doc.addEventListener("unload", function() { eval(func) });
   navigationDocument.popDocument();
+    
 }
 
 
@@ -140,9 +139,7 @@ signIn_do: function() {
 
   // login and get new settings page
   var docString = swiftInterface.signInUserPasswordView(myPlex.username, myPlex.password, "Settings");
-  if (!parser) {
-    var parser = new DOMParser();
-  }
+  var parser = new DOMParser();
   var doc = parser.parseFromString(docString, "application/xml");
   
   // update view
@@ -188,9 +185,7 @@ signOut: function(event)
   
   // logout and get new settings page
   var docString = swiftInterface.signOut("Settings");
-  if (!parser) {
-    var parser = new DOMParser();
-  }
+  var parser = new DOMParser();
   var doc = parser.parseFromString(docString, "application/xml");
   
   // update view
@@ -206,9 +201,7 @@ signOut: function(event)
 signInHomeUser: function() {
   // login and get new settings page
   var docString = swiftInterface.switchHomeUserIdPinView(myPlex.id, myPlex.pin, "Settings");
-  if (!parser) {
-    var parser = new DOMParser();
-  }
+  var parser = new DOMParser();
   var newDoc = parser.parseFromString(docString, "application/xml");
   
   // check success, signal failed

@@ -15,9 +15,9 @@ See LICENSE.txt for this sample’s licensing information
       <!-- player -->
       <mediaUrl>{{AUDIOURL()}}</mediaUrl>
       <title><![CDATA[{{VAL(title)}}]]></title>
-      <subtitle><![CDATA[{{VAL(subtitle)}}]]></subtitle>
-      <description><![CDATA[{{VAL(summary)}}]]></description>
-      <imageURL>{{IMAGEURL(grandparentThumb::384)}}</imageURL>
+      <subtitle>d<![CDATA[{{VAL(grandparentTitle)}}]]></subtitle>
+      <description>dd<![CDATA[{{VAL(parentTitle)}}]]></description>
+      <imageURL>{{IMAGEURL(parentThumb::384)}}</imageURL>
     
       <!-- PMS -->
       <key><![CDATA[{{VAL(key)}}]]></key>

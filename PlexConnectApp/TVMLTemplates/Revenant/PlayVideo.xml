@@ -20,10 +20,24 @@ See LICENSE.txt for this sample’s licensing information
         <indirect>{{VAL(@elem_MediaContainer_Video/Media/indirect:0)}}</indirect>
       </part>
 }}
+
+    {{IF({{CHK("{{VAL(type:)}}"=="episode")}})}}{{
+
+      <title><![CDATA[{{VAL(grandparentTitle)}}]]> - <![CDATA[{{VAL(title)}}]]></title>
+      <subtitle>Season {{VAL(parentIndex)}} Episode {{VAL(index)}}</subtitle>
+      <description><![CDATA[{{VAL(summary)}}]]></description>
+      <imageURL>{{IMAGEURL(parentThumb::384)}}</imageURL>
+      
+      }}
+      
+      {{IF(!{{CHK("{{VAL(type:)}}"=="episode")}})}}{{
+      
       <title><![CDATA[{{VAL(title)}}]]></title>
-      <subtitle><![CDATA[{{VAL(subtitle)}}]]></subtitle>
+      <subtitle></subtitle>
       <description><![CDATA[{{VAL(summary)}}]]></description>
       <imageURL>{{IMAGEURL(thumb::384)}}</imageURL>
+      
+      }}
       
       <resumeTime>{{VAL(viewOffset:0)}}</resumeTime>
       

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+    <document>
+        <head>
+            <style>
+                .showTextOnHighlight {
+                tv-text-highlight-style: show-on-highlight;
+                }
+                .overlayTextLayout {
+                    tv-position: top;
+                }
+                .centeredText {
+                    text-align: center;
+                }
+                .seasonText {
+                    text-align: center;
+                    text-shadow: 2px 2px 4px #000000;
+                    color:#FFFFFF;
+                    tv-text-style:title1;
+
+                }
+                .darkBackgroundColor {
+                background-color: #1f1f1f;
+                }
+                .count {
+                font-weight: bold;
+                font-size: 19;
+                text-align: center;
+                tv-position: bottom-right;
+                margin: -307 -89 307 89;
+                }
+            </style>
+        </head>
+        <productTemplate theme="light">
+            <background>
+               <audio>
+                    <asset src="{{IMAGEURL(MediaContainer/theme)}}" />
+                </audio>
+                <!--<img src="{{IMAGEURL(MediaContainer/art:1920)}}" width="1920" height="1080" />-->
+            </background>
+            <header style="padding:80 0 0 0;">
+                <title class="seasonText"><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
+            </header>
+            <shelf centered="true">
+                <section>
+                    {{COPY(MediaContainer/Directory)}}{{
+                    {{SET(noItems:false)}}
+                    {{IF(!{{CHK("{{VAL(title)}}"=="All episodes")}})}}{{
+                    <lockup onSelect="Presenter.loadPopup('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}');" >
+                        <img src="{{IMAGEURL(thumb::384)}}" width="340" height="500" />
+                        {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
+                        <overlay>
+                          <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(Images:unwatched2:png)}}"  width="72" height="72" />
+                          <decorationLabel class="count">{{EVAL({{VAL(leafCount)}}-{{VAL(viewedLeafCount)}})}}</decorationLabel>
+                        </overlay>
+                        }}
+                        <title><![CDATA[{{VAL(title)}}]]></title>
+                    </lockup>
+                    }}
+                    }}
+                    </section>
+            </shelf>
+        </productTemplate>
+    </document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>TITLE</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

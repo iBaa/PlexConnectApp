@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+ Copyright (C) 2015 Baa. All rights reserved.
+ See LICENSE.txt for this sample’s licensing information
+ -->
+{{XML()}}
+{{
+<document>
+    <catalogTemplate theme="light">
+        <banner>
+            <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
+        </banner>
+        <list>
+            <section>
+                
+                {{COPY(MediaContainer/Directory)}}{{
+                <listItemLockup>
+                    <title><![CDATA[{{VAL(title)}}]]></title>
+                    
+                    {{XML({{VAL(key)}})}}{{
+                    <decorationLabel><![CDATA[{{VAL(MediaContainer/size)}}]]></decorationLabel>
+                    <relatedContent>
+                        <grid>
+                            <section>
+                                {{COPY(MediaContainer/Directory)}}{{
+                                <lockup
+                                    onSelect="Presenter.load('Homemovie_Folder', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+                                    <img src="{{IMAGEURL(thumb::600)}}" height="180" width="180" />
+                                    <title><![CDATA[{{VAL(title)}}]]></title>
+                                </lockup>
+                                }}
+                                {{COPY(MediaContainer/Video)}}{{
+                                <lockup
+                                    onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                                    onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                                    onHoldSelect="Presenter.loadContext('Movie_MovieContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+                                    <img src="{{IMAGEURL(thumb::600)}}" height="180" width="320" />
+                                    <title><![CDATA[{{VAL(title)}}]]></title>
+                                </lockup>
+                                }}
+
+                            </section>
+                        </grid>
+                    </relatedContent>
+                    }}
+                </listItemLockup>
+                }}
+                
+            </section>
+        </list>
+    </catalogTemplate>
+</document>
+}}

@@ -5,17 +5,7 @@ See LICENSE.txt for this sample’s licensing information
 -->
 {{XML()}}{{
 <document>
-  <head>
-      <style>
-        .lightBackgroundColor {
-        background-color: rgb(239, 236, 230);
-        }
-        .darkBackgroundColor {
-        background-color: rgb(51, 51, 51);
-        }
-      </style>
-  </head>
-  <alertTemplate theme="light">
+  <alertTemplate>
     <title><![CDATA[{{VAL(MediaContainer/Video/title)}}]]></title>
 
 {{SET(showMarkWatched:false)}}  <!--default-->
@@ -32,14 +22,14 @@ See LICENSE.txt for this sample’s licensing information
 }}
 {{IF({{GET(showMarkWatched)}})}}{{
     <button
-        onSelect="swiftInterface.sendPmsPath('{{PMSID()}}', '/:/scrobble?key={{VAL(MediaContainer/Video/ratingKey)}}&amp;identifier=com.plexapp.plugins.library'); Presenter.closeContext(); Presenter.loadAndSwap('Movie_OnDeck', '{{PMSID()}}', '{{PATH()}}');"
+        onSelect="swiftInterface.sendPmsPath('{{PMSID()}}', '/:/scrobble?key={{VAL(MediaContainer/Video/ratingKey)}}&amp;identifier=com.plexapp.plugins.library'); Presenter.closeContext();"
         >
       <text>{{TEXT(Mark as Watched)}}</text>
     </button>
 }}
 {{IF({{GET(showMarkUnwatched)}})}}{{
     <button
-        onSelect="swiftInterface.sendPmsPath('{{PMSID()}}', '/:/unscrobble?key={{VAL(MediaContainer/Video/ratingKey)}}&amp;identifier=com.plexapp.plugins.library'); Presenter.closeContext(); Presenter.loadAndSwap('Movie_OnDeck', '{{PMSID()}}', '{{PATH()}}');"
+        onSelect="swiftInterface.sendPmsPath('{{PMSID()}}', '/:/unscrobble?key={{VAL(MediaContainer/Video/ratingKey)}}&amp;identifier=com.plexapp.plugins.library'); Presenter.closeContext();"
         >
       <text>{{TEXT(Mark as Unwatched)}}</text>
     </button>

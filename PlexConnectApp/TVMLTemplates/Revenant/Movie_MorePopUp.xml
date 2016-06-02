@@ -11,7 +11,9 @@
         }
       </style>
   </head>
-  <alertTemplate theme="dark" class="darkBackgroundColor">
+    <alertTemplate theme="dark" class="darkBackgroundColor">
+      <title><![CDATA[{{VAL(MediaContainer/Video/title)}}]]></title>
+
 			<button onSelect="swiftInterface.sendPmsPath('{{PMSID()}}', '/:/scrobble?key={{PATH()}}&amp;identifier=com.plexapp.plugins.library'); Presenter.closeContext();">
        	<text>{{TEXT(Mark as Watched)}}</text>
       </button>

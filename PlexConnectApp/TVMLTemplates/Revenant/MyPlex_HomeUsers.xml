@@ -8,6 +8,13 @@ See LICENSE.txt for this sample’s licensing information
 {{PMS(plex.tv)}}{{
 {{XML(/api/home/users)}}{{
 <document>
+    <head>
+        <style>
+            .darkBackgroundColor {
+            background-color: #1f1f1f;
+            }
+        </style>
+    </head>
   <listTemplate>
     <list>
 
@@ -27,7 +34,7 @@ See LICENSE.txt for this sample’s licensing information
             onSuccess="navigationDocument.popDocument();  // remove this page"
             onError="Presenter.load('MyPlex_SignInFailed','','');"
             >
-          <row>
+          <row autoHighlight="true">
             <title><![CDATA[{{VAL(title)}}]]></title>
 {{IF({{VAL(admin)}})}}{{
             <decorationImage src="{{RESOURCEURL(Images:icon_key:png)}}" width="27" height="26" />
@@ -41,15 +48,15 @@ See LICENSE.txt for this sample’s licensing information
           </row>
           <relatedContent>
             <lockup>
-              <img src="{{IMAGEURL(thumb::768)}}" width="" height="" />
-              <title><![CDATA[{{VAL(title)}}]]></title>
-              <description><![CDATA[{{VAL(email)}}]]></description>
+              <img style="tv-img-treatment: circle;" src="{{VAL(thumb)}}?size=100" width="100" height="100" />
+              <title style="text-align: center;"><![CDATA[{{VAL(title)}}]]></title>
+              <description style="text-align: center;"><![CDATA[{{VAL(email)}}]]></description>
             </lockup>
           </relatedContent>
         </listItemLockup>
 }}
       </section>
-      
+
     </list>
   </listTemplate>
 </document>

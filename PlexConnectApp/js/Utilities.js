@@ -84,7 +84,7 @@ function shuffleArray(arr) {
         arr[i] = arr[j];
         arr[j] = temp;
     }
-
+    
     return arr;
 }
 
@@ -124,9 +124,27 @@ var createSpinner = function(title) {
     </activityIndicator>
   </loadingTemplate>
 </document>`
-if (!parser) {
-var parser = new DOMParser();
-}
+  var parser = new DOMParser();
   var doc = parser.parseFromString(docString, "application/xml");
   return doc;
+}
+
+var createArtSpinner = function(title, art) {
+    var docString = `<?xml version="1.0" encoding="UTF-8" ?>
+    <document>
+    <productTemplate>
+    <background>
+    <img src="${art}" width="1920" height="1080" style="width:1920; height:1080" aspectFill="true" />
+    </background>
+    <header>
+    <title style="text-align: center;text-shadow: 2px 2px 4px #000000;color:#FFFFFF;tv-text-style:title2;tv-position: center; margin:400">Loading ${title}...</title>
+    </header>
+    <shelf>
+    </shelf>
+    
+    </productTemplate>
+    </document>`
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(docString, "application/xml");
+    return doc;
 }

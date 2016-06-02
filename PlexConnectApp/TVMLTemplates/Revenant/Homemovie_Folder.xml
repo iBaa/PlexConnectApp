@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+ Copyright (C) 2015 Baa. All rights reserved.
+ See LICENSE.txt for this sample’s licensing information
+ -->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+    <stackTemplate  theme="light">
+        <banner>
+            <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
+            <heroImg src="{{IMAGEURL(MediaContainer/art:1920)}}" />
+        </banner>
+        <collectionList>
+            
+            <grid>
+                
+                <section>
+                    {{COPY(MediaContainer/Directory)}}{{
+                    {{SET(noItems:false)}}
+                    <lockup
+                        onSelect="Presenter.load('Homemovie_Folder', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                        onSelectHold="modal"
+                        >
+                        <img src="{{RESOURCEURL(Images:folder:png)}}" width="180" height="180" />
+                        <title><![CDATA[{{VAL(title)}}]]></title>
+                    </lockup>
+                    }}
+                    
+                    {{COPY(MediaContainer/Video)}}{{
+                    {{SET(noItems:false)}}
+                    <lockup
+                        oNSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                        onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                        onHoldSelect="Presenter.loadContext('Movie_MovieContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                        >
+                        <img src="{{IMAGEURL(thumb::384)}}" width="320" height="180" />
+                        <title><![CDATA[{{VAL(title)}}]]></title>
+                        <!-- played dot -->
+                    </lockup>
+                    }}
+                </section>
+                
+            </grid>
+        </collectionList>
+    </stackTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+    <alertTemplate>
+        <title>TITLE</title>
+        <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+    </alertTemplate>
+</document>
+}}

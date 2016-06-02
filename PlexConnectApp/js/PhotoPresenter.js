@@ -22,9 +22,7 @@ show: function(pmsId, pmsPath) {
   // get photo list
   var docString = swiftInterface.getViewIdPath('Photos', pmsId, pmsPath);  // error handling?
   
-  if (!parser) {
-    var parser = new DOMParser();
-  }
+  var parser = new DOMParser();
   var doc = parser.parseFromString(docString, "application/xml");
 
   // render picture to screen
@@ -37,9 +35,7 @@ slideshow: function(pmsId, pmsPath) {
   // get photo list
   var docString = swiftInterface.getViewIdPath('Photos', pmsId, pmsPath);  // error handling?
   
-  if (!parser) {
-    var parser = new DOMParser();
-  }
+  var parser = new DOMParser();
   var doc = parser.parseFromString(docString, "application/xml");
 
   var playlist = doc.getElementByTagName("playlist")
@@ -91,9 +87,7 @@ var createPhoto = function(photoUrl) {
       <fullscreenImg src="${photoUrl}" width="1920" height="1080" />
     </divTemplate>
   </document>`
-  if (!parser) {
     var parser = new DOMParser();
-  }
     var doc = parser.parseFromString(docString, "application/xml");
     return doc;
 }

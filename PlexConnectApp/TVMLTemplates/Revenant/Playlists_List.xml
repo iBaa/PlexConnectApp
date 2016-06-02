@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+<document>
+  <listTemplate>
+    <banner>
+        <title>{{TEXT(Playlists)}}</title>
+    </banner>
+    <list>
+
+      <!-- myplex queue -->
+{{PMS(plex.tv)}}{{
+{{XML(/api/playlists/queue)}}{{
+{{CUT({{GET(noQueueLists)}})}}{{
+{{SET(noQueueLists)}}
+      <section>
+        <header>
+          <title>{{TEXT(MyPlex Queue)}}</title>
+        </header>
+        
+{{COPY(MediaContainer/Directory)}}{{
+{{SET(noItems:false)}}
+{{SET(noQueueLists:false)}}
+        <listItemLockup
+            onSelect="Presenter.load('Playlists_Video', '{{PMSID()}}', '{{PATH(/api/playlists/queue/{{VAL(key)}})}}')"
+            onSelectHold="modal"
+            >
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <relatedContent>
+            <lockup>
+              <img src="{{IMAGEURL(composite::768)}}" />
+            </lockup>
+          </relatedContent>
+        </listItemLockup>
+}}
+      </section>
+}}
+}}
+}}
+
+      <!-- video playlists -->
+{{PMSLOOP(all)}}{{
+{{XML()}}{{
+{{CUT({{GET(noVideoLists)}})}}{{
+{{SET(noVideoLists:true)}}
+      <section>
+        <header>
+          <title>{{TEXT(Video)}} - {{PMSVAL(name)}}</title>
+        </header>
+    
+{{COPY(MediaContainer/Playlist)}}{{
+{{IF({{CHK("{{VAL(playlistType)}}"=="video")}})}}{{
+{{SET(noItems:false)}}
+{{SET(noVideoLists:false)}}
+        <listItemLockup
+            onSelect="Presenter.load('Playlists_Video', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
+            >
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <decorationLabel>{{VAL(leafCount)}}</decorationLabel>
+          <relatedContent>
+            <lockup>
+              <img src="{{IMAGEURL(composite::768)}}" />
+            </lockup>
+          </relatedContent>
+        </listItemLockup>
+}}
+}}
+      </section>
+}}
+}}
+}}
+
+      <!-- audio playlists -->
+{{PMSLOOP(all)}}{{
+{{XML()}}{{
+{{CUT({{GET(noAudioLists)}})}}{{
+{{SET(noAudioLists:true)}}
+      <section>
+        <header>
+          <title>{{TEXT(Audio)}} - {{PMSVAL(name)}}</title>
+        </header>
+    
+{{COPY(MediaContainer/Playlist)}}{{
+{{IF({{CHK("{{VAL(playlistType)}}"=="audio")}})}}{{
+{{SET(noItems:false)}}
+{{SET(noAudioLists:false)}}
+        <listItemLockup
+            onSelect="Presenter.load('Playlists_Audio', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
+            >
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <decorationLabel>{{VAL(leafCount)}}</decorationLabel>
+          <relatedContent>
+            <lockup>
+              <img src="{{IMAGEURL(composite::768)}}" />
+            </lockup>
+          </relatedContent>
+        </listItemLockup>
+}}
+}}
+      </section>
+}}
+}}
+}}
+
+    </list>
+  </listTemplate>
+</document>
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>TITLE</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

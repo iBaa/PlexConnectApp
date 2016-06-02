@@ -42,7 +42,7 @@
         </buttonLockup>
         <buttonLockup onSelect="Presenter.loadContext('Music_Filters', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
           <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Library:png)}}" width="50" height="50"/>
-          <title>Library</title>
+          <title>Filters</title>
         </buttonLockup>
         {{XML(/playlists?playlistType=audio)}}{{
 				{{IF({{CHK("{{VAL(MediaContainer/size)}}">"0")}})}}{{
@@ -75,7 +75,7 @@
           <lockup onSelect="Presenter.load('Music_Artist', '{{PMSID()}}', '{{PATH(/library/metadata/{{VAL(ratingKey)}})}}')"
             onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH()}}/search?type=10&amp;artist.id={{VAL(ratingKey)}}&amp;group=title&amp;limit=100&amp;ratingCount%3E=1&amp;sort=ratingCount%3Adesc')">
             {{IF({{VAL(thumb)}})}}{{
-            <img class="rounded" src="{{IMAGE_T(thumb::360)}}" height="308" width="308" />
+            <img class="rounded" src="{{IMAGEURL(thumb::360)}}" height="308" width="308" />
             }}
             {{IF(!{{VAL(thumb)}})}}{{
             <img class="rounded" src="{{RESOURCEURL(TVMLTemplates/Revenant/images:IconArtist:png)}}" height="308" width="308" />
@@ -98,7 +98,7 @@
           {{COPY(MediaContainer/Directory)}}{{
           <lockup onSelect="Presenter.load('Music_Album', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
-            <img src="{{IMAGE_T(thumb::360)}}" height="308" width="308" />
+            <img src="{{IMAGEURL(thumb::360)}}" height="308" width="308" />
             <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
             <subtitle><![CDATA[{{VAL(year)}}]]></subtitle>
           </lockup>
@@ -124,10 +124,10 @@
             onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onSelectHold="ScrobbleMenu">
             {{IF({{CHK("{{VAL(type)}}"="artist")}})}}{{
-            <img class="rounded" src="{{IMAGE_T(thumb::360)}}" height="308" width="308" />
+            <img class="rounded" src="{{IMAGEURL(thumb::360)}}" height="308" width="308" />
             }}
             {{IF(!{{CHK("{{VAL(type)}}"="artist")}})}}{{
-            <img src="{{IMAGE_T(thumb::360)}}" height="308" width="308" />
+            <img src="{{IMAGEURL(thumb::360)}}" height="308" width="308" />
             }}
             <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
             {{IF({{VAL(year)}})}}{{
@@ -144,7 +144,7 @@
           <lockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onSelectHold="ScrobbleMenu">
-            <img src="{{IMAGE_T(thumb::360)}}" height="216" width="397" />
+            <img src="{{IMAGEURL(thumb::360)}}" height="216" width="397" />
             <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
             <subtitle><![CDATA[{{VAL(grandparentTitle)}}]]></subtitle>
           </lockup>

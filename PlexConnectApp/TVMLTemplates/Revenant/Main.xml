@@ -14,6 +14,8 @@ See LICENSE.txt for this sample’s licensing information
   <alertTemplate
     onLoad="Presenter.loadAndSwap('Main_SignIn','','');"
     >
+    <title>PlexConnect</title>
+    <description>loading...</description>
   </alertTemplate>
 </document>
 }}
@@ -26,8 +28,10 @@ See LICENSE.txt for this sample’s licensing information
 <document>
   <alertTemplate
     onLoad="discover(event);"
-    onSuccess="Presenter.loadAndSwap('Startup','','');"
+    onSuccess="Presenter.load('Library','','');"
     >
+    <title>PlexConnect</title>
+    <description>loading...</description>
   </alertTemplate>
 </document>
 }}
@@ -35,9 +39,16 @@ See LICENSE.txt for this sample’s licensing information
 {{IF(!{{CHK("{{VAL(MediaContainer/size:0)}}"=="1")}})}}{{
 <!--select HomeUser-->
 <document>
-  <alertTemplate
+  <!--<alertTemplate
     onLoad="Presenter.loadAndSwap('Main_HomeUsers','','');"
     >
+  </alertTemplate>-->
+  <alertTemplate
+      onLoad="discover(event);"
+      onSuccess="Presenter.loadAndSwap('Library','','');"
+      >
+      <title></title>
+      <description></description>
   </alertTemplate>
 </document>
 }}
@@ -46,12 +57,13 @@ See LICENSE.txt for this sample’s licensing information
 {{IF({{GET(noXml)}})}}{{
 <!--no XML received: switch to offline mode--> <!--todo: plexGDM, PMS by IP-->
 <document>
-  <alertTemplate>
-    <title style="text-align: left; color: #ff8000">PlexConnect</title>
-    <description>{{TEXT(No answer from plex.tv. Please check your Internet connection or try again later.)}}</description>
+  <alertTemplate style="color: #888888;">
+    <title>TITLE</title>
+    <description>{{TEXT(No answer from plex.tv. For now I'm stuck.)}}</description>
   </alertTemplate>
 </document>
 }}
+
 
 }}
 }}

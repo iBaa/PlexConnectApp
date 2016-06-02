@@ -1,38 +1,55 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
 {{CUT({{GET(noItems)}})}}{{
 {{SET(noItems:true)}}
 {{XML()}}{{
-{{IF({{CHK("{{VAL(MediaContainer/size)}}">"0")}})}}{{
-{{SET(noItems:false)}}
 <document>
   <head>
-        <style>
-            .lightBackgroundColor {
-            background-color: rgb(239, 236, 230);
-            }
-            .darkBackgroundColor {
-            background-color: rgb(51, 51, 51);
-            }
-            .showTextOnHighlight {
-            tv-text-highlight-style: show-on-highlight;
-            }
-            .roundedImageCorners {
-            itml-img-treatment: corner-medium;
-            }
-            .button {
-    	      tv-align: right;
-    	      margin: 10;
-      	  	}
-      	  	.buttonText {
-          	tv-text-style: subtitle1
-      	  	}
+    <style>
+      .showTextOnHighlight {
+        tv-text-highlight-style: show-on-highlight;
+      }
+      .button {
+        tv-align: right
+      }
+      .buttonText {
+        tv-text-style: subtitle1
+      }
     </style>
   </head>
-  <stackTemplate theme="light" class="lightBackgroundColor">
+  <stackTemplate>
     <banner>
-      <title><![CDATA[{{VAL(MediaContainer/title1)}}]]> - <![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
+      <title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
+      <heroImg src="{{IMAGEURL(MediaContainer/thumb:1920)}}" />
     </banner>
     <collectionList>
+
+      <!-- directories: shelf -->
+{{CUT({{GET(noDirs)}})}}{{
+{{SET(noDirs:true)}}
+      <grid>
+        <section>
+{{COPY(MediaContainer/Directory)}}{{
+{{SET(noItems:false)}}
+{{SET(noDirs:false)}}
+          <lockup
+              onSelect="Presenter.load('Photo_Browser', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+              onSelectHold="modal"
+              >
+            <img src="{{IMAGEURL(thumb::384)}}" width="300" height="300" style="tv-img-treatment:corner-small" />
+            <title><![CDATA[{{VAL(title)}}]]></title>
+          </lockup>
+}}
+        </section>
+      </grid>
+}}
+
+      <!-- photos: grid -->
+{{CUT({{GET(noPhotos)}})}}{{
+{{SET(noPhotos:true)}}
       <separator>
         <button class="button"
             onSelect="photoPresenter.slideshow('{{PMSID()}}', '{{PATH()}}')"
@@ -43,26 +60,30 @@
       <grid>
         <section>
 {{COPY(MediaContainer/Photo)}}{{
+{{SET(noItems:false)}}
+{{SET(noPhotos:false)}}
         <lockup
             onSelect="photoPresenter.show('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-            onSelectHold="modal">
-          <img src="{{IMAGE_T(thumb:)}}" width="308" height="308" />
+            onSelectHold="modal"
+            >
+          <img src="{{PHOTOURL(:384)}}" width="300" height="200" />
           <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
         </lockup>
 }}
       </section>
       </grid>
-   </collectionList>
+}}
+      
+    </collectionList>
   </stackTemplate>
 </document>
-}}
 }}
 }}
 
 {{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
 <document>
   <alertTemplate>
-    <title>PlexConnect</title>
+    <title>TITLE</title>
     <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
   </alertTemplate>
 </document>

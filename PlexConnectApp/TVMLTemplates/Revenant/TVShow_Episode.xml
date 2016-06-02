@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+ TOP RIGHT BOTTOM LERevenant
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+  <head>
+    <style>
+    .whiteButton {
+      tv-tint-color: rgb(255, 255, 255);
+      width: 500;
+      height: 200;
+    }
+    .plot {
+      min-height: 300;
+      max-height: 400;
+      margin: 50;
+    }
+    </style>
+  </head>
+    <productBundleTemplate theme="light">
+        <background>
+            <!--<img style="tv-img-treatment:uber;" src="{{IMAGEURL(MediaContainer/art:1920)}}" />-->
+            {{IF({{CHK("{{SETTING(themeMusic)}}"=="On")}})}}{{
+            <audio volume="10">
+               <asset src="{{IMAGEURL(MediaContainer/grandparentTheme)}}"/>
+            </audio>
+            }}
+        </background>
+        <banner>
+
+           <!-- <stack class="text" style="margin:-50 0 0 180;">-->
+                <stack>
+
+                <!--<row style="margin:0 0 110 0">
+                    <heroImg src="{{IMAGEURL(MediaContainer/banner::)}}" style="margin:0"/>
+                </row>-->
+
+                {{IF({{CHK("{{SETTING(themeTitle)}}"=="Text")}})}}{{<title>{{VAL(MediaContainer/grandparentTitle:{{VAL(MediaContainer/parentTitle)}})}}</title>}}
+                {{IF({{CHK("{{SETTING(themeTitle)}}"=="Banner")}})}}{{<title><badge src="{{IMAGEURL(MediaContainer/banner:100)}}" height="135" width="800" aspectFill="true"/></title>}}
+                <subtitle><![CDATA[{{VAL(MediaContainer/title2)}}]]></subtitle>
+
+                <row>
+                    <text><![CDATA[{{VAL(MediaContainer/Video/year)}}]]></text>
+                    <text><![CDATA[{{VAL(MediaContainer/grandparentStudio)}}]]></text>
+                    <!--<badge src="resource://hd" class="badge" />-->
+                    <ratingCard style="tv-align: left;">
+                        <ratingBadge style="tv-rating-style: star-hollow-l;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
+                    </ratingCard>
+                </row>
+
+                {{XML(/library/metadata/{{VAL(MediaContainer/grandparentRatingKey)}}/children)}}{{
+                <description allowsZooming="true" moreLabel="more"
+                    onSelect="Presenter.loadContext('TVShow_Description', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                    >
+                    <![CDATA[{{VAL(MediaContainer/summary)}}]]>
+                </description>
+                }}
+                <row>
+
+                    <!-- Grab first unwatched Episode -->
+                    {{SET(last:0)}}
+                    {{SET(lastEpisode:1)}}
+                    {{COPY(MediaContainer/Video)}}{{
+                        {{IF({{CHK("{{GET(last)}}"=="0")}})}}{{
+                            {{IF(!{{VAL(viewCount:0)}})}}{{
+                                {{SET(last:{{VAL(key)}})}}
+                                {{SET(lastEpisode:{{VAL(index)}})}}
+                            }}
+                        }}
+                    }}
+
+
+                    <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')" {{IF({{CHK("{{GET(lastEpisode)}}"=="1")}})}}{{autoHighlight="true"}}>
+                        <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Play:png)}}" width="50" height="50"/>
+                        <title>Play Season</title>
+                    </buttonLockup>
+
+                    <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{GET(last)}})}}')" {{IF(!{{CHK("{{GET(lastEpisode)}}"=="1")}})}}{{autoHighlight="true"}}>
+                        <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:PlayResume:png)}}" width="50" height="50"/>
+                        <title>Continue Season</title>
+                    </buttonLockup>
+
+                    <buttonLockup presentation="modalDialogPresenter"
+                                  onSelect="Presenter.loadContext('TVShow_SeasonPopup', '{{PMSID()}}', '{{PATH(/library/metadata/{{VAL(MediaContainer/grandparentRatingKey)}}/children)}}')" onSelectHold="modal">
+                        <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Server:png)}}" width="50" height="50"/>
+                        <title>Seasons</title>
+                    </buttonLockup>
+                </row>
+
+              </stack>
+                  <heroImg src="{{IMAGEURL(MediaContainer/thumb::)}}" />
+           </banner>
+
+        {{SET(parentIndex:{{VAL(MediaContainer/parentIndex:0)}})}}  <!--grab parentIndex, might be not available lateron-->
+        {{SET(gpIndex:{{VAL(MediaContainer/grandparentRatingKey)}})}}  <!--grab parentIndex, might be not available lateron-->
+        <shelf style="margin: 0 0 90 0;">
+            <header>
+                <title>{{VAL(MediaContainer/size)}} Episode(s)</title>
+            </header>
+            <section>
+                {{COPY(MediaContainer/Video)}}{{
+                {{SET(noItems:false)}}
+                <lockup
+                    onSelect="Presenter.loadView('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                    onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}', {{IF(!{{VAL(MediaContainer/Video/viewOffset:0)}})}}{{'resume'}})"
+
+                    {{IF(!{{VAL(viewCount:0)}})}}{{ autoHighlight = "True" }}
+                    onHoldSelect="Presenter.loadContext('TVShow_EpisodeContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+                    <img src="{{IMAGEURL(thumb::768)}}" width="320" height="180" />
+                    <overlay>
+                        <!--{{IF({{VAL(viewCount:0)}})}}{{ <badge src="resource://overlay-checkmark"/>}}-->
+                        {{IF(!{{VAL(viewCount:0)}})}}{{
+                            <badge src="{{RESOURCEURL(Images:unwatched:png)}}"/>
+
+                        }}
+                        {{IF({{VAL(viewOffset:0)}})}}{{
+                        <progressBar value="{{EVAL({{VAL(viewOffset)}}.0/{{VAL(duration)}}.0)}}"/>
+                        }}
+
+                    </overlay>
+                    <title><![CDATA[{{VAL(index:)}}. {{VAL(title)}}]]></title>
+                    <relatedContent>
+
+                        <infoTable>
+                            <header>
+                                <title><![CDATA[{{VAL(title)}}]]></title>
+                            </header>
+                            <info>
+                                <header>
+                                    <title></title>
+                                </header>
+                                <description><![CDATA[{{TEXT(Season)}} {{VAL(parentIndex:{{GET(parentIndex)}})}}, Episode {{VAL(index:0)}}]]></description>
+
+                            </info>
+                            <info>
+                                <header>
+                                    <title>Aired {{VAL(originallyAvailableAt)}}</title>
+                                </header>
+                                <description allowsZooming="true" moreLabel="more"
+                                    onSelect="Presenter.loadContext('TVShow_PrePlayDescription', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                                    >
+                                    <![CDATA[{{VAL(summary)}}]]>
+                                </description>
+                            </info>
+                            <info>
+                                <header>
+                                    <title></title>
+                                </header>
+                            </info>
+
+                        </infoTable>
+                    </relatedContent>
+                </lockup>
+
+                }}
+
+            </section>
+        </shelf>
+
+        {{SET(sectionID:{{VAL(MediaContainer/librarySectionID)}})}}
+        {{XML(/library/metadata/{{VAL(MediaContainer/grandparentRatingKey)}})}}{{
+        <shelf>
+            <header>
+                <title>Cast and Crew</title>
+            </header>
+            <section>
+                {{COPY(MediaContainer/Directory/Role)}}
+                {{
+                <monogramLockup onSelect="Presenter.loadView('TVShow_Actor', '{{PMSID()}}', '{{PATH(/library/sections/{{GET(sectionID)}}/actor/{{VAL(id)}})}}')">
+                    <monogram {{IF({{VAL(thumb:)}})}}{{src="{{IMAGEURL(thumb::384)}}"}} />
+                    <title>{{VAL(role)}}</title>
+                    <subtitle>{{VAL(tag)}}</subtitle>
+                </monogramLockup>
+                }}
+            </section>
+        </shelf>
+        }}
+        <productInfo style="padding:60 0 0 0;">
+
+        </productInfo>
+    </productBundleTemplate>
+    </document>
+
+}}
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>TITLE</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

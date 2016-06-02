@@ -25,10 +25,11 @@
       }
     </style>
   </head>
-  <stackTemplate theme="light" class="lightBackgroundColor">
+  <stackTemplate theme="light">
     <identityBanner>
       <title class="header">Discover <![CDATA[{{VAL(MediaContainer/title1)}}     ]]></title>
       <subtitle class="header"><![CDATA[{{PMSVAL(name)}}    ]]></subtitle>
+      <heroImg src="{{IMAGEURL(MediaContainer/art:1920)}}" />
       <row>
         <buttonLockup onSelect="Presenter.loadContext('TVShow_Filters', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
           <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Library:png)}}" width="50" height="50"/>
@@ -58,13 +59,13 @@
         <section>
           {{IFNODE(Directory)}}{{
           {{COPY(Directory)}}{{
-          <lockup onSelect="Presenter.load('TVShow_SeasonGrid', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+          <lockup onSelect="Presenter.load('TVShow_Season', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onHoldSelect="Presenter.loadContext('TVShow_EpisodeContext', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
-            <img src="{{IMAGE_T(thumb::360)}}" height="375" width="250" />
+            <img src="{{IMAGEURL(thumb::360)}}" height="375" width="250" />
             {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
             <overlay>
-            	<img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched:png)}}"  width="72" height="72" />
+            	<img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
             	<decorationLabel class="count">{{EVAL({{VAL(leafCount)}}-{{VAL(viewedLeafCount)}})}}</decorationLabel>
             </overlay>
             }}
@@ -84,14 +85,12 @@
           onPlay="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
           }}
           >
-            <img src="{{IMAGE_T(grandparentThumb::360)}}" height="375" width="250" />
+            <img src="{{IMAGEURL(grandparentThumb::360)}}" height="375" width="250" />
             <overlay>
-            	{{IF({{VAL(viewOffset)}})}}{{
-              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:watching:png)}}"  width="72" height="72" />
-            	}}
+
             	{{IF(!{{VAL(viewOffset)}})}}{{
             	{{IF(!{{VAL(viewCount)}})}}{{
-              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched:png)}}"  width="72" height="72" />
+              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
             	}}
             	}}
             </overlay>

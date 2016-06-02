@@ -953,7 +953,6 @@ class cXmlConverter {
     
         var par = _par.componentsSeparatedByString(":")
         let param = _self.getParam(XML, par: &par)
-        
         let expr = NSExpression(format: param)
         let res = expr.expressionValueWithObject(nil, context: nil)
         

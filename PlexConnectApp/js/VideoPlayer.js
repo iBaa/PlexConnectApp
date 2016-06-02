@@ -28,7 +28,6 @@ player: null,  // the player
   
 play: function(pmsId, pmsPath) {
   // parse optional argument: "resume"; "startAt",ix; "shuffle"
-  // Presenter.closeContext();
   var resume = false;
   var startAt = 0;
   var shuffle = false;
@@ -43,9 +42,7 @@ play: function(pmsId, pmsPath) {
   // get video list
   var docString = swiftInterface.getViewIdPath('PlayVideo', pmsId, pmsPath);  // error handling?
   
-  if (!parser) {
-    var parser = new DOMParser();
-  }
+  var parser = new DOMParser();
   var doc = parser.parseFromString(docString, "application/xml");
 
   // setup variables for transcoder ping
@@ -160,9 +157,7 @@ handleIndirectUrl: function(mediaItem) {
     // get redirected url from playlist based on fresh PMS XML
     var docString = swiftInterface.getViewIdPath('PlayVideo', '', mediaItem.url);  // pmsId not needed, full url  // error handling?
     
-    if (!parser) {
-      var parser = new DOMParser();
-    }
+    var parser = new DOMParser();
     var doc = parser.parseFromString(docString, "application/xml");
     
     // upadate url from playlist/video/part[ix]/mediaUrl
@@ -342,29 +337,4 @@ onMediaItemDidChange: function(event) {
     }
   }
 },
-
-refreshDocument: function(view, pmsId, pmsPath, ratingKey) {
-  var previousDoc = navigationDocument.documents[navigationDocument.documents.length-1];
-  //console.log('===== currentDoc: ' + view + ' currentPMS: ' + pmsId + ' currentPath: ' + pmsPath);
-  console.log("setting up refresh doc");
-  
-  var oldItem = previousDoc.getElementById(elem.getAttribute("id"));
-  if (elem && newElem) {
-    elem.innerHTML = newElem.innerHTML;
-  }
-  
-  var docString = "<document><alertTemplate onLoad=\"Presenter.loadAndSwap('"+view+"','"+pmsId+"','"+pmsPath+"');\"></alertTemplate></document>";
-  if (!parser) {
-    var parser = new DOMParser();
-  }
-  var doc = parser.parseFromString(docString, "application/xml");
-  
-  doc.addEventListener("select", Presenter.onSelect.bind(Presenter));
-  doc.addEventListener("holdselect", Presenter.onHoldSelect.bind(Presenter));
-  doc.addEventListener("play", Presenter.onPlay.bind(Presenter));
-  doc.addEventListener("highlight", Presenter.onHighlight.bind(Presenter));
-  doc.addEventListener("load", Presenter.onLoad.bind(Presenter));  // setup search for char entered
-  navigationDocument.replaceDocument(doc, previousDoc);
-},
-  
 }

@@ -48,12 +48,12 @@ App.onLaunch = function(options) {
 
 App.onResume = function() {
   console.log('onResume');
-  Presenter.load('Main','','');
+  //Presenter.load('Main','','');
 }
 
 App.onSuspend = function() {
   console.log('onSuspend');
-  navigationDocument.clear();
+  //navigationDocument.clear();
 }
 
 App.onExit = function() {
@@ -69,9 +69,7 @@ var createAlert = function(title, description) {
       <description>${description}</description>
     </alertTemplate>
   </document>`
-  if (!parser) {
-    var parser = new DOMParser();
-  }
+  var parser = new DOMParser();
   var alertDoc = parser.parseFromString(alertString, "application/xml");
   return alertDoc;
 }

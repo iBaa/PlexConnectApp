@@ -36,9 +36,7 @@ play: function(pmsId, pmsPath) {
   // get track list
   var docString = swiftInterface.getViewIdPath('PlayAudio', pmsId, pmsPath);  // error handling?
   
-  if (!parser) {
-    var parser = new DOMParser();
-  }
+  var parser = new DOMParser();
   var doc = parser.parseFromString(docString, "application/xml");
 
   // setup variables for transcoder ping

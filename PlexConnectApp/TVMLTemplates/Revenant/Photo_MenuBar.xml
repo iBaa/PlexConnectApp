@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+<document>
+  <menuBarTemplate>
+    <menuBar>
+      
+      <menuItem id="All"
+          onSelect="Presenter.loadMenuContent('Photo_Browser', '{{PMSID()}}', '{{PATH(all)}}')"
+          >
+        <title>{{TEXT(All Photos)}}</title>
+      </menuItem>
+      
+      <menuItem id="RecentlyAdded"
+          autoHighlight="true"
+          onSelect="Presenter.loadMenuContent('Photo_Browser', '{{PMSID()}}', '{{PATH(recentlyAdded)}}')"
+          >
+        <title>{{TEXT(Recently Added)}}</title>
+      </menuItem>
+      
+      <menuItem id="Year"
+          onSelect="Presenter.loadMenuContent('Photo_Browser', '{{PMSID()}}', '{{PATH(year)}}')"
+          >
+        <title>{{TEXT(Year)}}</title>
+      </menuItem>
+      
+      <!--
+      todo: more...(secondary)
+      -->
+      
+    </menuBar>
+  </menuBarTemplate>
+</document>
