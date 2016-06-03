@@ -47,7 +47,7 @@ See LICENSE.txt for this sample’s licensing information
             <title>{{TEXT(Actors)}}</title>
           </header>
 {{COPY(MediaContainer/Video/Role)}}{{  <!-- COPY till 5 or so? -->
-          <text>{{VAL(tag)}}</text>
+          <text><![CDATA[{{VAL(tag)}}]]></text>
 }}
         </info>
       </infoList>-->
@@ -55,8 +55,8 @@ See LICENSE.txt for this sample’s licensing information
 {{SET(popular:/library/sections/{{VAL(MediaContainer/librarySectionID)}}/search?type=10&amp;artist.id={{VAL(MediaContainer/Directory/ratingKey)}}&amp;group=title&amp;limit=100&amp;ratingCount%3E=1&amp;sort=ratingCount:desc)}}
 {{SET(artist:/library/sections/{{VAL(MediaContainer/librarySectionID)}}/search?type=10&amp;artist.id={{VAL(MediaContainer/Directory/ratingKey)}}&amp;group=title&amp;sort=title:desc)}}
 				<title><![CDATA[{{VAL(MediaContainer/Directory/title)}}]]></title>
-        <subtitle>{{COPY(MediaContainer/Directory/Genre)}}{{{{VAL(tag)}}{{TEXT(  )}}}}</subtitle>
-				<text>{{COPY(MediaContainer/Directory/Country)}}{{{{VAL(tag)}}{{TEXT(  )}}}}</text>
+        <subtitle><![CDATA[{{COPY(MediaContainer/Directory/Genre)}}{{{{VAL(tag)}}{{TEXT(  )}}}}]]]]></subtitle>
+				<text><![CDATA[{{COPY(MediaContainer/Directory/Country)}}{{{{VAL(tag)}}{{TEXT(  )}}}}]]></text>
         <description allowsZooming="true" moreLabel="more"
             onSelect="Presenter.loadContext('Music_Description', '{{PMSID()}}', '{{PATH()}}')"
             >
