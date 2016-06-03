@@ -17,7 +17,6 @@
             font-size: 20;
             margin: 40;
             tv-text-style: callout;
-
             }
 
             .roundedImageCorners {
@@ -29,16 +28,16 @@
             }
 
             .bannerImage {
-            tv-tint-color: linear-gradient(top, 0.50, transparent, 0.8, rgba(0,0,0,0.65), 1.00, rgba(0,0,0,0.8));
+            tv-tint-color: linear-gradient(top, 0.25, transparent, 0.8, rgba(0,0,0,0.65), 1.00, rgba(0,0,0,0.8));
             itml-img-treatment: corner-small;
-
             }
+
             .bannerText {
             text-shadow: 2px 2px 8px #000000;
             }
+
             .bannerSubtext{
             text-shadow: 2px 2px 4px #000000;
-
             }
 
             .banner {
@@ -59,11 +58,12 @@
             .sectionLabel {
             text-align: center;
             margin: 0 0 -15 0;
-          <!--color: #605e58;-->
             }
+
             .title {
             color: #ffffff;
             }
+
             .count {
             font-weight: bold;
             font-size: 19;
@@ -132,7 +132,7 @@
                         <img aspectFill="true" src="{{IMAGEURL(art::768)}}" height="378" width="672" class="bannerImage"/>
                         <overlay>
                             <title class="bannerText"><![CDATA[{{VAL(title)}}]]></title>
-                            <subtitle class="bannerSubtext"><![CDATA[{{VAL(grandparentTitle)}} - {{TEXT(S)}}{{VAL(parentIndex)}} • {{TEXT(E)}}{{VAL(index)}}]]></subtitle>
+                            <subtitle class="bannerSubtext"><![CDATA[{{VAL(grandparentTitle)}} ({{TEXT(S)}}{{VAL(parentIndex)}}•{{TEXT(E)}}{{VAL(index)}})]]></subtitle>
 
                         </overlay>
                     </lockup>
@@ -238,12 +238,10 @@
                   onSelect="Presenter.load('Homemovie_Directory', '{{PMSID()}}', '{{PATH(/library/sections/{{VAL(key)}}/folder)}}')"
                   onSelectHold="modal">
         {{XML({{PATH(/library/sections/{{VAL(key)}}/recentlyAdded)}})}}{{
-                    <img class="roundedImageCorners" src="{{IMAGEURL(MediaContainer/Video/art::600)}}" width="548" height="280" />
-        }}
+                <img aspectFill="true" src="{{IMAGEURL(MediaContainer/Video/art::600)}}" width="548" height="280" class="bannerImage"/>
+         }}
                 <overlay>
-        						<img class="roundedOverlay" src="{{RESOURCEURL(TVMLTemplates/Revenant/images:overlay:png)}}" width="548" height="280" />
-                  	<title class="sectionLabel"><![CDATA[{{VAL(title)}}]]></title>
-
+                 <title class="sectionLabel"><![CDATA[{{VAL(title)}}]]></title>
                 </overlay>
                 </lockup>
                 }}
@@ -253,13 +251,11 @@
                   onSelect="Presenter.load('Movie_OnDeck', '{{PMSID()}}', '{{PATH(/library/sections/{{VAL(key)}})}}')"
                   onSelectHold="modal">
         {{XML({{PATH(/library/sections/{{VAL(key)}}/recentlyAdded)}})}}{{
-                    <img class="roundedImageCorners" src="{{IMAGEURL(MediaContainer/Video/art::600)}}" width="548" height="280" />
+                <img aspectFill="true" src="{{IMAGEURL(MediaContainer/Video/art::600)}}" width="548" height="280" class="bannerImage"/>
         }}
-                <overlay>
-        						<img class="roundedOverlay" src="{{RESOURCEURL(TVMLTemplates/Revenant/images:overlay:png)}}" width="548" height="280" />
-        						<title class="sectionLabel"><![CDATA[{{VAL(title)}}]]></title>
-
-                </overlay>
+               <overlay>
+                <title class="sectionLabel"><![CDATA[{{VAL(title)}}]]></title>
+               </overlay>
                 </lockup>
                 }}
                 }}
@@ -269,12 +265,10 @@
                   onSelect="Presenter.load('TVShow_OnDeck', '{{PMSID()}}', '{{PATH(/library/sections/{{VAL(key)}})}}')"
                   onSelectHold="modal">
         {{XML({{PATH(/library/sections/{{VAL(key)}}/recentlyAdded)}})}}{{
-        					<img class="roundedImageCorners" src="{{IMAGEURL(MediaContainer/Video/art::600)}}" width="548" height="280" />
+        					<img aspectFill="true" src="{{IMAGEURL(MediaContainer/Video/art::600)}}" width="548" height="280" class="bannerImage"/>
         }}
                 <overlay>
-        						<img class="roundedOverlay" src="{{RESOURCEURL(TVMLTemplates/Revenant/images:overlay:png)}}" width="548" height="280" />
-        						<title class="sectionLabel"><![CDATA[{{VAL(title)}}]]></title>
-
+                   <title class="sectionLabel"><![CDATA[{{VAL(title)}}]]></title>
                 </overlay>
                 </lockup>
                 }}
@@ -284,13 +278,11 @@
                   onSelect="Presenter.load('Music_OnDeck', '{{PMSID()}}', '{{PATH(/library/sections/{{VAL(key)}})}}')"
                   onSelectHold="modal">
         {{XML({{PATH(/library/sections/{{VAL(key)}}/recentlyAdded)}})}}{{
-                    <img class="roundedImageCorners" src="{{IMAGEURL(MediaContainer/Directory/art::600)}}" width="548" height="280" />
-        }}
+                <img aspectFill="true" src="{{IMAGEURL(MediaContainer/Directory/art::600)}}" width="548" height="280" class="bannerImage"/>
+         }}
                 <overlay>
-        						<img class="roundedOverlay" src="{{RESOURCEURL(TVMLTemplates/Revenant/images:overlay:png)}}" width="548" height="280" />
-        						<title class="sectionLabel"><![CDATA[{{VAL(title)}}]]></title>
-
-                  </overlay>
+                  <title class="sectionLabel"><![CDATA[{{VAL(title)}}]]></title>
+                </overlay>
                 </lockup>
                 }}
                 {{IF({{CHK("{{VAL(type:)}}"=="photo")}})}}
@@ -299,22 +291,17 @@
                   onSelect="Presenter.load('Photo_Browser', '{{PMSID()}}', '{{PATH(/library/sections/{{VAL(key)}})}}')"
                   onSelectHold="modal">
         {{XML({{PATH(/library/sections/{{VAL(key)}}/recentlyAdded)}})}}{{
-                    <img class="roundedImageCorners" src="{{IMAGEURL(MediaContainer/Photo/thumb::600)}}" width="548" height="280" />
-        }}
+                <img aspectFill="true" src="{{IMAGEURL(MediaContainer/Photo/thumb::600)}}" width="548" height="280" class="bannerImage"/>
+         }}
                 <overlay>
-        						<img class="roundedOverlay" src="{{RESOURCEURL(TVMLTemplates/Revenant/images:overlay:png)}}" width="548" height="280" />
-        						<title class="sectionLabel"><![CDATA[{{VAL(title)}}]]></title>
-
-                  </overlay>
+                 <title class="sectionLabel"><![CDATA[{{VAL(title)}}]]></title>
+                </overlay>
                 </lockup>
                 }}
                 }}
               </section>
             </shelf>
             }}
-
-
-
 
 
 

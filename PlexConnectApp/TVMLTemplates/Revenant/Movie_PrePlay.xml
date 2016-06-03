@@ -53,16 +53,19 @@ See LICENSE.txt for this sample’s licensing information
         <text class="color:#FFFFFF; tv-text-style:title1;"><![CDATA[{{VAL(MediaContainer/Video/tagline)}}]]></text>
 
         <row>
-          <!--text>rating(Video/contentRating)</text-->
-          {{IF({{VAL(MediaContainer/Video/audienceRating:0)}})}}{{
-            <text><badge src="resource://tomato-fresh"/> {{EVAL({{VAL(MediaContainer/Video/audienceRating:0)}}*10)}}%</text>
-            }}
-          {{IF({{VAL(MediaContainer/Video/audienceRatingImage:0)}})}}{{<text><badge src="{{IMAGEURL({{VAL(MediaContainer/Video/audienceRatingImage)}})}}"/></text>}}
-
-
-          <text>{{DURATION({{VAL(MediaContainer/Video/duration)}})}}</text>
-          <text><![CDATA[{{VAL(MediaContainer/Video/Genre/tag)}}]]></text>
+          {{IF({{VAL(MediaContainer/Video/ratingImage)}})}}{{
+          <text><badge src="resource://tomato-fresh"/> {{EVAL({{VAL(MediaContainer/Video/audienceRating:0)}}*10)}}%</text>
+          }}
+          {{IF({{VAL(MediaContainer/Video/audienceRatingImage)}})}}{{
+          <text><badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/RT:{{RTBADGE(MediaContainer/Video/audienceRatingImage)}}:png)}}" width="28" height="28"/> {{EVAL({{VAL(MediaContainer/Video/audienceRating:0)}}*10)}}%</text>
+          }}
+          {{IF({{VAL(MediaContainer/Video/contentRating)}})}}{{
+          <textBadge> <![CDATA[{{UPPERCASE({{VAL(MediaContainer/Video/contentRating)}})}}]]> </textBadge>
+          }}
           <text><![CDATA[{{VAL(MediaContainer/Video/year)}}]]></text>
+          <text><![CDATA[{{VAL(MediaContainer/Video/Genre/tag)}}]]></text>
+          <text>{{DURATION({{VAL(MediaContainer/Video/duration)}})}}</text>
+          
           {{IF({{CHK("{{VAL(MediaContainer/Video/Media/videoResolution)}}"=="1080")}})}}{{<textBadge>1080p</textBadge>}}
           {{IF({{CHK("{{VAL(MediaContainer/Video/Media/videoResolution)}}"=="720")}})}}{{<textBadge>720p</textBadge>}}
           {{IF({{CHK("{{VAL(MediaContainer/Video/Media/videoResolution)}}"=="2k")}})}}{{<textBadge>2K</textBadge>}}
@@ -101,6 +104,11 @@ See LICENSE.txt for this sample’s licensing information
           <!--badge src="resource://mpaa-pg" class="badge" /-->
           <!--badge src="resource://cc" class="badge" /-->
         </row>
+        <!--<row>
+          <text><![CDATA[{{VAL(MediaContainer/Video/year)}}]]></text>
+          <text><![CDATA[{{VAL(MediaContainer/Video/Genre/tag)}}]]></text>
+          <text>{{DURATION({{VAL(MediaContainer/Video/duration)}})}}</text>
+        </row>-->
         <description allowsZooming="true" moreLabel="more"
             onSelect="Presenter.loadContext('Movie_PrePlayDescription', '{{PMSID()}}', '{{PATH()}}')"
             >
