@@ -18,7 +18,7 @@
     <title>Filters:</title>
 {{COPY(MediaContainer/Directory)}}{{
 	{{IF({{CHK("{{VAL(key:)}}"=="all")}})}}{{
-		<button onSelect="Presenter.closeContext(); Presenter.load('Music_MenuBarAll', '{{PMSID()}}', '{{PATH()}}/all')">
+		<button onSelect="Presenter.closeContext(); Presenter.load('Music_Grid', '{{PMSID()}}', '{{PATH()}}/all')">
 			<text>{{TEXT(All Artists)}}</text>
 		</button>
 	}}

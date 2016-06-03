@@ -7,10 +7,10 @@ See LICENSE.txt for this sample’s licensing information
 {{SET(noItems:true)}}
 {{XML()}}{{
 <document>
-    
-    <compilationTemplate>
+
+    <compilationTemplate theme="light">
         <background>
-            
+
         </background>
         <list>
             <relatedContent>
@@ -43,8 +43,10 @@ See LICENSE.txt for this sample’s licensing information
                 <title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
                 <subtitle><![CDATA[{{VAL(MediaContainer/title1)}}]]></subtitle>
                 <row>
-                    <text>{{VAL(MediaContainer/size)}} Songs</text>
-                    <text><![CDATA[{{VAL(MediaContainer/parentYear)}}]]></text>
+                  <text><![CDATA[{{VAL(MediaContainer/parentYear)}}]]></text>
+                </row>
+                <row>
+                  <text><![CDATA[{{VAL(MediaContainer/size)}} tracks]]></text>
                 </row>
             </header>
             <section>
@@ -55,7 +57,7 @@ See LICENSE.txt for this sample’s licensing information
             </section>
             <section>
                 <header>
-                    <title>Songs</title>
+                    <title>Tracks</title>
                 </header>
                 {{COPY(MediaContainer/Track)}}{{
                 {{SET(noItems:false)}}

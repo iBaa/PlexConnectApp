@@ -25,7 +25,7 @@
       }
     </style>
   </head>
-  <compilationTemplate theme="light" class="lightBackgroundColor">
+  <compilationTemplate theme="light">
     <list>
       <relatedContent>
         <itemBanner>
@@ -51,6 +51,8 @@
         <subtitle><![CDATA[{{VAL(MediaContainer/title2)}}]]></subtitle>
         <row>
           <text><![CDATA[{{VAL(MediaContainer/parentYear)}}]]></text>
+        </row>
+        <row>
           <text><![CDATA[{{VAL(MediaContainer/size)}} tracks]]></text>
         </row>
 
@@ -59,7 +61,7 @@
     {{
       <section>
       	<description allowsZooming="true" moreLabel="MORE"
-            onSelect="Presenter.loadContext('Movie_PrePlayDescription', '{{PMSID()}}', '{{PATH()}}')">
+            onSelect="Presenter.loadContext('Music_AlbumDescription', '{{PMSID()}}', '{{PATH()}}')">
           <![CDATA[{{VAL(MediaContainer/summary)}}]]>
         </description>
       </section>
@@ -98,7 +100,7 @@
 {{  <!--enable if no items added-->
 <document>
   <alertTemplate>
-    <title style="text-align: left; color: #ff8000">PlexConnect</title>
+    <title>PlexConnect</title>
     <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
   </alertTemplate>
 </document>

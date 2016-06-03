@@ -235,7 +235,7 @@
                 {{IF({{CHK("{{VAL(scanner:)}}"=="Plex Video Files Scanner")}})}}
                 {{
                 <lockup
-                  onSelect="Presenter.load('List', '{{PMSID()}}', '{{PATH(/library/sections/{{VAL(key)}}/folder)}}')"
+                  onSelect="Presenter.load('Homemovie_Directory', '{{PMSID()}}', '{{PATH(/library/sections/{{VAL(key)}}/folder)}}')"
                   onSelectHold="modal">
         {{XML({{PATH(/library/sections/{{VAL(key)}}/recentlyAdded)}})}}{{
                     <img class="roundedImageCorners" src="{{IMAGEURL(MediaContainer/Video/art::600)}}" width="548" height="280" />
@@ -296,7 +296,7 @@
                 {{IF({{CHK("{{VAL(type:)}}"=="photo")}})}}
                 {{
                 <lockup
-                  onSelect="Presenter.load('Photo_OnDeck', '{{PMSID()}}', '{{PATH(/library/sections/{{VAL(key)}})}}')"
+                  onSelect="Presenter.load('Photo_Browser', '{{PMSID()}}', '{{PATH(/library/sections/{{VAL(key)}})}}')"
                   onSelectHold="modal">
         {{XML({{PATH(/library/sections/{{VAL(key)}}/recentlyAdded)}})}}{{
                     <img class="roundedImageCorners" src="{{IMAGEURL(MediaContainer/Photo/thumb::600)}}" width="548" height="280" />

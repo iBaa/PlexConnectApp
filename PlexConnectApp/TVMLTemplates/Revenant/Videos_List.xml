@@ -112,7 +112,7 @@
 {{  <!--enable if no items added-->
 <document>
   <alertTemplate>
-    <title style="text-align: left; color: #ff8000">PlexConnect</title>
+    <title>PlexConnect</title>
     <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
   </alertTemplate>
 </document>
