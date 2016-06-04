@@ -21,13 +21,17 @@ See LICENSE.txt for this sample’s licensing information
                 .seasonText {
                     text-align: center;
                     text-shadow: 2px 2px 4px #000000;
-                    color:#FFFFF;
+                    color:#FFFFFF;
                     tv-text-style:title1;
 
                 }
                 .darkBackgroundColor {
                 background-color: #1f1f1f;
                 }
+               .shelfLayout {
+                padding: 20 90 50;
+                }
+
             </style>
         </head>
         <productTemplate theme="light">
@@ -41,13 +45,18 @@ See LICENSE.txt for this sample’s licensing information
             </background>
             <header style="padding:80 0 0 0;">
                 <title class="seasonText"><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
+
             </header>
             <shelf centered="true">
+
+
                 <section>
                     {{COPY(MediaContainer/Directory)}}{{
                     {{SET(noItems:false)}}
                     {{IF(!{{CHK("{{VAL(title)}}"=="All episodes")}})}}{{
-                    <lockup onSelect="Presenter.loadPopup('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}');" >
+                    <lockup
+                        onSelect="Presenter.loadView('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                        >
                         <img src="{{IMAGEURL(thumb::600)}}" height="500" width="384" />
                         {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
                         <overlay>
@@ -60,8 +69,10 @@ See LICENSE.txt for this sample’s licensing information
                     </lockup>
                     }}
                     }}
-                    </section>
+
+                </section>
             </shelf>
+
         </productTemplate>
     </document>
 }}

@@ -32,6 +32,10 @@
             itml-img-treatment: corner-small;
             }
 
+            .gradientImage {
+            tv-tint-color: linear-gradient(top, 0.0, transparent, 0.3, rgba(0,0,0,0.65), 1.00, rgba(0,0,0,0.8));
+            }
+
             .bannerText {
             text-shadow: 2px 2px 8px #000000;
             }

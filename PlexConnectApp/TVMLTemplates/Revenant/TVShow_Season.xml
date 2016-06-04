@@ -1,85 +1,97 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!--
-Copyright (C) 2015 Baa. All rights reserved.
-See LICENSE.txt for this sample’s licensing information
--->
 {{CUT({{GET(noItems)}})}}{{
 {{SET(noItems:true)}}
 {{XML()}}{{
-    <document>
-        <head>
-            <style>
-                .showTextOnHighlight {
-                tv-text-highlight-style: show-on-highlight;
-                }
-                .overlayTextLayout {
-                    tv-position: top;
-                }
-                .centeredText {
-                    text-align: center;
-                }
-                .seasonText {
-                    text-align: center;
-                    text-shadow: 2px 2px 4px #000000;
-                    color:#FFFFFF;
-                    tv-text-style:title1;
+<document>
+  <head>
+    <style>
+    .plot {
+      min-height: 300;
+      max-height: 400;
+      margin: 50;
+    }
+    .count {
+    tv-text-style: none;
+    color: #000000;
+    font-weight: bold;
+    font-size: 19;
+    text-align: center;
+    tv-position: bottom-right;
+    margin: -100 -30 100 30;
+    }
+    </style>
+  </head>
+   <productTemplate>
+     <background>
+       {{IF({{CHK("{{SETTING(themeMusic)}}"=="On")}})}}{{
+       <audio volume="10">
+             <asset src="{{IMAGEURL(MediaContainer/theme)}}" />
+         </audio>
+         }}
+         <!--<img src="{{IMAGEURL(MediaContainer/art:1920)}}" width="1920" height="1080" />-->
+     </background>
+      <banner>
+        <infoList>
+          <info>
+              <header>
+                  <title>{{TEXT(Released)}}</title>
+              </header>
+              <text><![CDATA[{{VAL(MediaContainer/parentYear)}}]]></text>
 
-                }
-                .darkBackgroundColor {
-                background-color: #1f1f1f;
-                }
-               .shelfLayout {
-                padding: 20 90 50;
-                }
-                .count {
-                font-weight: bold;
-                font-size: 19;
-                text-align: center;
-                tv-position: bottom-right;
-                margin: -307 -89 307 89;
-                }
-            </style>
-        </head>
-        <productTemplate theme="light">
-            <background>
-              {{IF({{CHK("{{SETTING(themeMusic)}}"=="On")}})}}{{
-              <audio volume="10">
-                    <asset src="{{IMAGEURL(MediaContainer/theme)}}" />
-                </audio>
-                }}
-                <!--<img src="{{IMAGEURL(MediaContainer/art:1920)}}" width="1920" height="1080" />-->
-            </background>
-            <header style="padding:80 0 0 0;">
-                <title class="seasonText"><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
+          </info>
+          <info>
+              <header>
+                  <title>{{TEXT(Studio)}}</title>
+              </header>
+              <text><![CDATA[{{VAL(MediaContainer/parentStudio)}}]]></text>
 
-            </header>
-            <shelf centered="true">
+          </info>
+        </infoList>
+         <stack>
+            <title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
 
-
-                <section>
-                    {{COPY(MediaContainer/Directory)}}{{
-                    {{SET(noItems:false)}}
-                    {{IF(!{{CHK("{{VAL(title)}}"=="All episodes")}})}}{{
-                    <lockup
-                        onSelect="Presenter.loadView('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-                        >
-                        <img src="{{IMAGEURL(thumb::384)}}" width="340" height="500" />
-                        {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
-                        <overlay>
-                          <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(Images:unwatched2:png)}}"  width="72" height="72" />
-                          <decorationLabel class="count">{{EVAL({{VAL(leafCount)}}-{{VAL(viewedLeafCount)}})}}</decorationLabel>
-                        </overlay>
-                        }}
-                        <title><![CDATA[{{VAL(title)}}]]></title>
-                    </lockup>
-                    }}
-                    }}
-
-                </section>
-            </shelf>
-
-        </productTemplate>
-    </document>
+            <description style="tv-text-max-lines: 6" allowsZooming="true" moreLabel="MORE"
+                onSelect="Presenter.loadContext('TVShow_Description', '{{PMSID()}}', '{{PATH()}}')">
+              <![CDATA[{{VAL(MediaContainer/summary)}}]]>
+            </description>
+            <row>
+              <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+                  <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Play:png)}}" width="50" height="50"/>
+                  <title>Play Show</title>
+              </buttonLockup>
+              <buttonLockup onSelect="Presenter.load('ContextMenu', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
+                <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Eye:png)}}" width="50" height="50"/>
+                <title>Watch Status</title>
+              </buttonLockup>
+            </row>
+         </stack>
+         <heroImg src="{{IMAGEURL(MediaContainer/thumb::)}}" />
+      </banner>
+      <shelf style="margin: 0 0 90 0;">
+         <header>
+            <title>Season(s)</title>
+         </header>
+         <section>
+           {{COPY(MediaContainer/Directory)}}{{
+           {{SET(noItems:false)}}
+           {{IF(!{{CHK("{{VAL(title)}}"=="All episodes")}})}}{{
+           <lockup onSelect="Presenter.loadPopup('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}');" >
+               <img src="{{IMAGEURL(thumb::384)}}" width="150" height="226" />
+               {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
+               <overlay>
+                 <img style="tv-position: top-right; margin: -10 -10 60 60" src="{{RESOURCEURL(Images:unwatched2:png)}}"  width="72" height="72" />
+               </overlay>
+               }}
+               <title><![CDATA[{{VAL(title)}}]]></title>
+               <subtitle>{{VAL(leafCount)}} {{TEXT(Episode(s))}}</subtitle>
+               <subtitle><![CDATA[{{EVAL({{VAL(leafCount)}}-{{VAL(viewedLeafCount)}})}} unwatched]]></subtitle>
+           </lockup>
+           }}
+           }}
+         </section>
+      </shelf>
+    </productTemplate>
+  </document>
 }}
 }}
 

@@ -16,47 +16,35 @@ See LICENSE.txt for this sample’s licensing information
             .roundedImageCorners {
       			itml-img-treatment: corner-small;
       			}
+            .shelfLayout {
+               padding: 20 90 50;
+             }
         </style>
     </head>
-    <productBundleTemplate theme="light">
+    <productTemplate theme="light">
     <background>
     </background>
     <banner>
-      <!--<infoList>
+      <infoList>
         <info>
-          <ratingCard style="tv-align: right;">
-            <ratingBadge style="tv-rating-style: star-m;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
-          </ratingCard>
+          <header>
+            <title>{{TEXT(Country)}}</title>
+          </header>
+          <text><![CDATA[{{COPY(MediaContainer/Directory/Country)}}{{{{VAL(tag)}}{{TEXT(  )}}}}]]></text>
         </info>
 
         <info>
           <header>
-            <title>{{TEXT(Director)}}</title>
+            <title>{{TEXT(Genre)}}</title>
           </header>
-          <text>{{VAL(MediaContainer/Video/Director/tag)}}</text>
-        </info>
-        <info>
-          <header>
-            <title>{{TEXT(Producer)}}</title>
-          </header>
-          <text>{{VAL(MediaContainer/Video/Producer/tag)}}</text>
+          <text><![CDATA[{{COPY(MediaContainer/Directory/Genre)}}{{{{VAL(tag)}}}}]]></text>
         </info>
 
-        <info>
-          <header>
-            <title>{{TEXT(Actors)}}</title>
-          </header>
-{{COPY(MediaContainer/Video/Role)}}{{  <!-- COPY till 5 or so? -->
-          <text><![CDATA[{{VAL(tag)}}]]></text>
-}}
-        </info>
-      </infoList>-->
+      </infoList>
       <stack>
 {{SET(popular:/library/sections/{{VAL(MediaContainer/librarySectionID)}}/search?type=10&amp;artist.id={{VAL(MediaContainer/Directory/ratingKey)}}&amp;group=title&amp;limit=100&amp;ratingCount%3E=1&amp;sort=ratingCount:desc)}}
 {{SET(artist:/library/sections/{{VAL(MediaContainer/librarySectionID)}}/search?type=10&amp;artist.id={{VAL(MediaContainer/Directory/ratingKey)}}&amp;group=title&amp;sort=title:desc)}}
 				<title><![CDATA[{{VAL(MediaContainer/Directory/title)}}]]></title>
-        <subtitle><![CDATA[{{COPY(MediaContainer/Directory/Genre)}}{{{{VAL(tag)}}{{TEXT(  )}}}}]]]]></subtitle>
-				<text><![CDATA[{{COPY(MediaContainer/Directory/Country)}}{{{{VAL(tag)}}{{TEXT(  )}}}}]]></text>
         <description allowsZooming="true" moreLabel="more"
             onSelect="Presenter.loadContext('Music_Description', '{{PMSID()}}', '{{PATH()}}')"
             >
@@ -126,7 +114,7 @@ See LICENSE.txt for this sample’s licensing information
 		}}
 }}
 
-  </productBundleTemplate>
+  </productTemplate>
 </document>
 }}
 

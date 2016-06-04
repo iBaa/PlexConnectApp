@@ -15,12 +15,6 @@ See LICENSE.txt for this sample’s licensing information
       <text>{{TEXT(View Show)}}</text>
     </button>
 
-    <button
-        onSelect="Presenter.load('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(MediaContainer/Video/parentKey)}}/children)}}'); Presenter.closeContext();"
-        >
-      <text>{{TEXT(View Season)}}</text>
-    </button>
-
 {{SET(showMarkWatched:false)}}  <!--default-->
 {{SET(showMarkUnwatched:false)}}
 {{IF({{VAL(MediaContainer/Video/viewOffset:0)}})}}{{  <!--offset>0 - watching has been started - as in onDeck -->

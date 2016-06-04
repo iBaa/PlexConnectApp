@@ -55,7 +55,7 @@ See LICENSE.txt for this sample’s licensing information
 
                 {{XML(/library/metadata/{{VAL(MediaContainer/grandparentRatingKey)}}/children)}}{{
                 <description allowsZooming="true" moreLabel="more"
-                    onSelect="Presenter.loadContext('TVShow_Description', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                    onSelect="Presenter.loadContext('TVShow_EpisodeDescription', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                     >
                     <![CDATA[{{VAL(MediaContainer/summary)}}]]>
                 </description>
