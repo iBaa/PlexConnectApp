@@ -29,16 +29,16 @@ See LICENSE.txt for this sample’s licensing information
             }
 
             .bannerImage {
-            tv-tint-color: linear-gradient(top, 0.50, transparent, 0.8, rgba(0,0,0,0.65), 1.00, rgba(0,0,0,0.8));
+            tv-tint-color: linear-gradient(top, 0.25, transparent, 0.8, rgba(0,0,0,0.65), 1.00, rgba(0,0,0,0.8));
             itml-img-treatment: corner-small;
-
             }
+
             .bannerText {
             text-shadow: 2px 2px 8px #000000;
             }
+
             .bannerSubtext{
             text-shadow: 2px 2px 4px #000000;
-
             }
 
             .banner {
@@ -59,11 +59,12 @@ See LICENSE.txt for this sample’s licensing information
             .sectionLabel {
             text-align: center;
             margin: 0 0 -15 0;
-          <!--color: #605e58;-->
             }
+
             .title {
             color: #ffffff;
             }
+
             .count {
             font-weight: bold;
             font-size: 19;
@@ -130,7 +131,7 @@ See LICENSE.txt for this sample’s licensing information
                     <img aspectFill="true" src="{{IMAGEURL(art::768)}}" height="378" width="672" class="bannerImage"/>
                     <overlay>
                         <title class="bannerText"><![CDATA[{{VAL(title)}}]]></title>
-                        <subtitle class="bannerSubtext"><![CDATA[{{VAL(grandparentTitle)}} - {{TEXT(S)}}{{VAL(parentIndex)}} • {{TEXT(E)}}{{VAL(index)}}]]></subtitle>
+                        <subtitle class="bannerSubtext"><![CDATA[{{VAL(grandparentTitle)}} ({{TEXT(S)}}{{VAL(parentIndex)}} • {{TEXT(E)}}{{VAL(index)}})]]></subtitle>
 
                     </overlay>
                 </lockup>
@@ -349,6 +350,9 @@ See LICENSE.txt for this sample’s licensing information
         }}
         }}
 
+
+        {{IF({{CHK("{{SETTING(showChannels)}}"=="Show")}})}}{{
+
         {{XML({{PATH(/channels/all)}})}}{{
         {{IFNODE(MediaContainer/Directory)}}{{
           <shelf>
@@ -390,13 +394,10 @@ See LICENSE.txt for this sample’s licensing information
         </shelf>
         }}
       }}
+      }}
 
 
-
-
-        }}
-
-
+      }}
 
     </collectionList>
 </stackTemplate>

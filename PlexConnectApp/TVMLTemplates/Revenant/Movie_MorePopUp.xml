@@ -11,7 +11,7 @@
         }
       </style>
   </head>
-    <alertTemplate theme="dark" class="darkBackgroundColor">
+    <alertTemplate theme="dark">
       <title><![CDATA[{{VAL(MediaContainer/Video/title)}}]]></title>
 
 			<button onSelect="swiftInterface.sendPmsPath('{{PMSID()}}', '/:/scrobble?key={{PATH()}}&amp;identifier=com.plexapp.plugins.library'); Presenter.closeContext();">

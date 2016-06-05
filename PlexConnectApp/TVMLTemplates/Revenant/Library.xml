@@ -32,10 +32,6 @@
             itml-img-treatment: corner-small;
             }
 
-            .gradientImage {
-            tv-tint-color: linear-gradient(top, 0.0, transparent, 0.3, rgba(0,0,0,0.65), 1.00, rgba(0,0,0,0.8));
-            }
-
             .bannerText {
             text-shadow: 2px 2px 8px #000000;
             }
@@ -86,9 +82,6 @@
         <identityBanner class="banner" >
             <title style="text-align: left;">Discover {{PMSVAL(name)}}</title>
             <subtitle style="text-align: left;">{{USRVAL(name)}}</subtitle>
-            {{XML({{PATH(/library/sections/{{VAL(key)}}/recentlyAdded)}})}}{{
-            <heroImg src="{{IMAGEURL(MediaContainer/Video/art:1920)}}" />
-            }}
             <row style="tv-content-align:top">
                 <buttonLockup onSelect="Presenter.loadAndSwap('Library','','');">
                     <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Reload:png)}}" width="50" height="50"/>
@@ -143,7 +136,7 @@
                     }}
                     {{IF({{CHK("{{VAL(type:)}}"=="movie")}})}}{{
                     <lockup
-                        onSelect="Presenter.loadArt('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}','{{IMAGEURL(art::768)}}', 'Movie')"
+                        onSelect="Presenter.loadArt('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}','{{IMAGEURL(art::768)}}', '{{VAL(title)}}')"
                         onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                         onHoldSelect="Presenter.loadContext('ContextMenu', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                         onSelectHold="modal">
@@ -168,9 +161,9 @@
               {{COPY(MediaContainer/Directory)}}{{
                   {{IF({{CHK("{{VAL(type:)}}"=="season")}})}}{{
                   {{SET(noItems:false)}}
-                  <lockup onSelect="Presenter.load('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                  <lockup onSelect="Presenter.loadArt('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}','{{IMAGEURL(art::768)}}', '{{VAL(parentTitle)}}')"
                     onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-                    onHoldSelect="modal">
+                    onHoldSelect="Presenter.loadContext('ContextMenu', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
                     <img src="{{IMAGEURL(thumb::360)}}" height="375" width="250" />
                     {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
                     <overlay>
@@ -200,8 +193,9 @@
                     {{COPY(MediaContainer/Video)}}{{
                     {{SET(noItems:false)}}
                     <lockup
-                        onSelect="Presenter.loadArt('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}','{{IMAGEURL(art::768)}}', 'Movie')"
-                        onSelectHold="modal">
+                        onSelect="Presenter.loadArt('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}','{{IMAGEURL(art::768)}}', '{{VAL(title)}}')"
+                        onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                        onHoldSelect="Presenter.loadContext('ContextMenu', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
                         <img src="{{IMAGEURL(thumb::384)}}" height="360" width="240" />
                         <overlay>
                             <!--{{IF({{VAL(viewCount:0)}})}}{{ <badge src="resource://overlay-checkmark"/>}}-->
@@ -292,7 +286,7 @@
                 {{IF({{CHK("{{VAL(type:)}}"=="photo")}})}}
                 {{
                 <lockup
-                  onSelect="Presenter.load('Photo_Browser', '{{PMSID()}}', '{{PATH(/library/sections/{{VAL(key)}})}}')"
+                  onSelect="Presenter.load('Photo_OnDeck', '{{PMSID()}}', '{{PATH(/library/sections/{{VAL(key)}})}}')"
                   onSelectHold="modal">
         {{XML({{PATH(/library/sections/{{VAL(key)}}/recentlyAdded)}})}}{{
                 <img aspectFill="true" src="{{IMAGEURL(MediaContainer/Photo/thumb::600)}}" width="548" height="280" class="bannerImage"/>
@@ -346,7 +340,53 @@
             }}
             }}
 
+
+            {{IF({{CHK("{{SETTING(showChannels)}}"=="Show")}})}}{{
+
+            {{XML({{PATH(/channels/all)}})}}{{
+            {{IFNODE(MediaContainer/Directory)}}{{
+              <shelf>
+                <header>
+                    <title>Channels</title>
+                </header>
+                <section>
+                    {{COPY(MediaContainer/Directory)}}{{
+                {{SET(noItems:false)}}
+                {{IF({{TABLE(${{VAL(key)}}:0:/video/:1)}})}}{{
+                <lockup
+                  onSelect="Presenter.load('Movie_Directory', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                  onSelectHold="modal">
+                  <img src="{{IMAGEURL(thumb::360)}}" height="250" width="250" />
+                  <title><![CDATA[{{VAL(title)}}]]></title>
+                  <subtitle>Video</subtitle>
+                </lockup>
+                }}
+                {{IF({{TABLE(${{VAL(key)}}:0:/music/:1)}})}}{{
+                <lockup
+                  onSelect="Presenter.load('Music_Directory', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                  onSelectHold="modal">
+                  <img src="{{IMAGEURL(thumb::360)}}" height="250" width="250" />
+                  <title><![CDATA[{{VAL(title)}}]]></title>
+                  <subtitle>Music</subtitle>
+                </lockup>
+                }}
+                {{IF({{TABLE(${{VAL(key)}}:0:/photos/:1)}})}}{{
+                <lockup
+                  onSelect="Presenter.load('Photo_Browser', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                  onSelectHold="modal">
+                  <img src="{{IMAGEURL(thumb::360)}}" height="250" width="250" />
+                  <title><![CDATA[{{VAL(title)}}]]></title>
+                  <subtitle>Photos</subtitle>
+                </lockup>
+                }}
+                }}
+              </section>
+            </shelf>
             }}
+            }}
+            }}
+
+         }}
 
         </collectionList>
     </stackTemplate>

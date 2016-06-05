@@ -20,7 +20,7 @@ See LICENSE.txt for this sample’s licensing information
       }
     </style>
   </head>
-  <stackTemplate>
+  <stackTemplate theme="light">
     <banner>
       <title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
       <heroImg src="{{IMAGEURL(MediaContainer/thumb:1920)}}" />
@@ -73,7 +73,7 @@ See LICENSE.txt for this sample’s licensing information
       </section>
       </grid>
 }}
-      
+
     </collectionList>
   </stackTemplate>
 </document>

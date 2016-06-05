@@ -84,7 +84,7 @@ function shuffleArray(arr) {
         arr[i] = arr[j];
         arr[j] = temp;
     }
-    
+
     return arr;
 }
 
@@ -141,7 +141,7 @@ var createArtSpinner = function(title, art) {
     </header>
     <shelf>
     </shelf>
-    
+
     </productTemplate>
     </document>`
     var parser = new DOMParser();

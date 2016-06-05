@@ -16,7 +16,7 @@
 			}
 	</style>
 </head>
-  <listTemplate theme="light" class="lightBackgroundColor">
+  <listTemplate theme="light">
     <list>
 		<relatedContent>
         <!--<itemBanner>

@@ -28,6 +28,10 @@ See LICENSE.txt for this sample’s licensing information
             onSelectHold="modal"
             >
           <title><![CDATA[{{VAL(title)}}]]></title>
+          <relatedContent>
+            <lockup>
+            </lockup>
+            </relatedContent>
         </listItemLockup>
 }}
 {{COPY(MediaContainer/Video)}}{{
@@ -42,7 +46,7 @@ See LICENSE.txt for this sample’s licensing information
 }}
 
       </section>
-      
+
     </list>
   </listTemplate>
 </document>

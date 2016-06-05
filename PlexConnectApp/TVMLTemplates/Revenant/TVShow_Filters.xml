@@ -12,14 +12,14 @@
         </style>
     </head>
     <alertTemplate theme="light">
-    <title>Filters:</title>
+    <title></title>
 
 	{{COPY(MediaContainer/Directory)}}
 	{{
 		{{IF({{VAL(prompt)}})}}
 		{{
-		
-        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
+
+        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
         	<button onSelect="Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/{{VAL(key)}}');Presenter.closeContext()">
         	  	<text>{{VAL(title)}}</text>
         	</button>
@@ -28,8 +28,8 @@
 		{{
     	{{IF({{CHK("{{VAL(key:)}}"=="folder")}})}}
 		{{
-		
-        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
+
+        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
         	<button onSelect="Presenter.close();Presenter.load('List', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}');Presenter.closeContext()">
             	<text>{{VAL(title)}}</text>
         	</button>
@@ -38,24 +38,24 @@
 		{{
     		{{IF({{CHK("{{VAL(secondary:)}}"=="1")}})}}
 			{{
-		
-        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
+
+        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
         	<button onSelect="Presenter.load('TVShow_Secondary', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}');Presenter.closeContext()">
             	<text>{{VAL(title)}}</text>
         	</button>
     		}}
     		{{IF(!{{CHK("{{VAL(secondary:)}}"=="1")}})}}
 			{{
-		
-        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
+
+        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
         	<button onSelect="Presenter.close();Presenter.load('TVShow_Grid', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}');Presenter.closeContext()">
             	<text>{{VAL(title)}}</text>
         	</button>
     		}}
     	}}
     	}}
-    }}    
-}}        
+    }}
+}}
     </alertTemplate>
 </document>
 }}

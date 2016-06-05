@@ -50,6 +50,11 @@ class cSettings {
             "off", "127.0.0.1:1844"
             ], 0
         ),
+        "showChannels": ([
+            "Hide", "Show"
+            ], 0
+        ),
+
         "themeTitle": ([
             "Text", "Banner"
             ], 0

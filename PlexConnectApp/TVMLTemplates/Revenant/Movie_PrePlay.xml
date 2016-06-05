@@ -44,7 +44,7 @@ See LICENSE.txt for this sample’s licensing information
             <title>{{TEXT(Actors)}}</title>
           </header>
 {{COPY(MediaContainer/Video/Role)}}{{  <!-- COPY till 5 or so? -->
-          <text>{{VAL(tag)}}</text>
+          <text><![CDATA[{{VAL(tag)}}]]></text>
 }}
         </info>
       </infoList>
@@ -65,7 +65,7 @@ See LICENSE.txt for this sample’s licensing information
           <text><![CDATA[{{VAL(MediaContainer/Video/year)}}]]></text>
           <text><![CDATA[{{VAL(MediaContainer/Video/Genre/tag)}}]]></text>
           <text>{{DURATION({{VAL(MediaContainer/Video/duration)}})}}</text>
-          
+
           {{IF({{CHK("{{VAL(MediaContainer/Video/Media/videoResolution)}}"=="1080")}})}}{{<textBadge>1080p</textBadge>}}
           {{IF({{CHK("{{VAL(MediaContainer/Video/Media/videoResolution)}}"=="720")}})}}{{<textBadge>720p</textBadge>}}
           {{IF({{CHK("{{VAL(MediaContainer/Video/Media/videoResolution)}}"=="2k")}})}}{{<textBadge>2K</textBadge>}}

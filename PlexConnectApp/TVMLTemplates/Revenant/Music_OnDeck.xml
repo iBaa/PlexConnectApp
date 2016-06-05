@@ -31,11 +31,11 @@
 			}
     </style>
   </head>
-  <stackTemplate theme="light" class="lightBackgroundColor">
+  <stackTemplate theme="light">
     <identityBanner>
       <title class="header">Discover <![CDATA[{{VAL(MediaContainer/title1)}}     ]]></title>
       <subtitle class="header"><![CDATA[{{PMSVAL(name)}}    ]]></subtitle>
-      <heroImg src="{{IMAGEURL(MediaContainer/art:1920)}}" />
+      <heroImg src="{{IMAGEURL(MediaContainer/Directory/art:1920)}}" />
       <row>
         <buttonLockup onSelect="audioPlayer.nowPlaying()">
           <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Playing:png)}}" width="50" height="50" />

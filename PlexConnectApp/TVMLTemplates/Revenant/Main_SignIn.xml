@@ -12,8 +12,8 @@ See LICENSE.txt for this sample’s licensing information
         </style>
     </head>
   <alertTemplate>
-    <title style="tv-text-style: title3;">TITLE</title>
-    <description>{{TEXT(To start using all your Plex Services, Sign In with your MyPlex ID.)}}<br/>{{TEXT(Use Offline Mode to access your local Plex Servers only.)}}</description>
+    <title style="tv-text-style: title3;">PlexConnect</title>
+    <description>{{TEXT(To start using all your Plex Services, Sign In with your MyPlex ID.)}}</description>
 
     <button id="MyPlexSignIn" autoHighlight="true"
         onSelect="myPlex.signIn(event);"
@@ -21,11 +21,6 @@ See LICENSE.txt for this sample’s licensing information
         onError="Presenter.load('MyPlex_SignInFailed','','');"
         >
       <text>{{TEXT(Sign In)}}</text>
-    </button>
-
-    <button id="OfflineMode" disabled="true"
-      onSelect="">
-      <text>{{TEXT(Offline Mode)}}</text>
     </button>
 
   </alertTemplate>

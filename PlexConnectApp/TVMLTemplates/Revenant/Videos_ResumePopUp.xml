@@ -6,7 +6,7 @@
        	<text>{{TEXT(Resume Playing: )}}{{DURATION_HMS({{VAL(MediaContainer/Video/viewOffset:)}})}}</text>
       </button>
       <button onSelect="Presenter.closeContext(); videoPlayer.play('{{PMSID()}}', '{{PATH()}}')">
-       	<text>{{TEXT(Play from Beginning)}}</text>
+       	<text>{{TEXT(Play From Beginning)}}</text>
       </button>
     </alertTemplate>
 </document>

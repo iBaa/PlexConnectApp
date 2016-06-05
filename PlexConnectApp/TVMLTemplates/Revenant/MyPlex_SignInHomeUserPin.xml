@@ -11,7 +11,7 @@ See LICENSE.txt for this sample’s licensing information
             }
         </style>
     </head>
-  <formTemplate theme="dark" class="darkBackgroundColor">
+  <formTemplate theme="dark">
     <banner>
       <title>{{TEXT(MyPlex HomeUser)}}</title>
       <description>{{TEXT(To finish switching, enter your HomeUser pin.)}}</description>

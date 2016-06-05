@@ -36,7 +36,7 @@
       }
     </style>
   </head>
-  <stackTemplate theme="light" class="lightBackgroundColor">
+  <stackTemplate theme="light">
     <identityBanner>
       <title class="header">Home Users</title>
       <subtitle class="header">{{TEXT(Admin )}}{{USRVAL(name)}}</subtitle>
@@ -56,7 +56,7 @@
           username="{{VAL(title)}}"
           protected="{{VAL(protected)}}"
           onSelect="myPlex.switchHomeUser(event);"
-          onSuccess="Presenter.load('Startup', '', '');"
+          onSuccess="Presenter.load('MyPlex_Servers', '', '');"
           onError="Presenter.load('MyPlex_SignInFailed', '', '');"
           >
           <monogram src="{{VAL(thumb)}}?size=256" width="180" height="180" />

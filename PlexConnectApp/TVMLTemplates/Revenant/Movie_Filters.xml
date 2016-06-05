@@ -12,7 +12,7 @@
         </style>
     </head>
     <alertTemplate theme="light">
-    <title>Filters:</title>
+    <title></title>
 
 	{{COPY(MediaContainer/Directory)}}
 	{{

@@ -22,7 +22,7 @@
       }
     </style>
   </head>
-  <listTemplate theme="light" class="lightBackgroundColor">
+  <listTemplate theme="light">
     <list>
       <header>
         <title>{{TEXT(Plex Media Servers)}}</title>
@@ -33,7 +33,7 @@
       <header>
         <title>{{TEXT(Available Plex Media Servers)}}: {{PMSCNT(all)}}</title>
       </header>
-				
+
 {{PMSLOOP(owned)}}{{
 {{SET(noItems:false)}}
         <listItemLockup

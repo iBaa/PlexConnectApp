@@ -14,13 +14,13 @@ See LICENSE.txt for this sample’s licensing information
             }
         </style>
     </head>
-  <stackTemplate theme="dark" class="darkBackgroundColor">
+  <stackTemplate theme="dark">
     <banner>
       <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
     </banner>
     <collectionList>
       <grid>
-              
+
         <section>
 {{COPY(MediaContainer/Directory)}}{{
 {{SET(noItems:false)}}
@@ -33,7 +33,7 @@ See LICENSE.txt for this sample’s licensing information
           </lockup>
 }}
       </section>
-      
+
       </grid>
     </collectionList>
   </stackTemplate>
