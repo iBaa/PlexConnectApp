@@ -129,14 +129,14 @@
                     <lockup
                         onSelect="Presenter.loadArt('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(parentKey)}}/children)}}', '{{IMAGEURL(art::768)}}', '{{VAL(grandparentTitle)}}')"
                         onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-                        onHoldSelect="Presenter.loadContext('Library_EpisodeContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                        onHoldSelect="Presenter.loadContext('ContextMenu', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                         onSelectHold="modal">
 
                         <!--https://lsrdb.com/search?title={PlexConnect}&year={RELEASEYEAR}&fallback={FALLBACKURL}-->
                         <img aspectFill="true" src="{{IMAGEURL(art::768)}}" height="378" width="672" class="bannerImage"/>
                         <overlay>
                             <title class="bannerText"><![CDATA[{{VAL(title)}}]]></title>
-                            <subtitle class="bannerSubtext"><![CDATA[{{VAL(grandparentTitle)}} ({{TEXT(S)}}{{VAL(parentIndex)}}•{{TEXT(E)}}{{VAL(index)}})]]></subtitle>
+                            <subtitle class="bannerSubtext"><![CDATA[{{VAL(grandparentTitle)}} ({{TEXT(S)}}{{VAL(parentIndex)}} • {{TEXT(E)}}{{VAL(index)}})]]></subtitle>
 
                         </overlay>
                     </lockup>
@@ -145,7 +145,7 @@
                     <lockup
                         onSelect="Presenter.loadArt('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}','{{IMAGEURL(art::768)}}', 'Movie')"
                         onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-                        onHoldSelect="Presenter.loadContext('Library_MovieContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                        onHoldSelect="Presenter.loadContext('ContextMenu', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                         onSelectHold="modal">
                         <img aspectFill="true" src="{{IMAGEURL(art::768)}}" height="378" width="672" class="bannerImage"/>
                         <overlay>

@@ -12,7 +12,7 @@
       </style>
   </head>
   <alertTemplate theme="dark" class="darkBackgroundColor">
-    <title><![CDATA[{{VAL(MediaContainer/parentTitle)}}]]></title>
+    <title>Watch Status:</title>
 			<button onSelect="swiftInterface.sendPmsPath('{{PMSID()}}', '/:/scrobble?key={{VAL(MediaContainer/Video/ratingKey)}}&amp;identifier=com.plexapp.plugins.library'); Presenter.closeContext();">
        	<text>{{TEXT(Mark as Watched)}}</text>
       </button>

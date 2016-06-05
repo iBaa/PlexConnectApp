@@ -37,7 +37,7 @@ See LICENSE.txt for this sample’s licensing information
 {{CUT({{GET(noItems)}})}}{{
         <section class="sectionSpacing">
           <header>
-            <title>&lt;{{PMSVAL(name)}}&gt;</title>  <!-- add local/remote, remove servername if only one -->
+            <title>{{PMSVAL(name)}}</title>  <!-- add local/remote, remove servername if only one -->
           </header>
 {{COPY(MediaContainer/Video)}}{{
 {{IF({{CHK("{{VAL(type:)}}"=="movie")}})}}{{
@@ -59,7 +59,7 @@ See LICENSE.txt for this sample’s licensing information
 }}
       </shelf>
 }}
-      
+
       <!-- shows -->
 {{CUT({{GET(noShows)}})}}{{
 {{SET(noShows:true)}}
@@ -73,7 +73,7 @@ See LICENSE.txt for this sample’s licensing information
 {{CUT({{GET(noItems)}})}}{{
         <section class="sectionSpacing">
           <header>
-            <title>&lt;{{PMSVAL(name)}}&gt;</title>  <!-- add local/remote, remove servername if only one -->
+            <title>{{PMSVAL(name)}}</title>  <!-- add local/remote, remove servername if only one -->
           </header>
 {{COPY(MediaContainer/Directory)}}{{
 {{IF({{CHK("{{VAL(type:)}}"=="show")}})}}{{
@@ -108,7 +108,7 @@ See LICENSE.txt for this sample’s licensing information
 {{CUT({{GET(noItems)}})}}{{
         <section class="sectionSpacing">
           <header>
-            <title>&lt;{{PMSVAL(name)}}&gt;</title>  <!-- add local/remote, remove servername if only one -->
+            <title>{{PMSVAL(name)}}</title>  <!-- add local/remote, remove servername if only one -->
           </header>
 {{COPY(MediaContainer/Video)}}{{
 {{IF({{CHK("{{VAL(type:)}}"=="episode")}})}}{{
@@ -145,7 +145,7 @@ See LICENSE.txt for this sample’s licensing information
 {{CUT({{GET(noItems)}})}}{{
         <section class="sectionSpacing">
           <header>
-            <title>&lt;{{PMSVAL(name)}}&gt;</title>  <!-- add local/remote, remove servername if only one -->
+            <title>{{PMSVAL(name)}}</title>  <!-- add local/remote, remove servername if only one -->
           </header>
 {{COPY(MediaContainer/Directory)}}{{
 {{IF({{CHK("{{VAL(type:)}}"=="album")}})}}{{
@@ -181,7 +181,7 @@ See LICENSE.txt for this sample’s licensing information
 {{CUT({{GET(noItems)}})}}{{
         <section class="sectionSpacing">
           <header>
-            <title>&lt;{{PMSVAL(name)}}&gt;</title>  <!-- add local/remote, remove servername if only one -->
+            <title>{{PMSVAL(name)}}</title>  <!-- add local/remote, remove servername if only one -->
           </header>
 {{COPY(MediaContainer/Directory)}}{{
 {{IF({{CHK("{{VAL(type:)}}"=="artist")}})}}{{
