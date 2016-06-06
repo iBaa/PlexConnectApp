@@ -2,26 +2,27 @@
 <!--
 Copyright (C) 2015 Baa. All rights reserved.
 See LICENSE.txt for this sample’s licensing information
- TOP RIGHT BOTTOM LERevenant
+ TOP RIGHT BOTTOM LEFT
 -->
 {{CUT({{GET(noItems)}})}}{{
 {{SET(noItems:true)}}
 {{XML()}}{{
 <document>
-  <head>
-    <style>
-    .whiteButton {
-      tv-tint-color: rgb(255, 255, 255);
-      width: 500;
-      height: 200;
-    }
-    .plot {
-      min-height: 300;
-      max-height: 400;
-      margin: 50;
-    }
-    </style>
-  </head>
+    <head>
+        <style>
+            .artImage {
+                tv-tint-color: linear-gradient(top, 0.1, rgba(0,0,0,0.75), 0.2, rgba(0,0,0,0.75), 1.00, rgba(0,0,0,0.8));
+
+            }
+            .text {
+                text-shadow: 2px 2px 4px #000000;
+                <!--height: 800px;-->
+            }
+            .darkBackgroundColor {
+                <!--background-color: #1f1f1f;-->
+            }
+        </style>
+    </head>
     <productBundleTemplate theme="light">
         <background>
             <!--<img style="tv-img-treatment:uber;" src="{{IMAGEURL(MediaContainer/art:1920)}}" />-->
@@ -34,7 +35,7 @@ See LICENSE.txt for this sample’s licensing information
         <banner>
 
            <!-- <stack class="text" style="margin:-50 0 0 180;">-->
-                <stack>
+                <stack class="text">
 
                 <!--<row style="margin:0 0 110 0">
                     <heroImg src="{{IMAGEURL(MediaContainer/banner::)}}" style="margin:0"/>
@@ -48,8 +49,8 @@ See LICENSE.txt for this sample’s licensing information
                     <text><![CDATA[{{VAL(MediaContainer/Video/year)}}]]></text>
                     <text><![CDATA[{{VAL(MediaContainer/grandparentStudio)}}]]></text>
                     <!--<badge src="resource://hd" class="badge" />-->
-                    <ratingCard style="tv-align: left;">
-                        <ratingBadge style="tv-rating-style: star-hollow-l;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
+                    <ratingCard style="tv-align: left; text-shadow: 2px 2px 8px #000000;">
+                        <ratingBadge style="tv-rating-style: star-hollow-l;text-shadow: 2px 2px 8px #000000;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
                     </ratingCard>
                 </row>
 

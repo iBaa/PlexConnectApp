@@ -48,6 +48,7 @@
     <identityBanner>
       <title class="header"><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
       <subtitle class="header"><![CDATA[{{VAL(MediaContainer/title1)}}]]>  <![CDATA[  ({{VAL(MediaContainer/size)}})]]></subtitle>
+      <heroImg src="{{IMAGEURL(MediaContainer/art:1920)}}" />
       <row>
         <buttonLockup onSelect="Presenter.load('Search', '{{PMSID()}}', '/library/sections/{{VAL(MediaContainer/librarySectionID)}}/search?type=1&amp;query')">
           <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Search:png)}}" width="50" height="50"/>

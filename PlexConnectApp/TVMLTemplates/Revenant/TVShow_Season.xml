@@ -5,30 +5,41 @@
 <document>
   <head>
     <style>
-    .plot {
-      min-height: 300;
-      max-height: 400;
-      margin: 50;
-    }
-    .count {
-    tv-text-style: none;
-    color: #000000;
-    font-weight: bold;
-    font-size: 19;
-    text-align: center;
-    tv-position: bottom-right;
-    margin: -100 -30 100 30;
-    }
+      .artImage {
+          tv-tint-color: linear-gradient(top, 0.1, rgba(0,0,0,0.75), 0.2, rgba(0,0,0,0.75), 1.00, rgba(0,0,0,0.8));
+
+      }
+      .text {
+          text-shadow: 2px 2px 4px #000000;
+          <!--height: 800px;-->
+      }
+      .darkBackgroundColor {
+          <!--background-color: #1f1f1f;-->
+      }
+      .plot {
+       min-height: 300;
+       max-height: 400;
+       margin: 50;
+      }
+      .count {
+      tv-text-style: none;
+      color: #000000;
+      font-weight: bold;
+      font-size: 19;
+      text-align: center;
+      tv-position: bottom-right;
+      margin: -100 -30 100 30;
+      }
     </style>
   </head>
-   <productTemplate>
+   <productTemplate theme="light">
      <background>
+       <!--<img style="tv-img-treatment:uber;" src="{{IMAGEURL(MediaContainer/art:1920)}}" />-->
        {{IF({{CHK("{{SETTING(themeMusic)}}"=="On")}})}}{{
        <audio volume="10">
              <asset src="{{IMAGEURL(MediaContainer/theme)}}" />
          </audio>
          }}
-         <!--<img src="{{IMAGEURL(MediaContainer/art:1920)}}" width="1920" height="1080" />-->
      </background>
       <banner>
         <infoList>
@@ -43,19 +54,19 @@
               <header>
                   <title>{{TEXT(Studio)}}</title>
               </header>
-              <text><![CDATA[{{VAL(MediaContainer/parentStudio)}}]]></text>
+              <text><![CDATA[{{VAL(MediaContainer/Directory/parentStudio)}}]]></text>
 
           </info>
         </infoList>
-         <stack>
+         <stack class="text">
             <title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
 
-            <description style="tv-text-max-lines: 6" allowsZooming="true" moreLabel="MORE"
+            <description allowsZooming="true" moreLabel="MORE"
                 onSelect="Presenter.loadContext('TVShow_Description', '{{PMSID()}}', '{{PATH()}}')">
               <![CDATA[{{VAL(MediaContainer/summary)}}]]>
             </description>
             <row>
-              <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+              <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', '')">
                   <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Play:png)}}" width="50" height="50"/>
                   <title>Play Show</title>
               </buttonLockup>

@@ -8,7 +8,7 @@ See LICENSE.txt for this sample’s licensing information
 {{XML()}}{{
     <document>
         <head>
-     
+
         </head>
         <stackTemplate>
             <background>
@@ -21,8 +21,8 @@ See LICENSE.txt for this sample’s licensing information
                 <!-- Grab Actor thumb -->
                  {{SET(actorPath:{{PATH()}})}}
                  {{SET(sectionID:{{VAL(MediaContainer/librarySectionID)}})}}
-                 
-           
+
+
 
 
                  {{XML(/library/metadata/{{VAL(MediaContainer/Directory/ratingKey)}})}}{{
@@ -35,9 +35,10 @@ See LICENSE.txt for this sample’s licensing information
                     }}
                 }}
                 <title style="tv-position: bottom; tv-text-style:title3;"><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
+                <heroImg src="{{IMAGEURL(MediaContainer/art:1920)}}" />
 
             </banner>
-            
+
             <collectionList>
             <shelf centered="true" style="margin:100">
                 <section>
