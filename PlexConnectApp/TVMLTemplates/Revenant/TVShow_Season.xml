@@ -32,7 +32,7 @@
       }
     </style>
   </head>
-   <productTemplate theme="light">
+   <productBundleTemplate>
      <background>
        <!--<img style="tv-img-treatment:uber;" src="{{IMAGEURL(MediaContainer/art:1920)}}" />-->
        {{IF({{CHK("{{SETTING(themeMusic)}}"=="On")}})}}{{
@@ -42,7 +42,7 @@
          }}
      </background>
       <banner>
-        <infoList>
+        <!--<infoList>
           <info>
               <header>
                   <title>{{TEXT(Released)}}</title>
@@ -57,16 +57,33 @@
               <text><![CDATA[{{VAL(MediaContainer/Directory/parentStudio)}}]]></text>
 
           </info>
-        </infoList>
+        </infoList>-->
          <stack class="text">
-            <title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
+            <!--<title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>-->
+            {{IF({{CHK("{{SETTING(themeTitle)}}"=="Text")}})}}{{<title>{{VAL(MediaContainer/grandparentTitle:{{VAL(MediaContainer/parentTitle)}})}}</title>}}
+            {{IF({{CHK("{{SETTING(themeTitle)}}"=="Banner")}})}}{{<title><badge src="{{IMAGEURL(MediaContainer/banner:100)}}" height="135" width="800" aspectFill="true"/></title>}}
+
+            <row>
+           <text><![CDATA[{{VAL(MediaContainer/parentYear)}}]]><![CDATA[  {{VAL(MediaContainer/parentRating)}}]]></text>
+           <ratingCard style="tv-align: left; text-shadow: 2px 2px 8px #000000;">
+               <ratingBadge style="tv-rating-style: star-hollow-l;text-shadow: 2px 2px 8px #000000;" value="{{EVAL({{VAL(MediaContainer/parentRating:0)}}/10)}}"></ratingBadge>
+           </ratingCard>
+           </row>
+
+            <!--<row>
+               <text><![CDATA[{{VAL(MediaContainer/parentYear)}}]]></text>
+                <text><![CDATA[{{VAL(MediaContainer/grandparentStudio)}}]]></text>
+                <ratingCard style="tv-align: left; text-shadow: 2px 2px 8px #000000;">
+                    <ratingBadge style="tv-rating-style: star-hollow-l;text-shadow: 2px 2px 8px #000000;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
+                </ratingCard>
+            </row>-->
 
             <description allowsZooming="true" moreLabel="MORE"
                 onSelect="Presenter.loadContext('TVShow_Description', '{{PMSID()}}', '{{PATH()}}')">
               <![CDATA[{{VAL(MediaContainer/summary)}}]]>
             </description>
             <row>
-              <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', '')">
+              <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
                   <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Play:png)}}" width="50" height="50"/>
                   <title>Play Show</title>
               </buttonLockup>
@@ -101,7 +118,7 @@
            }}
          </section>
       </shelf>
-    </productTemplate>
+    </productBundleTemplate>
   </document>
 }}
 }}

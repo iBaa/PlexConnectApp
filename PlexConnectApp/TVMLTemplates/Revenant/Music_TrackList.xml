@@ -8,7 +8,7 @@ See LICENSE.txt for this sample’s licensing information
 {{XML()}}{{
 <document>
 
-    <compilationTemplate theme="light">
+    <compilationTemplate>
         <background>
 
         </background>

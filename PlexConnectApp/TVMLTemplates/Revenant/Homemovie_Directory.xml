@@ -12,11 +12,11 @@
         </banner>
         <list>
             <section>
-                
+
                 {{COPY(MediaContainer/Directory)}}{{
                 <listItemLockup>
                     <title><![CDATA[{{VAL(title)}}]]></title>
-                    
+
                     {{XML({{VAL(key)}})}}{{
                     <decorationLabel><![CDATA[{{VAL(MediaContainer/size)}}]]></decorationLabel>
                     <relatedContent>
@@ -45,7 +45,7 @@
                     }}
                 </listItemLockup>
                 }}
-                
+
             </section>
         </list>
     </catalogTemplate>

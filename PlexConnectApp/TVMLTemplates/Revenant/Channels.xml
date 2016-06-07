@@ -34,7 +34,7 @@ See LICENSE.txt for this sample’s licensing information
       }
     </style>
   </head>
-  <stackTemplate theme="light">
+  <stackTemplate>
     <identityBanner>
       <title class="header">Discover <![CDATA[{{VAL(MediaContainer/title1)}}     ]]></title>
       <subtitle class="header"><![CDATA[{{PMSVAL(name)}}    ]]></subtitle>

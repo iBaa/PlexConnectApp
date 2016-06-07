@@ -40,7 +40,7 @@
       }
     </style>
   </head>
-  <compilationTemplate theme="light">
+  <compilationTemplate>
     <list>
       <relatedContent>
         <itemBanner>

@@ -15,7 +15,7 @@ See LICENSE.txt for this sample’s licensing information
     }
   </style>
   </head>
-  <productTemplate theme="light">
+  <productTemplate>
     <background>
     </background>
       <banner>
@@ -59,12 +59,13 @@ See LICENSE.txt for this sample’s licensing information
           {{IF({{VAL(MediaContainer/Video/audienceRatingImage)}})}}{{
           <text><badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/RT:{{RTBADGE(MediaContainer/Video/audienceRatingImage)}}:png)}}" width="28" height="28"/> {{EVAL({{VAL(MediaContainer/Video/audienceRating:0)}}*10)}}%</text>
           }}
-          {{IF({{VAL(MediaContainer/Video/contentRating)}})}}{{
-          <textBadge> <![CDATA[{{UPPERCASE({{VAL(MediaContainer/Video/contentRating)}})}}]]> </textBadge>
-          }}
           <text><![CDATA[{{VAL(MediaContainer/Video/year)}}]]></text>
           <text><![CDATA[{{VAL(MediaContainer/Video/Genre/tag)}}]]></text>
           <text>{{DURATION({{VAL(MediaContainer/Video/duration)}})}}</text>
+
+          {{IF({{VAL(MediaContainer/Video/contentRating)}})}}{{
+          <textBadge> <![CDATA[{{UPPERCASE({{VAL(MediaContainer/Video/contentRating)}})}}]]> </textBadge>
+          }}
 
           {{IF({{CHK("{{VAL(MediaContainer/Video/Media/videoResolution)}}"=="1080")}})}}{{<textBadge>1080p</textBadge>}}
           {{IF({{CHK("{{VAL(MediaContainer/Video/Media/videoResolution)}}"=="720")}})}}{{<textBadge>720p</textBadge>}}
@@ -73,21 +74,19 @@ See LICENSE.txt for this sample’s licensing information
           {{IF({{CHK("{{VAL(MediaContainer/Video/Media/videoResolution)}}"=="sd")}})}}{{<textBadge>SD</textBadge>}}
 
           {{IF({{CHK("{{VAL(MediaContainer/Video/Media/videoCodec)}}"=="h264")}})}}{{<textBadge>H264</textBadge>}}
-           {{IF({{CHK("{{VAL(MediaContainer/Video/Media/videoCodec)}}"=="hevc")}})}}{{<textBadge>H264</textBadge>}}
+          {{IF({{CHK("{{VAL(MediaContainer/Video/Media/videoCodec)}}"=="hevc")}})}}{{<textBadge>H264</textBadge>}}
 
-           {{IF({{CHK("{{VAL(MediaContainer/Video/Media/container)}}"=="avi")}})}}{{<textBadge>AVI</textBadge>}}
-           {{IF({{CHK("{{VAL(MediaContainer/Video/Media/container)}}"=="mkv")}})}}{{<textBadge>MKV</textBadge>}}
-           {{IF({{CHK("{{VAL(MediaContainer/Video/Media/container)}}"=="mov")}})}}{{<textBadge>MOV</textBadge>}}
-           {{IF({{CHK("{{VAL(MediaContainer/Video/Media/container)}}"=="mp4")}})}}{{<textBadge>MP4</textBadge>}}
-           {{IF({{CHK("{{VAL(MediaContainer/Video/Media/container)}}"=="mpeg1video")}})}}{{<textBadge>MPEG1</textBadge>}}
-           {{IF({{CHK("{{VAL(MediaContainer/Video/Media/container)}}"=="xvid")}})}}{{<textBadge>XVID</textBadge>}}
-           {{IF({{CHK("{{VAL(MediaContainer/Video/Media/container)}}"=="wmv1")}})}}{{<textBadge>WMV7</textBadge>}}
-           {{IF({{CHK("{{VAL(MediaContainer/Video/Media/container)}}"=="wmv2")}})}}{{<textBadge>WMV8</textBadge>}}
-           {{IF({{CHK("{{VAL(MediaContainer/Video/Media/container)}}"=="wmv3")}})}}{{<textBadge>WMV9</textBadge>}}
-           {{IF({{CHK("{{VAL(MediaContainer/Video/Media/container)}}"=="iTunesDRM")}})}}{{<textBadge>iTunes DRM</textBadge>}}
-           {{IF({{CHK("{{VAL(MediaContainer/Video/Media/container)}}"=="mpeg")}})}}{{<textBadge>MPEG</textBadge>}}
-
-
+          {{IF({{CHK("{{VAL(MediaContainer/Video/Media/container)}}"=="avi")}})}}{{<textBadge>AVI</textBadge>}}
+          {{IF({{CHK("{{VAL(MediaContainer/Video/Media/container)}}"=="mkv")}})}}{{<textBadge>MKV</textBadge>}}
+          {{IF({{CHK("{{VAL(MediaContainer/Video/Media/container)}}"=="mov")}})}}{{<textBadge>MOV</textBadge>}}
+          {{IF({{CHK("{{VAL(MediaContainer/Video/Media/container)}}"=="mp4")}})}}{{<textBadge>MP4</textBadge>}}
+          {{IF({{CHK("{{VAL(MediaContainer/Video/Media/container)}}"=="mpeg1video")}})}}{{<textBadge>MPEG1</textBadge>}}
+          {{IF({{CHK("{{VAL(MediaContainer/Video/Media/container)}}"=="xvid")}})}}{{<textBadge>XVID</textBadge>}}
+          {{IF({{CHK("{{VAL(MediaContainer/Video/Media/container)}}"=="wmv1")}})}}{{<textBadge>WMV7</textBadge>}}
+          {{IF({{CHK("{{VAL(MediaContainer/Video/Media/container)}}"=="wmv2")}})}}{{<textBadge>WMV8</textBadge>}}
+          {{IF({{CHK("{{VAL(MediaContainer/Video/Media/container)}}"=="wmv3")}})}}{{<textBadge>WMV9</textBadge>}}
+          {{IF({{CHK("{{VAL(MediaContainer/Video/Media/container)}}"=="iTunesDRM")}})}}{{<textBadge>iTunes DRM</textBadge>}}
+          {{IF({{CHK("{{VAL(MediaContainer/Video/Media/container)}}"=="mpeg")}})}}{{<textBadge>MPEG</textBadge>}}
 
           {{IF({{CHK("{{VAL(MediaContainer/Video/Media/audioChannels)}}"=="1")}})}}{{<textBadge>1.0</textBadge>}}
           {{IF({{CHK("{{VAL(MediaContainer/Video/Media/audioChannels)}}"=="2")}})}}{{<textBadge>2.0</textBadge>}}
