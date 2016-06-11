@@ -120,7 +120,7 @@ var createSpinner = function(title) {
 <document>
   <loadingTemplate>
     <activityIndicator>
-      <title>${title}</title>
+      <title><![CDATA[${title}]]></title>
     </activityIndicator>
   </loadingTemplate>
 </document>`
@@ -137,7 +137,7 @@ var createArtSpinner = function(title, art) {
     <img src="${art}" width="1920" height="1080" style="width:1920; height:1080" aspectFill="true" />
     </background>
     <header>
-    <title style="text-align: center;text-shadow: 2px 2px 4px #000000;color:#FFFFFF;tv-text-style:title2;tv-position: center; margin:400">Loading ${title}...</title>
+    <title style="text-align: center;text-shadow: 2px 2px 4px #000000;color:#FFFFFF;tv-text-style:title2;tv-position: center; margin:400"><![CDATA[Loading ${title}...]]></title>
     </header>
     <shelf>
     </shelf>

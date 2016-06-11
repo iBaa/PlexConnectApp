@@ -66,6 +66,7 @@ See LICENSE.txt for this sample’s licensing information
                 <row>
                     <text>{{DURATION({{VAL(MediaContainer/Video/duration)}})}}</text>
                     <text><![CDATA[{{VAL(MediaContainer/Video/year)}}]]></text>
+                    <text><![CDATA[{{VAL(MediaContainer/Video/grandparentStudio)}}]]></text>
 
                     {{IF({{CHK("{{VAL(MediaContainer/Video/Media/videoResolution)}}"=="1080")}})}}{{<textBadge>1080p</textBadge>}}
                     {{IF({{CHK("{{VAL(MediaContainer/Video/Media/videoResolution)}}"=="720")}})}}{{<textBadge>720p</textBadge>}}

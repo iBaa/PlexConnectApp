@@ -60,11 +60,11 @@
         </infoList>-->
          <stack class="text">
             <!--<title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>-->
-            {{IF({{CHK("{{SETTING(themeTitle)}}"=="Text")}})}}{{<title>{{VAL(MediaContainer/grandparentTitle:{{VAL(MediaContainer/parentTitle)}})}}</title>}}
+            {{IF({{CHK("{{SETTING(themeTitle)}}"=="Text")}})}}{{<title><![CDATA[{{VAL(MediaContainer/grandparentTitle:{{VAL(MediaContainer/parentTitle)}})}}]]></title>}}
             {{IF({{CHK("{{SETTING(themeTitle)}}"=="Banner")}})}}{{<title><badge src="{{IMAGEURL(MediaContainer/banner:100)}}" height="135" width="800" aspectFill="true"/></title>}}
 
             <row>
-           <text><![CDATA[{{VAL(MediaContainer/parentYear)}}]]><![CDATA[  {{VAL(MediaContainer/parentRating)}}]]></text>
+           <text><![CDATA[{{VAL(MediaContainer/parentYear)}}]]></text>
            <ratingCard style="tv-align: left; text-shadow: 2px 2px 8px #000000;">
                <ratingBadge style="tv-rating-style: star-hollow-l;text-shadow: 2px 2px 8px #000000;" value="{{EVAL({{VAL(MediaContainer/parentRating:0)}}/10)}}"></ratingBadge>
            </ratingCard>
@@ -83,7 +83,7 @@
               <![CDATA[{{VAL(MediaContainer/summary)}}]]>
             </description>
             <row>
-              <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+              <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(MediaContainer/Video/grandparentKey)}}/children)}}')">
                   <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Play:png)}}" width="50" height="50"/>
                   <title>Play Show</title>
               </buttonLockup>
@@ -103,7 +103,7 @@
            {{COPY(MediaContainer/Directory)}}{{
            {{SET(noItems:false)}}
            {{IF(!{{CHK("{{VAL(title)}}"=="All episodes")}})}}{{
-           <lockup onSelect="Presenter.loadPopup('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}');" >
+           <lockup onSelect="Presenter.loadView('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}');" >
                <img src="{{IMAGEURL(thumb::384)}}" width="150" height="226" />
                {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
                <overlay>
