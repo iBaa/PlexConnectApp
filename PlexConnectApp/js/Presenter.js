@@ -82,6 +82,18 @@ loadArt: function(view, pmsId, pmsPath, artwork, title) {
     
     
 },
+
+loadTitle: function(view, pmsId, pmsPath, title) {
+        var loadingDoc = createTitleSpinner(title);
+    loadingDoc.addEventListener("load", function() {
+                                var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
+                                navigationDocument.replaceDocument(doc, loadingDoc);
+                                });
+    navigationDocument.pushDocument(loadingDoc);
+    //navigationDocument.dismissModal();  // just in case?!  // todo: if (isModal)...?
+    
+    
+},
     
     
 loadPopup: function(view, pmsId, pmsPath) {

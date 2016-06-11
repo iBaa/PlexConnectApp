@@ -120,7 +120,7 @@
                     {{SET(noItems:false)}}
                     {{IF({{CHK("{{VAL(type:)}}"=="episode")}})}}{{
                     <lockup
-                        onSelect="Presenter.loadArt('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(parentKey)}}/children)}}', '{{IMAGEURL(art::768)}}', '{{VAL(grandparentTitle)}}')"
+                        onSelect="Presenter.loadTitle('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(parentKey)}}/children)}}', '{{VAL(grandparentTitle)}}')"
                         onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                         onHoldSelect="Presenter.loadContext('ContextMenu', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                         onSelectHold="modal">
@@ -136,7 +136,7 @@
                     }}
                     {{IF({{CHK("{{VAL(type:)}}"=="movie")}})}}{{
                     <lockup
-                        onSelect="Presenter.loadArt('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}','{{IMAGEURL(art::768)}}', '{{VAL(title)}}')"
+                        onSelect="Presenter.loadTitle('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', '{{VAL(title)}}')"
                         onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                         onHoldSelect="Presenter.loadContext('ContextMenu', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                         onSelectHold="modal">
@@ -161,7 +161,7 @@
               {{COPY(MediaContainer/Directory)}}{{
                   {{IF({{CHK("{{VAL(type:)}}"=="season")}})}}{{
                   {{SET(noItems:false)}}
-                  <lockup onSelect="Presenter.loadArt('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}','{{IMAGEURL(art::768)}}', '{{VAL(parentTitle)}}')"
+                  <lockup onSelect="Presenter.loadTitle('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', '{{VAL(parentTitle)}}')"
                     onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                     onHoldSelect="Presenter.loadContext('ContextMenu', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
                     <img src="{{IMAGEURL(thumb::360)}}" height="375" width="250" />
@@ -193,7 +193,7 @@
                     {{COPY(MediaContainer/Video)}}{{
                     {{SET(noItems:false)}}
                     <lockup
-                        onSelect="Presenter.loadArt('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}','{{IMAGEURL(art::768)}}', '{{VAL(title)}}')"
+                        onSelect="Presenter.loadTitle('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', '{{VAL(title)}}')"
                         onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                         onHoldSelect="Presenter.loadContext('ContextMenu', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
                         <img src="{{IMAGEURL(thumb::384)}}" height="360" width="240" />

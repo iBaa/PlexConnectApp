@@ -129,6 +129,20 @@ var createSpinner = function(title) {
   return doc;
 }
 
+var createTitleSpinner = function(title) {
+  var docString = `<?xml version="1.0" encoding="UTF-8" ?>
+<document>
+  <loadingTemplate>
+    <activityIndicator>
+    <title><![CDATA[Loading... ${title}]]></title>
+    </activityIndicator>
+  </loadingTemplate>
+</document>`
+  var parser = new DOMParser();
+  var doc = parser.parseFromString(docString, "application/xml");
+  return doc;
+}
+
 var createArtSpinner = function(title, art) {
     var docString = `<?xml version="1.0" encoding="UTF-8" ?>
     <document>
@@ -147,4 +161,4 @@ var createArtSpinner = function(title, art) {
     var parser = new DOMParser();
     var doc = parser.parseFromString(docString, "application/xml");
     return doc;
-}
+  }
