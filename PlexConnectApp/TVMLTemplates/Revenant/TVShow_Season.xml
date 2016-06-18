@@ -65,9 +65,7 @@
 
             <row>
            <text><![CDATA[{{VAL(MediaContainer/parentYear)}}]]></text>
-           <ratingCard style="tv-align: left; text-shadow: 2px 2px 8px #000000;">
-               <ratingBadge style="tv-rating-style: star-hollow-l;text-shadow: 2px 2px 8px #000000;" value="{{EVAL({{VAL(MediaContainer/parentRating:0)}}/10)}}"></ratingBadge>
-           </ratingCard>
+           <text>{{XML(/library/metadata/{{VAL(MediaContainer/key)}})}}{{ {{VAL(parentStudio)}} }}</text>
            </row>
 
             <!--<row>
@@ -83,7 +81,7 @@
               <![CDATA[{{VAL(MediaContainer/summary)}}]]>
             </description>
             <row>
-              <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(MediaContainer/Video/grandparentKey)}}/children)}}')">
+              <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(grandparentKey)}})}}', '')">
                   <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Play:png)}}" width="50" height="50"/>
                   <title>Play Show</title>
               </buttonLockup>
@@ -103,7 +101,8 @@
            {{COPY(MediaContainer/Directory)}}{{
            {{SET(noItems:false)}}
            {{IF(!{{CHK("{{VAL(title)}}"=="All episodes")}})}}{{
-           <lockup onSelect="Presenter.loadView('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}');" >
+           <lockup onSelect="Presenter.load('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}');"
+             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}', '')">
                <img src="{{IMAGEURL(thumb::384)}}" width="150" height="226" />
                {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
                <overlay>

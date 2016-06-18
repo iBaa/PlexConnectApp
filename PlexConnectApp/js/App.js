@@ -23,7 +23,7 @@ var console = {
 
 
 App.onLaunch = function(options) {
-  
+
   var javascriptFiles = [
     `${options.BASEURL}/js/Utilities.js`,
     `${options.BASEURL}/js/Presenter.js`,
@@ -34,7 +34,7 @@ App.onLaunch = function(options) {
     `${options.BASEURL}/js/MyPlex.js`,
     `${options.BASEURL}/js/Search.js`
   ];
-  
+
   evaluateScripts(javascriptFiles, function(success) {
     if(success) {
       console.log(options);
@@ -46,14 +46,14 @@ App.onLaunch = function(options) {
   });
 }
 
-App.onResume = function() {
-  console.log('onResume');
-  //Presenter.load('Main','','');
+App.onResume = function(options) {
+    console.log('onResume');
+    App.reload({when: "now"});
 }
 
 App.onSuspend = function() {
-  console.log('onSuspend');
-  //navigationDocument.clear();
+    console.log('onSuspend');
+    navigationDocument.clear();
 }
 
 App.onExit = function() {
