@@ -65,7 +65,9 @@
 
             <row>
            <text><![CDATA[{{VAL(MediaContainer/parentYear)}}]]></text>
-           <text>{{XML(/library/metadata/{{VAL(MediaContainer/key)}})}}{{ {{VAL(parentStudio)}} }}</text>
+           {{XML(/library/metadata/{{VAL(MediaContainer/key)}})}}{{
+           <text><![CDATA[{{VAL(MediaContainer/Studio)}}]]></text>
+           }}
            </row>
 
             <!--<row>
@@ -106,7 +108,7 @@
                <img src="{{IMAGEURL(thumb::384)}}" width="150" height="226" />
                {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
                <overlay>
-                 <img style="tv-position: top-right; margin: -10 -10 60 60" src="{{RESOURCEURL(Images:unwatched2:png)}}"  width="72" height="72" />
+                 <img style="tv-position: top-right; margin: -10 -10 60 60" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
                </overlay>
                }}
                <title><![CDATA[{{VAL(title)}}]]></title>

@@ -166,7 +166,7 @@
                   <img src="{{IMAGEURL(thumb::360)}}" height="375" width="250" />
                   {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
                   <overlay>
-                    <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(Images:unwatched2:png)}}"  width="72" height="72" />
+                    <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
                     <decorationLabel class="count">{{EVAL({{VAL(leafCount)}}-{{VAL(viewedLeafCount)}})}}</decorationLabel>
                   </overlay>
                   }}
@@ -197,7 +197,7 @@
                       <overlay>
                           <!--{{IF({{VAL(viewCount:0)}})}}{{ <badge src="resource://overlay-checkmark"/>}}-->
                           {{IF(!{{VAL(viewCount:0)}})}}{{
-                          <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(Images:unwatched2:png)}}"  width="72" height="72" />
+                          <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
                           }}
                           {{IF({{VAL(viewOffset:0)}})}}{{
                           <progressBar value="{{EVAL({{VAL(viewOffset)}}.0/{{VAL(duration)}}.0)}}"/>

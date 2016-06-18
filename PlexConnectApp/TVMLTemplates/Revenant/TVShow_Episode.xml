@@ -116,7 +116,7 @@ See LICENSE.txt for this sample’s licensing information
                     <overlay>
                         <!--{{IF({{VAL(viewCount:0)}})}}{{ <badge src="resource://overlay-checkmark"/>}}-->
                         {{IF(!{{VAL(viewCount:0)}})}}{{
-                            <badge src="{{RESOURCEURL(Images:unwatched:png)}}"/>
+                            <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched:png)}}"/>
 
                         }}
                         {{IF({{VAL(viewOffset:0)}})}}{{

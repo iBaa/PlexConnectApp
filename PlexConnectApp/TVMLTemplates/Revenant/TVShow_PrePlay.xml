@@ -39,7 +39,7 @@ See LICENSE.txt for this sample’s licensing information
                         <title>{{TEXT(Directors)}}</title>
                     </header>
                     {{COPY(MediaContainer/Video/Director)}}{{  <!-- COPY till 5 or so? -->
-                    <text>{{VAL(tag)}}</text>
+                    <text><![CDATA[{{VAL(tag)}}]]></text>
                     }}
                 </info>
                 <info>
@@ -65,7 +65,7 @@ See LICENSE.txt for this sample’s licensing information
                 </row>
                 <row>
                     <text>{{DURATION({{VAL(MediaContainer/Video/duration)}})}}</text>
-                    <text><![CDATA[{{VAL(MediaContainer/Video/year)}}]]></text>
+                    <text><![CDATA[{{VAL(MediaContainer/Video/originallyAvailableAt)}}]]></text>
                     <text><![CDATA[{{VAL(MediaContainer/Video/grandparentStudio)}}]]></text>
 
                     {{IF({{CHK("{{VAL(MediaContainer/Video/Media/videoResolution)}}"=="1080")}})}}{{<textBadge>1080p</textBadge>}}
@@ -201,7 +201,7 @@ See LICENSE.txt for this sample’s licensing information
                     <overlay>
                         <!--{{IF({{VAL(viewCount:0)}})}}{{ <badge src="resource://overlay-checkmark"/>}}-->
                         {{IF(!{{VAL(viewCount:0)}})}}{{
-                            <badge src="{{RESOURCEURL(Images:unwatched:png)}}"/>
+                            <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched:png)}}"/>
 
                         }}
                         {{IF({{VAL(viewOffset:0)}})}}{{

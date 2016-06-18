@@ -57,7 +57,7 @@
                         <img src="{{IMAGEURL(thumb::600)}}" height="375" width="250"/>
                         {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
                         <overlay>
-                          <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(Images:unwatched2:png)}}"  width="72" height="72" />
+                          <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
                           <decorationLabel class="count">{{EVAL({{VAL(leafCount)}}-{{VAL(viewedLeafCount)}})}}</decorationLabel>
                         </overlay>
                         }}

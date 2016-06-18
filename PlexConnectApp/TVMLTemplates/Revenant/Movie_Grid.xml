@@ -83,6 +83,11 @@
                   onHoldSelect="Presenter.loadContext('Movie_MovieContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                   >
                   <img src="{{IMAGEURL(thumb::384)}}" width="300" height="450" />
+                  {{IF(!{{VAL(viewCount)}})}}{{
+      						<overlay>
+      							<img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
+      						</overlay>
+      						}}
                   <title><![CDATA[{{VAL(title)}}]]></title>
                   <!-- played dot -->
               </lockup>
