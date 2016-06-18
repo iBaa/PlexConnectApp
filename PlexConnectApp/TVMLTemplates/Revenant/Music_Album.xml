@@ -67,10 +67,7 @@
       </relatedContent>
       <header>
         <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
-        <subtitle><![CDATA[{{VAL(MediaContainer/title2)}}]]></subtitle>
-        <row>
-          <text><![CDATA[{{VAL(MediaContainer/parentYear)}}]]></text>
-        </row>
+        <subtitle><![CDATA[{{VAL(MediaContainer/title2)}} ({{VAL(MediaContainer/parentYear)}})]]></subtitle>
         <row>
           <text><![CDATA[{{VAL(MediaContainer/size)}} tracks]]></text>
         </row>
