@@ -1,207 +1,249 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!--
-Copyright (C) 2015 Baa. All rights reserved.
-See LICENSE.txt for this sample’s licensing information
--->
 <document>
   <head>
     <style>
-      .sectionSpacing {
-        margin: 0 40;
+      .spacing {
+      margin: 0 0 90 0;
       }
       .pullAheadVsSectionSpacing {
-        margin: 0 -40;
+      margin: 0 -40;
+      }
+      .rounded {
+      itml-img-treatment: corner-medium;
+      }
+      .lightBackgroundColor {
+      background-color: #efece6;
+      }
+      .darkBackgroundColor {
+      background-color: #333333;
       }
     </style>
   </head>
-  <searchTemplate onLoad="Search.onLoad(event)">
+  <searchTemplate onLoad="Search.onLoad(event)" theme="light" class="lightBackgroundColor">
     <!-- search -->
     <searchField
-        view="Search_All"
-        pmsId=""
-        pmsPath="/search?query={0}"
-        />
+    view="Search_All"
+    pmsId=""
+    pmsPath="/search?query={0}"
+    />
     <!-- results -->
     <collectionList id="searchResults" class="pullAheadVsSectionSpacing">
 
       <!-- movies -->
-{{CUT({{GET(noMovies)}})}}{{
-{{SET(noMovies:true)}}
-      <shelf>
-        <header class="sectionSpacing">
+      {{CUT({{GET(noMovies)}})}}{{
+      {{SET(noMovies:true)}}
+      <shelf class="spacing">
+        <header>
           <title>{{TEXT(Movies)}}</title>
         </header>
-{{PMSLOOP(all)}}{{
-{{XML()}}{{
-{{SET(noItems:true)}}
-{{CUT({{GET(noItems)}})}}{{
-        <section class="sectionSpacing">
+        {{PMSLOOP(all)}}{{
+        {{XML()}}{{
+        {{SET(noItems:true)}}
+        {{CUT({{GET(noItems)}})}}{{
+        <section>
           <header>
-            <title>{{PMSVAL(name)}}</title>  <!-- add local/remote, remove servername if only one -->
           </header>
-{{COPY(MediaContainer/Video)}}{{
-{{IF({{CHK("{{VAL(type:)}}"=="movie")}})}}{{
-{{SET(noMovies:false)}}
-{{SET(noItems:false)}}  <!-- this PMS -->
-          <lockup
-              onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-              onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-              onSelectHold="ScrobbleMenu"
-              >
-            <img src="{{IMAGEURL(thumb::384)}}" width="200" height="300" />
-            <title><![CDATA[{{VAL(title)}}]]></title>
+          {{COPY(MediaContainer/Video)}}{{
+          {{IF({{CHK("{{VAL(type:)}}"=="movie")}})}}{{
+          {{SET(noMovies:false)}}
+          {{SET(noItems:false)}}  <!-- this PMS -->
+          {{IF({{VAL(viewOffset)}})}}{{
+          <lockup onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onHoldSelect="Presenter.loadContext('Movie_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
+            <img src="{{IMAGE_T(thumb::360)}}" height="375" width="250" />
+            <overlay>
+              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/flags:watching:png)}}"  width="72" height="72" />
+            </overlay>
+            <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
+            <subtitle><![CDATA[{{VAL(year)}}]]></subtitle>
           </lockup>
-}}
-}}
+          }}
+          {{IF(!{{VAL(viewOffset)}})}}{{
+          <lockup onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onHoldSelect="Presenter.loadContext('Movie_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
+            <img src="{{IMAGE_T(thumb::360)}}" height="375" width="250" />
+            {{IF(!{{VAL(viewCount)}})}}{{
+            <overlay>
+              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/flags:unwatched:png)}}"  width="72" height="72" />
+            </overlay>
+            }}
+            <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
+            <subtitle><![CDATA[{{VAL(year)}}]]></subtitle>
+            <subtitle><![CDATA[{{PMSVAL(name)}}]]></subtitle>  <!-- add local/remote, remove servername if only one -->
+          </lockup>
+          }}
+          }}
+          }}
         </section>
-}}
-}}
-}}
+        }}
+        }}
+        }}
       </shelf>
-}}
+      }}
 
       <!-- shows -->
-{{CUT({{GET(noShows)}})}}{{
-{{SET(noShows:true)}}
-      <shelf>
-        <header class="sectionSpacing">
+      {{CUT({{GET(noShows)}})}}{{
+      {{SET(noShows:true)}}
+      <shelf class="spacing">
+        <header>
           <title>{{TEXT(Shows)}}</title>
         </header>
-{{PMSLOOP(all)}}{{
-{{XML()}}{{
-{{SET(noItems:true)}}
-{{CUT({{GET(noItems)}})}}{{
-        <section class="sectionSpacing">
+        {{PMSLOOP(all)}}{{
+        {{XML()}}{{
+        {{SET(noItems:true)}}
+        {{CUT({{GET(noItems)}})}}{{
+        <section>
           <header>
-            <title>{{PMSVAL(name)}}</title>  <!-- add local/remote, remove servername if only one -->
           </header>
-{{COPY(MediaContainer/Directory)}}{{
-{{IF({{CHK("{{VAL(type:)}}"=="show")}})}}{{
-{{SET(noShows:false)}}
-{{SET(noItems:false)}}
-          <lockup
-              onSelect="Presenter.load('TVShow_Season', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-              onSelectHold="ScrobbleMenu"
-              >
-            <img src="{{IMAGEURL(thumb::384)}}" width="200" height="300" />
+          {{COPY(MediaContainer/Directory)}}{{
+          {{IF({{CHK("{{VAL(type:)}}"=="show")}})}}{{
+          {{SET(noShows:false)}}
+          {{SET(noItems:false)}}
+          <lockup onSelect="Presenter.load('TVShow_Season', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onHoldSelect="Presenter.loadContext('Movie_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
+            <img src="{{IMAGE_T(thumb::360)}}" height="375" width="250" />
+            {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
+            <overlay>
+              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/flags:unwatched:png)}}"  width="72" height="72" />
+              <decorationLabel class="count">{{EVAL({{VAL(leafCount)}}-{{VAL(viewedLeafCount)}})}}</decorationLabel>
+            </overlay>
+            }}
             <title><![CDATA[{{VAL(title)}}]]></title>
+            <subtitle><![CDATA[{{PMSVAL(name)}}]]></subtitle>  <!-- add local/remote, remove servername if only one -->
           </lockup>
-}}
-}}
+          }}
+          }}
         </section>
-}}
-}}
-}}
+        }}
+        }}
+        }}
       </shelf>
-}}
+      }}
 
       <!-- episodes -->
-{{CUT({{GET(noEpisodes)}})}}{{
-{{SET(noEpisodes:true)}}
-      <shelf>
-        <header class="sectionSpacing">
+      {{CUT({{GET(noEpisodes)}})}}{{
+      {{SET(noEpisodes:true)}}
+      <shelf class="spacing">
+        <header>
           <title>{{TEXT(Episodes)}}</title>
         </header>
-{{PMSLOOP(all)}}{{
-{{XML()}}{{
-{{SET(noItems:true)}}
-{{CUT({{GET(noItems)}})}}{{
-        <section class="sectionSpacing">
+        {{PMSLOOP(all)}}{{
+        {{XML()}}{{
+        {{SET(noItems:true)}}
+        {{CUT({{GET(noItems)}})}}{{
+        <section>
           <header>
-            <title>{{PMSVAL(name)}}</title>  <!-- add local/remote, remove servername if only one -->
           </header>
-{{COPY(MediaContainer/Video)}}{{
-{{IF({{CHK("{{VAL(type:)}}"=="episode")}})}}{{
-{{SET(noEpisodes:false)}}
-{{SET(noItems:false)}}
-          <lockup
-              onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-              onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-              onHoldSelect="Presenter.loadContext('TVShow_EpisodeContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-              >
-            <img src="{{IMAGEURL(thumb::384)}}" width="200" height="300" />
+          {{COPY(MediaContainer/Video)}}{{
+          {{IF({{CHK("{{VAL(type:)}}"=="episode")}})}}{{
+          {{SET(noEpisodes:false)}}
+          {{SET(noItems:false)}}
+          <lockup onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onHoldSelect="Presenter.loadContext('Movie_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')"
+            {{IF(!{{VAL(viewOffset)}})}}{{
+            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            }}
+            {{IF({{VAL(viewOffset)}})}}{{
+            onPlay="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            }}
+            >
+            <img src="{{IMAGE_T(grandparentThumb::360)}}" height="375" width="250" />
+            <overlay>
+              {{IF({{VAL(viewOffset)}})}}{{
+              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/flags:watching:png)}}"  width="72" height="72" />
+              }}
+              {{IF(!{{VAL(viewOffset)}})}}{{
+              {{IF(!{{VAL(viewCount)}})}}{{
+              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/flags:unwatched:png)}}"  width="72" height="72" />
+            	}}
+            	}}
+            </overlay>
             <title><![CDATA[{{VAL(title)}}]]></title>
-            <subtitle><![CDATA[{{VAL(grandparentTitle)}}]]></subtitle>
+            <subtitle>{{EP_INDEX({{VAL(parentIndex:)}}:{{VAL(index:)}})}}</subtitle>
+             <subtitle><![CDATA[{{PMSVAL(name)}}]]></subtitle>  <!-- add local/remote, remove servername if only one -->
           </lockup>
-}}
-}}
+          }}
+          }}
         </section>
-}}
-}}
-}}
+        }}
+        }}
+        }}
       </shelf>
-}}
+      }}
 
       <!-- albums -->
-{{CUT({{GET(noAlbums)}})}}{{
-{{SET(noAlbums:true)}}
-      <shelf>
-        <header class="sectionSpacing">
+      {{CUT({{GET(noAlbums)}})}}{{
+      {{SET(noAlbums:true)}}
+      <shelf class="spacing">
+        <header>
           <title>{{TEXT(Albums)}}</title>
         </header>
-{{PMSLOOP(all)}}{{
-{{XML()}}{{
-{{SET(noItems:true)}}
-{{CUT({{GET(noItems)}})}}{{
-        <section class="sectionSpacing">
+        {{PMSLOOP(all)}}{{
+        {{XML()}}{{
+        {{SET(noItems:true)}}
+        {{CUT({{GET(noItems)}})}}{{
+        <section>
           <header>
-            <title>{{PMSVAL(name)}}</title>  <!-- add local/remote, remove servername if only one -->
           </header>
-{{COPY(MediaContainer/Directory)}}{{
-{{IF({{CHK("{{VAL(type:)}}"=="album")}})}}{{
-{{SET(noAlbums:false)}}
-{{SET(noItems:false)}}
+          {{COPY(MediaContainer/Directory)}}{{
+          {{IF({{CHK("{{VAL(type:)}}"=="album")}})}}{{
+          {{SET(noAlbums:false)}}
+          {{SET(noItems:false)}}
           <lockup
-              onSelect="Presenter.load('Music_TrackList', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-              onSelectHold="modal"
-              >
-            <img src="{{IMAGEURL(thumb::384)}}" width="200" height="300" />
+            onSelect="Presenter.load('Music_Album', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
+            >
+            <img src="{{IMAGE_T(thumb::384)}}" width="308" height="308" />
             <title><![CDATA[{{VAL(title)}}]]></title>
             <subtitle><![CDATA[{{VAL(parentTitle)}}]]></subtitle>
+            <subtitle><![CDATA[{{PMSVAL(name)}}]]></subtitle>  <!-- add local/remote, remove servername if only one -->
           </lockup>
-}}
-}}
+          }}
+          }}
         </section>
-}}
-}}
-}}
+        }}
+        }}
+        }}
       </shelf>
-}}
+      }}
 
       <!-- artists -->
-{{CUT({{GET(noArtists)}})}}{{
-{{SET(noArtists:true)}}
-      <shelf>
-        <header class="sectionSpacing">
+      {{CUT({{GET(noArtists)}})}}{{
+      {{SET(noArtists:true)}}
+      <shelf class="spacing">
+        <header>
           <title>{{TEXT(Artists)}}</title>
         </header>
-{{PMSLOOP(all)}}{{
-{{XML()}}{{
-{{SET(noItems:true)}}
-{{CUT({{GET(noItems)}})}}{{
-        <section class="sectionSpacing">
+        {{PMSLOOP(all)}}{{
+        {{XML()}}{{
+        {{SET(noItems:true)}}
+        {{CUT({{GET(noItems)}})}}{{
+        <section>
           <header>
-            <title>{{PMSVAL(name)}}</title>  <!-- add local/remote, remove servername if only one -->
           </header>
-{{COPY(MediaContainer/Directory)}}{{
-{{IF({{CHK("{{VAL(type:)}}"=="artist")}})}}{{
-{{SET(noArtists:false)}}
-{{SET(noItems:false)}}
+          {{COPY(MediaContainer/Directory)}}{{
+          {{IF({{CHK("{{VAL(type:)}}"=="artist")}})}}{{
+          {{SET(noArtists:false)}}
+          {{SET(noItems:false)}}
           <lockup
-              onSelect="Presenter.load('Music_Directory', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-              onSelectHold="modal"
-              >
-            <img src="{{IMAGEURL(thumb::384)}}" width="200" height="300" />
+            onSelect="Presenter.load('Music_Artist', '{{PMSID()}}', '{{PATH(/library/metadata/{{VAL(ratingKey)}})}}')"
+            onSelectHold="modal"
+            >
+            <img class="rounded" src="{{IMAGE_T(thumb::384)}}" width="308" height="308" />
             <title><![CDATA[{{VAL(title)}}]]></title>
+            <subtitle><![CDATA[{{PMSVAL(name)}}]]></subtitle>  <!-- add local/remote, remove servername if only one -->
           </lockup>
-}}
-}}
+          }}
+          }}
         </section>
-}}
-}}
-}}
+        }}
+        }}
+        }}
       </shelf>
-}}
+      }}
 
     </collectionList>
   </searchTemplate>

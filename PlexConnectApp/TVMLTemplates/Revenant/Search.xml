@@ -9,8 +9,7 @@ See LICENSE.txt for this sample’s licensing information
     <searchField
         view="Search"
         pmsId="{{PMSID()}}"
-        pmsPath="/search?query={0}"
-        />
+        pmsPath="{{PATH()}}={0}"/>
     <!-- results -->
     <collectionList id="searchResults">
 {{XML()}}{{
@@ -79,7 +78,7 @@ See LICENSE.txt for this sample’s licensing information
               onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
               onHoldSelect="Presenter.loadContext('TVShow_EpisodeContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
               >
-            <img src="{{IMAGEURL(thumb::384)}}" width="200" height="300" />
+            <img src="{{IMAGEURL(thumb::384)}}" width="300" height="200" />
             <title><![CDATA[{{VAL(title)}}]]></title>
             <subtitle><![CDATA[{{VAL(grandparentTitle)}}]]></subtitle>
           </lockup>
@@ -101,10 +100,10 @@ See LICENSE.txt for this sample’s licensing information
 {{IF({{CHK("{{VAL(type:)}}"=="album")}})}}{{
 {{SET(noAlbums:false)}}
           <lockup
-              onSelect="Presenter.load('Music_TrackList', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+              onSelect="Presenter.load('Music_Album', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
               onSelectHold="modal"
               >
-            <img src="{{IMAGEURL(thumb::384)}}" width="200" height="300" />
+            <img src="{{IMAGEURL(thumb::384)}}" width="250" height="250" />
             <title><![CDATA[{{VAL(title)}}]]></title>
             <subtitle><![CDATA[{{VAL(parentTitle)}}]]></subtitle>
           </lockup>
@@ -113,7 +112,7 @@ See LICENSE.txt for this sample’s licensing information
         </section>
       </shelf>
 }}
-      
+
       <!-- artists -->
 {{CUT({{GET(noArtists)}})}}{{
 {{SET(noArtists:true)}}
@@ -126,10 +125,34 @@ See LICENSE.txt for this sample’s licensing information
 {{IF({{CHK("{{VAL(type:)}}"=="artist")}})}}{{
 {{SET(noArtists:false)}}
           <lockup
-              onSelect="Presenter.load('Music_Directory', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+              onSelect="Presenter.load('Music_Artist', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
               onSelectHold="modal"
               >
-            <img src="{{IMAGEURL(thumb::384)}}" width="200" height="300" />
+            <img src="{{IMAGEURL(thumb::384)}}" width="250" height="250" />
+            <title><![CDATA[{{VAL(title)}}]]></title>
+          </lockup>
+}}
+}}
+        </section>
+      </shelf>
+}}
+
+      <!-- tracks -->
+{{CUT({{GET(noTracks)}})}}{{
+{{SET(noTracks:true)}}
+      <shelf>
+        <header>
+          <title>{{TEXT(Tracks)}}</title>
+        </header>
+        <section>
+{{COPY(MediaContainer/Track)}}{{
+{{IF({{CHK("{{VAL(type:)}}"=="track")}})}}{{
+{{SET(noTracks:false)}}
+          <lockup
+              onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+              onSelectHold="modal"
+              >
+            <img src="{{IMAGEURL(thumb::384)}}" width="250" height="250" />
             <title><![CDATA[{{VAL(title)}}]]></title>
           </lockup>
 }}
@@ -139,6 +162,6 @@ See LICENSE.txt for this sample’s licensing information
 }}
 
 }}
-    </collectionList>
+   </collectionList>
   </searchTemplate>
 </document>

@@ -18,9 +18,9 @@
 	{{
 		{{IF({{VAL(prompt)}})}}
 		{{
-		
-        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
-        	<button onSelect="Presenter.closeContext(); Presenter.load('Search', '{{PMSID()}}', '{{VAL(key)}}&amp;query')">
+
+        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
+        	<button onSelect="Presenter.closeContext(); Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/{{VAL(key)}}&amp;query')">
             	<text>{{VAL(title)}}</text>
         	</button>
     	}}
@@ -28,8 +28,8 @@
 		{{
     	{{IF({{CHK("{{VAL(key:)}}"=="folder")}})}}
 		{{
-		
-        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
+
+        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
         	<button onSelect="Presenter.closeContext(); Presenter.load('List', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
             	<text>{{VAL(title)}}</text>
         	</button>
@@ -38,24 +38,24 @@
 		{{
     		{{IF({{CHK("{{VAL(secondary:)}}"=="1")}})}}
 			{{
-		
-        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
+
+        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
         	<button onSelect="Presenter.closeContext(); Presenter.load('Photo_Secondary', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
             	<text>{{VAL(title)}}</text>
         	</button>
     		}}
     		{{IF(!{{CHK("{{VAL(secondary:)}}"=="1")}})}}
 			{{
-		
-        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->    
+
+        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
         	<button onSelect="Presenter.closeContext(); Presenter.load('Photo_Browser', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
             	<text>{{VAL(title)}}</text>
         	</button>
     		}}
     	}}
     	}}
-    }}    
-}}        
+    }}
+}}
     </alertTemplate>
 </document>
 }}
