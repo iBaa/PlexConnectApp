@@ -55,12 +55,10 @@ See LICENSE.txt for this sample’s licensing information
         <text class="color:#FFFFFF; tv-text-style:title1;"><![CDATA[{{VAL(MediaContainer/Video/tagline)}}]]></text>
 
         <row>
-          {{IF({{VAL(MediaContainer/Video/ratingImage)}})}}{{
-          <text><badge src="resource://tomato-fresh"/> {{EVAL({{VAL(MediaContainer/Video/audienceRating:0)}}*10)}}%</text>
-          }}
-          {{IF({{VAL(MediaContainer/Video/audienceRatingImage)}})}}{{
-          <text><badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/RT:{{RTBADGE(MediaContainer/Video/audienceRatingImage)}}:png)}}" width="28" height="28"/> {{EVAL({{VAL(MediaContainer/Video/audienceRating:0)}}*10)}}%</text>
-          }}
+          {{IF({{VAL(MediaContainer/Video/audienceRating:0)}})}}{{
+            <text><badge src="resource://tomato-fresh"/> {{EVAL({{VAL(MediaContainer/Video/audienceRating:0)}}*10)}}%</text>
+            }}
+          {{IF({{VAL(MediaContainer/Video/audienceRatingImage:0)}})}}{{<text><badge src="{{IMAGEURL({{VAL(MediaContainer/Video/audienceRatingImage)}})}}"/></text>}}
           <text><![CDATA[{{VAL(MediaContainer/Video/year)}}]]></text>
           <text><![CDATA[{{VAL(MediaContainer/Video/Genre/tag)}}]]></text>
           <text>{{DURATION({{VAL(MediaContainer/Video/duration)}})}}</text>
