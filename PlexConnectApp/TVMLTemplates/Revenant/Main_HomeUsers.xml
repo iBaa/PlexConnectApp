@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
 {{PMS(plex.tv)}}{{
 {{XML(/api/home/users)}}{{
 <document>
@@ -60,6 +64,12 @@
           onError="Presenter.load('MyPlex_SignInFailed', '', '');"
           >
           <monogram src="{{VAL(thumb)}}?size=256" width="180" height="180" />
+          {{IF({{VAL(admin)}})}}{{
+                      <decorationImage src="{{RESOURCEURL(Images:icon_key:png)}}" width="27" height="26" />
+          }}
+          {{IF({{VAL(protected)}})}}{{
+                      <decorationImage src="{{RESOURCEURL(Images:icon_lock:png)}}" width="19" height="23" />
+          }}
           <title class="title"><![CDATA[{{VAL(title)}}]]></title>
         </monogramLockup>
         }}

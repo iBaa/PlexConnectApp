@@ -21,6 +21,9 @@ See LICENSE.txt for this sample’s licensing information
             .darkBackgroundColor {
                 <!--background-color: #1f1f1f;-->
             }
+            .progressbar {
+            color: #ff8000"
+            }
         </style>
     </head>
     <productBundleTemplate>
@@ -44,15 +47,6 @@ See LICENSE.txt for this sample’s licensing information
                 {{IF({{CHK("{{SETTING(themeTitle)}}"=="Text")}})}}{{<title><![CDATA[{{VAL(MediaContainer/grandparentTitle:{{VAL(MediaContainer/parentTitle)}})}}]]></title>}}
                 {{IF({{CHK("{{SETTING(themeTitle)}}"=="Banner")}})}}{{<title><badge src="{{IMAGEURL(MediaContainer/banner:100)}}" height="135" width="800" aspectFill="true"/></title>}}
                 <subtitle><![CDATA[{{VAL(MediaContainer/title2)}}]]></subtitle>
-
-                <row>
-                    <text><![CDATA[{{VAL(MediaContainer/Video/year)}}]]></text>
-                    <text><![CDATA[{{VAL(MediaContainer/grandparentStudio)}}]]></text>
-                    <!--<badge src="resource://hd" class="badge" />-->
-                    <ratingCard style="tv-align: left; text-shadow: 2px 2px 8px #000000;">
-                        <ratingBadge style="tv-rating-style: star-hollow-l;text-shadow: 2px 2px 8px #000000;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
-                    </ratingCard>
-                </row>
 
                 {{XML(/library/metadata/{{VAL(MediaContainer/grandparentRatingKey)}}/children)}}{{
                 <description allowsZooming="true" moreLabel="more"
@@ -87,9 +81,9 @@ See LICENSE.txt for this sample’s licensing information
                     </buttonLockup>
 
                     <buttonLockup presentation="modalDialogPresenter"
-                                  onSelect="Presenter.loadContext('TVShow_SeasonPopup', '{{PMSID()}}', '{{PATH(/library/metadata/{{VAL(MediaContainer/grandparentRatingKey)}}/children)}}')" onSelectHold="modal">
+                                  onSelect="Presenter.load('TVShow_Season', '{{PMSID()}}', '{{PATH(/library/metadata/{{VAL(MediaContainer/grandparentRatingKey)}}/children)}}')" onSelectHold="modal">
                         <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Server:png)}}" width="50" height="50"/>
-                        <title>Seasons</title>
+                        <title>Go to Show</title>
                     </buttonLockup>
                 </row>
 

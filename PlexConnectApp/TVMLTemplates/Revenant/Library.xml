@@ -74,13 +74,11 @@
 
         </style>
     </head>
-    <stackTemplate>
-        {{PMSLOOP(owned)}}{{
-        {{XML(/library/onDeck)}}{{
+    <stackTemplate theme="light">
         <background>
         </background>
         <identityBanner class="banner" >
-            <title style="text-align: left;">Discover {{PMSVAL(name)}}</title>
+            <title style="text-align: left;">Discover <![CDATA[{{PMSVAL(name)}}]]></title>
             <subtitle style="text-align: left;">{{USRVAL(name)}}</subtitle>
             <row style="tv-content-align:top">
                 <buttonLockup onSelect="Presenter.loadAndSwap('Library','','');">
@@ -109,7 +107,8 @@
         </identityBanner>
 
         <collectionList>
-
+          {{PMSLOOP(owned)}}{{
+          {{XML(/library/onDeck)}}{{
             {{IFNODE(MediaContainer/Video)}}{{
             <shelf centered="true" autoHighlight="true">
                 <header>
@@ -124,8 +123,6 @@
                         onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                         onHoldSelect="Presenter.loadContext('ContextMenu', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                         onSelectHold="modal">
-
-                        <!--https://lsrdb.com/search?title={PlexConnect}&year={RELEASEYEAR}&fallback={FALLBACKURL}-->
                         <img aspectFill="true" src="{{IMAGEURL(art::768)}}" height="378" width="672" class="bannerImage"/>
                         <overlay>
                             <title class="bannerText"><![CDATA[{{VAL(title)}}]]></title>
@@ -152,7 +149,6 @@
             </shelf>
             }}
             }}
-
 
             {{XML(/library/recentlyAdded)}}{{
               <shelf style="margin:100 0 0 0;">
@@ -182,10 +178,39 @@
                   {{IF({{CHK("{{VAL(type:)}}"!="season")}})}}{{
                   <data/>
                   }}
+                  }}
+                  }}
+                  {{IFNODE(MediaContainer/Video)}}{{
+                  {{COPY(MediaContainer/Video)}}{{
+                  {{IF({{CHK("{{VAL(type:)}}"=="episode")}})}}{{
+                  {{SET(noItems:false)}}
+                  <lockup onSelect="Presenter.loadTitle('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', '{{VAL(parentTitle)}}')"
+                      onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                      onHoldSelect="Presenter.loadContext('ContextMenu', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+                      <img src="{{IMAGEURL(parentThumb::360)}}" height="375" width="250" />
+                      <overlay>
+                          <!--{{IF({{VAL(viewCount:0)}})}}{{ <badge src="resource://overlay-checkmark"/>}}-->
+                          {{IF(!{{VAL(viewCount:0)}})}}{{
+                          <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
+                          }}
+                          {{IF({{VAL(viewOffset:0)}})}}{{
+                          <progressBar value="{{EVAL({{VAL(viewOffset)}}.0/{{VAL(duration)}}.0)}}"/>
+                          }}
+                      </overlay>
+                      <title><![CDATA[{{VAL(title)}}]]></title>
+                      <subtitle><![CDATA[{{VAL(parentTitle)}}]]></subtitle>
+                      <subtitle><![CDATA[{{VAL(grandparentTitle)}}]]></subtitle>
+                  </lockup>
+                  }}
+                  {{IF({{CHK("{{VAL(type:)}}"!="epsiode")}})}}{{
+                  <data/>
+                  }}
               }}
               }}
               </section>
               </shelf>
+
+
             <shelf style="margin:50 0 0 0;">
                 <header>
                     <title>Recently Added Movies</title>
@@ -231,8 +256,8 @@
 		           		onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'shuffle')"
 	          			onSelectHold="modal">
 	         			<img src="{{IMAGEURL(thumb::360)}}" height="250" width="250" />
-	        			<title class="shelfLabels"><![CDATA[{{VAL(title)}}]]></title>
-	        			<subtitle class="shelfLabels"><![CDATA[{{VAL(parentTitle)}}]]></subtitle>
+	        			<title><![CDATA[{{VAL(title)}}]]></title>
+	        			<subtitle><![CDATA[{{VAL(parentTitle)}}]]></subtitle>
 	        		</lockup>
         			}}
 	        	</section>
@@ -246,7 +271,7 @@
             {{XML(/library/sections)}}{{
             <shelf style="margin:50 0 0 0;">
                 <header>
-                    <title>{{PMSVAL(name)}}</title>
+                    <title><![CDATA[{{PMSVAL(name)}}]]></title>
                 </header>
                 <section>
                 {{COPY(MediaContainer/Directory)}}

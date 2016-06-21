@@ -25,14 +25,14 @@
       tv-text-style: none;
       color: #000000;
       font-weight: bold;
-      font-size: 19;
+      font-size: 15;
       text-align: center;
       tv-position: bottom-right;
-      margin: -100 -30 100 30;
+      margin: -200 -45 200 45;
       }
     </style>
   </head>
-   <productBundleTemplate>
+   <productTemplate>
      <background>
        <!--<img style="tv-img-treatment:uber;" src="{{IMAGEURL(MediaContainer/art:1920)}}" />-->
        {{IF({{CHK("{{SETTING(themeMusic)}}"=="On")}})}}{{
@@ -42,31 +42,51 @@
          }}
      </background>
       <banner>
-        <!--<infoList>
+        <infoList>
           <info>
-              <header>
-                  <title>{{TEXT(Released)}}</title>
-              </header>
-              <text><![CDATA[{{VAL(MediaContainer/parentYear)}}]]></text>
-
+            {{XML(/library/metadata/{{VAL(MediaContainer/key)}})}}{{
+              <ratingCard style="tv-align: right;">
+                  <ratingBadge style="tv-rating-style: star-hollow-l;text-shadow: 2px 2px 8px #000000;" value="{{EVAL({{VAL(MediaContainer/Directory/rating:0)}}/10)}}"></ratingBadge>
+              </ratingCard>
+              }}
           </info>
           <info>
               <header>
                   <title>{{TEXT(Studio)}}</title>
               </header>
-              <text><![CDATA[{{VAL(MediaContainer/Directory/parentStudio)}}]]></text>
+              {{XML(/library/metadata/{{VAL(MediaContainer/key)}})}}{{
+              <text>{{VAL(MediaContainer/Directory/studio)}}</text>
+              }}
 
           </info>
-        </infoList>-->
+          <info>
+              <header>
+                  <title>{{TEXT(Casts)}}</title>
+              </header>
+              {{XML(/library/metadata/{{VAL(MediaContainer/key)}})}}{{
+              {{COPY(MediaContainer/Directory/Role)}}{{  <!-- COPY till 5 or so? -->
+                        <text><![CDATA[{{VAL(tag)}}]]></text>
+              }}
+              }}
+
+          </info>
+        </infoList>
          <stack class="text">
             <!--<title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>-->
             {{IF({{CHK("{{SETTING(themeTitle)}}"=="Text")}})}}{{<title><![CDATA[{{VAL(MediaContainer/grandparentTitle:{{VAL(MediaContainer/parentTitle)}})}}]]></title>}}
             {{IF({{CHK("{{SETTING(themeTitle)}}"=="Banner")}})}}{{<title><badge src="{{IMAGEURL(MediaContainer/banner:100)}}" height="135" width="800" aspectFill="true"/></title>}}
 
             <row>
-           <text><![CDATA[{{VAL(MediaContainer/parentYear)}}]]></text>
            {{XML(/library/metadata/{{VAL(MediaContainer/key)}})}}{{
-           <text><![CDATA[{{VAL(MediaContainer/Studio)}}]]></text>
+           <text>{{VAL(MediaContainer/Directory/year)}}</text>
+           <text>{{VAL(MediaContainer/Directory/Genre/tag)}}</text>
+           {{IF({{CHK("{{VAL(MediaContainer/Directory/contentRating)}}"=="TV-14")}})}}{{<textBadge>TV-14</textBadge>}}
+           {{IF({{CHK("{{VAL(MediaContainer/Directory/contentRating)}}"=="TV-Y")}})}}{{<textBadge>TV-Y</textBadge>}}
+           {{IF({{CHK("{{VAL(MediaContainer/Directory/contentRating)}}"=="TV-Y7")}})}}{{<textBadge>TV-Y7</textBadge>}}
+           {{IF({{CHK("{{VAL(MediaContainer/Directory/contentRating)}}"=="TV-Y7VF")}})}}{{<textBadge>TV-Y7VF</textBadge>}}
+           {{IF({{CHK("{{VAL(MediaContainer/Directory/contentRating)}}"=="TV-G")}})}}{{<textBadge>TV-G</textBadge>}}
+           {{IF({{CHK("{{VAL(MediaContainer/Directory/contentRating)}}"=="TV-PG")}})}}{{<textBadge>TV-PG</textBadge>}}
+           {{IF({{CHK("{{VAL(MediaContainer/Directory/contentRating)}}"=="TV-MA")}})}}{{<textBadge>TV-MA</textBadge>}}
            }}
            </row>
 
@@ -78,16 +98,18 @@
                 </ratingCard>
             </row>-->
 
-            <description allowsZooming="true" moreLabel="MORE"
+            <description tv-text-max-lines="3" allowsZooming="true" moreLabel="MORE"
                 onSelect="Presenter.loadContext('TVShow_Description', '{{PMSID()}}', '{{PATH()}}')">
               <![CDATA[{{VAL(MediaContainer/summary)}}]]>
             </description>
             <row>
-              <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(grandparentKey)}})}}', '')">
+              <buttonLockup
+                onSelect="modal">
                   <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Play:png)}}" width="50" height="50"/>
                   <title>Play Show</title>
               </buttonLockup>
-              <buttonLockup onSelect="Presenter.load('ContextMenu', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
+              <buttonLockup
+                onSelect="modal">
                 <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Eye:png)}}" width="50" height="50"/>
                 <title>Watch Status</title>
               </buttonLockup>
@@ -97,7 +119,9 @@
       </banner>
       <shelf style="margin: 0 0 90 0;">
          <header>
-            <title>Season(s)</title>
+           {{XML(/library/metadata/{{VAL(MediaContainer/key)}})}}{{
+            <title>{{VAL(MediaContainer/Directory/childCount)}} Season(s)</title>
+            }}
          </header>
          <section>
            {{COPY(MediaContainer/Directory)}}{{
@@ -109,17 +133,16 @@
                {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
                <overlay>
                  <img style="tv-position: top-right; margin: -10 -10 60 60" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
+                 <decorationLabel class="count">{{EVAL({{VAL(leafCount)}}-{{VAL(viewedLeafCount)}})}}</decorationLabel>
                </overlay>
                }}
                <title><![CDATA[{{VAL(title)}}]]></title>
-               <subtitle>{{VAL(leafCount)}} {{TEXT(Episode(s))}}</subtitle>
-               <subtitle><![CDATA[{{EVAL({{VAL(leafCount)}}-{{VAL(viewedLeafCount)}})}} unwatched]]></subtitle>
            </lockup>
            }}
            }}
          </section>
       </shelf>
-    </productBundleTemplate>
+    </productTemplate>
   </document>
 }}
 }}
