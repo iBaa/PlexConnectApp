@@ -88,7 +88,7 @@
                 {{IF({{CHK("{{PMSCNT()}}">"1")}})}}{{
                 <buttonLockup onSelect="Presenter.load('MyPlex_Servers', '', '')">
                     <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Server:png)}}" width="50" height="50"/>
-                    <title class="buttonTitle">{{PMSVAL(name)}}</title>
+                    <title class="buttonTitle"><![CDATA[{{PMSVAL(name)}}]]></title>
                 </buttonLockup>
                 }}
                 <buttonLockup onSelect="Presenter.loadAndSwap('Main_HomeUsers','','');">

@@ -19,19 +19,23 @@ See LICENSE.txt for this sample’s licensing information
             .shelfLayout {
                padding: 20 90 50;
              }
+             .text {
+                 text-shadow: 2px 2px 4px #000000;
+                 <!--height: 800px;-->
+             }
         </style>
     </head>
-    <productTemplate>
+    <productTemplate theme="dark">
     <background>
     </background>
     <banner>
-      <infoList>
+      <infoList class="text">
         <info>
           <header>
             <title>{{TEXT(Country)}}</title>
           </header>
           {{COPY(MediaContainer/Directory/Country)}}{{
-          <text><![CDATA[{{VAL(tag)}}]]></text>
+          <text><![CDATA[{{VAL(tag)}}{{TEXT(  )}}]]></text>
           }}
         </info>
 
@@ -40,13 +44,12 @@ See LICENSE.txt for this sample’s licensing information
             <title>{{TEXT(Genre)}}</title>
           </header>
           {{COPY(MediaContainer/Directory/Genre)}}{{
-          <text><![CDATA[{{VAL(tag)}}]]></text>
+          <text><![CDATA[{{VAL(tag)}}{{TEXT(  )}}]]></text>
           }}
         </info>
 
       </infoList>
-      <stack
-        >
+      <stack class="text">
 {{SET(popular:/library/sections/{{VAL(MediaContainer/librarySectionID)}}/search?type=10&amp;artist.id={{VAL(MediaContainer/Directory/ratingKey)}}&amp;group=title&amp;limit=100&amp;ratingCount%3E=1&amp;sort=ratingCount:desc)}}
 {{SET(artist:/library/sections/{{VAL(MediaContainer/librarySectionID)}}/search?type=10&amp;artist.id={{VAL(MediaContainer/Directory/ratingKey)}}&amp;group=title&amp;sort=title:desc)}}
 				<title><![CDATA[{{VAL(MediaContainer/Directory/title)}}]]></title>

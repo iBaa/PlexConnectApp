@@ -18,6 +18,10 @@
       width: 500;
       height: 200;
       }
+      .text {
+          text-shadow: 2px 2px 4px #000000;
+          <!--height: 800px;-->
+      }
       .plot {
       min-height: 300;
       max-height: 400;
@@ -25,7 +29,7 @@
       }
     </style>
   </head>
-  <compilationTemplate>
+  <compilationTemplate thme="dark">
     <list>
       <relatedContent>
         <itemBanner>
@@ -46,16 +50,12 @@
           </row>
         </itemBanner>
       </relatedContent>
-      <header>
+      <header class="text">
         <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
         <subtitle><![CDATA[{{VAL(MediaContainer/title2)}}]]></subtitle>
         <row>
-          <text><![CDATA[{{VAL(MediaContainer/parentYear)}}]]></text>
+          <text>{{VAL(MediaContainer/parentYear)}}</text>
         </row>
-        <row>
-          <text><![CDATA[{{VAL(MediaContainer/size)}} tracks]]></text>
-        </row>
-
       </header>
  {{IF({{VAL(MediaContainer/summary)}})}}
     {{
@@ -74,7 +74,7 @@
 {{COPY(MediaContainer/Track)}}
 {{
 {{SET(noItems:false)}}
-	<listItemLockup onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+	<listItemLockup class="text" onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH()}}')"
             onSelectHold="modal">
 

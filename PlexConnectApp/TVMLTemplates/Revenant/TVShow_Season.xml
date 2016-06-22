@@ -32,7 +32,7 @@
       }
     </style>
   </head>
-   <productTemplate>
+   <productTemplate theme="dark">
      <background>
        <!--<img style="tv-img-treatment:uber;" src="{{IMAGEURL(MediaContainer/art:1920)}}" />-->
        {{IF({{CHK("{{SETTING(themeMusic)}}"=="On")}})}}{{
@@ -79,7 +79,9 @@
             <row>
            {{XML(/library/metadata/{{VAL(MediaContainer/key)}})}}{{
            <text>{{VAL(MediaContainer/Directory/year)}}</text>
-           <text>{{VAL(MediaContainer/Directory/Genre/tag)}}</text>
+           {{COPY(MediaContainer/Directory/Genre)}}{{
+           <text><![CDATA[{{VAL(tag)}}]]></text>
+           }}
            {{IF({{CHK("{{VAL(MediaContainer/Directory/contentRating)}}"=="TV-14")}})}}{{<textBadge>TV-14</textBadge>}}
            {{IF({{CHK("{{VAL(MediaContainer/Directory/contentRating)}}"=="TV-Y")}})}}{{<textBadge>TV-Y</textBadge>}}
            {{IF({{CHK("{{VAL(MediaContainer/Directory/contentRating)}}"=="TV-Y7")}})}}{{<textBadge>TV-Y7</textBadge>}}
