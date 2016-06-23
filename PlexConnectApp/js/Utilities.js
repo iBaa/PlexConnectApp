@@ -134,7 +134,7 @@ var createTitleSpinner = function(title) {
 <document>
   <loadingTemplate>
     <activityIndicator>
-    <title><![CDATA[Loading... ${title}]]></title>
+    <title><![CDATA[${title}]]></title>
     </activityIndicator>
   </loadingTemplate>
 </document>`

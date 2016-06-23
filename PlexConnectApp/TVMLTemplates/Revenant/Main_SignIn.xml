@@ -11,7 +11,7 @@ See LICENSE.txt for this sample’s licensing information
             }
         </style>
     </head>
-  <alertTemplate>
+  <alertTemplate style="color: #000000;">
     <title style="tv-text-style: title3;">PlexConnect</title>
     <description>{{TEXT(To start using all your Plex Services, Sign In with your MyPlex ID.)}}</description>
 

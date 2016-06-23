@@ -21,8 +21,8 @@ See LICENSE.txt for this sample’s licensing information
       <banner>
       <infoList>
         <info>
-          <ratingCard style="tv-align: right;">
-            <ratingBadge style="tv-rating-style: star-hollow-l;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
+          <ratingCard style="tv-align: right;text-shadow: 2px 2px 8px #000000;">
+              <ratingBadge style="tv-rating-style: star-hollow-l;text-shadow: 2px 2px 8px #000000;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
           </ratingCard>
         </info>
 
@@ -122,9 +122,13 @@ See LICENSE.txt for this sample’s licensing information
             </buttonLockup>
             }}
             {{IF({{VAL(MediaContainer/Video/viewOffset)}})}}{{
-            <buttonLockup onSelect="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH()}}');">
-              <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:PlayResume:png)}}" width="50" height="50"/>
+            <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH()}}')">
+              <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Play:png)}}" width="50" height="50"/>
               <title>{{TEXT(Play)}}</title>
+            </buttonLockup>
+            <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH()}}', 'resume')">
+              <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:PlayResume:png)}}" width="50" height="50"/>
+              <title>{{TEXT(@ )}}{{DURATION_HMS({{VAL(MediaContainer/Video/viewOffset:)}})}}</title>
             </buttonLockup>
                       }}
 
@@ -140,7 +144,7 @@ See LICENSE.txt for this sample’s licensing information
 						{{SET(AudioIsDefault:false)}}
 						<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
 							<badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Audio:png)}}" width="50" height="50"/>
-							<title><![CDATA[{{UPPERCASE({{VAL(languageCode)}} / {{VAL(codec)}})}}]]></title>
+							<title><![CDATA[{{UPPERCASE({{VAL(languageCode)}})}}]]></title>
 						</buttonLockup>
 						}}
 					}}
@@ -151,7 +155,7 @@ See LICENSE.txt for this sample’s licensing information
 						{{IF({{CHK("{{VAL(default)}}"="1")}})}}{{
 						<buttonLockup id="audio" onSelect="Presenter.loadContext('Movie_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
 							<badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Audio:png)}}" width="50" height="50"/>
-							<title><![CDATA[{{UPPERCASE({{VAL(languageCode)}} / {{VAL(codec)}})}}]]></title>
+							<title><![CDATA[{{UPPERCASE({{VAL(languageCode)}})}}]]></title>
 						</buttonLockup>
 						}}
 						}}

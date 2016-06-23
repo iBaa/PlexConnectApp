@@ -10,8 +10,8 @@ See LICENSE.txt for this sample’s licensing information
 <document>
     <head>
         <style>
-            .artImage {
-                tv-tint-color: linear-gradient(top, 0.1, rgba(0,0,0,0.75), 0.2, rgba(0,0,0,0.75), 1.00, rgba(0,0,0,0.8));
+            .info {
+                color: #FFFFFF;
 
             }
             .text {
@@ -125,6 +125,7 @@ See LICENSE.txt for this sample’s licensing information
                             <header>
                                 <title><![CDATA[{{VAL(title)}}]]></title>
                             </header>
+
                             <info>
                                 <header>
                                     <title></title>
@@ -134,7 +135,7 @@ See LICENSE.txt for this sample’s licensing information
                             </info>
                             <info>
                                 <header>
-                                    <title>Aired {{VAL(originallyAvailableAt)}}</title>
+                                    <title></title>
                                 </header>
                                 <description allowsZooming="true" moreLabel="more"
                                     onSelect="Presenter.loadContext('TVShow_PrePlayDescription', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
@@ -144,8 +145,9 @@ See LICENSE.txt for this sample’s licensing information
                             </info>
                             <info>
                                 <header>
-                                    <title></title>
+                                  <title></title>
                                 </header>
+                                <description style="text-align: left;" class="info">{{VAL(Media/videoResolution)}}p   {{UPPERCASE({{VAL(Media/audioCodec)}})}}   {{DURATION({{VAL(Media/duration)}})}}</description>
                             </info>
 
                         </infoTable>

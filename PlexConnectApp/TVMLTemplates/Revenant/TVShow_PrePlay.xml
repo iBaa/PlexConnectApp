@@ -13,6 +13,10 @@ See LICENSE.txt for this sample’s licensing information
    .shelfLayout {
       padding: 20 90 50;
     }
+    .text {
+        text-shadow: 2px 2px 4px #000000;
+        <!--height: 800px;-->
+    }
   </style>
   </head>
     <productTemplate theme="dark">
@@ -26,12 +30,12 @@ See LICENSE.txt for this sample’s licensing information
 
         </background>
 
-        <banner style="height:750">
+        <banner>
             <infoList>
                 <info>
-                    <ratingCard style="tv-align: right;">
-                        <ratingBadge style="tv-rating-style: star-hollow-l;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
-                    </ratingCard>
+                  <ratingCard style="tv-align: right;text-shadow: 2px 2px 8px #000000;">
+                      <ratingBadge style="tv-rating-style: star-hollow-l;text-shadow: 2px 2px 8px #000000;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
+                  </ratingCard>
                 </info>
 
                 <info>
@@ -52,8 +56,8 @@ See LICENSE.txt for this sample’s licensing information
                 </info>
             </infoList>
 
-            <stack  style="height:700">
-                <title><![CDATA[{{VAL(MediaContainer/Video/index)}}. {{VAL(MediaContainer/Video/title)}}]]></title>
+            <stack class="text">
+                <title><![CDATA[{{VAL(MediaContainer/Video/title)}}]]></title>
                 <row>
                     <!--text>rating(Video/contentRating)</text-->
                     <text style="tv-text-style:callout">Season {{VAL(MediaContainer/Video/parentIndex)}}, Episode {{VAL(MediaContainer/Video/index)}}</text>
@@ -129,7 +133,7 @@ See LICENSE.txt for this sample’s licensing information
                             {{SET(AudioIsDefault:false)}}
                             <buttonLockup id="audio" onSelect="Presenter.loadContext('TVShow_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
                                 <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Audio:png)}}" width="50" height="50"/>
-                                <title><![CDATA[{{UPPERCASE({{VAL(languageCode)}} / {{VAL(codec)}})}}]]></title>
+                                <title><![CDATA[{{UPPERCASE({{VAL(languageCode)}})}}]]></title>
                             </buttonLockup>
                             }}
                             }}
@@ -140,7 +144,7 @@ See LICENSE.txt for this sample’s licensing information
                             {{IF({{CHK("{{VAL(default)}}"="1")}})}}{{
                             <buttonLockup id="audio" onSelect="Presenter.loadContext('TVShow_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
                                 <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Audio:png)}}" width="50" height="50"/>
-                                <title><![CDATA[{{UPPERCASE({{VAL(languageCode)}} / {{VAL(codec)}})}}]]></title>
+                                <title><![CDATA[{{UPPERCASE({{VAL(languageCode)}})}}]]></title>
                             </buttonLockup>
                             }}
                             }}
@@ -180,11 +184,12 @@ See LICENSE.txt for this sample’s licensing information
 
 
             </stack>
-            <heroImg src="{{IMAGEURL(MediaContainer/Video/parentThumb::768)}}" style="height:660; width:440" aspectFill="true"/>
+          <heroImg src="{{IMAGEURL(MediaContainer/Video/parentThumb::)}}" />
         </banner>
+
         {{XML(/library/metadata/{{VAL(MediaContainer/Video/parentRatingKey)}}/children)}}{{
         {{SET(season:{{VAL(MediaContainer/parentIndex:)}})}}
-            <shelf>
+            <shelf style="margin: 0 0 90 0;">
               <header>
                 <title>{{TEXT(All Episodes)}}</title>
               </header>
