@@ -32,14 +32,10 @@ See LICENSE.txt for this sample’s licensing information
           <decorationLabel>{{TEXT(online:)}} {{PMSCNT(all)}}</decorationLabel>
           <relatedContent>
             <lockup>
-              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:icon:png)}}" />
-              <title style="text-align: center; color: #ff8000"><![CDATA[PlexConnect.app]]></title>
+              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+              <title style="text-align: center;"><![CDATA[PlexConnect.app]]></title>
               <subtitle style="text-align: center;"> </subtitle>
-              <subtitle style="text-align: center;">Version: 1.0 Theme "Revenant"</subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Coded by: iBaa]]></subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Designed by: CyberGhost84]]></subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Forum: http://forums.plex.tv]]></subtitle>
-              <subtitle style="text-align: center;"><![CDATA[HomePage: http://plexconnect.info]]></subtitle>
+              <subtitle style="text-align: center;">Version: 2.0 Theme "Revenant"</subtitle>
             </lockup>
             </relatedContent>
         </listItemLockup>
@@ -56,14 +52,10 @@ See LICENSE.txt for this sample’s licensing information
           <decorationImage src="resource://chevron" />
           <relatedContent>
             <lockup>
-              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:icon:png)}}" />
-              <title style="text-align: center; color: #ff8000"><![CDATA[PlexConnect.app]]></title>
+              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+              <title style="text-align: center;"><![CDATA[PlexConnect.app]]></title>
               <subtitle style="text-align: center;"> </subtitle>
-              <subtitle style="text-align: center;">Version: 1.0 Theme "Revenant"</subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Coded by: iBaa]]></subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Designed by: CyberGhost84]]></subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Forum: http://forums.plex.tv]]></subtitle>
-              <subtitle style="text-align: center;"><![CDATA[HomePage: http://plexconnect.info]]></subtitle>
+              <subtitle style="text-align: center;">Version: 2.0 Theme "Revenant"</subtitle>
             </lockup>
             </relatedContent>
         </listItemLockup>
@@ -77,14 +69,10 @@ See LICENSE.txt for this sample’s licensing information
           <decorationLabel>{{USRVAL(adminname)}}</decorationLabel>
           <relatedContent>
             <lockup>
-              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:icon:png)}}" />
-              <title style="text-align: center; color: #ff8000"><![CDATA[PlexConnect.app]]></title>
+              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+              <title style="text-align: center;"><![CDATA[PlexConnect.app]]></title>
               <subtitle style="text-align: center;"> </subtitle>
-              <subtitle style="text-align: center;">Version: 1.0 Theme "Revenant"</subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Coded by: iBaa]]></subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Designed by: CyberGhost84]]></subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Forum: http://forums.plex.tv]]></subtitle>
-              <subtitle style="text-align: center;"><![CDATA[HomePage: http://plexconnect.info]]></subtitle>
+              <subtitle style="text-align: center;">Version: 2.0 Theme "Revenant"</subtitle>
             </lockup>
             </relatedContent>
         </listItemLockup>
@@ -102,14 +90,10 @@ See LICENSE.txt for this sample’s licensing information
           </row>
           <relatedContent>
             <lockup>
-              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:icon:png)}}" />
-              <title style="text-align: center; color: #ff8000"><![CDATA[PlexConnect.app]]></title>
+              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+              <title style="text-align: center;"><![CDATA[PlexConnect.app]]></title>
               <subtitle style="text-align: center;"> </subtitle>
-              <subtitle style="text-align: center;">Version: 1.0 Theme "Revenant"</subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Coded by: iBaa]]></subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Designed by: CyberGhost84]]></subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Forum: http://forums.plex.tv]]></subtitle>
-              <subtitle style="text-align: center;"><![CDATA[HomePage: http://plexconnect.info]]></subtitle>
+              <subtitle style="text-align: center;">Version: 2.0 Theme "Revenant"</subtitle>
             </lockup>
             </relatedContent>
         </listItemLockup>
@@ -128,14 +112,10 @@ See LICENSE.txt for this sample’s licensing information
           <decorationLabel>{{SETTING(theme)}}</decorationLabel>
           <relatedContent>
             <lockup>
-              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:icon:png)}}" />
-              <title style="text-align: center; color: #ff8000"><![CDATA[PlexConnect.app]]></title>
+              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+              <title style="text-align: center;"><![CDATA[PlexConnect.app]]></title>
               <subtitle style="text-align: center;"> </subtitle>
-              <subtitle style="text-align: center;">Version: 1.0 Theme "Revenant"</subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Coded by: iBaa]]></subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Designed by: CyberGhost84]]></subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Forum: http://forums.plex.tv]]></subtitle>
-              <subtitle style="text-align: center;"><![CDATA[HomePage: http://plexconnect.info]]></subtitle>
+              <subtitle style="text-align: center;">Version: 2.0 Theme "Revenant"</subtitle>
             </lockup>
             </relatedContent>
         </listItemLockup>
@@ -147,14 +127,10 @@ See LICENSE.txt for this sample’s licensing information
           <decorationLabel>{{SETTING(themeExternalOverride)}}</decorationLabel>
           <relatedContent>
             <lockup>
-              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:icon:png)}}" />
-              <title style="text-align: center; color: #ff8000"><![CDATA[PlexConnect.app]]></title>
+              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+              <title style="text-align: center;"><![CDATA[PlexConnect.app]]></title>
               <subtitle style="text-align: center;"> </subtitle>
-              <subtitle style="text-align: center;">Version: 1.0 Theme "Revenant"</subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Coded by: iBaa]]></subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Designed by: CyberGhost84]]></subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Forum: http://forums.plex.tv]]></subtitle>
-              <subtitle style="text-align: center;"><![CDATA[HomePage: http://plexconnect.info]]></subtitle>
+              <subtitle style="text-align: center;">Version: 2.0 Theme "Revenant"</subtitle>
             </lockup>
             </relatedContent>
         </listItemLockup>
@@ -166,14 +142,10 @@ See LICENSE.txt for this sample’s licensing information
           <decorationLabel>{{SETTING(showChannels)}}</decorationLabel>
           <relatedContent>
             <lockup>
-              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:icon:png)}}" />
-              <title style="text-align: center; color: #ff8000"><![CDATA[PlexConnect.app]]></title>
+              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+              <title style="text-align: center;"><![CDATA[PlexConnect.app]]></title>
               <subtitle style="text-align: center;"> </subtitle>
-              <subtitle style="text-align: center;">Version: 1.0 Theme "Revenant"</subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Coded by: iBaa]]></subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Designed by: CyberGhost84]]></subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Forum: http://forums.plex.tv]]></subtitle>
-              <subtitle style="text-align: center;"><![CDATA[HomePage: http://plexconnect.info]]></subtitle>
+              <subtitle style="text-align: center;">Version: 2.0 Theme "Revenant"</subtitle>
             </lockup>
             </relatedContent>
         </listItemLockup>
@@ -185,14 +157,10 @@ See LICENSE.txt for this sample’s licensing information
             <decorationLabel>{{SETTING(themeTitle)}}</decorationLabel>
             <relatedContent>
               <lockup>
-                <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:icon:png)}}" />
-                <title style="text-align: center; color: #ff8000"><![CDATA[PlexConnect.app]]></title>
+                <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+                <title style="text-align: center;"><![CDATA[PlexConnect.app]]></title>
                 <subtitle style="text-align: center;"> </subtitle>
-                <subtitle style="text-align: center;">Version: 1.0 Theme "Revenant"</subtitle>
-             		<subtitle style="text-align: center;"><![CDATA[Coded by: iBaa]]></subtitle>
-             		<subtitle style="text-align: center;"><![CDATA[Designed by: CyberGhost84]]></subtitle>
-             		<subtitle style="text-align: center;"><![CDATA[Forum: http://forums.plex.tv]]></subtitle>
-                <subtitle style="text-align: center;"><![CDATA[HomePage: http://plexconnect.info]]></subtitle>
+                <subtitle style="text-align: center;">Version: 2.0 Theme "Revenant"</subtitle>
               </lockup>
               </relatedContent>
         </listItemLockup>
@@ -204,14 +172,10 @@ See LICENSE.txt for this sample’s licensing information
             <decorationLabel>{{SETTING(themeMusic)}}</decorationLabel>
             <relatedContent>
               <lockup>
-                <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:icon:png)}}" />
-                <title style="text-align: center; color: #ff8000"><![CDATA[PlexConnect.app]]></title>
+                <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+                <title style="text-align: center;"><![CDATA[PlexConnect.app]]></title>
                 <subtitle style="text-align: center;"> </subtitle>
-                <subtitle style="text-align: center;">Version: 1.0 Theme "Revenant"</subtitle>
-             		<subtitle style="text-align: center;"><![CDATA[Coded by: iBaa]]></subtitle>
-             		<subtitle style="text-align: center;"><![CDATA[Designed by: CyberGhost84]]></subtitle>
-             		<subtitle style="text-align: center;"><![CDATA[Forum: http://forums.plex.tv]]></subtitle>
-                <subtitle style="text-align: center;"><![CDATA[HomePage: http://plexconnect.info]]></subtitle>
+                <subtitle style="text-align: center;">Version: 2.0 Theme "Revenant"</subtitle>
               </lockup>
               </relatedContent>
         </listItemLockup>
@@ -230,14 +194,10 @@ See LICENSE.txt for this sample’s licensing information
           <decorationLabel>{{SETTING(transcoderAction)}}</decorationLabel>
           <relatedContent>
             <lockup>
-              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:icon:png)}}" />
-              <title style="text-align: center; color: #ff8000"><![CDATA[PlexConnect.app]]></title>
+              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+              <title style="text-align: center;"><![CDATA[PlexConnect.app]]></title>
               <subtitle style="text-align: center;"> </subtitle>
-              <subtitle style="text-align: center;">Version: 1.0 Theme "Revenant"</subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Coded by: iBaa]]></subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Designed by: CyberGhost84]]></subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Forum: http://forums.plex.tv]]></subtitle>
-              <subtitle style="text-align: center;"><![CDATA[HomePage: http://plexconnect.info]]></subtitle>
+              <subtitle style="text-align: center;">Version: 2.0 Theme "Revenant"</subtitle>
             </lockup>
             </relatedContent>
         </listItemLockup>
@@ -249,14 +209,10 @@ See LICENSE.txt for this sample’s licensing information
           <decorationLabel>{{SETTING(transcoderQuality)}}</decorationLabel>
           <relatedContent>
             <lockup>
-              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:icon:png)}}" />
-              <title style="text-align: center; color: #ff8000"><![CDATA[PlexConnect.app]]></title>
+              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+              <title style="text-align: center;"><![CDATA[PlexConnect.app]]></title>
               <subtitle style="text-align: center;"> </subtitle>
-              <subtitle style="text-align: center;">Version: 1.0 Theme "Revenant"</subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Coded by: iBaa]]></subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Designed by: CyberGhost84]]></subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Forum: http://forums.plex.tv]]></subtitle>
-              <subtitle style="text-align: center;"><![CDATA[HomePage: http://plexconnect.info]]></subtitle>
+              <subtitle style="text-align: center;">Version: 2.0 Theme "Revenant"</subtitle>
             </lockup>
             </relatedContent>
         </listItemLockup>
@@ -268,14 +224,10 @@ See LICENSE.txt for this sample’s licensing information
           <decorationLabel>{{SETTING(remoteBitrate)}}</decorationLabel>
           <relatedContent>
             <lockup>
-              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:icon:png)}}" />
-              <title style="text-align: center; color: #ff8000"><![CDATA[PlexConnect.app]]></title>
+              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+              <title style="text-align: center;"><![CDATA[PlexConnect.app]]></title>
               <subtitle style="text-align: center;"> </subtitle>
-              <subtitle style="text-align: center;">Version: 1.0 Theme "Revenant"</subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Coded by: iBaa]]></subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Designed by: CyberGhost84]]></subtitle>
-           		<subtitle style="text-align: center;"><![CDATA[Forum: http://forums.plex.tv]]></subtitle>
-              <subtitle style="text-align: center;"><![CDATA[HomePage: http://plexconnect.info]]></subtitle>
+              <subtitle style="text-align: center;">Version: 2.0 Theme "Revenant"</subtitle>
             </lockup>
             </relatedContent>
         </listItemLockup>

@@ -53,7 +53,7 @@
 						<decorationImage src="resource://chevron" />
           <relatedContent>
             <lockup>
-              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:Plex2:png)}}" />
+              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
               <title style="text-align: center;"><![CDATA[{{PMSVAL(name)}}]]></title>
             <subtitle style="text-align: center;"> </subtitle>
          		<subtitle style="text-align: center;">Admin: <![CDATA[{{USRVAL(name)}}]]></subtitle>
@@ -83,7 +83,7 @@
 					<decorationImage src="resource://chevron" />
           <relatedContent>
             <lockup>
-              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:Plex2:png)}}" />
+              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
               <title style="text-align: center;"><![CDATA[{{PMSVAL(name)}}]]></title>
          		<subtitle style="text-align: center;"> </subtitle>
          		<subtitle style="text-align: center;">Admin: <![CDATA[{{PMSVAL(sourceTitle)}}]]></subtitle>
