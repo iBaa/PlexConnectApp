@@ -4,6 +4,17 @@ Copyright (C) 2015 Baa. All rights reserved.
 See LICENSE.txt for this sample’s licensing information
 -->
 <document>
+  <head>
+    <style>
+      .count {
+      font-weight: bold;
+      font-size: 19;
+      text-align: center;
+      tv-position: bottom-right;
+      margin: -307 -89 307 89;
+      }
+    </style>
+  </head>
   <searchTemplate onLoad="Search.onLoad(event)">
     <!-- search -->
     <searchField
@@ -24,14 +35,32 @@ See LICENSE.txt for this sample’s licensing information
 {{COPY(MediaContainer/Video)}}{{
 {{IF({{CHK("{{VAL(type:)}}"=="movie")}})}}{{
 {{SET(noMovies:false)}}
-          <lockup
-              onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-              onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-              onSelectHold="ScrobbleMenu"
-              >
-            <img src="{{IMAGEURL(thumb::384)}}" width="200" height="300" />
-            <title><![CDATA[{{VAL(title)}}]]></title>
-          </lockup>
+{{IF({{VAL(viewOffset)}})}}{{
+<lockup onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+  onPlay="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+  onHoldSelect="Presenter.loadContext('Movie_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
+  <img src="{{IMAGEURL(thumb::360)}}" height="375" width="250" />
+  <overlay>
+    <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:watching:png)}}"  width="72" height="72" />
+  </overlay>
+  <title<![CDATA[{{VAL(title)}}]]></title>
+  <subtitle><![CDATA[{{VAL(year)}}]]></subtitle>
+</lockup>
+}}
+{{IF(!{{VAL(viewOffset)}})}}{{
+<lockup onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+  onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+  onHoldSelect="Presenter.loadContext('Movie_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
+  <img src="{{IMAGEURL(thumb::360)}}" height="375" width="250" />
+  {{IF(!{{VAL(viewCount)}})}}{{
+  <overlay>
+    <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
+  </overlay>
+  }}
+  <title><![CDATA[{{VAL(title)}}]]></title>
+  <subtitle><![CDATA[{{VAL(year)}}]]></subtitle>
+</lockup>
+}}
 }}
 }}
         </section>
@@ -53,7 +82,13 @@ See LICENSE.txt for this sample’s licensing information
               onSelect="Presenter.load('TVShow_Season', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
               onSelectHold="ScrobbleMenu"
               >
-            <img src="{{IMAGEURL(thumb::384)}}" width="200" height="300" />
+            <img src="{{IMAGEURL(thumb::384)}}" width="250" height="375" />
+            {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
+            <overlay>
+              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
+              <decorationLabel class="count">{{EVAL({{VAL(leafCount)}}-{{VAL(viewedLeafCount)}})}}</decorationLabel>
+            </overlay>
+            }}
             <title><![CDATA[{{VAL(title)}}]]></title>
           </lockup>
 }}
@@ -73,12 +108,26 @@ See LICENSE.txt for this sample’s licensing information
 {{COPY(MediaContainer/Video)}}{{
 {{IF({{CHK("{{VAL(type:)}}"=="episode")}})}}{{
 {{SET(noEpisodes:false)}}
-          <lockup
-              onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-              onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-              onHoldSelect="Presenter.loadContext('TVShow_EpisodeContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-              >
-            <img src="{{IMAGEURL(thumb::384)}}" width="300" height="200" />
+<lockup onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+  onHoldSelect="Presenter.loadContext('TVShow_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')"
+  {{IF(!{{VAL(viewOffset)}})}}{{
+  onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+  }}
+  {{IF({{VAL(viewOffset)}})}}{{
+  onPlay="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+  }}
+  >
+  <img src="{{IMAGEURL(grandparentThumb::360)}}" height="375" width="250" />
+  <overlay>
+    {{IF({{VAL(viewOffset)}})}}{{
+    <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:watching:png)}}"  width="72" height="72" />
+    }}
+    {{IF(!{{VAL(viewOffset)}})}}{{
+    {{IF(!{{VAL(viewCount)}})}}{{
+    <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
+    }}
+    }}
+  </overlay>
             <title><![CDATA[{{VAL(title)}}]]></title>
             <subtitle><![CDATA[{{VAL(grandparentTitle)}}]]></subtitle>
           </lockup>

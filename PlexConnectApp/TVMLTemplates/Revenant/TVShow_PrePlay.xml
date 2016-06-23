@@ -124,7 +124,7 @@ See LICENSE.txt for this sample’s licensing information
                   {{IF({{VAL(MediaContainer/Video/viewOffset)}})}}{{
                   <buttonLockup onSelect="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH()}}');">
                     <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:PlayResume:png)}}" width="50" height="50"/>
-                    <title>{{TEXT(Play)}}</title>
+                    <title>{{TEXT(Resume)}}</title>
                   </buttonLockup>
                             }}
                             {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
@@ -204,15 +204,14 @@ See LICENSE.txt for this sample’s licensing information
                     onHoldSelect="Presenter.loadContext('TVShow_EpisodeContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
                     <img src="{{IMAGEURL(thumb::768)}}" width="320" height="180" />
                     <overlay>
-                        <!--{{IF({{VAL(viewCount:0)}})}}{{ <badge src="resource://overlay-checkmark"/>}}-->
-                        {{IF(!{{VAL(viewCount:0)}})}}{{
-                            <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched:png)}}"/>
-
-                        }}
-                        {{IF({{VAL(viewOffset:0)}})}}{{
-                        <progressBar value="{{EVAL({{VAL(viewOffset)}}.0/{{VAL(duration)}}.0)}}"/>
-                        }}
-
+                      {{IF({{VAL(viewOffset)}})}}{{
+                      <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:watching2:png)}}"/>
+                      }}
+                      {{IF(!{{VAL(viewOffset)}})}}{{
+                      {{IF(!{{VAL(viewCount)}})}}{{
+                      <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched:png)}}"/>
+                      }}
+                      }}
                     </overlay>
                     <title><![CDATA[{{VAL(index:)}}. {{VAL(title)}}]]></title>
                 </lockup>

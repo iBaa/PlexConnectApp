@@ -122,13 +122,10 @@ See LICENSE.txt for this sample’s licensing information
             </buttonLockup>
             }}
             {{IF({{VAL(MediaContainer/Video/viewOffset)}})}}{{
-            <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH()}}')">
-              <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Play:png)}}" width="50" height="50"/>
-              <title>{{TEXT(Play)}}</title>
-            </buttonLockup>
-            <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH()}}', 'resume')">
+
+            <buttonLockup onSelect="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH()}}');">
               <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:PlayResume:png)}}" width="50" height="50"/>
-              <title>{{TEXT(@ )}}{{DURATION_HMS({{VAL(MediaContainer/Video/viewOffset:)}})}}</title>
+              <title>{{TEXT(Resume)}}</title>
             </buttonLockup>
                       }}
 

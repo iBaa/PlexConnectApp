@@ -11,14 +11,9 @@
             .darkBackgroundColor {
             background-color: #1f1f1f;
             }
-
-            .whiteButton {
-            tv-tint-color: rgb(255, 255, 255);
-            font-size: 20;
-            margin: 40;
-            tv-text-style: callout;
+            .lightBackgroundColor {
+            background-color: #efece6;
             }
-
             .roundedImageCorners {
             itml-img-treatment: corner-small;
             }
@@ -26,44 +21,35 @@
             itml-img-treatment: corner-small;
             margin: 0 -30 -280 -30;
             }
-
             .bannerImage {
             tv-tint-color: linear-gradient(top, 0.25, transparent, 0.8, rgba(0,0,0,0.65), 1.00, rgba(0,0,0,0.8));
             itml-img-treatment: corner-small;
             }
-
             .bannerText {
             text-shadow: 2px 2px 8px #000000;
             }
-
             .bannerSubtext{
             text-shadow: 2px 2px 4px #000000;
             }
-
             .banner {
             margin: 0 0 30 0;
             }
-
             .buttonTitle {
             tv-text-style:caption2;
             tv-highlight-color:rgb(255, 255, 255);
             color: rgb(255, 255, 255);
             text-align:center;
             }
-
             .showTextOnHighlight {
             tv-text-highlight-style: show-on-highlight;
             }
-
             .sectionLabel {
             text-align: center;
             margin: 0 0 -15 0;
             }
-
             .title {
             color: #ffffff;
             }
-
             .count {
             font-weight: bold;
             font-size: 19;
@@ -71,10 +57,9 @@
             tv-position: bottom-right;
             margin: -307 -89 307 89;
             }
-
         </style>
     </head>
-    <stackTemplate>
+    <stackTemplate class="lightBackgroundColor">
       {{PMSLOOP(owned)}}{{
       {{XML(/library/onDeck)}}{{
         <background>
@@ -194,7 +179,7 @@
                           <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
                           }}
                           {{IF({{VAL(viewOffset:0)}})}}{{
-                          <progressBar value="{{EVAL({{VAL(viewOffset)}}.0/{{VAL(duration)}}.0)}}"/>
+                          <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:watching:png)}}"  width="72" height="72" />
                           }}
                       </overlay>
                       <title><![CDATA[{{VAL(title)}}]]></title>
@@ -218,24 +203,32 @@
                 <section>
                     {{COPY(MediaContainer/Video)}}{{
                     {{SET(noItems:false)}}
-                    <lockup
-                        onSelect="Presenter.loadTitle('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', '{{VAL(title)}}')"
-                        onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-                        onHoldSelect="Presenter.loadContext('ContextMenu', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
-                        <img src="{{IMAGEURL(thumb::384)}}" height="360" width="240" />
-                        <overlay>
-                            <!--{{IF({{VAL(viewCount:0)}})}}{{ <badge src="resource://overlay-checkmark"/>}}-->
-                            {{IF(!{{VAL(viewCount:0)}})}}{{
-                            <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
-                            }}
-                            {{IF({{VAL(viewOffset:0)}})}}{{
-                            <progressBar value="{{EVAL({{VAL(viewOffset)}}.0/{{VAL(duration)}}.0)}}"/>
-                            }}
-
-                        </overlay>
-                        <title><![CDATA[{{VAL(title)}}]]></title>
-                        <subtitle><![CDATA[{{VAL(year)}}]]></subtitle>
+                    {{IF({{VAL(viewOffset)}})}}{{
+                    <lockup onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                      onPlay="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                      onHoldSelect="Presenter.loadContext('Movie_MovieContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+                      <img src="{{IMAGEURL(thumb::360)}}" height="375" width="250" />
+                      <overlay>
+                        <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:watching:png)}}"  width="72" height="72" />
+          						</overlay>
+          						<title><![CDATA[{{VAL(title)}}]]></title>
+                      <subtitle><![CDATA[{{VAL(year)}}]]></subtitle>
                     </lockup>
+                    }}
+                    {{IF(!{{VAL(viewOffset)}})}}{{
+                    <lockup onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                      onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                      onHoldSelect="Presenter.loadContext('Movie_MovieContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+                      <img src="{{IMAGEURL(thumb::360)}}" height="375" width="250" />
+                      {{IF(!{{VAL(viewCount)}})}}{{
+          						<overlay>
+          							<img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
+          						</overlay>
+          						}}
+                      <title><![CDATA[{{VAL(title)}}]]></title>
+                      <subtitle><![CDATA[{{VAL(year)}}]]></subtitle>
+                    </lockup>
+                    }}
                     }}
                 </section>
 

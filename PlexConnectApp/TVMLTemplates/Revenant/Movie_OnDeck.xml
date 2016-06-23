@@ -70,7 +70,7 @@
             onHoldSelect="Presenter.loadContext('Movie_MovieContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
             <img src="{{IMAGEURL(thumb::360)}}" height="375" width="250" />
             <overlay>
-              <progressBar value="{{EVAL({{VAL(viewOffset)}}.0/{{VAL(duration)}}.0)}}"/>
+              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:watching:png)}}"  width="72" height="72" />
 						</overlay>
 						<title><![CDATA[{{VAL(title)}}]]></title>
             <subtitle><![CDATA[{{VAL(year)}}]]></subtitle>
@@ -111,7 +111,7 @@
             onHoldSelect="Presenter.loadContext('Movie_MovieContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
             <img src="{{IMAGEURL(thumb::360)}}" height="375" width="250" />
             <overlay>
-              <progressBar value="{{EVAL({{VAL(viewOffset)}}.0/{{VAL(duration)}}.0)}}"/>
+              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:watching:png)}}"  width="72" height="72" />
 						</overlay>
 						<title><![CDATA[{{VAL(title)}}]]></title>
             <subtitle><![CDATA[{{VAL(year)}}]]></subtitle>

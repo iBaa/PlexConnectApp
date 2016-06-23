@@ -17,6 +17,13 @@
       .darkBackgroundColor {
       background-color: #333333;
       }
+      .count {
+      font-weight: bold;
+      font-size: 19;
+      text-align: center;
+      tv-position: bottom-right;
+      margin: -307 -89 307 89;
+      }
     </style>
   </head>
   <searchTemplate onLoad="Search.onLoad(event)" theme="light" class="lightBackgroundColor">
@@ -51,25 +58,27 @@
           <lockup onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onPlay="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onHoldSelect="Presenter.loadContext('Movie_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
-            <img src="{{IMAGE_T(thumb::360)}}" height="375" width="250" />
+            <img src="{{IMAGEURL(thumb::360)}}" height="375" width="250" />
             <overlay>
-              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/flags:watching:png)}}"  width="72" height="72" />
+              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:watching:png)}}"  width="72" height="72" />
             </overlay>
-            <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
+            <title><![CDATA[{{VAL(title)}}]]></title>
             <subtitle><![CDATA[{{VAL(year)}}]]></subtitle>
+            <subtitle><![CDATA[{{PMSVAL(name)}}]]></subtitle>  <!-- add local/remote, remove servername if only one -->
           </lockup>
           }}
+
           {{IF(!{{VAL(viewOffset)}})}}{{
           <lockup onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onHoldSelect="Presenter.loadContext('Movie_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
-            <img src="{{IMAGE_T(thumb::360)}}" height="375" width="250" />
+            <img src="{{IMAGEURL(thumb::360)}}" height="375" width="250" />
             {{IF(!{{VAL(viewCount)}})}}{{
             <overlay>
-              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/flags:unwatched:png)}}"  width="72" height="72" />
+              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
             </overlay>
             }}
-            <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
+            <title><![CDATA[{{VAL(title)}}]]></title>
             <subtitle><![CDATA[{{VAL(year)}}]]></subtitle>
             <subtitle><![CDATA[{{PMSVAL(name)}}]]></subtitle>  <!-- add local/remote, remove servername if only one -->
           </lockup>
@@ -104,10 +113,10 @@
           <lockup onSelect="Presenter.load('TVShow_Season', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onHoldSelect="Presenter.loadContext('Movie_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
-            <img src="{{IMAGE_T(thumb::360)}}" height="375" width="250" />
+            <img src="{{IMAGEURL(thumb::360)}}" height="375" width="250" />
             {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
             <overlay>
-              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/flags:unwatched:png)}}"  width="72" height="72" />
+              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
               <decorationLabel class="count">{{EVAL({{VAL(leafCount)}}-{{VAL(viewedLeafCount)}})}}</decorationLabel>
             </overlay>
             }}
@@ -142,7 +151,7 @@
           {{SET(noEpisodes:false)}}
           {{SET(noItems:false)}}
           <lockup onSelect="Presenter.load('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
-            onHoldSelect="Presenter.loadContext('Movie_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')"
+            onHoldSelect="Presenter.loadContext('TVShow_MorePopUp', '{{PMSID()}}', '{{VAL(ratingKey)}}')"
             {{IF(!{{VAL(viewOffset)}})}}{{
             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             }}
@@ -150,19 +159,19 @@
             onPlay="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             }}
             >
-            <img src="{{IMAGE_T(grandparentThumb::360)}}" height="375" width="250" />
+            <img src="{{IMAGEURL(grandparentThumb::360)}}" height="375" width="250" />
             <overlay>
               {{IF({{VAL(viewOffset)}})}}{{
-              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/flags:watching:png)}}"  width="72" height="72" />
+              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:watching:png)}}"  width="72" height="72" />
               }}
               {{IF(!{{VAL(viewOffset)}})}}{{
               {{IF(!{{VAL(viewCount)}})}}{{
-              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/flags:unwatched:png)}}"  width="72" height="72" />
+              <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
             	}}
             	}}
             </overlay>
             <title><![CDATA[{{VAL(title)}}]]></title>
-            <subtitle>{{EP_INDEX({{VAL(parentIndex:)}}:{{VAL(index:)}})}}</subtitle>
+            <subtitle>{{TEXT(S)}}{{VAL(parentIndex)}} • {{TEXT(E)}}{{VAL(index)}}</subtitle>
              <subtitle><![CDATA[{{PMSVAL(name)}}]]></subtitle>  <!-- add local/remote, remove servername if only one -->
           </lockup>
           }}
