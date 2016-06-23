@@ -74,7 +74,9 @@
 
         </style>
     </head>
-    <stackTemplate theme="light">
+    <stackTemplate>
+      {{PMSLOOP(owned)}}{{
+      {{XML(/library/onDeck)}}{{
         <background>
         </background>
         <identityBanner class="banner" >
@@ -107,8 +109,6 @@
         </identityBanner>
 
         <collectionList>
-          {{PMSLOOP(owned)}}{{
-          {{XML(/library/onDeck)}}{{
             {{IFNODE(MediaContainer/Video)}}{{
             <shelf centered="true" autoHighlight="true">
                 <header>

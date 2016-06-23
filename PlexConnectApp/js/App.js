@@ -46,14 +46,14 @@ App.onLaunch = function(options) {
   });
 }
 
-App.onResume = function(options) {
-    console.log('onResume');
-    App.reload({when: "now"});
+App.onResume = function() {
+  console.log('onResume');
+  //Presenter.load('Main','','');
 }
 
 App.onSuspend = function() {
-    console.log('onSuspend');
-    navigationDocument.clear();
+  console.log('onSuspend');
+  //navigationDocument.clear();
 }
 
 App.onExit = function() {
