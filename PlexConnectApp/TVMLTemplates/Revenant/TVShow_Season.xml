@@ -55,7 +55,7 @@
                   <title>{{TEXT(Studio)}}</title>
               </header>
               {{XML(/library/metadata/{{VAL(MediaContainer/key)}})}}{{
-              <text>{{VAL(MediaContainer/Directory/studio)}}</text>
+              <text><![CDATA[{{VAL(MediaContainer/Directory/studio)}}]]></text>
               }}
 
           </info>
