@@ -59,7 +59,7 @@
         <section>
           {{IFNODE(Directory)}}{{
           {{COPY(Directory)}}{{
-          <lockup onSelect="Presenter.load('TVShow_Season', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+          <lockup onSelect="Presenter.load('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onHoldSelect="Presenter.loadContext('TVShow_EpisodeContext', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
             <img src="{{IMAGEURL(thumb::360)}}" height="375" width="250" />
