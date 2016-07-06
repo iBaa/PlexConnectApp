@@ -81,7 +81,7 @@
             {{IF(!{{VAL(thumb)}})}}{{
             <img class="rounded" src="{{RESOURCEURL(TVMLTemplates/Revenant/images:IconArtist:png)}}" height="308" width="308" />
             }}
-            <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
+            <title><![CDATA[{{VAL(title)}}]]></title>
             <subtitle><![CDATA[ ]]></subtitle>
           </lockup>
           }}
@@ -100,7 +100,7 @@
           <lockup onSelect="Presenter.load('Music_Album', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
             <img src="{{IMAGEURL(thumb::360)}}" height="308" width="308" />
-            <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
+            <title><![CDATA[{{VAL(title)}}]]></title>
             <subtitle><![CDATA[{{VAL(year)}}]]></subtitle>
           </lockup>
           }}
@@ -121,7 +121,7 @@
         <section>
           {{IFNODE(Directory)}}{{
           {{COPY(Directory)}}{{
-          <lockup onSelect="Presenter.load('Music_Albums', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+          <lockup onSelect="Presenter.load('Music_Artist', '{{PMSID()}}', '{{PATH(/library/metadata/{{VAL(ratingKey)}})}}')"
             onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onSelectHold="ScrobbleMenu">
             {{IF({{CHK("{{VAL(type)}}"="artist")}})}}{{
@@ -130,7 +130,7 @@
             {{IF(!{{CHK("{{VAL(type)}}"="artist")}})}}{{
             <img src="{{IMAGEURL(thumb::360)}}" height="308" width="308" />
             }}
-            <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
+            <title><![CDATA[{{VAL(title)}}]]></title>
             {{IF({{VAL(year)}})}}{{
             <subtitle><![CDATA[{{VAL(year)}}]]></subtitle>
             }}
@@ -146,7 +146,7 @@
             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onSelectHold="ScrobbleMenu">
             <img src="{{IMAGEURL(thumb::360)}}" height="216" width="397" />
-            <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
+            <title><![CDATA[{{VAL(title)}}]]></title>
             <subtitle><![CDATA[{{VAL(grandparentTitle)}}]]></subtitle>
           </lockup>
           }}

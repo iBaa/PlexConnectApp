@@ -9,13 +9,11 @@ See LICENSE.txt for this sample’s licensing information
 <document>
   <listTemplate>
     <list>
-      <!--
       <relatedContent>
         <itemBanner>
-          <heroImg src="" />
+          <heroImg src="{{IMAGEURL(MediaContainer/art:1920)}}" />
         </itemBanner>
       </relatedContent>
-      -->
       <header>
         <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
       </header>

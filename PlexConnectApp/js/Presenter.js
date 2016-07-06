@@ -10,7 +10,7 @@
 
 
 var Presenter = {
-  
+
 makeDocument: function(resource) {
   if (!Presenter.parser) {
     Presenter.parser = new DOMParser();
@@ -31,11 +31,11 @@ modalDialogPresenter: function(xml) {
  */
 setupViewDocument: function(view, pmsId, pmsPath) {
   console.log("load");
-  
+
   var docString = swiftInterface.getViewIdPath(view, pmsId, pmsPath);
   var parser = new DOMParser();
   var doc = parser.parseFromString(docString, "application/xml");
-  
+
   // events: https://developer.apple.com/library/tvos/documentation/TVMLKit/Reference/TVViewElement_Ref/index.html#//apple_ref/c/tdef/TVElementEventType
   doc.addEventListener("select", Presenter.onSelect.bind(Presenter));
   doc.addEventListener("holdselect", Presenter.onHoldSelect.bind(Presenter));
@@ -48,7 +48,7 @@ setupViewDocument: function(view, pmsId, pmsPath) {
         pmsId: pmsId,
         pmsPath: pmsPath,
     };
-    
+
   return doc
 },
 
@@ -60,17 +60,17 @@ load: function(view, pmsId, pmsPath) {
   });
   navigationDocument.pushDocument(loadingDoc);
   //navigationDocument.dismissModal();  // just in case?!  // todo: if (isModal)...?
- 
-    
+
+
 },
-    
+
 loadView: function(view, pmsId, pmsPath) {
     var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
     navigationDocument.pushDocument(doc);
-    
-    
+
+
 },
-    
+
 loadArt: function(view, pmsId, pmsPath, artwork, title) {
         var loadingDoc = createArtSpinner(title, artwork);
     loadingDoc.addEventListener("load", function() {
@@ -79,8 +79,8 @@ loadArt: function(view, pmsId, pmsPath, artwork, title) {
                                 });
     navigationDocument.pushDocument(loadingDoc);
     //navigationDocument.dismissModal();  // just in case?!  // todo: if (isModal)...?
-    
-    
+
+
 },
 
 loadTitle: function(view, pmsId, pmsPath, title) {
@@ -91,18 +91,18 @@ loadTitle: function(view, pmsId, pmsPath, title) {
                                 });
     navigationDocument.pushDocument(loadingDoc);
     //navigationDocument.dismissModal();  // just in case?!  // todo: if (isModal)...?
-    
-    
+
+
 },
-    
-    
+
+
 loadPopup: function(view, pmsId, pmsPath) {
     var currentDoc = navigationDocument.documents[navigationDocument.documents.length-1];
-    
+
     var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
     navigationDocument.replaceDocument(doc, currentDoc);
     navigationDocument.dismissModal();
-    
+
 },
 
 loadAndSwap: function(view, pmsId, pmsPath) {
@@ -115,27 +115,27 @@ loadAndSwap: function(view, pmsId, pmsPath) {
   navigationDocument.replaceDocument(loadingDoc, currentDoc);
   // navigationDocument.dismissModal();  // just in case?!  // todo: if (isModal)...?
 },
-    
+
 
 
 close() {
   navigationDocument.popDocument();
 },
-  
+
 loadContext(view, pmsId, pmsPath) {
   var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
   navigationDocument.presentModal(doc);
 },
-    
+
 closeContext() {
   navigationDocument.dismissModal();
 },
-  
+
 loadMenuContent: function(view, pmsId, pmsPath) {
   console.log("loadMenuContent");
   var elem = this.event.target;  // todo: check event existing
   var id = elem.getAttribute("id");
-  
+
   var feature = elem.parentNode.getFeature("MenuBarDocument");
   if (feature) {
     var currentDoc = feature.getDocument(elem);
@@ -160,16 +160,16 @@ loadParade: function(view, pmsId, pmsPath) {
   if (elem.hasChildNodes()) {  // related content already populated?
     return;
   }
-  
+
   // update view
   var doc = Presenter.setupViewDocument(view, pmsId, pmsPath);
   var elemNew = doc.getElementByTagName("relatedContent");
-  
+
   if (elem && elemNew) {
     elem.innerHTML = elemNew.innerHTML;
   }
 },
-  
+
 // store event for downstream use
 event: "",
 
@@ -189,12 +189,12 @@ onSelect: function(event) {
     }
   }
 },
-  
+
 onHoldSelect: function(event) {
   console.log("onHoldSelect "+event);
   this.event = event;
   var elem = event.target;
-  
+
   if (elem) {
     var id = elem.getAttribute("id");
     var onHoldSelect = elem.getAttribute("onHoldSelect");  // get onHoldSelect=...
@@ -206,7 +206,7 @@ onHoldSelect: function(event) {
     }
   }
 },
-  
+
 onPlay: function(event) {
   console.log("onPlay "+event);
   this.event = event;
@@ -229,7 +229,7 @@ onHighlight: function(event) {
   console.log("onHighlight "+event);
   this.event = event;
   var elem = event.target;
-  
+
   if (elem) {
     var onHighlight = elem.getAttribute("onHighlight");  // get onHighlight=...
     if (onHighlight) {
@@ -237,7 +237,7 @@ onHighlight: function(event) {
     }
   }
 },
-  
+
 // grab keyboard changes for searchField
 onLoad: function(event) {
   var elem = event.target;
