@@ -10,55 +10,42 @@
             background-color: #1f1f1f;
             }
         </style>
-    </head>
-    <alertTemplate theme="light">
-    <title></title>
-
-	{{COPY(MediaContainer/Directory)}}
-	{{
-		{{IF({{VAL(prompt)}})}}
-		{{
-
-        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
-        	<button onSelect="Presenter.closeContext(); Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/{{VAL(key)}}&amp;query')">
-        	  	<text>{{VAL(title)}}</text>
-        	</button>
-    	}}
-    	{{IF(!{{VAL(prompt)}})}}
-		{{
-    	{{IF({{CHK("{{VAL(key:)}}"=="folder")}})}}
-		{{
-
-        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
-        	<button onSelect="Presenter.close();Presenter.load('List', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}');Presenter.closeContext()">
-            	<text>{{VAL(title)}}</text>
-        	</button>
-    	}}
-    	{{IF(!{{CHK("{{VAL(key:)}}"=="folder")}})}}
-		{{
-    		{{IF({{CHK("{{VAL(secondary:)}}"=="1")}})}}
-			{{
-
-        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
-        	<button onSelect="Presenter.load('Movie_Secondary', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}');Presenter.closeContext()">
-            	<text>{{VAL(title)}}</text>
-        	</button>
-    		}}
-    		{{IF(!{{CHK("{{VAL(secondary:)}}"=="1")}})}}
-			{{
-
-        	{{SET(noItems:false)}}  <!--within COPY this sets the var to false-->
-        	<button onSelect="Presenter.close();Presenter.load('Movie_Grid', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}');Presenter.closeContext()">
-            	<text>{{VAL(title)}}</text>
-        	</button>
-    		}}
-    	}}
-    	}}
+      </head>
+      {{IFNODE(MediaContainer/Directory)}}{{
+      {{SET(noItems:false)}}
+      <alertTemplate theme="light">
+        <title>{{VAL(MediaContainer/title1)}}</title>
+        {{COPY(MediaContainer/Directory)}}{{
+        {{IF({{VAL(prompt)}})}}{{
+        <button onSelect="Presenter.closeContext(); Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/{{VAL(key)}}&amp;query')">
+          <text>{{VAL(title)}}</text>
+        </button>
+        }}
+        {{IF(!{{VAL(prompt)}})}}{{
+        {{IF({{CHK("{{VAL(key:)}}"=="folder")}})}}{{
+        <button onSelect="Presenter.closeContext(); Presenter.load('List', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+          <text>{{VAL(title)}}</text>
+        </button>
+        }}
+        {{IF(!{{CHK("{{VAL(key:)}}"=="folder")}})}}{{
+        {{IF({{CHK("{{VAL(secondary:)}}"=="1")}})}}{{
+        <button onSelect="Presenter.closeContext(); Presenter.load('Movie_Secondary', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+          <text>{{VAL(title)}}</text>
+        </button>
+        }}
+        {{IF(!{{CHK("{{VAL(secondary:)}}"=="1")}})}}{{
+        <button onSelect="Presenter.closeContext(); Presenter.load('Movie_Grid', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}?excludeFields=summary')">
+          <text>{{VAL(title)}}</text>
+        </button>
+        }}
+        }}
+        }}
+        }}
+      </alertTemplate>
+      }}
+    </document>
     }}
-}}
-    </alertTemplate>
-</document>
-}}
+    }}
 
 {{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
 <document>

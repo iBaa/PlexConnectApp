@@ -63,13 +63,7 @@ See LICENSE.txt for this sample’s licensing information
           onSuccess="Presenter.load('MyPlex_Servers', '', '');"
           onError="Presenter.load('MyPlex_SignInFailed', '', '');"
           >
-          <monogram src="{{VAL(thumb)}}?size=256" width="180" height="180" />
-          {{IF({{VAL(admin)}})}}{{
-                      <decorationImage src="{{RESOURCEURL(Images:ServerIcon_key:png)}}" width="27" height="26" />
-          }}
-          {{IF({{VAL(protected)}})}}{{
-                      <decorationImage src="{{RESOURCEURL(Images:ServerIcon_lock:png)}}" width="19" height="23" />
-          }}
+          <monogram src="{{VAL(thumb)}}?size=384" width="180" height="180" />
           <title class="title"><![CDATA[{{VAL(title)}}]]></title>
         </monogramLockup>
         }}
