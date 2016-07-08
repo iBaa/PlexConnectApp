@@ -169,8 +169,8 @@ See LICENSE.txt for this sample’s licensing information
                 {{
                 <monogramLockup onSelect="Presenter.loadView('TVShow_Actor', '{{PMSID()}}', '{{PATH(/library/sections/{{GET(sectionID)}}/actor/{{VAL(id)}})}}')">
                     <monogram {{IF({{VAL(thumb:)}})}}{{src="{{IMAGEURL(thumb::384)}}"}} />
-                    <title>{{VAL(role)}}</title>
-                    <subtitle>{{VAL(tag)}}</subtitle>
+                    <title><![CDATA[{{VAL(role)}}]]></title>
+                    <subtitle><![CDATA[{{VAL(tag)}}]]></subtitle>
                 </monogramLockup>
                 }}
             </section>
