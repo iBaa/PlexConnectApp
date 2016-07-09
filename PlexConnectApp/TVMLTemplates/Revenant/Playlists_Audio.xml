@@ -7,9 +7,10 @@ See LICENSE.txt for this sample’s licensing information
 {{SET(noItems:true)}}
 {{XML()}}{{
 <document>
-  <listTemplate>
+  <listTemplate theme="light">
     <banner>
       <title><![CDATA[{{VAL(MediaContainer/title)}}]]></title>
+      <heroImg src="{{IMAGEURL(MediaContainer/Track/grandparentArt:1920)}}" />
     </banner>
     <list>
 
@@ -60,7 +61,7 @@ See LICENSE.txt for this sample’s licensing information
 }}
 }}
       </section>
-      
+
     </list>
   </listTemplate>
 </document>

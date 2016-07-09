@@ -74,6 +74,7 @@
         <identityBanner class="banner" >
             <title style="text-align: left;">Discover <![CDATA[{{PMSVAL(name)}}]]></title>
             <subtitle style="text-align: left;">{{USRVAL(name)}}</subtitle>
+            <heroImg src="{{IMAGEURL(MediaContainer/Video/art:1920)}}" />
             <row style="tv-content-align:top">
                 <buttonLockup onSelect="Presenter.loadAndSwap('Library','','');">
                     <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Reload:png)}}" width="50" height="50"/>
@@ -350,7 +351,7 @@
                         </overlay>
                            }}
                         <title><![CDATA[{{VAL(title)}}]]></title>
-                        <subtitle>{{VAL(playlistType)}}</subtitle>
+                        <subtitle><![CDATA[{{UPPERCASE({{VAL(playlistType)}})}}]]></subtitle>
                     </lockup>
                     }}
                     {{IF({{CHK("{{VAL(playlistType:)}}"=="audio")}})}}
@@ -366,7 +367,7 @@
                         </overlay>
                            }}
                         <title><![CDATA[{{VAL(title)}}]]></title>
-                        <subtitle>{{VAL(playlistType)}}</subtitle>
+                        <subtitle><![CDATA[{{UPPERCASE({{VAL(playlistType)}})}}]]></subtitle>
                     </lockup>
                     }}
                     }}
