@@ -106,11 +106,11 @@
             <overlay>
                 <!--{{IF({{VAL(viewCount:0)}})}}{{ <badge src="resource://overlay-checkmark"/>}}-->
                 {{IF({{VAL(viewOffset)}})}}{{
-                <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
+                <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:watching:png)}}"  width="72" height="72" />
                 }}
                 {{IF(!{{VAL(viewOffset)}})}}{{
               	{{IF(!{{VAL(viewCount)}})}}{{
-                <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:watching:png)}}"  width="72" height="72" />
+                <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
                 }}
                 }}
             </overlay>
