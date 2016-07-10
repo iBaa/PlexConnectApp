@@ -129,7 +129,7 @@
            {{COPY(MediaContainer/Directory)}}{{
            {{SET(noItems:false)}}
            {{IF(!{{CHK("{{VAL(title)}}"=="All episodes")}})}}{{
-           <lockup onSelect="Presenter.load('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}');"
+           <lockup onSelect="Presenter.loadTitle('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', '{{VAL(parentTitle)}}');"
              onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}', '')">
                <img src="{{IMAGEURL(thumb::384)}}" width="150" height="226" />
                {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
@@ -144,6 +144,23 @@
            }}
          </section>
       </shelf>
+      {{XML(/library/metadata/{{VAL(MediaContainer/key)}})}}{{
+      <shelf style="margin:100 0 0 0">
+          <header>
+              <title>Cast and Crew</title>
+          </header>
+          <section>
+              {{COPY(MediaContainer/Directory/Role)}}
+              {{
+              <monogramLockup onSelect="Presenter.loadView('TVShow_Actor', '{{PMSID()}}', '{{PATH(/library/sections/{{GET(sectionID)}}/actor/{{VAL(id)}})}}')">
+                  <monogram {{IF({{VAL(thumb:)}})}}{{src="{{IMAGEURL(thumb::384)}}"}} />
+                  <title><![CDATA[{{VAL(role)}}]]></title>
+                  <subtitle><![CDATA[{{VAL(tag)}}]]></subtitle>
+              </monogramLockup>
+              }}
+          </section>
+      </shelf>
+      }}
     </productTemplate>
   </document>
 }}
