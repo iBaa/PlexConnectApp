@@ -7,19 +7,10 @@
     <style>
       .artImage {
           tv-tint-color: linear-gradient(top, 0.1, rgba(0,0,0,0.75), 0.2, rgba(0,0,0,0.75), 1.00, rgba(0,0,0,0.8));
-
       }
       .text {
           text-shadow: 2px 2px 4px #000000;
           <!--height: 800px;-->
-      }
-      .darkBackgroundColor {
-          <!--background-color: #1f1f1f;-->
-      }
-      .plot {
-       min-height: 300;
-       max-height: 400;
-       margin: 50;
       }
       .count {
       tv-text-style: none;
@@ -104,11 +95,28 @@
                 onSelect="Presenter.loadContext('TVShow_Description', '{{PMSID()}}', '{{PATH()}}')">
               <![CDATA[{{VAL(MediaContainer/summary)}}]]>
             </description>
+
+            {{SET(last:0)}}
+            {{SET(lastEpisode:1)}}
+            {{COPY(MediaContainer/Directory/Video)}}{{
+                {{IF({{CHK("{{GET(last)}}"=="0")}})}}{{
+                    {{IF(!{{VAL(viewCount:0)}})}}{{
+                        {{SET(last:{{VAL(key)}})}}
+                        {{SET(lastEpisode:{{VAL(index)}})}}
+                    }}
+                }}
+            }}
+
             <row>
               <buttonLockup
-                onSelect="modal">
+                onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(MediaContainer/Directory/key)}})}}')">
                   <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Play:png)}}" width="50" height="50"/>
                   <title>Play Show</title>
+              </buttonLockup>
+              <buttonLockup
+                onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(MediaContainer/Directory/key)}})}}', 'shuffle')">
+                <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Shuffle:png)}}" width="50" height="50"/>
+                <title>Shuffle Show</title>
               </buttonLockup>
               <buttonLockup
                 onSelect="modal">
@@ -129,7 +137,7 @@
            {{COPY(MediaContainer/Directory)}}{{
            {{SET(noItems:false)}}
            {{IF(!{{CHK("{{VAL(title)}}"=="All episodes")}})}}{{
-           <lockup onSelect="Presenter.loadTitle('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', '{{VAL(parentTitle)}}');"
+           <lockup onSelect="Presenter.loadTitle('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'TV Show');"
              onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}', '')">
                <img src="{{IMAGEURL(thumb::384)}}" width="150" height="226" />
                {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
@@ -144,6 +152,8 @@
            }}
          </section>
       </shelf>
+
+      {{SET(sectionID:{{VAL(MediaContainer/librarySectionID)}})}}
       {{XML(/library/metadata/{{VAL(MediaContainer/key)}})}}{{
       <shelf style="margin:100 0 0 0">
           <header>

@@ -19,7 +19,7 @@ See LICENSE.txt for this sample’s licensing information
 {{COPY(MediaContainer/Directory)}}{{
 {{SET(noItems:false)}}
           <lockup
-            onSelect="Presenter.load('Movie_Directory', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelect="Presenter.loadTitle('Movie_Directory', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'Movie')"
             onSelectHold="modal"
             >
             <img src="{{IMAGEURL(thumb::768)}}" width="300" height="300" style="tv-img-treatment:corner-large" />
@@ -30,7 +30,7 @@ See LICENSE.txt for this sample’s licensing information
 {{COPY(MediaContainer/Video)}}{{
 {{SET(noItems:false)}}
           <lockup
-            onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelect="Presenter.loadTitle('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'Movie')"
             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             onHoldSelect="Presenter.loadContext('Movie_MovieContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
             >

@@ -8,16 +8,6 @@ See LICENSE.txt for this sample’s licensing information
 <document>
     <head>
         <style>
-            .darkBackgroundColor {
-            background-color: #1f1f1f;
-            }
-            .layout {
-            margin: 40;
-            }
-
-            .roundedImageCorners {
-            itml-img-treatment: corner-small;
-            }
             .count {
             font-weight: bold;
             font-size: 19;
@@ -25,7 +15,6 @@ See LICENSE.txt for this sample’s licensing information
             tv-position: bottom-right;
             margin: -307 -89 307 89;
             }
-
         </style>
     </head>
     <catalogTemplate theme="light" >
@@ -50,7 +39,7 @@ See LICENSE.txt for this sample’s licensing information
                         <grid>
                             <section>
                               {{COPY(MediaContainer/Directory)}}{{
-                                <lockup onSelect="Presenter.load('TVShow_Season', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                                <lockup onSelect="Presenter.loadTitle('TVShow_Season', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'TV Show')"
                 onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                 onSelectHold="ScrobbleMenu">
                                     <img src="{{IMAGEURL(thumb::600)}}" height="360" width="240" />
@@ -60,7 +49,7 @@ See LICENSE.txt for this sample’s licensing information
                                     	<decorationLabel class="count">{{EVAL({{VAL(leafCount)}}-{{VAL(viewedLeafCount)}})}}</decorationLabel>
                                     </overlay>
                                     }}
-                                    <title class="whiteText"><![CDATA[{{VAL(title)}}]]></title>
+                                    <title><![CDATA[{{VAL(title)}}]]></title>
                                 </lockup>
            					  }}
                             </section>

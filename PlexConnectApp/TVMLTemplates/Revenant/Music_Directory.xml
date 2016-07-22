@@ -15,12 +15,12 @@ See LICENSE.txt for this sample’s licensing information
     </banner>
     <collectionList>
       <grid>
-        
+
         <section>
 {{COPY(MediaContainer/Directory)}}{{
 {{SET(noItems:false)}}
           <lockup
-            onSelect="Presenter.load('Music_Artist', '{{PMSID()}}', '{{PATH(/library/metadata/{{VAL(ratingKey)}})}}')"
+            onSelect="Presenter.loadTitle('Music_Artist', '{{PMSID()}}', '{{PATH(/library/metadata/{{VAL(ratingKey)}})}}', 'Music')"
             onSelectHold="modal"
             >
             <img src="{{IMAGEURL(thumb::768)}}" width="300" height="300" style="tv-img-treatment:corner-large" />
@@ -28,7 +28,7 @@ See LICENSE.txt for this sample’s licensing information
         </lockup>
 }}
         </section>
-      
+
       </grid>
     </collectionList>
 

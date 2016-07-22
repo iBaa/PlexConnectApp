@@ -45,7 +45,7 @@ See LICENSE.txt for this sample’s licensing information
               <section>
 				{{COPY(MediaContainer/Directory)}}{{
         {{IF({{CHK("{{VAL(type)}}"!="artist")}})}}{{
-        				<lockup onSelect="Presenter.load('Music_Albums', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+        				<lockup onSelect="Presenter.loadTitle('Music_Albums', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'Music')"
                 onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                 onSelectHold="ScrobbleMenu">
       						<img src="{{IMAGEURL(thumb::360)}}" height="308" width="308" />
@@ -53,7 +53,7 @@ See LICENSE.txt for this sample’s licensing information
                 </lockup>
         }}
         {{IF({{CHK("{{VAL(type)}}"=="artist")}})}}{{
-        				<lockup onSelect="Presenter.load('Music_Artist', '{{PMSID()}}', '/library/metadata/{{VAL(ratingKey)}}')"
+        				<lockup onSelect="Presenter.loadTitle('Music_Artist', '{{PMSID()}}', '/library/metadata/{{VAL(ratingKey)}}', 'Music')"
                 onSelectHold="ScrobbleMenu">
       						<img style="tv-img-treatment: corner-medium" src="{{IMAGEURL(thumb::360)}}" height="308" width="308" />
                 	<title style="tv-text-highlight-style: marquee-on-highlight"><![CDATA[{{VAL(title)}}]]></title>

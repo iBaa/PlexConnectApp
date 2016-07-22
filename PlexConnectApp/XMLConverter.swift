@@ -956,7 +956,12 @@ class cXmlConverter {
         let expr = NSExpression(format: param)
         let res = expr.expressionValueWithObject(nil, context: nil)
         
-        return String(res)
+        var test:String = ""
+        test = String(res)
+        test = test.stringByReplacingOccurrencesOfString("Optional(", withString: "")
+        test = test.stringByReplacingOccurrencesOfString(")", withString: "")
+        // Bug return String(res) liefert String mit Optional als Text im String
+        return test
     }
 
     var processCHK: ((_self: cXmlConverter,XML: XMLIndexer?, par: String) -> String)? = {

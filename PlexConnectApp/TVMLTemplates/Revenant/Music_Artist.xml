@@ -7,18 +7,9 @@ See LICENSE.txt for this sample’s licensing information
 <document>
   <head>
         <style>
-            .showTextOnHighlight {
-            tv-text-highlight-style: show-on-highlight;
-            }
-            .lightBackgroundColor {
-            background-color: #efece6;
-            }
             .roundedImageCorners {
       			itml-img-treatment: corner-small;
       			}
-            .shelfLayout {
-               padding: 20 90 50;
-             }
              .text {
                  text-shadow: 2px 2px 4px #000000;
                  <!--height: 800px;-->
@@ -90,7 +81,7 @@ See LICENSE.txt for this sample’s licensing information
         {{COPY(MediaContainer/Directory)}}
         {{
         <lockup
-            onSelect="Presenter.load('Music_Album', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelect="Presenter.loadTitle('Music_Album', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'Music')"
             >
           <img src="{{IMAGEURL(thumb::360)}}" width="310" height="310" />
           <title><![CDATA[{{VAL(title)}}]]></title>

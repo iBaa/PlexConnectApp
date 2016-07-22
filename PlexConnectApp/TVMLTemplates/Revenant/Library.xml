@@ -8,12 +8,6 @@
 <document>
     <head>
         <style>
-            .darkBackgroundColor {
-            background-color: #1f1f1f;
-            }
-            .lightBackgroundColor {
-            background-color: #efece6;
-            }
             .roundedImageCorners {
             itml-img-treatment: corner-small;
             }
@@ -39,9 +33,6 @@
             tv-highlight-color:rgb(255, 255, 255);
             color: rgb(255, 255, 255);
             text-align:center;
-            }
-            .showTextOnHighlight {
-            tv-text-highlight-style: show-on-highlight;
             }
             .sectionLabel {
             text-align: center;
@@ -112,7 +103,7 @@
                     {{SET(noItems:false)}}
                     {{IF({{CHK("{{VAL(type:)}}"=="episode")}})}}{{
                     <lockup
-                        onSelect="Presenter.loadTitle('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(parentKey)}}/children)}}', '{{VAL(grandparentTitle)}}')"
+                        onSelect="Presenter.loadTitle('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(parentKey)}}/children)}}', 'TV Show')"
                         onPlay="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                         onHoldSelect="Presenter.loadContext('ContextMenu', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                         onSelectHold="modal">
@@ -126,7 +117,7 @@
                     }}
                     {{IF({{CHK("{{VAL(type:)}}"=="movie")}})}}{{
                     <lockup
-                        onSelect="Presenter.loadTitle('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', '{{VAL(title)}}')"
+                        onSelect="Presenter.loadTitle('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'Movie')"
                         onPlay="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                         onHoldSelect="Presenter.loadContext('ContextMenu', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                         onSelectHold="modal">
@@ -153,7 +144,7 @@
               {{COPY(MediaContainer/Directory)}}{{
                   {{IF({{CHK("{{VAL(type:)}}"=="season")}})}}{{
                   {{SET(noItems:false)}}
-                  <lockup onSelect="Presenter.loadTitle('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', '{{VAL(parentTitle)}}')"
+                  <lockup onSelect="Presenter.loadTitle('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'TV Show')"
                     onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                     onHoldSelect="Presenter.loadContext('ContextMenu', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
                     <img src="{{IMAGEURL(thumb::360)}}" height="375" width="250" />
@@ -185,7 +176,7 @@
                     {{COPY(MediaContainer/Video)}}{{
                     {{SET(noItems:false)}}
                     {{IF({{VAL(viewOffset)}})}}{{
-                    <lockup onSelect="Presenter.loadTitle('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', '{{VAL(title)}}')"
+                    <lockup onSelect="Presenter.loadTitle('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'Movie')"
                       onPlay="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                       onHoldSelect="Presenter.loadContext('Movie_MovieContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
                       <img src="{{IMAGEURL(thumb::360)}}" height="375" width="250" />
@@ -197,7 +188,7 @@
                     </lockup>
                     }}
                     {{IF(!{{VAL(viewOffset)}})}}{{
-                    <lockup onSelect="Presenter.loadTitle('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', '{{VAL(title)}}')"
+                    <lockup onSelect="Presenter.loadTitle('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'Movie')"
                       onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
                       onHoldSelect="Presenter.loadContext('Movie_MovieContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
                       <img src="{{IMAGEURL(thumb::360)}}" height="375" width="250" />
@@ -226,7 +217,7 @@
           		<section>
 			        {{COPY(Directory)}}{{
 		          	<lockup
-		          		onSelect="Presenter.loadTitle('Music_Album', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', '{{VAL(parentTitle)}}')"
+		          		onSelect="Presenter.loadTitle('Music_Album', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'Music')"
 		           		onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'shuffle')"
 	          			onSelectHold="modal">
 	         			<img src="{{IMAGEURL(thumb::360)}}" height="250" width="250" />

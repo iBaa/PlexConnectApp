@@ -2,11 +2,11 @@
 <document>
   <head>
     <style>
-      .spacing {
-      margin: 0 0 90 0;
+      .sectionSpacing {
+        margin: 0 40;
       }
       .pullAheadVsSectionSpacing {
-      margin: 0 -40;
+        margin: 0 -40;
       }
       .rounded {
       itml-img-treatment: corner-medium;
@@ -39,7 +39,7 @@
       <!-- movies -->
       {{CUT({{GET(noMovies)}})}}{{
       {{SET(noMovies:true)}}
-      <shelf class="spacing">
+      <shelf class="sectionSpacing">
         <header>
           <title>{{TEXT(Movies)}}</title>
         </header>
@@ -47,7 +47,7 @@
         {{XML()}}{{
         {{SET(noItems:true)}}
         {{CUT({{GET(noItems)}})}}{{
-        <section>
+        <section class="sectionSpacing">
           <header>
           </header>
           {{COPY(MediaContainer/Video)}}{{
@@ -95,7 +95,7 @@
       <!-- shows -->
       {{CUT({{GET(noShows)}})}}{{
       {{SET(noShows:true)}}
-      <shelf class="spacing">
+      <shelf class="sectionSpacing">
         <header>
           <title>{{TEXT(Shows)}}</title>
         </header>
@@ -103,7 +103,7 @@
         {{XML()}}{{
         {{SET(noItems:true)}}
         {{CUT({{GET(noItems)}})}}{{
-        <section>
+        <section class="sectionSpacing">
           <header>
           </header>
           {{COPY(MediaContainer/Directory)}}{{
@@ -135,7 +135,7 @@
       <!-- episodes -->
       {{CUT({{GET(noEpisodes)}})}}{{
       {{SET(noEpisodes:true)}}
-      <shelf class="spacing">
+      <shelf class="sectionSpacing">
         <header>
           <title>{{TEXT(Episodes)}}</title>
         </header>
@@ -143,7 +143,7 @@
         {{XML()}}{{
         {{SET(noItems:true)}}
         {{CUT({{GET(noItems)}})}}{{
-        <section>
+        <section class="sectionSpacing">
           <header>
           </header>
           {{COPY(MediaContainer/Video)}}{{
@@ -186,7 +186,7 @@
       <!-- albums -->
       {{CUT({{GET(noAlbums)}})}}{{
       {{SET(noAlbums:true)}}
-      <shelf class="spacing">
+      <shelf class="sectionSpacing">
         <header>
           <title>{{TEXT(Albums)}}</title>
         </header>
@@ -194,7 +194,7 @@
         {{XML()}}{{
         {{SET(noItems:true)}}
         {{CUT({{GET(noItems)}})}}{{
-        <section>
+        <section class="sectionSpacing">
           <header>
           </header>
           {{COPY(MediaContainer/Directory)}}{{
@@ -222,7 +222,7 @@
       <!-- artists -->
       {{CUT({{GET(noArtists)}})}}{{
       {{SET(noArtists:true)}}
-      <shelf class="spacing">
+      <shelf class="sectionSpacing">
         <header>
           <title>{{TEXT(Artists)}}</title>
         </header>
@@ -230,7 +230,7 @@
         {{XML()}}{{
         {{SET(noItems:true)}}
         {{CUT({{GET(noItems)}})}}{{
-        <section>
+        <section class="sectionSpacing">
           <header>
           </header>
           {{COPY(MediaContainer/Directory)}}{{

@@ -8,42 +8,23 @@ See LICENSE.txt for this sample’s licensing information
 <document>
   <head>
     <style>
-      .showTextOnHighlight {
-      tv-text-highlight-style: show-on-highlight;
-      }
-      .overlayTextLayout {
-      tv-position: top;
-      }
-      .centeredText {
-      text-align: center;
-      }
-      .rounded {
-      tv-img-treatment: circle;
-      width: 200;
-      height: 200;
-      }
-      .hero {
-      margin: -323 -280 0 0;
-      }
-      .lightBackgroundColor {
-      background-color: #efece6;
-      }
-      .darkBackgroundColor {
-      background-color: #333333;
-      }
       .title {
       font-size: 26;
       text-align: center;
-      color: #a7a5a0;
+      color: rgb(167, 165, 160);
       font-weight: medium;
       tv-highlight-color: white;
+      }
+      .header {
+      .text-align: left;
+      .margin: 0 0 0 -200;
       }
     </style>
   </head>
   <stackTemplate theme="light">
     <identityBanner>
       <title class="header">Home Users</title>
-      <subtitle class="header">{{TEXT(Admin )}}{{USRVAL(name)}}</subtitle>
+      <subtitle class="header">{{TEXT(Admin: )}}{{USRVAL(name)}}</subtitle>
       <row>
         <buttonLockup onSelect="Presenter.load('Settings', '', '')">
           <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Settings:png)}}" width="50" height="50"/>
@@ -51,21 +32,30 @@ See LICENSE.txt for this sample’s licensing information
         </buttonLockup>
       </row>
     </identityBanner>
-    <shelf centered="true" style="tv-interitem-spacing: 60; margin: 280 50 0 50;">
+    <shelf centered="true" autoHighlight="true" style="tv-interitem-spacing: 60; margin: 280 50 0 50;">
       <section>
         {{COPY(MediaContainer/User)}}{{
-        <monogramLockup style="tv-img-treatment: circle"
-          {{IF({{CHK("{{USRVAL(name)}}"=="{{VAL(title)}}")}})}}{{autoHighlight="true"}}
-          id="{{VAL(id)}}"
-          username="{{VAL(title)}}"
-          protected="{{VAL(protected)}}"
-          onSelect="myPlex.switchHomeUser(event);"
-          onSuccess="Presenter.load('MyPlex_Servers', '', '');"
-          onError="Presenter.load('MyPlex_SignInFailed', '', '');"
-          >
-          <monogram src="{{VAL(thumb)}}?size=384" width="180" height="180" />
-          <title class="title"><![CDATA[{{VAL(title)}}]]></title>
-        </monogramLockup>
+                <monogramLockup
+                    {{IF({{CHK("{{USRVAL(name)}}"=="{{VAL(title)}}")}})}}{{autoHighlight="true"}}
+                    id="{{VAL(id)}}"
+                    username="{{VAL(title)}}"
+                    protected="{{VAL(protected)}}"
+                    onSelect="myPlex.switchHomeUser(event);"
+                    onSuccess="Presenter.load('MyPlex_Servers','','');"
+                    onError="Presenter.load('MyPlex_SignInFailed','','');"
+                    >
+                  <monogram src="{{VAL(thumb)}}?size=256" width="200" height="200" />
+                  <title class="title"><![CDATA[{{VAL(title)}}]]></title>
+                  <!--todo: overlay/icon: admin, protected-->
+                  <!--
+                  {{IF({{VAL(admin)}})}}{{
+                  <decorationImage src="{{RESOURCEURL(Images:icon_key:png)}}" width="27" height="26" />
+                  }}
+                  {{IF({{VAL(protected)}})}}{{
+                  <decorationImage src="{{RESOURCEURL(Images:icon_lock:png)}}" width="19" height="23" />
+                  }}
+                  -->
+                </monogramLockup>
         }}
       </section>
     </shelf>

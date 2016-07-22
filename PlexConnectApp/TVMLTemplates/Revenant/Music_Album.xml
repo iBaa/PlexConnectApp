@@ -9,38 +9,9 @@
 <document>
   <head>
     <style>
-      .lightBackgroundColor {
-      background-color: rgb(239, 236, 230);
-      }
-      .darkBackgroundColor {
-      background-color: rgb(51, 51, 51);
-      }
-      .whiteButton {
-      tv-tint-color: rgb(255, 255, 255);
-      width: 500;
-      height: 200;
-      }
-      .plot {
-      min-height: 300;
-      max-height: 400;
-      margin: 50;
-      }
       .text {
           text-shadow: 2px 2px 4px #000000;
           <!--height: 800px;-->
-      }
-      .customRightText {
-      font-size: 26pt;
-      font-weight: normal;
-      color: rgba(0, 0, 0, 0.6);
-      text-align: right;
-      itml-text-max-lines: 1;
-      margin: 0 20;
-      }
-      .customRightTextImage {
-      itml-position: left;
-      margin: 0 20;
-      tv-highlight-color: rgb(0, 0, 0);
       }
     </style>
   </head>

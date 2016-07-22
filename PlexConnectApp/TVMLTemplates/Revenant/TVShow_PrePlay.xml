@@ -133,7 +133,7 @@ See LICENSE.txt for this sample’s licensing information
                             {{SET(AudioIsDefault:false)}}
                             <buttonLockup id="audio" onSelect="Presenter.loadContext('TVShow_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
                                 <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Audio:png)}}" width="50" height="50"/>
-                                <title><![CDATA[{{UPPERCASE({{VAL(languageCode)}})}}]]></title>
+                                <title><![CDATA[{{VAL(language)}}]]></title>
                             </buttonLockup>
                             }}
                             }}
@@ -144,7 +144,7 @@ See LICENSE.txt for this sample’s licensing information
                             {{IF({{CHK("{{VAL(default)}}"="1")}})}}{{
                             <buttonLockup id="audio" onSelect="Presenter.loadContext('TVShow_AudioPopUp', '{{PMSID()}}', '{{PATH()}}')">
                                 <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Audio:png)}}" width="50" height="50"/>
-                                <title><![CDATA[{{UPPERCASE({{VAL(languageCode)}})}}]]></title>
+                                <title><![CDATA[{{VAL(language)}}]]></title>
                             </buttonLockup>
                             }}
                             }}
@@ -157,7 +157,7 @@ See LICENSE.txt for this sample’s licensing information
                             {{SET(SubsIsDefault:false)}}
                             <buttonLockup id="audio" onSelect="Presenter.loadContext('TVShow_SubsPopUp', '{{PMSID()}}', '{{PATH()}}')">
                                 <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Subtitles:png)}}" width="50" height="50"/>
-                                <title><![CDATA[{{UPPERCASE({{VAL(languageCode)}})}}]]></title>
+                                <title><![CDATA[{{VAL(language)}}]]></title>
                             </buttonLockup>
                             }}
                             }}
@@ -168,7 +168,7 @@ See LICENSE.txt for this sample’s licensing information
                             {{IF({{CHK("{{VAL(default)}}"="1")}})}}{{
                             <buttonLockup id="audio" onSelect="Presenter.loadContext('TVShow_SubsPopUp', '{{PMSID()}}', '{{PATH()}}')">
                                 <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Subtitles:png)}}" width="50" height="50"/>
-                                <title><![CDATA[{{UPPERCASE({{VAL(languageCode)}})}}]]></title>
+                                <title><![CDATA[{{VAL(language)}}]]></title>
                             </buttonLockup>
                             }}
                             }}

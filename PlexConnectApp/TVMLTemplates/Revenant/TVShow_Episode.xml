@@ -20,12 +20,6 @@ See LICENSE.txt for this sample’s licensing information
                 text-shadow: 2px 2px 4px #000000;
                 <!--height: 800px;-->
             }
-            .darkBackgroundColor {
-                <!--background-color: #1f1f1f;-->
-            }
-            .progressbar {
-            color: #ff8000"
-            }
         </style>
     </head>
     <productBundleTemplate theme="dark">
@@ -103,7 +97,7 @@ See LICENSE.txt for this sample’s licensing information
                 {{COPY(MediaContainer/Video)}}{{
                 {{SET(noItems:false)}}
                 <lockup
-                    onSelect="Presenter.loadTitle('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', '{{VAL(grandparentTitle)}}')"
+                    onSelect="Presenter.loadTitle('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'Episode')"
                     onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}', {{IF(!{{VAL(MediaContainer/Video/viewOffset:0)}})}}{{'resume'}})"
 
                     {{IF(!{{VAL(viewCount:0)}})}}{{ autoHighlight = "True" }}
