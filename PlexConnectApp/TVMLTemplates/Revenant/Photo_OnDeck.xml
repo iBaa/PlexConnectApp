@@ -21,7 +21,7 @@
             }
         </style>
     </head>
-<stackTemplate theme="light">
+<stackTemplate theme="">
 {{XML(all?sort=random&amp;limit=1)}}{{
 {{IFNODE(MediaContainer/Photo)}}{{
 {{SET(noItems:false)}}

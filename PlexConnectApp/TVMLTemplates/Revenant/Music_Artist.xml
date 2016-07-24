@@ -18,6 +18,9 @@ See LICENSE.txt for this sample’s licensing information
     </head>
     <productTemplate theme="dark">
     <background>
+      {{IF({{CHK("{{SETTING(musicFanart)}}"=="Show")}})}}{{
+    <img style="tv-img-treatment:uber;" src="{{IMAGEURL(MediaContainer/Directory/art:1920)}}" />
+      }}
     </background>
     <banner>
       <infoList class="text">

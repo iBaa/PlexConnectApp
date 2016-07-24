@@ -27,16 +27,13 @@ See LICENSE.txt for this sample’s licensing information
                 <asset src="{{IMAGEURL(MediaContainer/Video/grandparentTheme)}}" />
             </audio>
             }}
-
+            {{IF({{CHK("{{SETTING(tvshowFanart)}}"=="Show")}})}}{{
+            <img style="tv-img-treatment:uber;" src="{{IMAGEURL(MediaContainer/Video/grandparentArt:1920)}}" />
+            }}
         </background>
 
         <banner>
             <infoList>
-                <info>
-                  <ratingCard style="tv-align: right;text-shadow: 2px 2px 8px #000000;">
-                      <ratingBadge style="tv-rating-style: star-hollow-l;text-shadow: 2px 2px 8px #000000;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
-                  </ratingCard>
-                </info>
 
                 <info>
                     <header>
@@ -64,8 +61,6 @@ See LICENSE.txt for this sample’s licensing information
 
                     <!--badge src="resource://mpaa-pg" class="badge" /-->
                     <!--badge src="resource://cc" class="badge" /-->
-                </row>
-                <row>
                 </row>
                 <row>
                     <text>{{DURATION({{VAL(MediaContainer/Video/duration)}})}}</text>

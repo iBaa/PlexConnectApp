@@ -54,6 +54,21 @@ class cSettings {
             "Hide", "Show"
             ], 0
         ),
+        
+        "movieFanart": ([
+            "Hide", "Show"
+            ], 0
+        ),
+        
+        "musicFanart": ([
+            "Hide", "Show"
+            ], 0
+        ),
+        
+        "tvshowFanart": ([
+            "Hide", "Show"
+            ], 0
+        ),
 
         "themeTitle": ([
             "Text", "Banner"

@@ -21,7 +21,7 @@ See LICENSE.txt for this sample’s licensing information
       }
     </style>
   </head>
-  <stackTemplate theme="light">
+  <stackTemplate>
     <identityBanner>
       <title class="header">Home Users</title>
       <subtitle class="header">{{TEXT(Admin: )}}{{USRVAL(name)}}</subtitle>

@@ -20,7 +20,7 @@
       }
     </style>
   </head>
-  <stackTemplate theme="light">
+  <stackTemplate theme="">
     <identityBanner>
       <title class="header">Discover <![CDATA[{{VAL(MediaContainer/title1)}}     ]]></title>
       <subtitle class="header"><![CDATA[{{PMSVAL(name)}}    ]]></subtitle>

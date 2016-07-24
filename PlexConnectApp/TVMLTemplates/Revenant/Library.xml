@@ -57,7 +57,7 @@
             }
         </style>
     </head>
-    <stackTemplate class="lightBackgroundColor">
+    <stackTemplate>
       {{PMSLOOP(owned)}}{{
       {{XML(/library/onDeck)}}{{
         <background>

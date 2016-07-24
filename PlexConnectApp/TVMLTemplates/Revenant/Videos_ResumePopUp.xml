@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 {{XML()}}{{
 <document>
-    <alertTemplate theme="light">
+    <alertTemplate theme="">
 			<button onSelect="Presenter.closeContext(); videoPlayer.play('{{PMSID()}}', '{{PATH()}}', 'resume')">
        	<text>{{TEXT(Resume @ )}}{{DURATION_HMS({{VAL(MediaContainer/Video/viewOffset:)}})}}</text>
       </button>

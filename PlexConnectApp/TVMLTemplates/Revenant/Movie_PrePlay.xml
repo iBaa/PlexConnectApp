@@ -15,16 +15,14 @@ See LICENSE.txt for this sample’s licensing information
     }
   </style>
   </head>
-  <productTemplate theme="dark">
+  <productTemplate>
     <background>
+      {{IF({{CHK("{{SETTING(movieFanart)}}"=="Show")}})}}{{
+    <img style="tv-img-treatment:uber;" src="{{IMAGEURL(MediaContainer/Video/art:1920)}}" />
+      }}
     </background>
       <banner>
       <infoList>
-        <info>
-          <ratingCard style="tv-align: right;text-shadow: 2px 2px 8px #000000;">
-              <ratingBadge style="tv-rating-style: star-m;text-shadow: 2px 2px 8px #000000;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
-          </ratingCard>
-        </info>
 
         <info>
             <header>
@@ -56,10 +54,11 @@ See LICENSE.txt for this sample’s licensing information
         <text class="color:#FFFFFF; tv-text-style:title1;"><![CDATA[{{VAL(MediaContainer/Video/tagline)}}]]></text>
 
         <row>
-          <!--{{IF({{VAL(MediaContainer/Video/audienceRating:0)}})}}{{
+          {{IF({{VAL(MediaContainer/Video/audienceRating:0)}})}}{{
             <text><badge src="resource://tomato-fresh"/> {{EVAL({{VAL(MediaContainer/Video/audienceRating:0)}}*10)}}%</text>
             }}
-          {{IF({{VAL(MediaContainer/Video/audienceRatingImage:0)}})}}{{<text><badge src="{{IMAGEURL({{VAL(MediaContainer/Video/audienceRatingImage)}})}}"/></text>}}-->
+          {{IF({{VAL(MediaContainer/Video/audienceRatingImage:0)}})}}{{
+          <text><badge src="{{IMAGEURL({{VAL(MediaContainer/Video/audienceRatingImage)}})}}"/></text>}}
           <text><![CDATA[{{VAL(MediaContainer/Video/year)}}]]></text>
           <text><![CDATA[{{VAL(MediaContainer/Video/Genre/tag)}}]]></text>
           <text>{{DURATION({{VAL(MediaContainer/Video/duration)}})}}</text>

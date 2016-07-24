@@ -31,16 +31,19 @@
              <asset src="{{IMAGEURL(MediaContainer/theme)}}" />
          </audio>
          }}
+         {{IF({{CHK("{{SETTING(tvshowFanart)}}"=="Show")}})}}{{
+         <img style="tv-img-treatment:uber;" src="{{IMAGEURL(MediaContainer/art:1920)}}" />
+         }}
      </background>
       <banner>
         <infoList>
-          <info>
+          <!--<info>
             {{XML(/library/metadata/{{VAL(MediaContainer/key)}})}}{{
               <ratingCard style="tv-align: right;">
                   <ratingBadge style="tv-rating-style: star-hollow-l;text-shadow: 2px 2px 8px #000000;" value="{{EVAL({{VAL(MediaContainer/Directory/rating:0)}}/10)}}"></ratingBadge>
               </ratingCard>
               }}
-          </info>
+          </info>-->
           <info>
               <header>
                   <title>{{TEXT(Studio)}}</title>
@@ -95,17 +98,6 @@
                 onSelect="Presenter.loadContext('TVShow_Description', '{{PMSID()}}', '{{PATH()}}')">
               <![CDATA[{{VAL(MediaContainer/summary)}}]]>
             </description>
-
-            {{SET(last:0)}}
-            {{SET(lastEpisode:1)}}
-            {{COPY(MediaContainer/Directory/Video)}}{{
-                {{IF({{CHK("{{GET(last)}}"=="0")}})}}{{
-                    {{IF(!{{VAL(viewCount:0)}})}}{{
-                        {{SET(last:{{VAL(key)}})}}
-                        {{SET(lastEpisode:{{VAL(index)}})}}
-                    }}
-                }}
-            }}
 
             <row>
               <buttonLockup

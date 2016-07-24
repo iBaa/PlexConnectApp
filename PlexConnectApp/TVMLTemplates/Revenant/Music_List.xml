@@ -7,7 +7,7 @@
 	<style>
 	</style>
 </head>
-  <listTemplate theme="light">
+  <listTemplate theme="">
     <list>
 		<relatedContent>
         <!--<itemBanner>

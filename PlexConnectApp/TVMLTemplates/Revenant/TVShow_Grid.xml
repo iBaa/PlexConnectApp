@@ -22,7 +22,7 @@
       }
     </style>
   </head>
-  <stackTemplate theme="light">
+  <stackTemplate theme="">
     <identityBanner>
       <title class="header"><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
       <subtitle class="header"><![CDATA[{{VAL(MediaContainer/title1)}}]]>  <![CDATA[  ({{VAL(MediaContainer/size)}})]]></subtitle>

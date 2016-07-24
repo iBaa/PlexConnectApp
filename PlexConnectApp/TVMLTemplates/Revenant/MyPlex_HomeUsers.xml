@@ -8,28 +8,10 @@ See LICENSE.txt for this sample’s licensing information
 <document>
   <head>
     <style>
-      .showTextOnHighlight {
-      tv-text-highlight-style: show-on-highlight;
-      }
-      .overlayTextLayout {
-      tv-position: top;
-      }
-      .centeredText {
-      text-align: center;
-      }
-      .rounded {
-      tv-img-treatment: circle;
-      width: 200;
-      height: 200;
-      }
-      .hero {
-      margin: -323 -280 0 0;
-      }
-      .lightBackgroundColor {
-      background-color: #efece6;
-      }
-      .darkBackgroundColor {
-      background-color: #333333;
+
+      .header {
+      .text-align: left;
+      .margin: 0 0 0 -200;
       }
       .title {
       font-size: 26;
@@ -40,9 +22,9 @@ See LICENSE.txt for this sample’s licensing information
       }
     </style>
   </head>
-  <stackTemplate theme="light">
+  <stackTemplate>
     <identityBanner>
-      <title class="header">Home Users</title>
+      <title>Home Users</title>
       <subtitle class="header">{{TEXT(Admin )}}{{USRVAL(name)}}</subtitle>
       <row>
         <buttonLockup onSelect="Presenter.load('Settings', '', '')">

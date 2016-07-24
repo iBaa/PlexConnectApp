@@ -26,7 +26,7 @@
       }
     </style>
   </head>
-  <searchTemplate onLoad="Search.onLoad(event)" theme="light" class="lightBackgroundColor">
+  <searchTemplate onLoad="Search.onLoad(event)" theme="" class="lightBackgroundColor">
     <!-- search -->
     <searchField
     view="Search_All"

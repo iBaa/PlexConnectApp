@@ -7,7 +7,7 @@
 {{SET(noItems:true)}}
 {{XML()}}{{
 <document>
-    <stackTemplate theme="light">
+    <stackTemplate theme="">
         <banner>
             <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
             <heroImg src="{{IMAGEURL(MediaContainer/art:1920)}}" />

@@ -20,7 +20,7 @@ See LICENSE.txt for this sample’s licensing information
       }
     </style>
   </head>
-  <stackTemplate theme="light">
+  <stackTemplate theme="">
     <banner>
       <title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
       <heroImg src="{{IMAGEURL(MediaContainer/thumb:1920)}}" />
