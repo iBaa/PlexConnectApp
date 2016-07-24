@@ -27,6 +27,7 @@ discover = function(event) {
   var func = elem.getAttribute('onSuccess');
   doc.addEventListener("unload", function() { eval(func) });
   navigationDocument.popDocument();
+    
 }
 
 

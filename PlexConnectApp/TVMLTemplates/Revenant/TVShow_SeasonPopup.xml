@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+    <document>
+        <head>
+            <style>
+                .showTextOnHighlight {
+                tv-text-highlight-style: show-on-highlight;
+                }
+                .overlayTextLayout {
+                    tv-position: top;
+                }
+                .centeredText {
+                    text-align: center;
+                }
+                .seasonText {
+                    text-align: center;
+                    text-shadow: 2px 2px 4px #000000;
+                    color:#FFFFF;
+                    tv-text-style:title1;
+
+                }
+                .darkBackgroundColor {
+                background-color: #1f1f1f;
+                }
+            </style>
+        </head>
+        <productTemplate theme="">
+            <background>
+              {{IF({{CHK("{{SETTING(themeMusic)}}"=="On")}})}}{{
+              <audio volume="10">
+                    <asset src="{{IMAGEURL(MediaContainer/theme)}}" />
+                </audio>
+                }}
+                <!--<img src="{{IMAGEURL(MediaContainer/art:1920)}}" width="1920" height="1080" />-->
+            </background>
+            <header style="padding:80 0 0 0;">
+                <title class="seasonText"><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
+            </header>
+            <shelf centered="true">
+                <section>
+                    {{COPY(MediaContainer/Directory)}}{{
+                    {{SET(noItems:false)}}
+                    {{IF(!{{CHK("{{VAL(title)}}"=="All episodes")}})}}{{
+                    <lockup onSelect="Presenter.loadPopup('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}');" >
+                        <img src="{{IMAGEURL(thumb::360)}}" height="375" width="250" />
+                        {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
+                        <overlay>
+                          <img style="tv-position: top-right; margin: -0 -0 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
+                        </overlay>
+                        }}
+                        <title><![CDATA[{{VAL(title)}}]]></title>
+                        <subtitle>{{VAL(leafCount)}} {{TEXT(Episode(s))}}</subtitle>
+                        <subtitle><![CDATA[{{EVAL({{VAL(leafCount)}}-{{VAL(viewedLeafCount)}})}} unwatched]]></subtitle>
+                    </lockup>
+                    }}
+                    }}
+                    </section>
+            </shelf>
+        </productTemplate>
+    </document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>PlexConnect</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

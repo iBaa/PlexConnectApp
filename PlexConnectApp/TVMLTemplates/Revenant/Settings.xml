@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+<document>
+    <head>
+        <style>
+            .darkBackgroundColor {
+            background-color: #1f1f1f;
+            }
+        </style>
+    </head>
+  <listTemplate>
+    <list>
+
+      <header>
+        <title>{{TEXT(Settings)}}</title>
+      </header>
+
+      <section>
+        <header>
+          <title>{{TEXT(Plex Media Environment)}}</title>
+        </header>
+
+        <listItemLockup
+          id="Discover"
+          onSelect="discover(event);"
+          onSuccess=""
+          >
+          <title>{{TEXT(Discover)}}</title>
+          <decorationLabel>{{TEXT(online:)}} {{PMSCNT(all)}}</decorationLabel>
+          <relatedContent>
+            <lockup>
+              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+              <title style="text-align: center; tv-text-style:title2;">PlexConnect</title>
+              <subtitle style="text-align: center;"> </subtitle>
+              <subtitle style="text-align: center;">Revenant v0.2beta</subtitle>
+            </lockup>
+            </relatedContent>
+        </listItemLockup>
+
+{{IF(!{{USRVAL(adminname)}})}} {{
+        <listItemLockup
+          id="MyPlexSignInOut"
+          onSelect="myPlex.signIn(event);"
+          onSuccess=""
+          onError="Presenter.load('MyPlex_SignInFailed','','');"
+          >
+          <title>{{TEXT(Sign In)}}</title>
+          <decorationLabel />
+          <decorationImage src="resource://chevron" />
+          <relatedContent>
+            <lockup>
+              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+              <title style="text-align: center; tv-text-style:title2;">PlexConnect</title>
+              <subtitle style="text-align: center;"> </subtitle>
+              <subtitle style="text-align: center;">Revenant v0.2beta</subtitle>
+            </lockup>
+            </relatedContent>
+        </listItemLockup>
+}}
+{{IF({{USRVAL(adminname)}})}} {{
+        <listItemLockup
+          id="MyPlexSignInOut"
+          onSelect="myPlex.signOut(event);"
+          >
+          <title>{{TEXT(Sign Out)}}</title>
+          <decorationLabel>{{USRVAL(adminname)}}</decorationLabel>
+          <relatedContent>
+            <lockup>
+              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+              <title style="text-align: center; tv-text-style:title2;">PlexConnect</title>
+              <subtitle style="text-align: center;"> </subtitle>
+              <subtitle style="text-align: center;">Revenant v0.2beta</subtitle>
+            </lockup>
+            </relatedContent>
+        </listItemLockup>
+}}
+
+        <listItemLockup
+          id="MyPlexHomeUser"
+          onSelect="Presenter.load('MyPlex_HomeUsers', '', '');"
+          >
+          <row>
+            <title>{{TEXT(Switch Home User)}}</title>
+            <decorationLabel>{{USRVAL(name)}}</decorationLabel>
+            <decorationImage src="resource://chevron" />
+
+          </row>
+          <relatedContent>
+            <lockup>
+              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+              <title style="text-align: center; tv-text-style:title2;">PlexConnect</title>
+              <subtitle style="text-align: center;"> </subtitle>
+              <subtitle style="text-align: center;">Revenant v0.2beta</subtitle>
+            </lockup>
+            </relatedContent>
+        </listItemLockup>
+      </section>
+
+      <section>
+        <header>
+          <title>{{TEXT(Appearance)}}</title>
+        </header>
+
+        <listItemLockup
+          id="theme"
+          onSelect="Settings.toggle(event)"
+          >
+          <title>{{TEXT(Theme)}}</title>
+          <decorationLabel>{{SETTING(theme)}}</decorationLabel>
+          <relatedContent>
+            <lockup>
+              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+              <title style="text-align: center; tv-text-style:title2;">PlexConnect</title>
+              <subtitle style="text-align: center;"> </subtitle>
+              <subtitle style="text-align: center;">Revenant v0.2beta</subtitle>
+            </lockup>
+            </relatedContent>
+        </listItemLockup>
+        <listItemLockup
+          id="themeExternalOverride"
+          onSelect="Settings.toggle(event)"
+          >
+          <title>{{TEXT(External Override)}}</title>
+          <decorationLabel>{{SETTING(themeExternalOverride)}}</decorationLabel>
+          <relatedContent>
+            <lockup>
+              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+              <title style="text-align: center; tv-text-style:title2;">PlexConnect</title>
+              <subtitle style="text-align: center;"> </subtitle>
+              <subtitle style="text-align: center;">Revenant v0.2beta</subtitle>
+            </lockup>
+            </relatedContent>
+        </listItemLockup>
+        <listItemLockup
+          id="showChannels"
+          onSelect="Settings.toggle(event)"
+          >
+          <title>{{TEXT(Channels)}}</title>
+          <decorationLabel>{{SETTING(showChannels)}}</decorationLabel>
+          <relatedContent>
+            <lockup>
+              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+              <title style="text-align: center; tv-text-style:title2;">PlexConnect</title>
+              <subtitle style="text-align: center;"> </subtitle>
+              <subtitle style="text-align: center;">Revenant v0.2beta</subtitle>
+            </lockup>
+            </relatedContent>
+        </listItemLockup>
+        <listItemLockup
+          id="movieFanart"
+          onSelect="Settings.toggle(event)"
+          >
+        <title>{{TEXT(Movie FanArt)}}</title>
+        <decorationLabel>{{SETTING(movieFanart)}}</decorationLabel>
+        <relatedContent>
+          <lockup>
+            <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+            <title style="text-align: center; tv-text-style:title2;">PlexConnect</title>
+            <subtitle style="text-align: center;"> </subtitle>
+            <subtitle style="text-align: center;">Revenant v0.2beta</subtitle>
+          </lockup>
+          </relatedContent>
+      </listItemLockup>
+      <listItemLockup
+        id="musicFanart"
+        onSelect="Settings.toggle(event)"
+        >
+      <title>{{TEXT(Music FanArt)}}</title>
+      <decorationLabel>{{SETTING(musicFanart)}}</decorationLabel>
+      <relatedContent>
+        <lockup>
+          <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+          <title style="text-align: center; tv-text-style:title2;">PlexConnect</title>
+          <subtitle style="text-align: center;"> </subtitle>
+          <subtitle style="text-align: center;">Revenant v0.2beta</subtitle>
+        </lockup>
+        </relatedContent>
+    </listItemLockup>
+    <listItemLockup
+      id="tvshowFanart"
+      onSelect="Settings.toggle(event)"
+      >
+    <title>{{TEXT(TV Show FanArt)}}</title>
+    <decorationLabel>{{SETTING(tvshowFanart)}}</decorationLabel>
+    <relatedContent>
+      <lockup>
+        <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+        <title style="text-align: center; tv-text-style:title2;">PlexConnect</title>
+        <subtitle style="text-align: center;"> </subtitle>
+        <subtitle style="text-align: center;">Revenant v0.2beta</subtitle>
+      </lockup>
+      </relatedContent>
+  </listItemLockup>
+        <listItemLockup
+            id="themeTitle"
+            onSelect="Settings.toggle(event)"
+            >
+            <title>{{TEXT(TV Show Banner)}}</title>
+            <decorationLabel>{{SETTING(themeTitle)}}</decorationLabel>
+            <relatedContent>
+              <lockup>
+                <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+                <title style="text-align: center; tv-text-style:title2;">PlexConnect</title>
+                <subtitle style="text-align: center;"> </subtitle>
+                <subtitle style="text-align: center;">Revenant v0.2beta</subtitle>
+              </lockup>
+              </relatedContent>
+        </listItemLockup>
+        <listItemLockup
+            id="themeMusic"
+            onSelect="Settings.toggle(event)"
+            >
+            <title>{{TEXT(Theme Music)}}</title>
+            <decorationLabel>{{SETTING(themeMusic)}}</decorationLabel>
+            <relatedContent>
+              <lockup>
+                <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+                <title style="text-align: center; tv-text-style:title2;">PlexConnect</title>
+                <subtitle style="text-align: center;"> </subtitle>
+                <subtitle style="text-align: center;">Revenant v0.2beta</subtitle>
+              </lockup>
+              </relatedContent>
+        </listItemLockup>
+      </section>
+
+      <section>
+        <header>
+          <title>{{TEXT(Media Replay)}}</title>
+        </header>
+
+        <listItemLockup
+          id="transcoderAction"
+          onSelect="Settings.toggle(event)"
+          >
+          <title>{{TEXT(Transcoder Action)}}</title>
+          <decorationLabel>{{SETTING(transcoderAction)}}</decorationLabel>
+          <relatedContent>
+            <lockup>
+              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+              <title style="text-align: center; tv-text-style:title2;">PlexConnect</title>
+              <subtitle style="text-align: center;"> </subtitle>
+              <subtitle style="text-align: center;">Revenant v0.2beta</subtitle>
+            </lockup>
+            </relatedContent>
+        </listItemLockup>
+        <listItemLockup
+          id="transcoderQuality"
+          onSelect="Settings.toggle(event)"
+          >
+          <title>{{TEXT(Transcode Quality)}}</title>
+          <decorationLabel>{{SETTING(transcoderQuality)}}</decorationLabel>
+          <relatedContent>
+            <lockup>
+              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+              <title style="text-align: center; tv-text-style:title2;">PlexConnect</title>
+              <subtitle style="text-align: center;"> </subtitle>
+              <subtitle style="text-align: center;">Revenant v0.2beta</subtitle>
+            </lockup>
+            </relatedContent>
+        </listItemLockup>
+        <listItemLockup
+          id="remoteBitrate"
+          onSelect="Settings.toggle(event)"
+          >
+          <title>{{TEXT(Remote Bitrate)}}</title>
+          <decorationLabel>{{SETTING(remoteBitrate)}}</decorationLabel>
+          <relatedContent>
+            <lockup>
+              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon:png)}}" />
+              <title style="text-align: center; tv-text-style:title2;">PlexConnect</title>
+              <subtitle style="text-align: center;"> </subtitle>
+              <subtitle style="text-align: center;">Revenant v0.2beta</subtitle>
+            </lockup>
+            </relatedContent>
+        </listItemLockup>
+
+      </section>
+
+    </list>
+  </listTemplate>
+</document>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+<document>
+<head>
+    <style>
+      .whiteButton {
+      tv-tint-color: rgb(255, 255, 255);
+      width: 500;
+      height: 200;
+      }
+      .plot {
+      min-height: 300;
+      max-height: 400;
+      margin: 50;
+      }
+    </style>
+  </head>
+  <listTemplate>
+    <list>
+      <header>
+        <title>{{TEXT(Plex Media Servers)}}</title>
+      </header>
+
+      <!-- own servers -->
+      <section>
+      <header>
+        <title>{{TEXT(Available Plex Media Servers)}}: {{PMSCNT(all)}}</title>
+      </header>
+
+{{PMSLOOP(owned)}}{{
+{{SET(noItems:false)}}
+        <listItemLockup
+            id="{{PMSVAL(clientIdentifier)}}"
+            onSelect="myPlex.switchServer(event);"
+            onSuccess="Presenter.load('Library', '{{PMSID()}}', '{{PATH(/library/sections)}}');"
+            >
+            <title style="color: #00753A;"><![CDATA[{{PMSVAL(name)}}]]></title>
+
+{{IF({{PMSVAL(local)}})}}{{
+            <subtitle style="tv-text-style: subtitle3;"><![CDATA[Nearby ({{USRVAL(name)}})]]></subtitle>
+
+}}
+{{IF(!{{PMSVAL(local)}})}}{{
+            <subtitle style="tv-text-style: subtitle3;"><![CDATA[Remote ({{USRVAL(name)}})]]></subtitle>
+}}
+						<decorationImage src="resource://chevron" />
+          <relatedContent>
+            <lockup>
+              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon2:png)}}" />
+              <title style="text-align: center;"><![CDATA[{{PMSVAL(name)}}]]></title>
+            <subtitle style="text-align: center;"> </subtitle>
+         		<subtitle style="text-align: center;">Admin: <![CDATA[{{USRVAL(name)}}]]></subtitle>
+         		<subtitle style="text-align: center;"><![CDATA[{{PMSVAL(product)}} {{PMSVAL(productVersion)}}]]></subtitle>
+         		<subtitle style="text-align: center;">Platform: <![CDATA[{{PMSVAL(platform)}} {{PMSVAL(platformVersion)}}]]></subtitle>
+            </lockup>
+          </relatedContent>
+        </listItemLockup>
+}}
+
+{{PMSLOOP(shared)}}{{
+{{SET(noItems:false)}}
+        <listItemLockup
+            id="{{PMSVAL(clientIdentifier)}}"
+            onSelect="myPlex.switchServer(event);"
+            onSuccess="Presenter.load('SharedLibraries', '{{PMSID()}}', '{{PATH(/library/sections)}}');"
+            >
+
+            <title style="color: #FF7435;"><![CDATA[{{PMSVAL(name)}}]]></title>
+{{IF({{PMSVAL(local)}})}}{{
+            <subtitle style="tv-text-style: subtitle3;"><![CDATA[Nearby ({{PMSVAL(sourceTitle)}})]]></subtitle>
+
+}}
+{{IF(!{{PMSVAL(local)}})}}{{
+            <subtitle style="tv-text-style: subtitle3;"><![CDATA[Remote ({{PMSVAL(sourceTitle)}})]]></subtitle>
+}}
+					<decorationImage src="resource://chevron" />
+          <relatedContent>
+            <lockup>
+              <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ServerIcon2:png)}}" />
+              <title style="text-align: center;"><![CDATA[{{PMSVAL(name)}}]]></title>
+         		<subtitle style="text-align: center;"> </subtitle>
+         		<subtitle style="text-align: center;">Admin: <![CDATA[{{PMSVAL(sourceTitle)}}]]></subtitle>
+         		<subtitle style="text-align: center;"><![CDATA[{{PMSVAL(product)}} {{PMSVAL(productVersion)}}]]></subtitle>
+         		<subtitle style="text-align: center;">Platform: <![CDATA[{{PMSVAL(platform)}} {{PMSVAL(platformVersion)}}]]></subtitle>
+            </lockup>
+          </relatedContent>
+        </listItemLockup>
+}}
+      </section>
+
+    </list>
+  </listTemplate>
+</document>
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>PlexConnect</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

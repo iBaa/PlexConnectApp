@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+  <head>
+    <style>
+      .header {
+      .text-align: left;
+      .margin: 0 0 0 -200;
+      }
+      .count {
+      tv-text-style: none;
+      color: #000000;
+      font-weight: bold;
+      font-size: 19;
+      text-align: center;
+      tv-position: bottom-right;
+      margin: -307 -89 307 89;
+      }
+    </style>
+  </head>
+  <stackTemplate theme="">
+    <identityBanner>
+      <title class="header">Discover <![CDATA[{{VAL(MediaContainer/title1)}}     ]]></title>
+      <subtitle class="header"><![CDATA[{{PMSVAL(name)}}    ]]></subtitle>
+      <heroImg src="{{IMAGEURL(MediaContainer/art:1920)}}" />
+      <row>
+        <buttonLockup onSelect="Presenter.loadContext('TVShow_Filters', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+          <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Library:png)}}" width="50" height="50"/>
+          <title>Filters</title>
+        </buttonLockup>
+        <buttonLockup onSelect="Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/search?type=2&amp;query')">
+          <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Search:png)}}" width="50" height="50"/>
+          <title>Search</title>
+        </buttonLockup>
+        <buttonLockup onSelect="Presenter.loadAndSwap('TVShow_OnDeck', '{{PMSID()}}', '{{PATH()}}')">
+          <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Reload:png)}}" width="50" height="50"/>
+          <title>Reload</title>
+        </buttonLockup>
+      </row>
+    </identityBanner>
+    {{XML(/hubs/sections/{{VAL(MediaContainer/librarySectionID)}}/?count=15&amp;excludeFields=summary)}}{{
+    {{IFNODE(MediaContainer/Hub)}}{{
+    {{SET(noItems:false)}}
+    <collectionList>
+      {{COPY(MediaContainer/Hub)}}{{
+      {{IF({{CHK("{{VAL(size)}}">"0")}})}}{{
+      {{IF(!{{CHK("{{VAL(hubIdentifier)}}"="tv.inprogress")}})}}{{
+      <shelf id="{{VAL(hubIdentifier)}}">
+        <header>
+          <title><![CDATA[{{VAL(title)}}]]></title>
+        </header>
+        <section>
+          {{IFNODE(Directory)}}{{
+          {{COPY(Directory)}}{{
+          {{IF({{CHK("{{VAL(type:)}}"=="show")}})}}{{
+          <lockup onSelect="Presenter.loadTitle('TVShow_Season', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'TV Show')"
+            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onHoldSelect="Presenter.loadContext('TVShow_EpisodeContext', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
+            <img src="{{IMAGEURL(thumb::360)}}" height="375" width="250" />
+            {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
+            <overlay>
+            	<img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
+            	<decorationLabel class="count">{{EVAL({{VAL(leafCount)}}-{{VAL(viewedLeafCount)}})}}</decorationLabel>
+            </overlay>
+            }}
+            <title><![CDATA[{{VAL(title)}}]]></title>
+            <subtitle><![CDATA[{{VAL(parentTitle)}}]]></subtitle>
+          </lockup>
+          }}
+          {{IF({{CHK("{{VAL(type:)}}"=="season")}})}}{{
+          <lockup onSelect="Presenter.loadTitle('TVShow_Season', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'TV Show')"
+            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onHoldSelect="Presenter.loadContext('TVShow_EpisodeContext', '{{PMSID()}}', '{{VAL(ratingKey)}}')">
+            <img src="{{IMAGEURL(thumb::360)}}" height="375" width="250" />
+            {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
+            <overlay>
+            	<img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
+            	<decorationLabel class="count">{{EVAL({{VAL(leafCount)}}-{{VAL(viewedLeafCount)}})}}</decorationLabel>
+            </overlay>
+            }}
+            <title><![CDATA[{{VAL(title)}}]]></title>
+            <subtitle><![CDATA[{{VAL(parentTitle)}}]]></subtitle>
+          </lockup>
+          }}
+          }}
+          }}
+          {{IFNODE(Video)}}{{
+          {{COPY(Video)}}{{
+          <lockup onSelect="Presenter.loadTitle('TVShow_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'TV Show')"
+          onHoldSelect="Presenter.loadContext('TVShow_EpisodeContext', '{{PMSID()}}', '{{VAL(ratingKey)}}')"
+          {{IF(!{{VAL(viewOffset)}})}}{{
+          onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+          }}
+          {{IF({{VAL(viewOffset)}})}}{{
+          onPlay="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+          }}
+          >
+            <img src="{{IMAGEURL(grandparentThumb::360)}}" height="375" width="250" />
+            <overlay>
+                <!--{{IF({{VAL(viewCount:0)}})}}{{ <badge src="resource://overlay-checkmark"/>}}-->
+                {{IF({{VAL(viewOffset)}})}}{{
+                <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:watching:png)}}"  width="72" height="72" />
+                }}
+                {{IF(!{{VAL(viewOffset)}})}}{{
+              	{{IF(!{{VAL(viewCount)}})}}{{
+                <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
+                }}
+                }}
+            </overlay>
+            <title><![CDATA[{{VAL(title)}}]]></title>
+            <subtitle>{{TEXT(S)}}{{VAL(parentIndex)}} • {{TEXT(E)}}{{VAL(index)}}</subtitle>
+          </lockup>
+          }}
+          }}
+        </section>
+      </shelf>
+      }}
+      }}
+      }}
+    </collectionList>
+		}}
+		}}
+  </stackTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>PlexConnect</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

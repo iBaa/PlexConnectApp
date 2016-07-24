@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+  <head>
+    <style>
+      .showTextOnHighlight {
+        tv-text-highlight-style: show-on-highlight;
+      }
+      .button {
+        tv-align: right
+      }
+      .buttonText {
+        tv-text-style: subtitle1
+      }
+    </style>
+  </head>
+  <stackTemplate theme="">
+    <banner>
+      <title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
+      <heroImg src="{{IMAGEURL(MediaContainer/thumb:1920)}}" />
+    </banner>
+    <collectionList>
+
+      <!-- directories: shelf -->
+{{CUT({{GET(noDirs)}})}}{{
+{{SET(noDirs:true)}}
+      <grid>
+        <section>
+{{COPY(MediaContainer/Directory)}}{{
+{{SET(noItems:false)}}
+{{SET(noDirs:false)}}
+          <lockup
+              onSelect="Presenter.load('Photo_Browser', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+              onSelectHold="modal"
+              >
+            <img src="{{IMAGEURL(thumb::384)}}" width="300" height="300" style="tv-img-treatment:corner-small" />
+            <title><![CDATA[{{VAL(title)}}]]></title>
+          </lockup>
+}}
+        </section>
+      </grid>
+}}
+
+      <!-- photos: grid -->
+{{CUT({{GET(noPhotos)}})}}{{
+{{SET(noPhotos:true)}}
+      <separator>
+        <button class="button"
+            onSelect="photoPresenter.slideshow('{{PMSID()}}', '{{PATH()}}')"
+            >
+          <title class="buttonText">{{TEXT(Slideshow)}}</title>
+        </button>
+      </separator>
+      <grid>
+        <section>
+{{COPY(MediaContainer/Photo)}}{{
+{{SET(noItems:false)}}
+{{SET(noPhotos:false)}}
+        <lockup
+            onSelect="photoPresenter.show('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
+            >
+          <img src="{{PHOTOURL(:384)}}" width="300" height="200" />
+          <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
+        </lockup>
+}}
+      </section>
+      </grid>
+}}
+
+    </collectionList>
+  </stackTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>PlexConnect</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

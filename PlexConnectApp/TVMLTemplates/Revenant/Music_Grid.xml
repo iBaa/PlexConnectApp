@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+    <head>
+        <style>
+          .header {
+          .text-align: left;
+          .margin: 0 0 0 -200;
+          }
+        </style>
+    </head>
+    <stackTemplate theme="">
+      <identityBanner>
+        <title class="header"><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
+        <subtitle class="header"><![CDATA[{{VAL(MediaContainer/title1)}}]]>  <![CDATA[  ({{VAL(MediaContainer/size)}})]]></subtitle>
+        <heroImg src="{{IMAGEURL(MediaContainer/art:1920)}}" />
+        <row>
+          <buttonLockup onSelect="Presenter.load('Search', '{{PMSID()}}', '/library/sections/{{VAL(MediaContainer/librarySectionID)}}/search?type=1&amp;query')">
+            <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Search:png)}}" width="50" height="50"/>
+            <title>Search</title>
+          </buttonLockup>
+          <buttonLockup onSelect="Presenter.loadAndSwap('Music_Grid', '{{PMSID()}}', '{{PATH()}}')">
+            <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Reload:png)}}" width="50" height="50"/>
+            <title>Reload</title>
+          </buttonLockup>
+        </row>
+      </identityBanner>
+        <collectionList>
+
+            <grid>
+                {{IFNODE(MediaContainer/Directory)}}{{
+                <section>
+                {{COPY(MediaContainer/Directory)}}{{
+                {{SET(noItems:false)}}
+                    {{IF({{CHK("{{VAL(type)}}"!="artist")}})}}{{
+                    <lockup
+            onSelect="Presenter.loadTitle('Music_Albums', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'Music')"
+            onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal">
+
+                        <img src="{{IMAGEURL(thumb::360)}}" height="308" width="308"/>
+                        <title><![CDATA[{{VAL(title)}}]]></title>
+                        <subtitle>{{VAL(year:&#x00AD;)}}</subtitle>
+                    </lockup>
+                    }}
+                    {{IF({{CHK("{{VAL(type)}}"=="artist")}})}}{{
+                    <lockup
+            onSelect="Presenter.loadTitle('Music_Artist', '{{PMSID()}}', '/library/metadata/{{VAL(ratingKey)}}', 'Music')"
+            onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal">
+
+                        <img style="tv-img-treatment: corner-medium" src="{{IMAGEURL(thumb::360)}}" height="300" width="300"/>
+                        <title><![CDATA[{{VAL(title)}}]]></title>
+                    </lockup>
+                    }}
+                }}
+                </section>
+                }}
+                {{IFNODE(MediaContainer/Playlist)}}{{
+                <section>
+                {{COPY(MediaContainer/Playlist)}}{{
+                {{SET(noItems:false)}}
+                    <lockup
+            onSelect="Presenter.loadTitle('Playlists_Audio', '{{PMSID()}}', '{{VAL(key)}}', 'Music')"
+            onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal">
+
+                        <img src="{{IMAGEURL(composite::360)}}" height="308" width="308"/>
+                        <title><![CDATA[{{VAL(title)}}]]></title>
+                    </lockup>
+                }}
+                </section>
+                }}
+          </grid>
+}}
+      </collectionList>
+  </stackTemplate>
+</document>
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>PlexConnect</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

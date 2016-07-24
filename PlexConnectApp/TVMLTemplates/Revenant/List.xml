@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+  <listTemplate>
+    <list>
+      <relatedContent>
+        <itemBanner>
+          <heroImg src="{{IMAGEURL(MediaContainer/art:1920)}}" />
+        </itemBanner>
+      </relatedContent>
+      <header>
+        <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
+      </header>
+
+      <section>
+{{COPY(MediaContainer/Directory)}}{{
+{{SET(noItems:false)}}
+        <listItemLockup
+            onSelect="Presenter.load('List', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
+            >
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <relatedContent>
+            <lockup>
+            </lockup>
+            </relatedContent>
+        </listItemLockup>
+}}
+{{COPY(MediaContainer/Video)}}{{
+{{SET(noItems:false)}}
+        <listItemLockup
+            onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('PlayVideo', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
+            >
+          <title><![CDATA[{{VAL(title)}}]]></title>
+        </listItemLockup>
+}}
+
+      </section>
+
+    </list>
+  </listTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>PlexConnect</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

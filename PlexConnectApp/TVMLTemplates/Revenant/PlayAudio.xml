@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{XML()}}{{
+<document>
+  <playlist>
+    <pmsBaseUrl>{{PMSVAL(uri)}}</pmsBaseUrl>
+    <pmsToken>{{PMSVAL(accessToken)}}</pmsToken>
+
+{{COPY(MediaContainer/Track)}}
+{{
+    <track>
+      <!-- player -->
+      <mediaUrl>{{AUDIOURL()}}</mediaUrl>
+      <title><![CDATA[{{VAL(title)}}]]></title>
+      <subtitle>d<![CDATA[{{VAL(grandparentTitle)}}]]></subtitle>
+      <description>dd<![CDATA[{{VAL(parentTitle)}}]]></description>
+      <imageURL>{{IMAGEURL(parentThumb::384)}}</imageURL>
+    
+      <!-- PMS -->
+      <key><![CDATA[{{VAL(key)}}]]></key>
+      <ratingKey>{{VAL(ratingKey)}}</ratingKey>
+      <duration>{{VAL(duration)}}</duration>
+    
+    <!-- OSD -->
+    <!--
+    <showClock>{{VAL($showplayerclock)}}</showClock>
+    <timeFormat>{{VAL($timeformat)}}</timeFormat>
+    <clockPosition>{{VAL($clockposition)}}</clockPosition>
+    <overscanAdjust>{{VAL($overscanadjust)}}</overscanAdjust>
+    <showEndtime>{{VAL($showendtime)}}</showEndtime>
+    -->
+    </track>
+}}
+  </playlist>
+</document>
+}}

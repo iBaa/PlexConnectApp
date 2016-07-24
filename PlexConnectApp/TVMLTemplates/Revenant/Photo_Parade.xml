@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{XML(recentlyAdded?X-Plex-Container-Start=0&amp;X-Plex-Container-Size=20)}}{{
+<document>
+  <relatedContent>
+    <imgDeck>
+{{COPY(MediaContainer/Photo)}}{{
+{{IF({{VAL(thumb:)}})}}{{
+      <img src="{{IMAGEURL(thumb)}}" />
+}}
+}}
+    </imgDeck>
+  </relatedContent>
+</document>
+}}

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+  <listTemplate theme="">
+    <banner>
+      <title><![CDATA[{{VAL(MediaContainer/title)}}]]></title>
+      <heroImg src="{{IMAGEURL(MediaContainer/Track/grandparentArt:1920)}}" />
+    </banner>
+    <list>
+
+      <section>
+        <!-- shuffle -->
+        <listItemLockup
+            onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', 'shuffle')"
+            onSelectHold="modal"
+            >
+          <title>{{TEXT(Shuffle)}}</title>
+          <decorationImage src="resource://button-shuffle" />
+          <relatedContent>
+            <lockup>
+              <img src="{{IMAGEURL(MediaContainer/composite::768)}}" />
+            </lockup>
+          </relatedContent>
+        </listItemLockup>
+        <!-- now playing -->
+        <listItemLockup
+            onSelect="audioPlayer.nowPlaying()"
+            onSelectHold="modal"
+            >
+          <title>{{TEXT(Now Playing)}}</title>
+          <decorationImage src="resource://chevron" />
+        </listItemLockup>
+      </section>
+
+      <section>
+        <header>  <!--gives some space between shuffle/nowplaying and actual track list-->
+        </header>
+{{COPY(MediaContainer/Track)}}{{
+        <!-- tracks -->
+{{IF({{CHK("{{VAL(type)}}"=="track")}})}}{{
+{{SET(noItems:false)}}
+        <listItemLockup
+            onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH()}}')"
+            onSelectHold="modal"
+            >
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <decorationLabel>{{DURATION_HMS({{VAL(duration)}})}}</decorationLabel>
+          <relatedContent>
+            <lockup>
+              <img src="{{IMAGEURL(thumb::768)}}" />
+            </lockup>
+          </relatedContent>
+        </listItemLockup>
+}}
+}}
+      </section>
+
+    </list>
+  </listTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>PlexConnect</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

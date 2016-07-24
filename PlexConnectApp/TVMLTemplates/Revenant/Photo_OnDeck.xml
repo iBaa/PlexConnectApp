@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+{{SET(sectionId:{{VAL(MediaContainer/librarySectionID)}})}}
+<document>
+    <head>
+        <style>
+            .showTextOnHighlight {
+            tv-text-highlight-style: marquee-and-show-on-highlight;
+            }
+            .rounded {
+            itml-img-treatment: corner-small;
+            }
+            .hero {
+            margin: -900 -900 0 0;
+            }
+            .header {
+            .text-align: left;
+            .margin: 0 0 0 -200;
+            }
+        </style>
+    </head>
+<stackTemplate theme="">
+{{XML(all?sort=random&amp;limit=1)}}{{
+{{IFNODE(MediaContainer/Photo)}}{{
+{{SET(noItems:false)}}
+        <identityBanner>
+          <title class="header">Discover <![CDATA[{{VAL(MediaContainer/title1)}}     ]]></title>
+          <subtitle class="header"><![CDATA[{{PMSVAL(name)}}    ]]></subtitle>
+          <heroImg src="{{IMAGEURL(MediaContainer/Photo/art:1920)}}" />
+            <row>
+                <buttonLockup onSelect="Presenter.loadContext('Photo_Filters', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+                    <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Library:png)}}" width="50" height="50"/>
+                    <title>Filters</title>
+                </buttonLockup>
+                {{XML(/playlists?playlistType=photo)}}{{
+								{{IF({{CHK("{{VAL(MediaContainer/size)}}">"0")}})}}{{
+								<buttonLockup onSelect="Presenter.load('Photo_Browser', '{{PMSID()}}', '{{PATH(/playlists?playlistType=photo)}}')">
+                    <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Playlist:png)}}" width="50" height="50"/>
+                    <title>Playlists</title>
+                </buttonLockup>
+                }}
+                }}
+                <buttonLockup onSelect="Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/search?type=13&amp;query')">
+                    <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Search:png)}}" width="50" height="50"/>
+                    <title>Search</title>
+                </buttonLockup>
+
+                <buttonLockup onSelect="Presenter.loadAndSwap('Photo_OnDeck', '{{PMSID()}}', '{{PATH()}}')">
+                    <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Reload:png)}}" width="50" height="50"/>
+                    <title>Reload</title>
+                </buttonLockup>
+            </row>
+        </identityBanner>
+}}
+}}
+        <collectionList>
+
+{{XML(all?sort=title%3Adesc)}}{{
+{{IFNODE(MediaContainer/Directory)}}{{
+            <shelf id="Years">
+                <header>
+                    <title>Years</title>
+                </header>
+                <section>
+                    {{COPY(MediaContainer/Directory)}}{{
+                    <lockup onSelect="Presenter.load('Photo_Browser', '{{PMSID()}}', '{{VAL(key)}}')"
+                        onPlay="photoPresenter.slideshow('{{PMSID()}}', '{{VAL(key)}}')"
+                        >
+                        <img class="rounded" src="{{IMAGEURL(composite::360)}}" height="308" width="308" />
+                        <title class="showTextOnHighlight"><![CDATA[{{VAL(title)}}]]></title>
+                    </lockup>
+                    }}
+                </section>
+            </shelf>
+}}
+}}
+
+{{XML(recentlyAdded?X-Plex-Container-Start=0&amp;X-Plex-Container-Size=25)}}{{
+{{IFNODE(MediaContainer/Photo)}}{{
+            <shelf id="Recent">
+                <header>
+                    <title>Recently Added Photos</title>
+                </header>
+                <section>
+                    {{COPY(MediaContainer/Photo)}}{{
+                    <lockup onSelect="photoPresenter.slideshow('{{PMSID()}}', '{{VAL(key)}}')"
+                        onPlay="photoPresenter.slideshow('{{PMSID()}}', '{{VAL(key)}}')"
+                        onSelectHold="ScrobbleMenu">
+                        <img src="{{IMAGEURL(thumb::360)}}" height="308" width="308" />
+                        <title class="showTextOnHighlight"><![CDATA[{{VAL(originallyAvailableAt)}}]]></title>
+
+                    </lockup>
+                    }}
+                </section>
+            </shelf>
+}}
+}}
+{{XML(/hubs/sections/{{GET(sectionId)}})}}{{
+{{IFNODE(MediaContainer/Hub)}}{{
+{{COPY(MediaContainer/Hub)}}{{
+{{IF({{CHK("{{VAL(hubIdentifier)}}"!="photo.recent")}})}}{{
+            <shelf>
+                <header>
+                    <title><![CDATA[{{VAL(title)}}]]></title>
+                </header>
+                <section>
+                    {{COPY(Photo)}}{{
+                    <lockup onSelect="photoPresenter.slideshow('{{PMSID()}}', '{{VAL(key)}}')"
+                        onPlay="photoPresenter.slideshow('{{PMSID()}}', '{{VAL(key)}}')"
+                        onSelectHold="ScrobbleMenu">
+                        <img src="{{IMAGEURL(thumb::360)}}" height="308" width="308" />
+                        <title class="showTextOnHighlight"><![CDATA[{{VAL(originallyAvailableAt)}}]]></title>
+
+                    </lockup>
+                    }}
+                </section>
+            </shelf>
+}}
+}}
+}}
+}}
+
+        </collectionList>
+    </stackTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+    <alertTemplate>
+        <title>TITLE</title>
+        <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+    </alertTemplate>
+</document>
+}}

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{CUT({{GET(noItems)}})}}
+{{
+{{SET(noItems:true)}}
+{{SET(videoItems:false)}}
+
+{{XML()}}
+{{
+<document>
+  <head>
+    <style>
+      .text {
+          text-shadow: 2px 2px 4px #000000;
+          <!--height: 800px;-->
+      }
+    </style>
+  </head>
+  <compilationTemplate theme="dark">
+    <list>
+      <relatedContent>
+        <itemBanner>
+          <heroImg src="{{IMAGEURL(MediaContainer/thumb::)}}" />
+          <row>
+            <buttonLockup onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', '')">
+              <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:PlayAll:png)}}" width="50" height="50"/>
+              <title>Play all</title>
+            </buttonLockup>
+            <buttonLockup onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', 'shuffle')">
+              <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Shuffle:png)}}" width="50" height="50"/>
+              <title>Shuffle all</title>
+            </buttonLockup>
+            <buttonLockup onSelect="Presenter.load('Music_Artist', '{{PMSID()}}', '{{PATH(/library/metadata/{{VAL(MediaContainer/grandparentRatingKey)}})}}')">
+              <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Artist:png)}}" width="50" height="50" />
+              <title>Go to Artist</title>
+            </buttonLockup>
+            <!--<buttonLockup onSelect="Presenter.load('Music_Videos', '{{PMSID()}}', '{{PATH(/library/metadata/{{VAL(MediaContainer/grandparentRatingKey)}})}}')">
+              <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:MusicVideo:png)}}" width="50" height="50" />
+              <title>Videos</title>
+            </buttonLockup>-->
+          </row>
+        </itemBanner>
+      </relatedContent>
+      <header class="text">
+        <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
+        <subtitle><![CDATA[{{VAL(MediaContainer/title2)}}]]></subtitle>
+        <row>
+          <text>{{VAL(MediaContainer/parentYear)}}</text>
+        </row>
+      </header>
+      {{IF({{VAL(MediaContainer/summary)}})}}
+         {{
+           <section>
+           	<description class="text" style="color: #FFFFFF" allowsZooming="true" moreLabel="MORE"
+                 onSelect="Presenter.loadContext('Music_AlbumDescription', '{{PMSID()}}', '{{PATH()}}')">
+               <![CDATA[{{VAL(MediaContainer/summary)}}]]>
+             </description>
+           </section>
+           }}
+
+      <section>
+        <header>
+          <title>TRACKS</title>
+        </header>
+
+{{COPY(MediaContainer/Track)}}{{
+	{{SET(noItems:false)}}
+	{{IF(!{{VAL(primaryExtraKey)}})}}{{
+					<listItemLockup class="text" onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH()}}')"
+            onSelectHold="modal">
+          <ordinal minLength="3" class="ordinalLayout">{{VAL(index)}}</ordinal>
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <subtitle><![CDATA[{{VAL(grandparentTitle)}}]]></subtitle>
+          <decorationLabel>{{DURATION_HMS({{VAL(duration)}})}}</decorationLabel>
+      	 </listItemLockup>
+	}}
+	{{IF({{VAL(primaryExtraKey)}})}}{{
+					<listItemLockup class="text" onSelect="Presenter.loadContext('Music_VideoPopUp', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH()}}')"
+            onSelectHold="Presenter.load('Music_VideoPopUp', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+          <ordinal minLength="3" class="ordinalLayout">{{VAL(index)}}</ordinal>
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <subtitle><![CDATA[{{VAL(grandparentTitle)}}]]></subtitle>
+          <decorationLabel>{{DURATION_HMS({{VAL(duration)}})}}</decorationLabel>
+      		<decorationImage src="{{RESOURCEURL(TVMLTemplates/Revenant/images:MusicVideoBadge:png)}}" width="62" height="36" />
+					{{SET(videoItems:true)}}
+				 </listItemLockup>
+	}}
+	}}
+      </section>
+    </list>
+  </compilationTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}
+{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>PlexConnect</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{PMS(plex.tv)}}{{
+{{XML(/api/home/users)}}{{
+<document>
+  <head>
+    <style>
+      .title {
+      font-size: 26;
+      text-align: center;
+      color: rgb(167, 165, 160);
+      font-weight: medium;
+      tv-highlight-color: white;
+      }
+      .header {
+      .text-align: left;
+      .margin: 0 0 0 -200;
+      }
+    </style>
+  </head>
+  <stackTemplate>
+    <identityBanner>
+      <title class="header">Home Users</title>
+      <subtitle class="header">{{TEXT(Admin: )}}{{USRVAL(name)}}</subtitle>
+      <row>
+        <buttonLockup onSelect="Presenter.load('Settings', '', '')">
+          <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Settings:png)}}" width="50" height="50"/>
+          <title>Settings</title>
+        </buttonLockup>
+      </row>
+    </identityBanner>
+    <shelf centered="true" autoHighlight="true" style="tv-interitem-spacing: 60; margin: 280 50 0 50;">
+      <section>
+        {{COPY(MediaContainer/User)}}{{
+                <monogramLockup
+                    {{IF({{CHK("{{USRVAL(name)}}"=="{{VAL(title)}}")}})}}{{autoHighlight="true"}}
+                    id="{{VAL(id)}}"
+                    username="{{VAL(title)}}"
+                    protected="{{VAL(protected)}}"
+                    onSelect="myPlex.switchHomeUser(event);"
+                    onSuccess="Presenter.load('MyPlex_Servers','','');"
+                    onError="Presenter.load('MyPlex_SignInFailed','','');"
+                    >
+                  <monogram src="{{VAL(thumb)}}?size=256" width="200" height="200" />
+                  <title class="title"><![CDATA[{{VAL(title)}}]]></title>
+                  <!--todo: overlay/icon: admin, protected-->
+                  <!--
+                  {{IF({{VAL(admin)}})}}{{
+                  <decorationImage src="{{RESOURCEURL(Images:icon_key:png)}}" width="27" height="26" />
+                  }}
+                  {{IF({{VAL(protected)}})}}{{
+                  <decorationImage src="{{RESOURCEURL(Images:icon_lock:png)}}" width="19" height="23" />
+                  }}
+                  -->
+                </monogramLockup>
+        }}
+      </section>
+    </shelf>
+  </stackTemplate>
+</document>
+}}
+}}

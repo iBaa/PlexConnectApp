@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{XML()}}{{
+<document>
+  <head>
+        <style>
+            .roundedImageCorners {
+      			itml-img-treatment: corner-small;
+      			}
+             .text {
+                 text-shadow: 2px 2px 4px #000000;
+                 <!--height: 800px;-->
+             }
+        </style>
+    </head>
+    <productTemplate theme="dark">
+    <background>
+      {{IF({{CHK("{{SETTING(musicFanart)}}"=="Show")}})}}{{
+    <img style="tv-img-treatment:uber;" src="{{IMAGEURL(MediaContainer/Directory/art:1920)}}" />
+      }}
+    </background>
+    <banner>
+      <infoList class="text">
+        <info>
+          <header>
+            <title>{{TEXT(Country)}}</title>
+          </header>
+          {{COPY(MediaContainer/Directory/Country)}}{{
+          <text><![CDATA[{{VAL(tag)}}{{TEXT(  )}}]]></text>
+          }}
+        </info>
+
+        <info>
+          <header>
+            <title>{{TEXT(Genre)}}</title>
+          </header>
+          {{COPY(MediaContainer/Directory/Genre)}}{{
+          <text><![CDATA[{{VAL(tag)}}{{TEXT(  )}}]]></text>
+          }}
+        </info>
+
+      </infoList>
+      <stack class="text">
+{{SET(popular:/library/sections/{{VAL(MediaContainer/librarySectionID)}}/search?type=10&amp;artist.id={{VAL(MediaContainer/Directory/ratingKey)}}&amp;group=title&amp;limit=100&amp;ratingCount%3E=1&amp;sort=ratingCount:desc)}}
+{{SET(artist:/library/sections/{{VAL(MediaContainer/librarySectionID)}}/search?type=10&amp;artist.id={{VAL(MediaContainer/Directory/ratingKey)}}&amp;group=title&amp;sort=title:desc)}}
+				<title><![CDATA[{{VAL(MediaContainer/Directory/title)}}]]></title>
+        <description allowsZooming="true" moreLabel="more"
+            onSelect="Presenter.loadContext('Music_Description', '{{PMSID()}}', '{{PATH()}}')"
+            >
+          <![CDATA[{{VAL(MediaContainer/Directory/summary)}}]]>
+        </description>
+        <!--text>Language information can go here</text-->
+        <row>
+            <buttonLockup onSelect="audioPlayer.play('{{PMSID()}}', '{{GET(artist)}}', 'shuffle')">
+              <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Shuffle:png)}}" width="50" height="50"/>
+              <title>Shuffle all</title>
+            </buttonLockup>
+            <buttonLockup onSelect="audioPlayer.play('{{PMSID()}}', '{{GET(popular)}}', 'shuffle')">
+              <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Favorites:png)}}" width="50" height="50"/>
+              <title>Popular</title>
+            </buttonLockup>
+            <buttonLockup onSelect="Presenter.load('Music_Videos', '{{PMSID()}}', '{{PATH()}}')">
+              <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:MusicVideo:png)}}" width="50" height="50"/>
+              <title>Videos</title>
+            </buttonLockup>
+            <!--<buttonLockup onSelect="audioPlayer.nowPlaying()">
+              <badge src="{{RESOURCEURL(TVMLTemplates/Quartz2/images/buttons:Playing:png)}}" width="50" height="50" />
+              <title>Now playing</title>
+            </buttonLockup>-->
+        </row>
+      </stack>
+      <heroImg style="tv-img-treatment: corner-medium" src="{{IMAGEURL(MediaContainer/Directory/thumb::)}}" />
+    </banner>
+{{XML({{PATH()}}/children/)}}{{
+{{IFNODE(MediaContainer/Directory:)}}{{
+    <shelf style="margin: 0 0 90 0">
+      <header>
+        <title>{{VAL(MediaContainer/size)}}{{TEXT( Album(s))}}</title>
+      </header>
+      <section>
+        {{COPY(MediaContainer/Directory)}}
+        {{
+        <lockup
+            onSelect="Presenter.loadTitle('Music_Album', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'Music')"
+            >
+          <img src="{{IMAGEURL(thumb::360)}}" width="310" height="310" />
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <subtitle><![CDATA[{{VAL(year)}}]]></subtitle>
+        </lockup>
+        }}
+      </section>
+    </shelf>
+}}
+}}
+{{XML({{PATH()}}/extras/)}}{{
+     {{IFNODE(MediaContainer/Video)}}{{
+     <shelf style="margin: 0 0 70 0">
+      <header>
+          <title>{{VAL(MediaContainer/size)}}{{TEXT( Music video(s))}}</title>
+      </header>
+      <section>
+        {{COPY(MediaContainer/Video)}}{{
+        {{SET(noItems:false)}}
+        <lockup
+          onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+          onSelectHold="modal">
+          <img class="roundedImageCorners" src="{{IMAGEURL(thumb::)}}" height="225" width="400" />
+          <title><![CDATA[{{VAL(title)}}]]></title>
+        </lockup>
+        }}
+      </section>
+    </shelf>
+		}}
+}}
+
+  </productTemplate>
+</document>
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>PlexConnect</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

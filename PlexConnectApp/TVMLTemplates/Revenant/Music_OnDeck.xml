@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+  <head>
+    <style>
+      .rounded {
+      itml-img-treatment: corner-medium;
+      }
+      .hero {
+      margin: -323 -280 0 0;
+      }
+      ..header {
+      .text-align: left;
+      .margin: 0 0 0 -200;
+      }
+      .sectionLabel {
+      text-align: center;
+      <!--margin: 0 0 15 0;-->
+      <!--color: #605e58;-->
+      }
+    </style>
+  </head>
+  <stackTemplate theme="">
+    <identityBanner>
+      <title class="header">Discover <![CDATA[{{VAL(MediaContainer/title1)}}     ]]></title>
+      <subtitle class="header"><![CDATA[{{PMSVAL(name)}}    ]]></subtitle>
+      <heroImg src="{{IMAGEURL(MediaContainer/art:1920)}}" />
+      <row>
+        <buttonLockup onSelect="audioPlayer.nowPlaying()">
+          <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Playing:png)}}" width="50" height="50" />
+           <title>Now playing</title>
+        </buttonLockup>
+        <buttonLockup onSelect="Presenter.loadContext('Music_Filters', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+          <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Library:png)}}" width="50" height="50"/>
+          <title>Filters</title>
+        </buttonLockup>
+        {{XML(/playlists?playlistType=audio)}}{{
+				{{IF({{CHK("{{VAL(MediaContainer/size)}}">"0")}})}}{{
+				<buttonLockup onSelect="Presenter.load('Music_Grid', '{{PMSID()}}', '{{PATH(/playlists?playlistType=audio)}}')">
+					<badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Playlist:png)}}" width="50" height="50"/>
+					<title>Playlists</title>
+				</buttonLockup>
+				}}
+				}}
+				<buttonLockup onSelect="Presenter.load('Search', '{{PMSID()}}', '{{PATH()}}/search?type=8&amp;query')">
+					<badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Search:png)}}" width="50" height="50"/>
+					<title>Search</title>
+				</buttonLockup>
+				<buttonLockup onSelect="Presenter.loadAndSwap('Music_OnDeck', '{{PMSID()}}', '{{PATH()}}')">
+					<badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Reload:png)}}" width="50" height="50"/>
+					<title>Reload</title>
+				</buttonLockup>
+      </row>
+    </identityBanner>
+    <collectionList>
+      {{XML(all?sort=viewCount%3Adesc&amp;excludeFields=summary&amp;limit=15)}}{{
+      {{IFNODE(MediaContainer/Directory)}}{{
+      {{SET(noItems:false)}}
+      <shelf id="Most.Played.Artists">
+        <header>
+          <title>Most played artists</title>
+        </header>
+        <section>
+          {{COPY(MediaContainer/Directory)}}{{
+          <lockup onSelect="Presenter.loadTitle('Music_Artist', '{{PMSID()}}', '{{PATH(/library/metadata/{{VAL(ratingKey)}})}}', 'Music')"
+            onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH()}}/search?type=10&amp;artist.id={{VAL(ratingKey)}}&amp;group=title&amp;limit=100&amp;ratingCount%3E=1&amp;sort=ratingCount%3Adesc')">
+            {{IF({{VAL(thumb)}})}}{{
+            <img class="rounded" src="{{IMAGEURL(thumb::360)}}" height="308" width="308" />
+            }}
+            {{IF(!{{VAL(thumb)}})}}{{
+            <img class="rounded" src="{{RESOURCEURL(TVMLTemplates/Revenant/images:IconArtist:png)}}" height="308" width="308" />
+            }}
+            <title><![CDATA[{{VAL(title)}}]]></title>
+            <subtitle><![CDATA[ ]]></subtitle>
+          </lockup>
+          }}
+        </section>
+      </shelf>
+      }}
+      }}
+      {{XML(all?type=9&amp;sort=viewCount&amp;excludeFields=summary&amp;X-Plex-Container-Start=0&amp;X-Plex-Container-Size=15)}}{{
+      {{IFNODE(MediaContainer/Directory)}}{{
+      <shelf id="Most.Played.Albums">
+        <header>
+          <title>Most Played Albums</title>
+        </header>
+        <section>
+          {{COPY(MediaContainer/Directory)}}{{
+          <lockup onSelect="Presenter.loadTitle('Music_Album', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'Music')"
+            onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+            <img src="{{IMAGEURL(thumb::360)}}" height="308" width="308" />
+            <title><![CDATA[{{VAL(title)}}]]></title>
+            <subtitle><![CDATA[{{VAL(year)}}]]></subtitle>
+          </lockup>
+          }}
+        </section>
+      </shelf>
+      }}
+      }}
+      {{XML(/hubs/sections/{{VAL(MediaContainer/librarySectionID)}}/?count=15&amp;excludeFields=summary)}}{{
+      {{IFNODE(MediaContainer/Hub)}}{{
+      {{COPY(MediaContainer/Hub)}}{{
+      {{IF({{CHK("{{VAL(size)}}">"0")}})}}{{
+      {{IF(!{{CHK("{{VAL(hubIdentifier)}}"="music.recent.artist")}})}}{{
+      {{IF(!{{CHK("{{VAL(hubIdentifier)}}"="music.recent.genre")}})}}{{
+      <shelf id="{{VAL(hubIdentifier)}}">
+        <header>
+          <title><![CDATA[{{VAL(title)}}]]></title>
+        </header>
+        <section>
+          {{IFNODE(Directory)}}{{
+          {{COPY(Directory)}}{{
+          {{IF({{CHK("{{VAL(type)}}"="artist")}})}}{{
+          <lockup onSelect="Presenter.loadTitle('Music_Artist', '{{PMSID()}}', '{{PATH(/library/metadata/{{VAL(ratingKey)}})}}', 'Music')"
+            onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="ScrobbleMenu">
+            <img class="rounded" src="{{IMAGEURL(thumb::360)}}" height="308" width="308" />
+            }}
+            {{IF(!{{CHK("{{VAL(type)}}"="artist")}})}}{{
+            <lockup onSelect="Presenter.loadTitle('Music_Album', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'Music')"
+              onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+              onSelectHold="ScrobbleMenu">
+            <img src="{{IMAGEURL(thumb::360)}}" height="308" width="308" />
+            }}
+            <title><![CDATA[{{VAL(title)}}]]></title>
+            {{IF({{VAL(year)}})}}{{
+            <subtitle><![CDATA[{{VAL(year)}}]]></subtitle>
+            }}
+            {{IF(!{{VAL(year)}})}}{{
+            <subtitle><![CDATA[ ]]></subtitle>
+            }}
+          </lockup>
+          }}
+          }}
+          {{IFNODE(Video)}}{{
+          {{COPY(Video)}}{{
+          <lockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="ScrobbleMenu">
+            <img src="{{IMAGEURL(thumb::360)}}" height="216" width="397" />
+            <title><![CDATA[{{VAL(title)}}]]></title>
+            <subtitle><![CDATA[{{VAL(grandparentTitle)}}]]></subtitle>
+          </lockup>
+          }}
+          }}
+        </section>
+      </shelf>
+      }}
+      }}
+      }}
+      }}
+      }}
+      }}
+    </collectionList>
+  </stackTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>PlexConnect</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

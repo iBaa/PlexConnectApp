@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+<document>
+    <head>
+        <style>
+            .darkBackgroundColor {
+            background-color: #1f1f1f;
+            }
+        </style>
+    </head>
+  <formTemplate theme="dark">
+    <banner>
+      <title>{{TEXT(MyPlex HomeUser)}}</title>
+      <description>{{TEXT(To finish switching, enter your HomeUser pin.)}}</description>
+    </banner>
+    <textField keyboardType="numberPad">0000</textField>
+  </formTemplate>
+</document>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+
+    <compilationTemplate>
+        <background>
+
+        </background>
+        <list>
+            <relatedContent>
+                <itemBanner>
+                    <heroImg src="{{IMAGEURL(MediaContainer/Track/thumb::768)}}" />
+                    <row>
+                        <buttonLockup onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}')">
+                            <badge src="resource://button-play"/>
+                            <title>Play</title>
+                        </buttonLockup>
+                        <buttonLockup onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', 'shuffle')"
+                            onSelectHold="modal">
+                            <badge src="resource://button-shuffle"/>
+                            <title>Shuffle</title>
+                        </buttonLockup>
+                        <buttonLockup onSelect="audioPlayer.nowPlaying()"
+                            onSelectHold="modal">
+                            <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Playing:png)}}" width="50" height="50"/>
+                            <title>Now Playing</title>
+                        </buttonLockup>
+                        <buttonLockup onSelect="Presenter.loadView('Music_Artist', '{{PMSID()}}', '{{PATH(/library/metadata/{{VAL(MediaContainer/grandparentRatingKey)}})}}')"
+                            onSelectHold="modal">
+                            <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Artist:png)}}" width="50" height="50"/>
+                            <title>Artist</title>
+                        </buttonLockup>
+                    </row>
+                </itemBanner>
+            </relatedContent>
+            <header>
+                <title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
+                <subtitle><![CDATA[{{VAL(MediaContainer/title1)}}]]></subtitle>
+                <row>
+                  <text><![CDATA[{{VAL(MediaContainer/parentYear)}}]]></text>
+                </row>
+                <row>
+                  <text><![CDATA[{{VAL(MediaContainer/size)}} tracks]]></text>
+                </row>
+            </header>
+            <section>
+                <description allowsZooming="true" moreLabel="more"
+                    onSelect="Presenter.loadContext('Music_AlbumDescription', '{{PMSID()}}', '{{PATH()}}')">
+                    <![CDATA[{{VAL(MediaContainer/summary)}}]]>
+                </description>
+            </section>
+            <section>
+                <header>
+                    <title>Tracks</title>
+                </header>
+                {{COPY(MediaContainer/Track)}}{{
+                {{SET(noItems:false)}}
+                <listItemLockup
+                    onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                    onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH()}}')"
+                    onSelectHold="modal"
+                    {{IF({{VAL(index:1)}})}}{{ autoHighlight = "True" }}
+                    >
+                    <ordinal minLength="2">{{VAL(index)}}</ordinal>
+                    <title><![CDATA[{{VAL(title)}}]]></title>
+                    <decorationLabel>{{DURATION_HMS({{VAL(duration)}})}}</decorationLabel>
+                </listItemLockup>
+                }}
+            </section>
+        </list>
+    </compilationTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>PlexConnect</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

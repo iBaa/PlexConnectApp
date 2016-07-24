@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+  <head>
+    <style>
+      .lightBackgroundColor {
+      background-color: rgb(239, 236, 230);
+      }
+      .darkBackgroundColor {
+      background-color: rgb(51, 51, 51);
+      }
+      .whiteButton {
+      tv-tint-color: rgb(255, 255, 255);
+      width: 500;
+      height: 200;
+      }
+      .plot {
+      min-height: 300;
+      max-height: 400;
+      margin: 50;
+      }
+    </style>
+  </head>
+  <compilationTemplate theme="">
+    <list>
+      <relatedContent>
+        <itemBanner>
+          <heroImg src="{{IMAGEURL(MediaContainer/thumb::)}}" />
+          <row>
+            <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', '')">
+              <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:PlayAll:png)}}" width="50" height="50"/>
+              <title>Play all</title>
+            </buttonLockup>
+            <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', 'shuffle')">
+              <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Shuffle:png)}}" width="50" height="50"/>
+              <title>Shuffle all</title>
+            </buttonLockup>
+          </row>
+        </itemBanner>
+      </relatedContent>
+      <header>
+        <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
+        <subtitle><![CDATA[{{VAL(MediaContainer/title2)}}]]></subtitle>
+      </header>
+      <section>
+        <!-- shuffle -->
+        <listItemLockup
+            onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', 'shuffle')"
+            onSelectHold="modal"
+            >
+          <title>{{TEXT(Shuffle all)}}</title>
+          <img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:null:png)}}" width="90" height="90" />
+          <decorationImage src="{{RESOURCEURL(TVMLTemplates/Revenant/images:ShuffleList:png)}}" width="50" height="50" />
+        </listItemLockup>
+      </section>
+
+
+        <section>
+{{COPY(MediaContainer/Directory)}}{{
+{{SET(noItems:false)}}
+        <listItemLockup style="height: 86;"
+            onSelect="Presenter.load('List', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
+            >
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <!--<img src="{{RESOURCEURL(TVMLTemplates/Revenant/images:75folder:png)}}" width="90" height="90" />-->
+          <decorationImage src="resource://chevron" />
+        </listItemLockup>
+}}
+         </section>
+
+        <section>
+{{COPY(MediaContainer/Video)}}{{
+{{SET(noItems:false)}}
+         <listItemLockup style="height: 86;"
+            onSelect="Presenter.load('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('PlayVideo', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal"
+            >
+          <!--<img src="{{IMAGEURL(thumb::120)}}" width="160" height="120" />-->
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <subtitle>{{DURATION_HMS({{VAL(duration)}})}}</subtitle>
+          {{IF(!{{VAL(viewCount)}})}}{{
+						{{IF(!{{VAL(viewOffset)}})}}{{
+						<img src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:000:png)}}"  width="60" height="40" />
+						}}
+						{{IF({{VAL(viewOffset)}})}}{{
+						<img src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:030:png)}}"  width="60" height="40" />
+						}}
+					}}
+					{{IF({{VAL(viewCount)}})}}{{
+					<img src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:100:png)}}"  width="60" height="40" />
+					}}
+					<relatedContent>
+            <lockup>
+              <img src="{{IMAGEURL(thumb::768)}}" />
+            </lockup>
+          </relatedContent>
+        </listItemLockup>
+}}
+      </section>
+
+    </list>
+  </compilationTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}
+{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>PlexConnect</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

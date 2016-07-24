@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{XML()}}
+{{
+<document>
+    <head>
+        <style>
+            .count {
+            font-weight: bold;
+            font-size: 19;
+            text-align: center;
+            tv-position: bottom-right;
+            margin: -307 -89 307 89;
+            }
+        </style>
+    </head>
+    <catalogTemplate theme="" >
+        <banner>
+            <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
+            <heroImg src="{{IMAGEURL(MediaContainer/art:1920)}}" />
+        </banner>
+        <list>
+            <section>
+                <header>
+                    <title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
+                </header>
+
+
+    {{COPY(MediaContainer/Directory)}}{{
+				<listItemLockup>
+                    <title><![CDATA[{{VAL(title)}}]]></title>
+
+                   {{XML({{VAL(key)}})}}{{
+                   <decorationLabel><![CDATA[{{VAL(MediaContainer/size)}}]]></decorationLabel>
+    			    <relatedContent>
+                        <grid>
+                            <section>
+                              {{COPY(MediaContainer/Directory)}}{{
+                                <lockup onSelect="Presenter.loadTitle('TVShow_Season', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'TV Show')"
+                onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                onSelectHold="ScrobbleMenu">
+                                    <img src="{{IMAGEURL(thumb::600)}}" height="360" width="240" />
+                                    {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
+                                    <overlay>
+                                    	<img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
+                                    	<decorationLabel class="count">{{EVAL({{VAL(leafCount)}}-{{VAL(viewedLeafCount)}})}}</decorationLabel>
+                                    </overlay>
+                                    }}
+                                    <title><![CDATA[{{VAL(title)}}]]></title>
+                                </lockup>
+           					  }}
+                            </section>
+                        </grid>
+                    </relatedContent>
+                    }}
+                </listItemLockup>
+    }}
+
+            </section>
+        </list>
+    </catalogTemplate>
+</document>
+}}

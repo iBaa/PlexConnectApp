@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{CUT({{GET(noItems)}})}}
+{{
+{{SET(noItems:true)}}
+{{XML()}}
+{{
+<document>
+  <head>
+    <style>
+      .text {
+          text-shadow: 2px 2px 4px #000000;
+          <!--height: 800px;-->
+      }
+    </style>
+  </head>
+  <compilationTemplate thme="dark">
+    <list>
+      <relatedContent>
+        <itemBanner>
+          <heroImg src="{{IMAGEURL(MediaContainer/thumb::)}}" />
+          <row>
+            <buttonLockup onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', '')">
+              <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:PlayAll:png)}}" width="50" height="50"/>
+              <title>Play all</title>
+            </buttonLockup>
+            <buttonLockup onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL()}})}}', 'shuffle')">
+              <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Shuffle:png)}}" width="50" height="50"/>
+              <title>Shuffle all</title>
+            </buttonLockup>
+            <buttonLockup onSelect="audioPlayer.nowPlaying()">
+              <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Playing:png)}}" width="50" height="50" />
+              <title>Now playing</title>
+            </buttonLockup>
+          </row>
+        </itemBanner>
+      </relatedContent>
+      <header class="text">
+        <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
+        <subtitle><![CDATA[{{VAL(MediaContainer/title2)}}]]></subtitle>
+        <row>
+          <text>{{VAL(MediaContainer/parentYear)}}</text>
+        </row>
+      </header>
+ {{IF({{VAL(MediaContainer/summary)}})}}
+    {{
+      <section>
+      	<description allowsZooming="true" moreLabel="MORE"
+            onSelect="Presenter.loadContext('Music_AlbumDescription', '{{PMSID()}}', '{{PATH()}}')">
+          <![CDATA[{{VAL(MediaContainer/summary)}}]]>
+        </description>
+      </section>
+      }}
+      <section>
+        <header>
+          <title>TRACKS</title>
+        </header>
+
+{{COPY(MediaContainer/Track)}}
+{{
+{{SET(noItems:false)}}
+	<listItemLockup class="text" onSelect="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH()}}')"
+            onSelectHold="modal">
+
+          <!--<ordinal minLength="3" class="ordinalLayout">{{VAL(index)}}</ordinal-->
+          <img src="{{IMAGEURL(thumb::120)}}" width="90" height="90" />
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <subtitle><![CDATA[{{VAL(parentTitle)}}]]></subtitle>
+
+          <decorationLabel>{{DURATION_HMS({{VAL(duration)}})}}</decorationLabel>
+
+          <!--<decorationImage src="{{IMAGEURL(thumb::384)}}" width="100" height="150"/>-->
+        </listItemLockup>
+
+}}
+      </section>
+    </list>
+  </compilationTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}
+{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>PlexConnect</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

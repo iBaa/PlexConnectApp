@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{XML()}}
+{{
+<document>
+    <head>
+        <style>
+            .lightBackgroundColor {
+            background-color: #efece6;
+            }
+            .layout {
+            margin: 40;
+            }
+            .showTextOnHighlight {
+            tv-text-highlight-style: marquee-on-highlight;
+            }
+            .roundedImageCorners {
+            itml-img-treatment: corner-small;
+            }
+
+        </style>
+    </head>
+    <catalogTemplate theme="">
+        <banner>
+            <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
+        </banner>
+        <list>
+            <section>
+                <header>
+                    <title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
+                </header>
+
+    {{COPY(MediaContainer/Directory)}}{{
+				<listItemLockup>
+                    <title><![CDATA[{{VAL(title)}}]]></title>
+
+                   {{XML({{VAL(key)}})}}{{
+                   <decorationLabel><![CDATA[{{VAL(MediaContainer/size)}}]]></decorationLabel>
+    			    <relatedContent>
+                        <grid>
+                            <section>
+                              {{COPY(MediaContainer/Photo)}}{{
+                                <lockup onSelect="photoPresenter.show('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onSelectHold="modal">
+                                    <img src="{{IMAGEURL(thumb::360)}}" height="350" width="350" />
+
+                                </lockup>
+           					  }}
+                            </section>
+                        </grid>
+                    </relatedContent>
+                    }}
+                </listItemLockup>
+    }}
+
+            </section>
+        </list>
+    </catalogTemplate>
+</document>
+}}

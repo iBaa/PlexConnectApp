@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{XML()}}{{
+<document>
+    <alertTemplate theme="">
+    <title>Select item you want to play:</title>
+			<button onSelect="Presenter.closeContext(); audioPlayer.play('{{PMSID()}}', '{{PATH()}}')">
+       	<text>{{TEXT(Play audio track)}}</text>
+      </button>
+      <button onSelect="Presenter.closeContext(); videoPlayer.play('{{PMSID()}}', '{{VAL(MediaContainer/Track/primaryExtraKey)}}')">
+       	<text>{{TEXT(Play music video)}}</text>
+      </button>
+    </alertTemplate>
+</document>
+}}

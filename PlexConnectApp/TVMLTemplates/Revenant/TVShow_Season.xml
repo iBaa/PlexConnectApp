@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+  <head>
+    <style>
+      .artImage {
+          tv-tint-color: linear-gradient(top, 0.1, rgba(0,0,0,0.75), 0.2, rgba(0,0,0,0.75), 1.00, rgba(0,0,0,0.8));
+      }
+      .text {
+          text-shadow: 2px 2px 4px #000000;
+          <!--height: 800px;-->
+      }
+      .count {
+      tv-text-style: none;
+      color: #000000;
+      font-weight: bold;
+      font-size: 15;
+      text-align: center;
+      tv-position: bottom-right;
+      margin: -200 -45 200 45;
+      }
+    </style>
+  </head>
+   <productTemplate theme="dark">
+     <background>
+       <!--<img style="tv-img-treatment:uber;" src="{{IMAGEURL(MediaContainer/art:1920)}}" />-->
+       {{IF({{CHK("{{SETTING(themeMusic)}}"=="On")}})}}{{
+       <audio volume="10">
+             <asset src="{{IMAGEURL(MediaContainer/theme)}}" />
+         </audio>
+         }}
+         {{IF({{CHK("{{SETTING(tvshowFanart)}}"=="Show")}})}}{{
+         <img style="tv-img-treatment:uber;" src="{{IMAGEURL(MediaContainer/art:1920)}}" />
+         }}
+     </background>
+      <banner>
+        <infoList>
+          <!--<info>
+            {{XML(/library/metadata/{{VAL(MediaContainer/key)}})}}{{
+              <ratingCard style="tv-align: right;">
+                  <ratingBadge style="tv-rating-style: star-hollow-l;text-shadow: 2px 2px 8px #000000;" value="{{EVAL({{VAL(MediaContainer/Directory/rating:0)}}/10)}}"></ratingBadge>
+              </ratingCard>
+              }}
+          </info>-->
+          <info>
+              <header>
+                  <title>{{TEXT(Studio)}}</title>
+              </header>
+              {{XML(/library/metadata/{{VAL(MediaContainer/key)}})}}{{
+              <text><![CDATA[{{VAL(MediaContainer/Directory/studio)}}]]></text>
+              }}
+
+          </info>
+          <info>
+              <header>
+                  <title>{{TEXT(Casts)}}</title>
+              </header>
+              {{XML(/library/metadata/{{VAL(MediaContainer/key)}})}}{{
+              {{COPY(MediaContainer/Directory/Role)}}{{  <!-- COPY till 5 or so? -->
+                        <text><![CDATA[{{VAL(tag)}}]]></text>
+              }}
+              }}
+
+          </info>
+        </infoList>
+         <stack class="text">
+            <!--<title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>-->
+            {{IF({{CHK("{{SETTING(themeTitle)}}"=="Text")}})}}{{<title><![CDATA[{{VAL(MediaContainer/grandparentTitle:{{VAL(MediaContainer/parentTitle)}})}}]]></title>}}
+            {{IF({{CHK("{{SETTING(themeTitle)}}"=="Banner")}})}}{{<title><badge src="{{IMAGEURL(MediaContainer/banner:100)}}" height="135" width="800" aspectFill="true"/></title>}}
+
+            <row>
+           {{XML(/library/metadata/{{VAL(MediaContainer/key)}})}}{{
+           <text>{{VAL(MediaContainer/Directory/year)}}</text>
+           {{COPY(MediaContainer/Directory/Genre)}}{{
+           <text><![CDATA[{{VAL(tag)}}]]></text>
+           }}
+           {{IF({{CHK("{{VAL(MediaContainer/Directory/contentRating)}}"=="TV-14")}})}}{{<textBadge>TV-14</textBadge>}}
+           {{IF({{CHK("{{VAL(MediaContainer/Directory/contentRating)}}"=="TV-Y")}})}}{{<textBadge>TV-Y</textBadge>}}
+           {{IF({{CHK("{{VAL(MediaContainer/Directory/contentRating)}}"=="TV-Y7")}})}}{{<textBadge>TV-Y7</textBadge>}}
+           {{IF({{CHK("{{VAL(MediaContainer/Directory/contentRating)}}"=="TV-Y7VF")}})}}{{<textBadge>TV-Y7VF</textBadge>}}
+           {{IF({{CHK("{{VAL(MediaContainer/Directory/contentRating)}}"=="TV-G")}})}}{{<textBadge>TV-G</textBadge>}}
+           {{IF({{CHK("{{VAL(MediaContainer/Directory/contentRating)}}"=="TV-PG")}})}}{{<textBadge>TV-PG</textBadge>}}
+           {{IF({{CHK("{{VAL(MediaContainer/Directory/contentRating)}}"=="TV-MA")}})}}{{<textBadge>TV-MA</textBadge>}}
+           }}
+           </row>
+
+            <!--<row>
+               <text><![CDATA[{{VAL(MediaContainer/parentYear)}}]]></text>
+                <text><![CDATA[{{VAL(MediaContainer/grandparentStudio)}}]]></text>
+                <ratingCard style="tv-align: left; text-shadow: 2px 2px 8px #000000;">
+                    <ratingBadge style="tv-rating-style: star-hollow-l;text-shadow: 2px 2px 8px #000000;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
+                </ratingCard>
+            </row>-->
+
+            <description tv-text-max-lines="3" allowsZooming="true" moreLabel="MORE"
+                onSelect="Presenter.loadContext('TVShow_Description', '{{PMSID()}}', '{{PATH()}}')">
+              <![CDATA[{{VAL(MediaContainer/summary)}}]]>
+            </description>
+
+            <row>
+              <buttonLockup
+                onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(MediaContainer/Directory/key)}})}}')">
+                  <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Play:png)}}" width="50" height="50"/>
+                  <title>Play Show</title>
+              </buttonLockup>
+              <buttonLockup
+                onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(MediaContainer/Directory/key)}})}}', 'shuffle')">
+                <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Shuffle:png)}}" width="50" height="50"/>
+                <title>Shuffle Show</title>
+              </buttonLockup>
+              <buttonLockup
+                onSelect="modal">
+                <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Eye:png)}}" width="50" height="50"/>
+                <title>Watch Status</title>
+              </buttonLockup>
+            </row>
+         </stack>
+         <heroImg src="{{IMAGEURL(MediaContainer/thumb::)}}" />
+      </banner>
+      <shelf style="margin: 0 0 90 0;">
+         <header>
+           {{XML(/library/metadata/{{VAL(MediaContainer/key)}})}}{{
+            <title>{{VAL(MediaContainer/Directory/childCount)}} Season(s)</title>
+            }}
+         </header>
+         <section>
+           {{COPY(MediaContainer/Directory)}}{{
+           {{SET(noItems:false)}}
+           {{IF(!{{CHK("{{VAL(title)}}"=="All episodes")}})}}{{
+           <lockup onSelect="Presenter.loadTitle('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'TV Show');"
+             onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}', '')">
+               <img src="{{IMAGEURL(thumb::384)}}" width="150" height="226" />
+               {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
+               <overlay>
+                 <img style="tv-position: top-right; margin: -10 -10 60 60" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
+                 <decorationLabel class="count">{{EVAL({{VAL(leafCount)}}-{{VAL(viewedLeafCount)}})}}</decorationLabel>
+               </overlay>
+               }}
+               <title><![CDATA[{{VAL(title)}}]]></title>
+           </lockup>
+           }}
+           }}
+         </section>
+      </shelf>
+
+      {{SET(sectionID:{{VAL(MediaContainer/librarySectionID)}})}}
+      {{XML(/library/metadata/{{VAL(MediaContainer/key)}})}}{{
+      <shelf style="margin:100 0 0 0">
+          <header>
+              <title>Cast and Crew</title>
+          </header>
+          <section>
+              {{COPY(MediaContainer/Directory/Role)}}
+              {{
+              <monogramLockup onSelect="Presenter.loadView('TVShow_Actor', '{{PMSID()}}', '{{PATH(/library/sections/{{GET(sectionID)}}/actor/{{VAL(id)}})}}')">
+                  <monogram {{IF({{VAL(thumb:)}})}}{{src="{{IMAGEURL(thumb::384)}}"}} />
+                  <title><![CDATA[{{VAL(role)}}]]></title>
+                  <subtitle><![CDATA[{{VAL(tag)}}]]></subtitle>
+              </monogramLockup>
+              }}
+          </section>
+      </shelf>
+      }}
+    </productTemplate>
+  </document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>PlexConnect</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

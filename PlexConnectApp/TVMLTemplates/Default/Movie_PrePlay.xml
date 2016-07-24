@@ -15,7 +15,7 @@ See LICENSE.txt for this sample’s licensing information
             <ratingBadge style="tv-rating-style: star-hollow-l;" value="{{EVAL({{VAL(MediaContainer/Video/rating:0)}}/10)}}"></ratingBadge>
           </ratingCard>
         </info>
-        
+
         <info>
           <header>
             <title>{{TEXT(Director)}}</title>
@@ -28,7 +28,7 @@ See LICENSE.txt for this sample’s licensing information
           </header>
           <text>{{VAL(MediaContainer/Video/Producer/tag)}}</text>
         </info>
-        
+
         <info>
           <header>
             <title>{{TEXT(Actors)}}</title>

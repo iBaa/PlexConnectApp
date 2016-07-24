@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:false)}}
+{{XML()}}{{
+<document>
+  <head>
+    <style>
+    </style>
+  </head>
+  <compilationTemplate theme="">
+    <list>
+      <relatedContent>
+        <itemBanner>
+          <heroImg style="tv-img-treatment: corner-medium" src="{{IMAGEURL(MediaContainer/Directory/thumb::)}}" />
+          <row>
+            <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH()}}/extras', '')">
+              <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:PlayAll:png)}}" width="50" height="50"/>
+              <title>Play all</title>
+            </buttonLockup>
+            <buttonLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH()}}/extras', 'shuffle')">
+              <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Shuffle:png)}}" width="50" height="50"/>
+              <title>Shuffle all</title>
+            </buttonLockup>
+          </row>
+        </itemBanner>
+      </relatedContent>
+      <header>
+        <title><![CDATA[{{VAL(MediaContainer/Directory/title)}}]]></title>
+      </header>
+      <section>
+        <header>
+          <title>VIDEOS</title>
+        </header>
+}}
+
+{{XML({{PATH()}}/extras)}}{{
+{{COPY(MediaContainer/Video)}}{{
+{{SET(noItems:false)}}
+	<listItemLockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+            onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH()}}')"
+            onSelectHold="modal">
+
+          <ordinal minLength="3" class="ordinalLayout">{{EVAL({{VAL(index)}}-1)}}</ordinal>
+          <!--<img src="{{IMAGEURL(thumb::120)}}" width="90" height="90" />-->
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <subtitle><![CDATA[{{VAL(originallyAvailableAt)}}]]></subtitle>
+          <decorationImage style="margin: 0" src="{{IMAGEURL(thumb::384)}}" width="192" height="108"/>
+        </listItemLockup>
+
+}}
+      </section>
+    </list>
+  </compilationTemplate>
+</document>
+}}
+}}
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>PlexConnect</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

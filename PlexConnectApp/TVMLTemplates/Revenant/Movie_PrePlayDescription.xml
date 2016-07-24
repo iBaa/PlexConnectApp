@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{XML()}}{{
+<document>
+  <descriptiveAlertTemplate>
+    <title><![CDATA[{{VAL(MediaContainer/Video/title)}}]]></title>
+    <description><![CDATA[{{VAL(MediaContainer/Video/summary)}}]]></description>
+    
+    <button
+        onSelect="Presenter.closeContext()"
+        >
+        <text>{{TEXT(Back)}}</text>
+    </button>
+  </descriptiveAlertTemplate>
+</document>
+}}

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+<head>
+	<style>
+	</style>
+</head>
+  <listTemplate theme="">
+    <list>
+		<relatedContent>
+        <!--<itemBanner>
+          <heroImg src="{{IMAGEURL(thumb::360)}}" />
+        </itemBanner>-->
+      </relatedContent>
+      <header>
+        <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
+      </header>
+      <section>
+      <header>
+          <title><![CDATA[{{VAL(MediaContainer/title2)}}]]></title>
+        </header>
+{{COPY(MediaContainer/Directory)}}{{
+{{SET(noItems:false)}}
+        <listItemLockup style="height: 90"
+            onSelect="Presenter.loadTitle('Music_Artist', '{{PMSID()}}', '{{PATH(/library/metadata/{{VAL(ratingKey)}})}}', 'Music')"
+            onPlay=""
+            onSelectHold="modal"
+            >
+          <title><![CDATA[{{VAL(title)}}]]></title>
+          <decorationLabel><![CDATA[{{VAL(year)}}]]></decorationLabel>
+          <relatedContent>
+            <lockup>
+              {{IF({{VAL(art)}})}}{{
+              <img src="{{IMAGEURL(art::360)}}" />
+              }}
+              {{IF(!{{VAL(art)}})}}{{
+              <img src="{{IMAGEURL(thumb::360)}}" />
+              }}
+              <title style="tv-align: left;"><![CDATA[{{VAL(title)}}]]></title>
+							<separator />
+              <description moreLabel="more">
+          			<![CDATA[{{VAL(summary)}}]]>
+        			</description>
+        			<separator />
+        			{{IF({{VAL(Country/tag)}})}}{{
+        			<subtitle>Country:  <![CDATA[{{VAL(Country/tag)}}]]></subtitle>
+        			}}
+        			{{IF({{VAL(Genre/tag)}})}}{{
+        			<subtitle>Genre:  <![CDATA[{{VAL(Genre/tag)}}]]></subtitle>
+              }}
+              <separator />
+            </lockup>
+          </relatedContent>
+        </listItemLockup>
+}}
+      </section>
+
+    </list>
+  </listTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>PlexConnect</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{XML()}}{{
+<document>
+  <alertTemplate>
+    <title><![CDATA[{{VAL(MediaContainer/Video/title)}}]]></title>
+
+{{SET(showMarkWatched:false)}}  <!--default-->
+{{SET(showMarkUnwatched:false)}}
+{{IF({{VAL(MediaContainer/Video/viewOffset:0)}})}}{{  <!--offset>0 - watching has been started - as in onDeck -->
+  {{SET(showMarkWatched:true)}}
+  {{SET(showMarkUnwatched:true)}}
+}}
+{{IF({{VAL(MediaContainer/Video/viewCount:0)}})}}{{  <!--count>0 - allow mark unwatched-->
+  {{SET(showMarkUnwatched:true)}}
+}}
+{{IF(!{{VAL(MediaContainer/Video/viewCount:0)}})}}{{  <!--count==0 - allow mark watched-->
+  {{SET(showMarkWatched:true)}}
+}}
+{{IF({{GET(showMarkWatched)}})}}{{
+    <button
+        onSelect="swiftInterface.sendPmsPath('{{PMSID()}}', '/:/scrobble?key={{VAL(MediaContainer/Video/ratingKey)}}&amp;identifier=com.plexapp.plugins.library'); Presenter.closeContext();"
+        >
+      <text>{{TEXT(Mark as Watched)}}</text>
+    </button>
+}}
+{{IF({{GET(showMarkUnwatched)}})}}{{
+    <button
+        onSelect="swiftInterface.sendPmsPath('{{PMSID()}}', '/:/unscrobble?key={{VAL(MediaContainer/Video/ratingKey)}}&amp;identifier=com.plexapp.plugins.library'); Presenter.closeContext();"
+        >
+      <text>{{TEXT(Mark as Unwatched)}}</text>
+    </button>
+}}
+
+    <!--change artwork-->
+
+  </alertTemplate>
+</document>
+}}

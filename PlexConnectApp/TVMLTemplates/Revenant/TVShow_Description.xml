@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{XML()}}{{
+<document>
+  <head>
+    <style>
+      .subtitleStyle {
+        color: rgb(255,255,255);
+        tv-text-style: subtitle1;
+        margin: 30;
+      }
+    </style>
+  </head>
+
+  <descriptiveAlertTemplate>
+    <title><![CDATA[{{VAL(MediaContainer/parentTitle)}}]]></title>
+    <description><![CDATA[{{VAL(MediaContainer/summary)}}]]></description>
+
+    <button
+        onSelect="Presenter.closeContext()"
+        >
+        <text>{{TEXT(Back)}}</text>
+    </button>
+  </descriptiveAlertTemplate>
+</document>
+
+}}

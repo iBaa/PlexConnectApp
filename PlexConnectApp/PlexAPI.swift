@@ -20,13 +20,13 @@ var plexUserInformation = cPlexUserInformation()
 
 class cPlexUserInformation {
     private let _storage = NSUserDefaults.standardUserDefaults()
-
+    
     private var _attributes: [String: String] = [:]
-/*
-    private var _name: String
-    private var _email: String
-    private var _token: String
-  */
+    /*
+     private var _name: String
+     private var _email: String
+     private var _token: String
+     */
     private var _xmlUser: XMLIndexer?  // store for debugging - XML data this PMS was set up with
     private var _xmlHomeUser: XMLIndexer?
     
@@ -35,7 +35,7 @@ class cPlexUserInformation {
         _xmlUser = nil
         _xmlHomeUser = nil
         _attributes = ["adminname": "", "name": "", "email": "", "token": "", "id": ""]
-
+        
         if let name = _storage.stringForKey("adminname") {
             _attributes["adminname"] = name
         }
@@ -57,7 +57,7 @@ class cPlexUserInformation {
         _xmlUser = xmlUser
         _xmlHomeUser = nil
         _attributes = ["adminname": "", "name": "", "email": "", "token": "", "id": ""]
-       
+        
         // todo: check XML and neccessary nodes
         if let name = xmlUser.element!.attributes["title"] {
             _attributes["adminname"] = name
@@ -72,13 +72,13 @@ class cPlexUserInformation {
         if let id = _storage.stringForKey("id") {
             _attributes["id"] = id
         }
-
+        
         store()
     }
     
     func switchHomeUser(xmlUser: XMLIndexer) {
         _xmlHomeUser = xmlUser
-
+        
         if let name = xmlUser.element!.attributes["title"] {
             _attributes["name"] = name
         }
@@ -99,7 +99,7 @@ class cPlexUserInformation {
         _xmlUser = nil
         _xmlHomeUser = nil
         _attributes = ["adminname": "", "name": "", "email": "", "token": "", "id": ""]
-    
+        
         store()
     }
     
@@ -145,13 +145,13 @@ class cPlexMediaServerInformation {
         _fastestConnection = nil
         let dsptch = dispatch_semaphore_create(0)
         for (_ix,_con) in xmlPms["Connection"].enumerate() {
-  
+            
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
                 let config = NSURLSessionConfiguration.defaultSessionConfiguration()
                 let session = NSURLSession(configuration: config)
                 let url = NSURL(string: _con.element!.attributes["uri"]! + "?X-Plex-Token=" + self._attributes["accessToken"]!)
                 let request = NSMutableURLRequest(URL: url!)
-
+                
                 let task = session.dataTaskWithRequest(request) {
                     (data, response, error) -> Void in
                     if let httpResp = response as? NSHTTPURLResponse {
@@ -166,7 +166,7 @@ class cPlexMediaServerInformation {
             })
         }
         dispatch_semaphore_wait(dsptch, dispatch_time(DISPATCH_TIME_NOW, httpTimeout))  // todo: 10sec timeout?
-            
+        
         // add connection details of fastest response to top level _attributes
         if let _ = _fastestConnection {
             for (key, value) in xmlPms["Connection"][_fastestConnection!].element!.attributes {
@@ -204,7 +204,7 @@ func getPmsUrl(key: String, pmsId: String, pmsPath: String) -> String {
         url = "https://plex.tv"
         token = plexUserInformation.getAttribute("token")
     }
-
+    
     // path
     if (key.hasPrefix("/")) {  // internal full path
         url = url + key
@@ -213,7 +213,7 @@ func getPmsUrl(key: String, pmsId: String, pmsPath: String) -> String {
     } else {  // relative path - current plex new path component
         url = url + pmsPath + "/" + key
     }
-
+    
     // token
     if token != "" {
         var queryDelimiter = "?"
@@ -231,7 +231,7 @@ func getPmsUrl(key: String, pmsId: String, pmsPath: String) -> String {
 
 func getVideoPath(video: XMLIndexer, partIx: Int, pmsId: String, pmsPath: String?) -> String {
     var res: String
-
+    
     // sanity check: pmsId
     var accessToken: String
     var pmsUri: String
@@ -261,7 +261,7 @@ func getVideoPath(video: XMLIndexer, partIx: Int, pmsId: String, pmsPath: String
     // XML pointing to Video node
     let media = video["Media"][0]  // todo: cover XMLError, errorchecking on optionals
     let part = media["Part"][partIx]
-
+    
     // transcoder action
     let transcoderAction = settings.getSetting("transcoderAction")
     
@@ -270,23 +270,23 @@ func getVideoPath(video: XMLIndexer, partIx: Int, pmsId: String, pmsPath: String
     // or native aTV media
     var videoATVNative =
         ["hls"].contains(getAttribute(media, key: "protocol", dflt: ""))
-        ||
-        ["mov", "mp4"].contains(getAttribute(media, key: "container", dflt: "")) &&
-        ["mpeg4", "h264", "drmi"].contains(getAttribute(media, key: "videoCodec", dflt: "")) &&
-        ["aac", "ac3", "drms"].contains(getAttribute(media, key: "audioCodec", dflt: ""))
-
+            ||
+            ["mov", "mp4"].contains(getAttribute(media, key: "container", dflt: "")) &&
+            ["mpeg4", "h264", "drmi"].contains(getAttribute(media, key: "videoCodec", dflt: "")) &&
+            ["aac", "ac3", "drms"].contains(getAttribute(media, key: "audioCodec", dflt: ""))
+    
     /* limitation of aTV2/3 only?
-    for stream in part["Stream"] {
-        if (stream.element!.attributes["streamType"] == "1" &&
-            ["mpeg4", "h264"].contains(stream.element!.attributes["codec"]!)) {
-            if (stream.element!.attributes["profile"] == "high 10" ||
-                Int(stream.element!.attributes["refFrames"]!) > 8) {
-                    videoATVNative = false
-                    break
-            }
-        }
-    }
-    */
+     for stream in part["Stream"] {
+     if (stream.element!.attributes["streamType"] == "1" &&
+     ["mpeg4", "h264"].contains(stream.element!.attributes["codec"]!)) {
+     if (stream.element!.attributes["profile"] == "high 10" ||
+     Int(stream.element!.attributes["refFrames"]!) > 8) {
+     videoATVNative = false
+     break
+     }
+     }
+     }
+     */
     print("videoATVNative: " + String(videoATVNative))
     
     // quality limits: quality=(resolution, quality, bitrate)
@@ -314,36 +314,36 @@ func getVideoPath(video: XMLIndexer, partIx: Int, pmsId: String, pmsPath: String
     
     // subtitle renderer, subtitle selection
     /* not used yet - todo: implement and test
-    let subtitleRenderer = settings.getSetting("subtitleRenderer")
-    
-    var subtitleId = ""
-    var subtitleKey = ""
-    var subtitleFormat = ""
-    for stream in part["Stream"] {  // todo: check 'Part' existance, deal with multi part video
-        if stream.element!.attributes["streamType"] == "3" &&
-           stream.element!.attributes["selected"] == "1" {
-            subtitleId = stream.element!.attributes["id"]!
-            subtitleKey = stream.element!.attributes["key"]!
-            subtitleFormat = stream.element!.attributes["format"]!
-            break
-        }
-    }
-    
-    let subtitleIOSNative = (subtitleKey == "") && (subtitleFormat == "tx3g")  // embedded
-    let subtitleThisApp   = (subtitleKey != "") && (subtitleFormat == "srt")  // external
-
-    // subtitle suitable for direct play?
-    //    no subtitle
-    // or 'Auto'    with subtitle by iOS or ThisApp
-    // or 'iOS,PMS' with subtitle by iOS
-    let subtitleDirectPlay =
-        subtitleId == ""
-        ||
-        subtitleRenderer == "Auto" && ( (videoATVNative && subtitleIOSNative) || subtitleThisApp )
-        ||
-        subtitleRenderer == "iOS, PMS" && (videoATVNative && subtitleIOSNative)
-    print("subtitle: IOSNative - {0}, PlexConnect - {1}, DirectPlay - {2}", subtitleIOSNative, subtitleThisApp, subtitleDirectPlay)
-    */
+     let subtitleRenderer = settings.getSetting("subtitleRenderer")
+     
+     var subtitleId = ""
+     var subtitleKey = ""
+     var subtitleFormat = ""
+     for stream in part["Stream"] {  // todo: check 'Part' existance, deal with multi part video
+     if stream.element!.attributes["streamType"] == "3" &&
+     stream.element!.attributes["selected"] == "1" {
+     subtitleId = stream.element!.attributes["id"]!
+     subtitleKey = stream.element!.attributes["key"]!
+     subtitleFormat = stream.element!.attributes["format"]!
+     break
+     }
+     }
+     
+     let subtitleIOSNative = (subtitleKey == "") && (subtitleFormat == "tx3g")  // embedded
+     let subtitleThisApp   = (subtitleKey != "") && (subtitleFormat == "srt")  // external
+     
+     // subtitle suitable for direct play?
+     //    no subtitle
+     // or 'Auto'    with subtitle by iOS or ThisApp
+     // or 'iOS,PMS' with subtitle by iOS
+     let subtitleDirectPlay =
+     subtitleId == ""
+     ||
+     subtitleRenderer == "Auto" && ( (videoATVNative && subtitleIOSNative) || subtitleThisApp )
+     ||
+     subtitleRenderer == "iOS, PMS" && (videoATVNative && subtitleIOSNative)
+     print("subtitle: IOSNative - {0}, PlexConnect - {1}, DirectPlay - {2}", subtitleIOSNative, subtitleThisApp, subtitleDirectPlay)
+     */
     
     // determine video URL
     // direct play for...
@@ -356,11 +356,11 @@ func getVideoPath(video: XMLIndexer, partIx: Int, pmsId: String, pmsPath: String
     let key = getAttribute(part, key: "key", dflt: "")
     let indirect = getAttribute(media, key: "indirect", dflt: "0")
     if indirect == "1" ||
-       key.hasPrefix("http://") || key.hasPrefix("https://") {
+        key.hasPrefix("http://") || key.hasPrefix("https://") {
         res = key
     } else if transcoderAction == "DirectPlay"
-              ||
-              transcoderAction == "Auto" && videoATVNative && qualityDirectPlay /*&& subtitleDirectPlay*/ {
+        ||
+        transcoderAction == "Auto" && videoATVNative && qualityDirectPlay /*&& subtitleDirectPlay*/ {
         // direct play
         var xargs = getDeviceInfoXArgs()
         if accessToken != "" {
@@ -378,18 +378,18 @@ func getVideoPath(video: XMLIndexer, partIx: Int, pmsId: String, pmsPath: String
         
         // misc settings: subtitlesize, audioboost
         /*
-        let subtitle = ["selected": "1" if subtitleId else "0",
-                        "dontBurnIn": "1" if subtitleDirectPlay else "0",
-                        "size": settings.getSetting("subtitlesize") ]
-        */
+         let subtitle = ["selected": "1" if subtitleId else "0",
+         "dontBurnIn": "1" if subtitleDirectPlay else "0",
+         "size": settings.getSetting("subtitlesize") ]
+         */
         let audio = ["boost": "100" /*settings.getSetting("audioboost")*/ ]
         
         let args = getTranscodeVideoArgs(key, ratingKey: ratingKey, partIx: partIx,
-            transcoderAction: transcoderAction,
-            quality: quality,
-            audio: audio
+                                         transcoderAction: transcoderAction,
+                                         quality: quality,
+                                         audio: audio
             // subtitle: subtitle
-            )
+        )
         
         var xargs = getDeviceInfoXArgs()
         xargs += [
@@ -432,12 +432,12 @@ func getDirectVideoPath(key: String, pmsToken: String) -> String {
         }
         res = key + queryDelimiter + "X-Plex-Token=" + pmsToken  // todo: does token need urlencode?
     }
-
+    
     return res
 }
 
 func getTranscodeVideoArgs(path: String, ratingKey: String, partIx: Int, transcoderAction: String, quality: [String: String], audio: [String: String]) -> [NSURLQueryItem] {
-
+    
     var directStream: String
     if transcoderAction == "Transcode" {
         directStream = "0"  // force transcoding, no direct stream
@@ -445,13 +445,13 @@ func getTranscodeVideoArgs(path: String, ratingKey: String, partIx: Int, transco
         directStream = "1"
     }
     // transcoderAction 'directPlay' - handled by the client in MEDIARUL()
-
+    
     let args: [NSURLQueryItem] = [
         NSURLQueryItem(name: "path", value: path),
         NSURLQueryItem(name: "partIndex", value: String(partIx)),
         
         NSURLQueryItem(name: "session", value: ratingKey),  // todo: session UDID? ratingKey?
-
+        
         NSURLQueryItem(name: "protocol", value: "hls"),
         NSURLQueryItem(name: "videoResolution", value: quality["resolution"]!),
         NSURLQueryItem(name: "videoQuality", value: quality["quality"]!),
@@ -463,9 +463,9 @@ func getTranscodeVideoArgs(path: String, ratingKey: String, partIx: Int, transco
         NSURLQueryItem(name: "skipSubtitles", value: "1"),  // no PMS subtitles for now
         
         /* todo: subtitle support
-        args["subtitleSize"] = subtitle["size"]
-        args["skipSubtitles"] = subtitle["dontBurnIn"]  // '1'  // shut off PMS subtitles. Todo: skip only for aTV native/SRT (or other supported)
-        */
+         args["subtitleSize"] = subtitle["size"]
+         args["skipSubtitles"] = subtitle["dontBurnIn"]  // '1'  // shut off PMS subtitles. Todo: skip only for aTV native/SRT (or other supported)
+         */
         
     ]
     return args
@@ -495,7 +495,7 @@ func getAudioPath(audio: XMLIndexer, partIx: Int, pmsId: String, pmsPath: String
     quality["bitrate"] = "384"  // maxAudioBitrate  // todo: setting?
     let qualityDirectPlay = Int(getAttribute(media, key: "bitrate", dflt: "0")) < Int(quality["bitrate"]!)
     print("quality: ", quality["bitrate"], "qualityDirectPlay: ", qualityDirectPlay)
-
+    
     // determine adio URL
     // direct play for...
     //    audioATVNative
@@ -541,7 +541,7 @@ func getAudioPath(audio: XMLIndexer, partIx: Int, pmsId: String, pmsPath: String
         // internal path, add-on
         res = PlexMediaServerInformation[pmsId]!.getAttribute("uri") + pmsPath! + "/" + res
     }
-
+    
     return res
 }
 
@@ -551,11 +551,11 @@ func getTranscodeAudioArgs(path: String, ratingKey: String, quality: [String: St
         NSURLQueryItem(name: "path", value: path),
         // mediaIndex
         // partIndex
-
+        
         NSURLQueryItem(name: "session", value: ratingKey),  // todo: session UDID? ratingKey?
         NSURLQueryItem(name: "protocol", value: "http"),
         NSURLQueryItem(name: "maxAudioBitrate", value: quality["bitrate"]!),
-    ]
+        ]
     return args
 }
 
@@ -566,18 +566,18 @@ func getPhotoPath(photo: XMLIndexer, width: String, height: String, pmsId: Strin
     
     // sanity check
     // todo: ?
-
+    
     // XML pointing to Video node
     let media = photo["Media"][0]  // todo: cover XMLError, errorchecking on optionals
     let part = media["Part"][0]
-
+    
     // todo: transcoder action setting
     //let transcoderAction = settings.getSetting("transcoderAction")
-
+    
     // photo format
     let photoATVNative = ["jpg","jpeg","tif","tiff","gif","png"].contains(getAttribute(media, key: "container", dflt: ""))
     print("photoATVNative: " + String(photoATVNative))
-
+    
     let accessToken = PlexMediaServerInformation[pmsId]!.getAttribute("accessToken")
     if photoATVNative && width=="" && height=="" {
         // direct play
@@ -605,7 +605,7 @@ func getPhotoPath(photo: XMLIndexer, width: String, height: String, pmsId: Strin
             _width = "1920"
             _height = "1080"
         }
-
+        
         var photoPath: String
         if key.hasPrefix("/") {
             // internal full path
@@ -617,12 +617,12 @@ func getPhotoPath(photo: XMLIndexer, width: String, height: String, pmsId: Strin
             // internal path, add-on
             photoPath = "http://127.0.0.1:32400" + pmsPath! + "/" + key
         }
-
+        
         let args: [NSURLQueryItem] = [
             NSURLQueryItem(name: "url", value: photoPath),
             NSURLQueryItem(name: "width", value: _width),
             NSURLQueryItem(name: "height", value: _height),
-        ]
+            ]
         
         var xargs: [NSURLQueryItem] = []
         if accessToken != "" {
@@ -634,7 +634,7 @@ func getPhotoPath(photo: XMLIndexer, width: String, height: String, pmsId: Strin
         
         res = urlComponents!.string!
     }
-
+    
     if res.hasPrefix("/") {
         // internal full path
         res = PlexMediaServerInformation[pmsId]!.getAttribute("uri") + res
@@ -644,11 +644,11 @@ func getPhotoPath(photo: XMLIndexer, width: String, height: String, pmsId: Strin
         // internal path, add-on
         res = PlexMediaServerInformation[pmsId]!.getAttribute("uri") + pmsPath! + res
     }
-
+    
     return res
 }
 
-    
+
 
 func getDeviceInfoXArgs() -> [NSURLQueryItem] {
     let device = UIDevice()
@@ -660,7 +660,7 @@ func getDeviceInfoXArgs() -> [NSURLQueryItem] {
         NSURLQueryItem(name: "X-Plex-Platform", value: "iOS" /*device.systemName*/),  // todo: have PMS to accept tvOS
         NSURLQueryItem(name: "X-Plex-Client-Platform", value: "iOS" /*device.systemName*/),
         NSURLQueryItem(name: "X-Plex-Platform-Version", value: device.systemVersion),
-
+        
         NSURLQueryItem(name: "X-Plex-Client-Identifier", value: device.identifierForVendor?.UUIDString),
         
         NSURLQueryItem(name: "X-Plex-Product", value: "PlexConnectApp"),  // todo: actual App name
@@ -701,7 +701,7 @@ func getXMLWait(url: String) -> XMLIndexer? {
     
     let dsptch = dispatch_semaphore_create(0)
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-
+        
         let _nsurl = NSURL(string: url)
         //let session = NSURLSession.sharedSession()
         let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
@@ -717,7 +717,7 @@ func getXMLWait(url: String) -> XMLIndexer? {
         task.resume()
     })
     dispatch_semaphore_wait(dsptch, dispatch_time(DISPATCH_TIME_NOW, httpTimeout))
-
+    
     return XML
 }
 
@@ -736,12 +736,12 @@ func myPlexSignIn(username: String, password: String) {
     let url = NSURL(string: "https://plex.tv/users/sign_in.xml")
     let request = NSMutableURLRequest(URL: url!)
     request.HTTPMethod = "POST"
-
+    
     let xargs = getDeviceInfoXArgs()
     for xarg in xargs {
         request.addValue(xarg.value!, forHTTPHeaderField: xarg.name)
     }
-
+    
     print("signing in")
     let dsptch = dispatch_semaphore_create(0)
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
@@ -851,9 +851,9 @@ func myPlexSwitchHomeUser(id: String, pin: String) {
 func discoverServers() {
     // check for servers
     let _url = "https://plex.tv/api/resources?includeHttps=1" +
-               "&X-Plex-Token=" + plexUserInformation.getAttribute("token")
+        "&X-Plex-Token=" + plexUserInformation.getAttribute("token")
     let _xml = getXMLWait(_url)
-
+    
     PlexMediaServerInformation = [:]
     if (_xml != nil) && (_xml!["MediaContainer"] /*!=XMLError*/) {
         var _pms: cPlexMediaServerInformation

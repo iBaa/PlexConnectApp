@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{{XML()}}{{
+{{SET(partID:{{VAL(MediaContainer/Video/Media/Part/id)}})}}
+{{SET(SelectedFound:false)}}
+<document>
+    <alertTemplate>
+    <title>Available subtitles:</title>
+			<!-- Check for selected and flag them.Add other tracks that are NOT selected or default -->
+			{{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
+			{{IF({{CHK("{{VAL(streamType:)}}"=="3")}})}}{{
+			{{IF({{VAL(selected)}})}}{{
+			{{SET(SelectedFound:true)}}
+			<button onSelect="putData('https:{{VAL({{PMSVAL(uri)}})}}:32400/library/parts/{{GET(partID)}}?subtitleStreamID={{VAL(id)}}&amp;allParts=1&amp;X-Plex-Token={{PMSVAL(accessToken)}}'); Presenter.closeContext(); Presenter.loadAndSwap('TVShow_PrePlay', '{{PMSID()}}', '{{PATH()}}');">
+       	<text>✓   {{VAL(language)}} - {{VAL(codec)}}</text>
+      </button>
+      }}
+      {{IF(!{{VAL(selected)}})}}{{
+			{{IF(!{{VAL(default)}})}}{{
+			<button onSelect="putData('https:{{VAL({{PMSVAL(uri)}})}}:32400/library/parts/{{GET(partID)}}?subtitleStreamID={{VAL(id)}}&amp;allParts=1&amp;X-Plex-Token={{PMSVAL(accessToken)}}'); Presenter.closeContext(); Presenter.loadAndSwap('TVShow_PrePlay', '{{PMSID()}}', '{{PATH()}}');">
+       	<text>{{VAL(language)}} - {{VAL(codec)}}</text>
+      </button>
+      }}
+      }}
+      }}
+      }}
+      <!-- Check ONLY for default tracks and flag them if selected were NOT found -->
+      {{COPY(MediaContainer/Video/Media/Part/Stream)}}{{
+			{{IF({{CHK("{{VAL(streamType:)}}"=="3")}})}}{{
+			{{IF(!{{VAL(selected)}})}}{{
+			{{IF({{VAL(default)}})}}{{
+			{{IF({{CHK("{{GET(SelectedFound)}}"=="true")}})}}{{
+			<button onSelect="putData('https:{{VAL({{PMSVAL(uri)}})}}:32400/library/parts/{{GET(partID)}}?subtitleStreamID={{VAL(id)}}&amp;allParts=1&amp;X-Plex-Token={{PMSVAL(accessToken)}}'); Presenter.closeContext(); Presenter.loadAndSwap('TVShow_PrePlay', '{{PMSID()}}', '{{PATH()}}');">
+       	<text>{{VAL(language)}} - {{VAL(codec)}}</text>
+      </button>
+      }}
+      {{IF({{CHK("{{GET(SelectedFound)}}"=="false")}})}}{{
+      <button onSelect="putData('https:{{VAL({{PMSVAL(uri)}})}}:32400/library/parts/{{GET(partID)}}?subtitleStreamID={{VAL(id)}}&amp;allParts=1&amp;X-Plex-Token={{PMSVAL(accessToken)}}'); Presenter.closeContext(); Presenter.loadAndSwap('TVShow_PrePlay', '{{PMSID()}}', '{{PATH()}}');">
+       	<text>✓   {{VAL(language)}} - {{VAL(codec)}}</text>
+      </button>
+      }}
+      }}
+      }}
+      }}
+      }}
+    </alertTemplate>
+</document>
+}}

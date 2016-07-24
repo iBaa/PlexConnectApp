@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+ Copyright (C) 2015 Baa. All rights reserved.
+ See LICENSE.txt for this sample’s licensing information
+ -->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+<document>
+    <head>
+        <style>
+            .roundedImageCorners {
+            itml-img-treatment: corner-small;
+            }
+            .roundedOverlay {
+            itml-img-treatment: corner-small;
+            margin: 0 -30 -280 -30;
+            }
+            .bannerImage {
+            tv-tint-color: linear-gradient(top, 0.25, transparent, 0.8, rgba(0,0,0,0.65), 1.00, rgba(0,0,0,0.8));
+            itml-img-treatment: corner-small;
+            }
+            .bannerText {
+            text-shadow: 2px 2px 8px #000000;
+            }
+            .bannerSubtext{
+            text-shadow: 2px 2px 4px #000000;
+            }
+            .banner {
+            margin: 0 0 30 0;
+            }
+            .buttonTitle {
+            tv-text-style:caption2;
+            tv-highlight-color:rgb(255, 255, 255);
+            color: rgb(255, 255, 255);
+            text-align:center;
+            }
+            .sectionLabel {
+            text-align: center;
+            margin: 0 0 -15 0;
+            }
+            .title {
+            color: #ffffff;
+            }
+            .count {
+            font-weight: bold;
+            font-size: 19;
+            text-align: center;
+            tv-position: bottom-right;
+            margin: -307 -89 307 89;
+            }
+            .count2 {
+            font-weight: bold;
+            font-size: 19;
+            text-align: center;
+            tv-position: bottom-right;
+            margin: -229 -89 229 89;
+            }
+        </style>
+    </head>
+    <stackTemplate>
+      {{PMSLOOP(owned)}}{{
+      {{XML(/library/onDeck)}}{{
+        <background>
+        </background>
+        <identityBanner class="banner" >
+            <title style="text-align: left;">Discover <![CDATA[{{PMSVAL(name)}}]]></title>
+            <subtitle style="text-align: left;">{{USRVAL(name)}}</subtitle>
+            <heroImg src="{{IMAGEURL(MediaContainer/Video/art:1920)}}" />
+            <row style="tv-content-align:top">
+                <buttonLockup onSelect="Presenter.loadAndSwap('Library','','');">
+                    <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Reload:png)}}" width="50" height="50"/>
+                    <title class="buttonTitle">Reload</title>
+                </buttonLockup>
+                {{IF({{CHK("{{PMSCNT()}}">"1")}})}}{{
+                <buttonLockup onSelect="Presenter.load('MyPlex_Servers', '', '')">
+                    <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Server:png)}}" width="50" height="50"/>
+                    <title class="buttonTitle"><![CDATA[{{PMSVAL(name)}}]]></title>
+                </buttonLockup>
+                }}
+                <buttonLockup onSelect="Presenter.loadAndSwap('Main_HomeUsers','','');">
+                    <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:User:png)}}" width="70" height="70"/>
+                    <title class="buttonTitle">Switch User</title>
+                </buttonLockup>
+                <buttonLockup onSelect="Presenter.load('Search_All', '', '')">
+                    <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Search:png)}}" width="50" height="50"/>
+                    <title class="buttonTitle">Search</title>
+                </buttonLockup>
+                <buttonLockup onSelect="Presenter.load('Settings', '', '')">
+                    <badge src="{{RESOURCEURL(TVMLTemplates/Revenant/images/buttons:Settings:png)}}" width="50" height="50"/>
+                    <title class="buttonTitle">Settings</title>
+                </buttonLockup>
+            </row>
+        </identityBanner>
+
+        <collectionList>
+            {{IFNODE(MediaContainer/Video)}}{{
+            <shelf centered="true" autoHighlight="true">
+                <header>
+                    <title>On Deck</title>
+                </header>
+                <section>
+                    {{COPY(MediaContainer/Video)}}{{
+                    {{SET(noItems:false)}}
+                    {{IF({{CHK("{{VAL(type:)}}"=="episode")}})}}{{
+                    <lockup
+                        onSelect="Presenter.loadTitle('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(parentKey)}}/children)}}', 'TV Show')"
+                        onPlay="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                        onHoldSelect="Presenter.loadContext('ContextMenu', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                        onSelectHold="modal">
+                        <img aspectFill="true" src="{{IMAGEURL(art::768)}}" height="378" width="672" class="bannerImage"/>
+                        <overlay>
+                            <title class="bannerText"><![CDATA[{{VAL(title)}}]]></title>
+                            <subtitle class="bannerSubtext"><![CDATA[{{VAL(grandparentTitle)}} ({{TEXT(S)}}{{VAL(parentIndex)}} • {{TEXT(E)}}{{VAL(index)}})]]></subtitle>
+
+                        </overlay>
+                    </lockup>
+                    }}
+                    {{IF({{CHK("{{VAL(type:)}}"=="movie")}})}}{{
+                    <lockup
+                        onSelect="Presenter.loadTitle('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'Movie')"
+                        onPlay="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                        onHoldSelect="Presenter.loadContext('ContextMenu', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                        onSelectHold="modal">
+                        <img aspectFill="true" src="{{IMAGEURL(art::768)}}" height="378" width="672" class="bannerImage"/>
+                        <overlay>
+                            <title class="bannerText"><![CDATA[{{VAL(title)}}]]></title>
+                            <subtitle class="bannerSubtext"><![CDATA[{{VAL(year)}}]]></subtitle>
+                        </overlay>
+                    </lockup>
+                    }}
+                    }}
+                </section>
+            </shelf>
+            }}
+            }}
+
+            {{XML(/library/recentlyAdded)}}{{
+              <shelf style="margin:100 0 0 0;">
+                  <header>
+                      <title>Recently Added Television</title>
+                  </header>
+          		<section>
+              {{IFNODE(MediaContainer/Directory)}}{{
+              {{COPY(MediaContainer/Directory)}}{{
+                  {{IF({{CHK("{{VAL(type:)}}"=="season")}})}}{{
+                  {{SET(noItems:false)}}
+                  <lockup onSelect="Presenter.loadTitle('TVShow_Episode', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'TV Show')"
+                    onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                    onHoldSelect="Presenter.loadContext('ContextMenu', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+                    <img src="{{IMAGEURL(thumb::360)}}" height="375" width="250" />
+                    {{IF(!{{CHK("{{VAL(leafCount)}}"="{{VAL(viewedLeafCount)}}")}})}}{{
+                    <overlay>
+                      <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
+                      <decorationLabel class="count">{{EVAL({{VAL(leafCount)}}-{{VAL(viewedLeafCount)}})}}</decorationLabel>
+                    </overlay>
+                    }}
+                    <title><![CDATA[{{VAL(title)}}]]></title>
+                    <subtitle><![CDATA[{{VAL(parentTitle)}}]]></subtitle>
+                    <subtitle><![CDATA[{{VAL(grandparentTitle)}}]]></subtitle>
+                  </lockup>
+                  }}
+                  {{IF({{CHK("{{VAL(type:)}}"!="season")}})}}{{
+                  <data/>
+                  }}
+                  }}
+                  }}
+              </section>
+              </shelf>
+
+
+            <shelf style="margin:50 0 0 0;">
+                <header>
+                    <title>Recently Added Movies</title>
+                </header>
+                <section>
+                    {{COPY(MediaContainer/Video)}}{{
+                    {{SET(noItems:false)}}
+                    {{IF({{VAL(viewOffset)}})}}{{
+                    <lockup onSelect="Presenter.loadTitle('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'Movie')"
+                      onPlay="Presenter.loadContext('Videos_ResumePopUp', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                      onHoldSelect="Presenter.loadContext('Movie_MovieContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+                      <img src="{{IMAGEURL(thumb::360)}}" height="375" width="250" />
+                      <overlay>
+                        <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:watching:png)}}"  width="72" height="72" />
+          						</overlay>
+          						<title><![CDATA[{{VAL(title)}}]]></title>
+                      <subtitle><![CDATA[{{VAL(year)}}]]></subtitle>
+                    </lockup>
+                    }}
+                    {{IF(!{{VAL(viewOffset)}})}}{{
+                    <lockup onSelect="Presenter.loadTitle('Movie_PrePlay', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'Movie')"
+                      onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}')"
+                      onHoldSelect="Presenter.loadContext('Movie_MovieContext', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}')">
+                      <img src="{{IMAGEURL(thumb::360)}}" height="375" width="250" />
+                      {{IF(!{{VAL(viewCount)}})}}{{
+          						<overlay>
+          							<img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
+          						</overlay>
+          						}}
+                      <title><![CDATA[{{VAL(title)}}]]></title>
+                      <subtitle><![CDATA[{{VAL(year)}}]]></subtitle>
+                    </lockup>
+                    }}
+                    }}
+                </section>
+
+            </shelf>
+
+            {{XML({{PATH(/hubs)}})}}{{
+	          {{IFNODE(MediaContainer/Hub)}}{{
+	          {{COPY(MediaContainer/Hub)}}{{
+          	{{IF({{CHK("{{VAL(hubIdentifier:)}}"=="home.music.recent")}})}}{{
+        		<shelf style="margin:50 0 0 0;">
+              <header>
+                  <title>Recently Added Music</title>
+              </header>
+          		<section>
+			        {{COPY(Directory)}}{{
+		          	<lockup
+		          		onSelect="Presenter.loadTitle('Music_Album', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'Music')"
+		           		onPlay="audioPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'shuffle')"
+	          			onSelectHold="modal">
+	         			<img src="{{IMAGEURL(thumb::360)}}" height="250" width="250" />
+	        			<title><![CDATA[{{VAL(title)}}]]></title>
+	        			<subtitle><![CDATA[{{VAL(parentTitle)}}]]></subtitle>
+	        		</lockup>
+        			}}
+	        	</section>
+	       	</shelf>
+       		}}
+         	}}
+        	}}
+         }}
+      }}
+
+            {{XML(/library/sections)}}{{
+            <shelf style="margin:50 0 0 0;">
+                <header>
+                    <title><![CDATA[{{PMSVAL(name)}}]]></title>
+                </header>
+                <section>
+                {{COPY(MediaContainer/Directory)}}
+                {{
+                {{SET(noItems:false)}}
+                {{IF({{CHK("{{VAL(type:)}}"=="movie")}})}}
+                {{
+                {{IF({{CHK("{{VAL(scanner:)}}"=="Plex Video Files Scanner")}})}}
+                {{
+                <lockup
+                  onSelect="Presenter.loadTitle('Homemovie_Directory', '{{PMSID()}}', '{{PATH(/library/sections/{{VAL(key)}}/folder)}}', '{{VAL(title)}}')"
+                  onSelectHold="modal">
+        {{XML({{PATH(/library/sections/{{VAL(key)}}/recentlyAdded)}})}}{{
+                <img aspectFill="true" src="{{IMAGEURL(MediaContainer/Video/art::600)}}" width="548" height="280" class="bannerImage"/>
+         }}
+                <overlay>
+                 <title class="sectionLabel"><![CDATA[{{VAL(title)}}]]></title>
+                </overlay>
+                </lockup>
+                }}
+                {{IF(!{{CHK("{{VAL(scanner:)}}"=="Plex Video Files Scanner")}})}}
+                {{
+                <lockup
+                  onSelect="Presenter.loadTitle('Movie_OnDeck', '{{PMSID()}}', '{{PATH(/library/sections/{{VAL(key)}})}}', '{{VAL(title)}}')"
+                  onSelectHold="modal">
+        {{XML({{PATH(/library/sections/{{VAL(key)}}/recentlyAdded)}})}}{{
+                <img aspectFill="true" src="{{IMAGEURL(MediaContainer/Video/art::600)}}" width="548" height="280" class="bannerImage"/>
+        }}
+               <overlay>
+                <title class="sectionLabel"><![CDATA[{{VAL(title)}}]]></title>
+               </overlay>
+                </lockup>
+                }}
+                }}
+                {{IF({{CHK("{{VAL(type:)}}"=="show")}})}}
+                {{
+                <lockup
+                  onSelect="Presenter.loadTitle('TVShow_OnDeck', '{{PMSID()}}', '{{PATH(/library/sections/{{VAL(key)}})}}', '{{VAL(title)}}')"
+                  onSelectHold="modal">
+        {{XML({{PATH(/library/sections/{{VAL(key)}}/recentlyAdded)}})}}{{
+        					<img aspectFill="true" src="{{IMAGEURL(MediaContainer/Video/art::600)}}" width="548" height="280" class="bannerImage"/>
+        }}
+                <overlay>
+                   <title class="sectionLabel"><![CDATA[{{VAL(title)}}]]></title>
+                </overlay>
+                </lockup>
+                }}
+                {{IF({{CHK("{{VAL(type:)}}"=="artist")}})}}
+                {{
+                <lockup
+                  onSelect="Presenter.loadTitle('Music_OnDeck', '{{PMSID()}}', '{{PATH(/library/sections/{{VAL(key)}})}}', '{{VAL(title)}}')"
+                  onSelectHold="modal">
+        {{XML({{PATH(/library/sections/{{VAL(key)}}/recentlyAdded)}})}}{{
+                <img aspectFill="true" src="{{IMAGEURL(MediaContainer/Directory/art::600)}}" width="548" height="280" class="bannerImage"/>
+         }}
+                <overlay>
+                  <title class="sectionLabel"><![CDATA[{{VAL(title)}}]]></title>
+                </overlay>
+                </lockup>
+                }}
+                {{IF({{CHK("{{VAL(type:)}}"=="photo")}})}}
+                {{
+                <lockup
+                  onSelect="Presenter.loadTitle('Photo_OnDeck', '{{PMSID()}}', '{{PATH(/library/sections/{{VAL(key)}})}}', '{{VAL(title)}}')"
+                  onSelectHold="modal">
+        {{XML({{PATH(/library/sections/{{VAL(key)}}/recentlyAdded)}})}}{{
+                <img aspectFill="true" src="{{IMAGEURL(MediaContainer/Photo/thumb::600)}}" width="548" height="280" class="bannerImage"/>
+         }}
+                <overlay>
+                 <title class="sectionLabel"><![CDATA[{{VAL(title)}}]]></title>
+                </overlay>
+                </lockup>
+                }}
+                }}
+              </section>
+            </shelf>
+            }}
+
+
+
+            {{XML(/playlists/)}}{{
+            {{IFNODE(MediaContainer/Playlist)}}{{
+            <shelf style="margin:50 0 0 0;" id="Playlists">
+                <header>
+                    <title>Playlists</title>
+                </header>
+                <section>
+                    {{COPY(MediaContainer/Playlist)}}
+                    {{
+                    {{SET(noItems:false)}}
+                    {{IF({{CHK("{{VAL(type:)}}"=="playlist")}})}}
+                    {{
+                    {{IF({{CHK("{{VAL(playlistType:)}}"=="video")}})}}
+                    {{
+                    <lockup
+                        onSelect="Presenter.loadTitle('Playlists_Video', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', '{{VAL(title)}}')"
+                        onSelectHold="modal">
+                        <img class="roundedImageCorners" src="{{IMAGEURL(composite::600)}}" height="300" width="300" />
+                        {{IF({{CHK("{{VAL(leafCount)}}">"0")}})}}{{
+                        <overlay>
+                           <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
+                           <decorationLabel class="count2">{{VAL(leafCount)}}</decorationLabel>
+                        </overlay>
+                           }}
+                        <title><![CDATA[{{VAL(title)}}]]></title>
+                        <subtitle><![CDATA[{{UPPERCASE({{VAL(playlistType)}})}}]]></subtitle>
+                    </lockup>
+                    }}
+                    {{IF({{CHK("{{VAL(playlistType:)}}"=="audio")}})}}
+                    {{
+                    <lockup
+                        onSelect="Presenter.loadTitle('Playlists_Audio', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', '{{VAL(title)}}')"
+                        onSelectHold="modal">
+                        <img class="roundedImageCorners" src="{{IMAGEURL(composite::600)}}" height="300" width="300" />
+                        {{IF({{CHK("{{VAL(leafCount)}}">"0")}})}}{{
+                        <overlay>
+                           <img style="tv-position: top-right; margin: -36 -30 120 120" src="{{RESOURCEURL(TVMLTemplates/Revenant/images/flags:unwatched2:png)}}"  width="72" height="72" />
+                           <decorationLabel class="count2">{{VAL(leafCount)}}</decorationLabel>
+                        </overlay>
+                           }}
+                        <title><![CDATA[{{VAL(title)}}]]></title>
+                        <subtitle><![CDATA[{{UPPERCASE({{VAL(playlistType)}})}}]]></subtitle>
+                    </lockup>
+                    }}
+                    }}
+                    }}
+                </section>
+            </shelf>
+            }}
+            }}
+
+
+            {{IF({{CHK("{{SETTING(showChannels)}}"=="Show")}})}}{{
+
+            {{XML({{PATH(/channels/all)}})}}{{
+            {{IFNODE(MediaContainer/Directory)}}{{
+              <shelf>
+                <header>
+                    <title>Channels</title>
+                </header>
+                <section>
+                    {{COPY(MediaContainer/Directory)}}{{
+                {{SET(noItems:false)}}
+                {{IF({{TABLE(${{VAL(key)}}:0:/video/:1)}})}}{{
+                <lockup
+                  onSelect="Presenter.loadTitle('Movie_Directory', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', '{{VAL(title)}}')"
+                  onSelectHold="modal">
+                  <img src="{{IMAGEURL(thumb::360)}}" height="250" width="250" />
+                  <title><![CDATA[{{VAL(title)}}]]></title>
+                  <subtitle>Video</subtitle>
+                </lockup>
+                }}
+                {{IF({{TABLE(${{VAL(key)}}:0:/music/:1)}})}}{{
+                <lockup
+                  onSelect="Presenter.loadTitle('Music_Directory', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', '{{VAL(title)}}')"
+                  onSelectHold="modal">
+                  <img src="{{IMAGEURL(thumb::360)}}" height="250" width="250" />
+                  <title><![CDATA[{{VAL(title)}}]]></title>
+                  <subtitle>Music</subtitle>
+                </lockup>
+                }}
+                {{IF({{TABLE(${{VAL(key)}}:0:/photos/:1)}})}}{{
+                <lockup
+                  onSelect="Presenter.loadTitle('Photo_Browser', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', '{{VAL(title)}}')"
+                  onSelectHold="modal">
+                  <img src="{{IMAGEURL(thumb::360)}}" height="250" width="250" />
+                  <title><![CDATA[{{VAL(title)}}]]></title>
+                  <subtitle>Photos</subtitle>
+                </lockup>
+                }}
+                }}
+              </section>
+            </shelf>
+            }}
+            }}
+            }}
+
+         }}
+         {{PMS(plex.tv)}}{{
+         {{XML(/pms/playlists/queue/unwatched)}}{{
+         {{IF({{CHK("{{VAL(MediaContainer/size)}}">"0")}})}}{{
+                 <shelf style="margin:50 0 0 0;">
+                 <header>
+                   <title>{{TEXT(Online)}}</title>
+                 </header>
+              <section>
+              {{COPY(MediaContainer/Video)}}{{
+              	<lockup onSelect="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}', '')"
+                        onPlay="videoPlayer.play('{{PMSID()}}', '{{PATH({{VAL(key)}})}}', '')"
+                        onSelectHold="modal">
+              	<img src="{{IMAGEHTTP(thumb)}}" height="226" width="402" />
+                <title><![CDATA[{{VAL(title)}}]]></title>
+                <subtitle><![CDATA[{{VAL(originallyAvailableAt)}}]]></subtitle>
+                 </lockup>
+                 }}
+               </section>
+             </shelf>
+         }}
+         }}
+         }}
+
+
+        </collectionList>
+    </stackTemplate>
+</document>
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+    <alertTemplate>
+        <title>PlexConnect</title>
+        <description>{{TEXT(Plex Media Server: No Servers Available)}}</description>
+    </alertTemplate>
+</document>
+}}

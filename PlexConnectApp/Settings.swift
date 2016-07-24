@@ -43,11 +43,39 @@ class cSettings {
             ], 0
         ),
         "theme": ([
-            "Default", "Fanart", "Grids'n'Posters"
+            "Revenant", "Default", "Fanart", "Grids'n'Posters"
             ], 0
         ),
         "themeExternalOverride": ([
             "off", "127.0.0.1:1844"
+            ], 0
+        ),
+        "showChannels": ([
+            "Hide", "Show"
+            ], 0
+        ),
+        
+        "movieFanart": ([
+            "Hide", "Show"
+            ], 0
+        ),
+        
+        "musicFanart": ([
+            "Hide", "Show"
+            ], 0
+        ),
+        
+        "tvshowFanart": ([
+            "Hide", "Show"
+            ], 0
+        ),
+
+        "themeTitle": ([
+            "Text", "Banner"
+            ], 0
+        ),
+        "themeMusic": ([
+            "Off", "On"
             ], 0
         ),
     ]

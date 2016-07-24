@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+    <head>
+        <style>
+            .darkBackgroundColor {
+            background-color: #1f1f1f;
+            }
+        </style>
+    </head>
+  <stackTemplate theme="dark">
+    <banner>
+      <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
+      <heroImg src="{{IMAGEURL(MediaContainer/art:1920)}}" />
+    </banner>
+    <collectionList>
+      <grid>
+
+        <section>
+{{COPY(MediaContainer/Directory)}}{{
+{{SET(noItems:false)}}
+          <lockup
+            onSelect="Presenter.loadTitle('TVShow_Season', '{{PMSID()}}', '{{PATH({{VAL(key)}})}}', 'TV Show')"
+            onSelectHold="modal"
+            >
+            <img src="{{RESOURCEURL(Images:folder:png)}}" width="400" height="600" />
+            <title><![CDATA[{{VAL(title)}}]]></title>
+          </lockup>
+}}
+      </section>
+
+      </grid>
+    </collectionList>
+  </stackTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>PlexConnect</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}

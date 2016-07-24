@@ -84,7 +84,7 @@ function shuffleArray(arr) {
         arr[i] = arr[j];
         arr[j] = temp;
     }
-    
+
     return arr;
 }
 
@@ -100,7 +100,13 @@ function loadPage(url)
   req.send();
 };
 
-
+// Send http PUT request - disregard response
+function putData(url)
+{
+  var req = new XMLHttpRequest();
+  req.open('PUT', url, true);
+  req.send();
+};
 
 // prepare for localisation - currently just return string
 function TEXT(textString) {
@@ -114,7 +120,7 @@ var createSpinner = function(title) {
 <document>
   <loadingTemplate>
     <activityIndicator>
-      <title>${title}</title>
+      <title><![CDATA[${title}]]></title>
     </activityIndicator>
   </loadingTemplate>
 </document>`
@@ -122,3 +128,37 @@ var createSpinner = function(title) {
   var doc = parser.parseFromString(docString, "application/xml");
   return doc;
 }
+
+var createTitleSpinner = function(title) {
+  var docString = `<?xml version="1.0" encoding="UTF-8" ?>
+<document>
+  <loadingTemplate>
+    <activityIndicator>
+    <title><![CDATA[${title}]]></title>
+    </activityIndicator>
+  </loadingTemplate>
+</document>`
+  var parser = new DOMParser();
+  var doc = parser.parseFromString(docString, "application/xml");
+  return doc;
+}
+
+var createArtSpinner = function(title, art) {
+    var docString = `<?xml version="1.0" encoding="UTF-8" ?>
+    <document>
+    <productTemplate>
+    <background>
+    <img src="${art}" width="1920" height="1080" style="width:1920; height:1080" aspectFill="true" />
+    </background>
+    <header>
+    <title style="text-align: center;text-shadow: 2px 2px 4px #000000;color:#FFFFFF;tv-text-style:title2;tv-position: center; margin:400">${title}</title>
+    </header>
+    <shelf>
+    </shelf>
+
+    </productTemplate>
+    </document>`
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(docString, "application/xml");
+    return doc;
+  }

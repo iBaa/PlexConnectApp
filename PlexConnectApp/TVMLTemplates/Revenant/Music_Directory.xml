@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2015 Baa. All rights reserved.
+See LICENSE.txt for this sample’s licensing information
+-->
+{{CUT({{GET(noItems)}})}}{{
+{{SET(noItems:true)}}
+{{XML()}}{{
+<document>
+<stackTemplate>
+    <banner>
+      <title><![CDATA[{{VAL(MediaContainer/title1)}}]]></title>
+      <heroImg src="{{IMAGEURL(MediaContainer/art:1920)}}" />
+
+    </banner>
+    <collectionList>
+      <grid>
+
+        <section>
+{{COPY(MediaContainer/Directory)}}{{
+{{SET(noItems:false)}}
+          <lockup
+            onSelect="Presenter.loadTitle('Music_Artist', '{{PMSID()}}', '{{PATH(/library/metadata/{{VAL(ratingKey)}})}}', 'Music')"
+            onSelectHold="modal"
+            >
+            <img src="{{IMAGEURL(thumb::768)}}" width="300" height="300" style="tv-img-treatment:corner-large" />
+            <title><![CDATA[{{VAL(title)}}]]></title>
+        </lockup>
+}}
+        </section>
+
+      </grid>
+    </collectionList>
+
+  </stackTemplate>
+</document>
+}}
+}}
+
+{{IF({{GET(noItems)}})}}{{  <!--enable if no items added-->
+<document>
+  <alertTemplate>
+    <title>PlexConnect</title>
+    <description>{{TEXT(Plex Media Server: No Items Available)}}</description>
+  </alertTemplate>
+</document>
+}}
